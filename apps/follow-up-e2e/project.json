@@ -1,0 +1,10 @@
+{
+  "name": "follow-up-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/follow-up-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["follow-up"],
+  "// targets": "to see all targets run: nx show project follow-up-e2e --web",
+  "targets": {}
+}
