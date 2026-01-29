@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core'
-import { UrlService } from '@follow-up/core'
+import { Component } from '@angular/core'
+import { injectConfigService } from '@follow-up/core'
+import { AppConfigs } from './constants/app-configs'
 
 @Component({
   imports: [],
@@ -8,5 +9,9 @@ import { UrlService } from '@follow-up/core'
   styleUrl: './app.css',
 })
 export class App {
-  service = inject(UrlService)
+  service = injectConfigService<AppConfigs>()
+
+  constructor() {
+    console.log(this.service.CONFIG)
+  }
 }

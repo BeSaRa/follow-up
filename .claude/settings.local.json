@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__angular-mcp__list_projects",
+      "mcp__angular-mcp__get_best_practices"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "nx-mcp"
+  ]
+}

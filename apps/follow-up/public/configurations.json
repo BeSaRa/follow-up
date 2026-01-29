@@ -1,0 +1,8 @@
+{
+  "ENVIRONMENTS": {
+    "DEV": "http://localhost:4200/dev",
+    "STG": "http://localhost:4200/stg",
+    "PROD": "http://localhost:4200/prod"
+  },
+  "ENV": "DEV"
+}
