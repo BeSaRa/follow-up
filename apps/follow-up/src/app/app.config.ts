@@ -6,12 +6,15 @@ import {
 import { provideRouter } from '@angular/router'
 import { appRoutes } from './app.routes'
 import {
+  injectConfigService,
   provideConfigService,
   provideSequentialAppInitializer,
+  provideUrlService,
 } from '@follow-up/core'
 import { of } from 'rxjs'
 import { DomSanitizer } from '@angular/platform-browser'
-import { appConfigs } from './constants/app-configs'
+import { AppConfigs, appConfigs } from './constants/app-configs'
+import { ENDPOINTS } from './constants/endpoints'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +25,14 @@ export const appConfig: ApplicationConfig = {
       INCLUDE_API_VERSION_TO_BASE_URL: true,
       CONFIG_FILE_URL: './configurations.json',
       EMBEDDED_CONFIG: appConfigs,
+    }),
+    provideUrlService(() => {
+      const config = injectConfigService<AppConfigs>()
+      return {
+        PREPARE: true,
+        ENDPOINTS: ENDPOINTS,
+        BASE_URL: config.baseURL$,
+      }
     }),
     provideSequentialAppInitializer(
       () => {

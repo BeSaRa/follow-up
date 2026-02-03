@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core'
 import { CONFIG_SERVICE_DEFAULTS_TOKEN } from '../providers/provide-config-service'
 import { HttpClient } from '@angular/common/http'
-import { map, Observable, tap } from 'rxjs'
+import { map, Observable, ReplaySubject, tap } from 'rxjs'
 import {
   removeTrailingAndLeadingSlash,
   removeTrailingSlash,
@@ -18,6 +18,8 @@ export class ConfigService<T> {
   options = inject(CONFIG_SERVICE_DEFAULTS_TOKEN)
   http = inject(HttpClient)
   CONFIG: T & EnvironmentConfigs = {} as T & EnvironmentConfigs
+  private baseUrlPrepared$ = new ReplaySubject<string>(1)
+  baseURL$ = this.baseUrlPrepared$.asObservable()
 
   load(): Observable<T & EnvironmentConfigs> {
     return this.http
@@ -73,6 +75,7 @@ export class ConfigService<T> {
     this.CONFIG.BASE_URL = removeTrailingSlash(
       this.CONFIG.ENVIRONMENTS[this.CONFIG.ENV],
     )
+    this.baseUrlPrepared$.next(this.CONFIG.BASE_URL)
   }
 
   private addAPIVersionToBaseUrl() {
