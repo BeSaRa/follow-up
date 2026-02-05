@@ -5,15 +5,7 @@ import {
   provideAppInitializer,
 } from '@angular/core'
 import { UrlService } from '../services/url-service'
-import {
-  delay,
-  firstValueFrom,
-  isObservable,
-  map,
-  Observable,
-  of,
-  timer,
-} from 'rxjs'
+import { firstValueFrom, isObservable, map, Observable, of } from 'rxjs'
 
 export const URL_SERVICE_OPTIONS_TOKEN = new InjectionToken<object>(
   'URL_SERVICE_ENDPOINTS_TOKEN',
