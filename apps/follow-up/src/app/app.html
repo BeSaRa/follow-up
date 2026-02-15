@@ -835,5 +835,54 @@
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Breadcrumb
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Breadcrumb</h2>
+
+    <!-- Basic -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic</h3>
+      <ui-breadcrumb>
+        <ui-breadcrumb-item><a href="#">Home</a></ui-breadcrumb-item>
+        <ui-breadcrumb-separator />
+        <ui-breadcrumb-item><a href="#">Products</a></ui-breadcrumb-item>
+        <ui-breadcrumb-separator />
+        <ui-breadcrumb-item><a href="#">Electronics</a></ui-breadcrumb-item>
+        <ui-breadcrumb-separator />
+        <ui-breadcrumb-item active>Laptops</ui-breadcrumb-item>
+      </ui-breadcrumb>
+    </section>
+
+    <!-- Custom Separator -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Custom Separator</h3>
+      <ui-breadcrumb>
+        <ui-breadcrumb-item><a href="#">Dashboard</a></ui-breadcrumb-item>
+        <ui-breadcrumb-separator>»</ui-breadcrumb-separator>
+        <ui-breadcrumb-item><a href="#">Settings</a></ui-breadcrumb-item>
+        <ui-breadcrumb-separator>»</ui-breadcrumb-separator>
+        <ui-breadcrumb-item active>Profile</ui-breadcrumb-item>
+      </ui-breadcrumb>
+    </section>
+
+    <!-- Inside a Card -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Inside a Card</h3>
+      <ui-card>
+        <ui-card-content class="!pt-6">
+          <ui-breadcrumb>
+            <ui-breadcrumb-item><a href="#">Home</a></ui-breadcrumb-item>
+            <ui-breadcrumb-separator />
+            <ui-breadcrumb-item><a href="#">Users</a></ui-breadcrumb-item>
+            <ui-breadcrumb-separator />
+            <ui-breadcrumb-item><a href="#">Alice Johnson</a></ui-breadcrumb-item>
+            <ui-breadcrumb-separator />
+            <ui-breadcrumb-item active>Edit</ui-breadcrumb-item>
+          </ui-breadcrumb>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>

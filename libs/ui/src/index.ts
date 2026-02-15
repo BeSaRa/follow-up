@@ -60,3 +60,9 @@ export {
 
 export { UiSkeleton } from './lib/skeleton/skeleton'
 export type { SkeletonVariant } from './lib/skeleton/skeleton'
+
+export {
+  UiBreadcrumb,
+  UiBreadcrumbItem,
+  UiBreadcrumbSeparatorItem,
+} from './lib/breadcrumb/breadcrumb'
