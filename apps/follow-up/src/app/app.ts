@@ -19,6 +19,9 @@ import {
   UiTab,
   UiTabPanel,
   DialogService,
+  UiDropdownTrigger,
+  UiDropdownMenu,
+  UiDropdownItem,
 } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
 import { Endpoints } from './constants/endpoints'
@@ -41,6 +44,9 @@ import { Endpoints } from './constants/endpoints'
     UiTabList,
     UiTab,
     UiTabPanel,
+    UiDropdownTrigger,
+    UiDropdownMenu,
+    UiDropdownItem,
   ],
   selector: 'app-root',
   templateUrl: './app.html',

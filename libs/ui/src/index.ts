@@ -28,3 +28,10 @@ export {
 
 export { DialogService, DialogComponent, ConfirmDialogComponent } from './lib/dialog/dialog'
 export type { DialogServiceContract, DialogVariant, DialogData, ConfirmDialogData } from './lib/dialog/dialog'
+
+export {
+  UiDropdownTrigger,
+  UiDropdownMenu,
+  UiDropdownItem,
+} from './lib/dropdown/dropdown'
+export type { DropdownPosition } from './lib/dropdown/dropdown'

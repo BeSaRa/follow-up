@@ -354,5 +354,89 @@
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Dropdown
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Dropdown</h2>
+
+    <!-- Basic -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic</h3>
+      <button uiButton variant="outline" [uiDropdownTrigger]="basicMenu">
+        Actions
+      </button>
+      <ui-dropdown-menu #basicMenu>
+        <ui-dropdown-item>Edit</ui-dropdown-item>
+        <ui-dropdown-item>Duplicate</ui-dropdown-item>
+        <ui-dropdown-item>Delete</ui-dropdown-item>
+      </ui-dropdown-menu>
+    </section>
+
+    <!-- With disabled items -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">With Disabled Items</h3>
+      <button uiButton variant="primary" [uiDropdownTrigger]="disabledMenu">
+        Options
+      </button>
+      <ui-dropdown-menu #disabledMenu>
+        <ui-dropdown-item>Profile</ui-dropdown-item>
+        <ui-dropdown-item>Settings</ui-dropdown-item>
+        <ui-dropdown-item [disabled]="true">Admin Panel</ui-dropdown-item>
+        <ui-dropdown-item>Logout</ui-dropdown-item>
+      </ui-dropdown-menu>
+    </section>
+
+    <!-- Positions -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Positions</h3>
+      <div class="flex flex-wrap gap-3">
+        <button uiButton variant="outline" [uiDropdownTrigger]="belowStartMenu">
+          Below Start
+        </button>
+        <ui-dropdown-menu #belowStartMenu position="below-start">
+          <ui-dropdown-item>Option A</ui-dropdown-item>
+          <ui-dropdown-item>Option B</ui-dropdown-item>
+        </ui-dropdown-menu>
+
+        <button uiButton variant="outline" [uiDropdownTrigger]="belowEndMenu">
+          Below End
+        </button>
+        <ui-dropdown-menu #belowEndMenu position="below-end">
+          <ui-dropdown-item>Option A</ui-dropdown-item>
+          <ui-dropdown-item>Option B</ui-dropdown-item>
+        </ui-dropdown-menu>
+
+        <button uiButton variant="outline" [uiDropdownTrigger]="aboveStartMenu">
+          Above Start
+        </button>
+        <ui-dropdown-menu #aboveStartMenu position="above-start">
+          <ui-dropdown-item>Option A</ui-dropdown-item>
+          <ui-dropdown-item>Option B</ui-dropdown-item>
+        </ui-dropdown-menu>
+      </div>
+    </section>
+
+    <!-- Trigger variants -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Trigger Variants</h3>
+      <div class="flex flex-wrap gap-3">
+        <button uiButton variant="ghost" [uiDropdownTrigger]="ghostMenu">
+          More
+        </button>
+        <ui-dropdown-menu #ghostMenu>
+          <ui-dropdown-item>Option A</ui-dropdown-item>
+          <ui-dropdown-item>Option B</ui-dropdown-item>
+        </ui-dropdown-menu>
+
+        <button uiButton variant="destructive" [uiDropdownTrigger]="dangerMenu">
+          Danger
+        </button>
+        <ui-dropdown-menu #dangerMenu>
+          <ui-dropdown-item>Archive</ui-dropdown-item>
+          <ui-dropdown-item>Delete permanently</ui-dropdown-item>
+        </ui-dropdown-menu>
+      </div>
+    </section>
+
   </div>
 </div>
