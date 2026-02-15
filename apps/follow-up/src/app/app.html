@@ -615,5 +615,48 @@
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Pagination
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Pagination</h2>
+
+    <!-- With Table -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">With Table</h3>
+      <div class="overflow-hidden rounded-md border border-border">
+        <table uiTable striped>
+          <thead uiTableHeader>
+            <tr uiTableRow>
+              <th uiTableHead sortable [sortDirection]="nameSort()" (sortChange)="onSortName($event)">Name</th>
+              <th uiTableHead>Email</th>
+              <th uiTableHead>Role</th>
+              <th uiTableHead sortable [sortDirection]="statusSort()" (sortChange)="onSortStatus($event)">Status</th>
+            </tr>
+          </thead>
+          <tbody uiTableBody>
+            @for (row of paginatedTableData(); track row.id) {
+              <tr uiTableRow>
+                <td uiTableCell>{{ row.name }}</td>
+                <td uiTableCell>{{ row.email }}</td>
+                <td uiTableCell>{{ row.role }}</td>
+                <td uiTableCell>
+                  <ui-badge [variant]="row.status === 'Active' ? 'success' : 'secondary'" size="sm">
+                    {{ row.status }}
+                  </ui-badge>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+        <ui-pagination
+          [totalItems]="tableData().length"
+          [pageSize]="paginationPageSize()"
+          [pageIndex]="paginationPageIndex()"
+          [pageSizeOptions]="[3, 5, 10]"
+          (pageChange)="onPageChange($event)"
+        />
+      </div>
+    </section>
+
   </div>
 </div>

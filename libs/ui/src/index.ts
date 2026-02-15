@@ -46,3 +46,6 @@ export {
   UiTableCell,
 } from './lib/table/table'
 export type { SortDirection } from './lib/table/table'
+
+export { UiPagination } from './lib/pagination/pagination'
+export type { PageChangeEvent } from './lib/pagination/pagination'

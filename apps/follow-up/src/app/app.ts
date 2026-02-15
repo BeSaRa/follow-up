@@ -28,8 +28,9 @@ import {
   UiTableRow,
   UiTableHead,
   UiTableCell,
+  UiPagination,
 } from '@follow-up/ui'
-import type { SortDirection } from '@follow-up/ui'
+import type { SortDirection, PageChangeEvent } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
 import { Endpoints } from './constants/endpoints'
 
@@ -61,6 +62,7 @@ import { Endpoints } from './constants/endpoints'
     UiTableRow,
     UiTableHead,
     UiTableCell,
+    UiPagination,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -149,5 +151,20 @@ export class App {
   onSortStatus(direction: SortDirection) {
     this.statusSort.set(direction)
     this.nameSort.set(null)
+  }
+
+  // Pagination demo
+  readonly paginationPageIndex = signal(0)
+  readonly paginationPageSize = signal(5)
+
+  readonly paginatedTableData = computed(() => {
+    const data = this.sortedTableData()
+    const start = this.paginationPageIndex() * this.paginationPageSize()
+    return data.slice(start, start + this.paginationPageSize())
+  })
+
+  onPageChange(event: PageChangeEvent) {
+    this.paginationPageIndex.set(event.pageIndex)
+    this.paginationPageSize.set(event.pageSize)
   }
 }
