@@ -25,3 +25,6 @@ export {
   UiTab,
   UiTabPanel,
 } from './lib/tabs/tabs'
+
+export { DialogService, DialogComponent, ConfirmDialogComponent } from './lib/dialog/dialog'
+export type { DialogServiceContract, DialogVariant, DialogData, ConfirmDialogData } from './lib/dialog/dialog'

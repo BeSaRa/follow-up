@@ -337,5 +337,22 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Dialog
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Dialog</h2>
+
+    <!-- Variants -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Variants</h3>
+      <div class="flex flex-wrap gap-3">
+        <button uiButton variant="primary" (click)="openConfirm()">Confirm</button>
+        <button uiButton variant="destructive" (click)="openError()">Error</button>
+        <button uiButton variant="secondary" (click)="openSuccess()">Success</button>
+        <button uiButton variant="outline" (click)="openInfo()">Info</button>
+        <button uiButton variant="accent" (click)="openWarning()">Warning</button>
+      </div>
+    </section>
+
   </div>
 </div>
