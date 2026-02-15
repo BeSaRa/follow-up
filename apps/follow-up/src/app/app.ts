@@ -14,6 +14,10 @@ import {
   UiAlert,
   UiAlertTitle,
   UiAlertDescription,
+  UiTabs,
+  UiTabList,
+  UiTab,
+  UiTabPanel,
 } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
 import { Endpoints } from './constants/endpoints'
@@ -32,6 +36,10 @@ import { Endpoints } from './constants/endpoints'
     UiAlert,
     UiAlertTitle,
     UiAlertDescription,
+    UiTabs,
+    UiTabList,
+    UiTab,
+    UiTabPanel,
   ],
   selector: 'app-root',
   templateUrl: './app.html',

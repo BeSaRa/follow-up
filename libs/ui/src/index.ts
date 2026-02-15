@@ -18,3 +18,10 @@ export type { SpinnerSize } from './lib/spinner/spinner'
 
 export { UiAlert, UiAlertTitle, UiAlertDescription } from './lib/alert/alert'
 export type { AlertVariant } from './lib/alert/alert'
+
+export {
+  UiTabs,
+  UiTabList,
+  UiTab,
+  UiTabPanel,
+} from './lib/tabs/tabs'

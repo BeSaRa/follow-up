@@ -276,5 +276,66 @@
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Tabs
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Tabs</h2>
+
+    <!-- Basic tabs -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic</h3>
+      <ui-tabs #basicTabs activeTab="overview">
+        <ui-tab-list>
+          <ui-tab value="overview" [tabs]="basicTabs">Overview</ui-tab>
+          <ui-tab value="features" [tabs]="basicTabs">Features</ui-tab>
+          <ui-tab value="settings" [tabs]="basicTabs">Settings</ui-tab>
+        </ui-tab-list>
+        <ui-tab-panel value="overview" [tabs]="basicTabs">
+          <p class="text-sm text-foreground-muted">
+            This is the overview panel. Navigate between tabs to see different content.
+          </p>
+        </ui-tab-panel>
+        <ui-tab-panel value="features" [tabs]="basicTabs">
+          <p class="text-sm text-foreground-muted">
+            Feature list would go here. Tabs support keyboard navigation with arrow keys.
+          </p>
+        </ui-tab-panel>
+        <ui-tab-panel value="settings" [tabs]="basicTabs">
+          <p class="text-sm text-foreground-muted">
+            Settings panel. Only the active panel is rendered in the DOM.
+          </p>
+        </ui-tab-panel>
+      </ui-tabs>
+    </section>
+
+    <!-- Tabs inside a card -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Inside a Card</h3>
+      <ui-card>
+        <ui-card-header>
+          <ui-card-title>Account</ui-card-title>
+          <ui-card-description>Manage your account settings and preferences.</ui-card-description>
+        </ui-card-header>
+        <ui-card-content>
+          <ui-tabs #cardTabs activeTab="profile">
+            <ui-tab-list>
+              <ui-tab value="profile" [tabs]="cardTabs">Profile</ui-tab>
+              <ui-tab value="security" [tabs]="cardTabs">Security</ui-tab>
+              <ui-tab value="notifications" [tabs]="cardTabs">Notifications</ui-tab>
+            </ui-tab-list>
+            <ui-tab-panel value="profile" [tabs]="cardTabs">
+              <p class="text-sm text-foreground-muted">Update your name, email, and avatar.</p>
+            </ui-tab-panel>
+            <ui-tab-panel value="security" [tabs]="cardTabs">
+              <p class="text-sm text-foreground-muted">Change your password and enable two-factor authentication.</p>
+            </ui-tab-panel>
+            <ui-tab-panel value="notifications" [tabs]="cardTabs">
+              <p class="text-sm text-foreground-muted">Choose which notifications you want to receive.</p>
+            </ui-tab-panel>
+          </ui-tabs>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>
