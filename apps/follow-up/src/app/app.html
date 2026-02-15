@@ -752,5 +752,88 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Skeleton
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Skeleton</h2>
+
+    <!-- Shapes -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Shapes</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <div class="flex flex-col items-center gap-2">
+          <ui-skeleton variant="line" width="12rem" />
+          <span class="text-xs text-foreground-muted">Line</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <ui-skeleton variant="circle" width="3rem" />
+          <span class="text-xs text-foreground-muted">Circle</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <ui-skeleton variant="rect" width="10rem" height="6rem" />
+          <span class="text-xs text-foreground-muted">Rect</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Card Skeleton -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Card Skeleton</h3>
+      <ui-card>
+        <ui-card-header>
+          <ui-skeleton variant="line" width="60%" height="1.25rem" />
+          <ui-skeleton variant="line" width="40%" height="0.875rem" />
+        </ui-card-header>
+        <ui-card-content>
+          <div class="space-y-2">
+            <ui-skeleton variant="line" />
+            <ui-skeleton variant="line" />
+            <ui-skeleton variant="line" width="75%" />
+          </div>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
+    <!-- Profile Skeleton -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Profile Skeleton</h3>
+      <ui-card>
+        <ui-card-content class="!pt-6">
+          <div class="flex items-center gap-4">
+            <ui-skeleton variant="circle" width="3rem" />
+            <div class="flex-1 space-y-2">
+              <ui-skeleton variant="line" width="30%" height="1rem" />
+              <ui-skeleton variant="line" width="50%" height="0.75rem" />
+            </div>
+          </div>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
+    <!-- Table Row Skeleton -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Table Row Skeleton</h3>
+      <div class="overflow-hidden rounded-md border border-border">
+        <table uiTable>
+          <thead uiTableHeader>
+            <tr uiTableRow>
+              <th uiTableHead>Name</th>
+              <th uiTableHead>Email</th>
+              <th uiTableHead>Role</th>
+            </tr>
+          </thead>
+          <tbody uiTableBody>
+            @for (i of [1, 2, 3, 4]; track i) {
+              <tr uiTableRow>
+                <td uiTableCell><ui-skeleton variant="line" width="70%" /></td>
+                <td uiTableCell><ui-skeleton variant="line" width="85%" /></td>
+                <td uiTableCell><ui-skeleton variant="line" width="50%" /></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
   </div>
 </div>

@@ -57,3 +57,6 @@ export {
   UiFormError,
   UiFormField,
 } from './lib/input/input'
+
+export { UiSkeleton } from './lib/skeleton/skeleton'
+export type { SkeletonVariant } from './lib/skeleton/skeleton'
