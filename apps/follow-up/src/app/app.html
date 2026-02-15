@@ -884,5 +884,62 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Slide Toggle
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Slide Toggle</h2>
+
+    <!-- Basic -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic</h3>
+      <div class="flex flex-col gap-4">
+        <ui-slide-toggle [(checked)]="isDark">Dark mode</ui-slide-toggle>
+      </div>
+    </section>
+
+    <!-- Sizes -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Sizes</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <ui-slide-toggle size="sm">Small</ui-slide-toggle>
+        <ui-slide-toggle size="md">Medium</ui-slide-toggle>
+      </div>
+    </section>
+
+    <!-- Disabled -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Disabled</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <ui-slide-toggle disabled>Disabled off</ui-slide-toggle>
+        <ui-slide-toggle disabled [checked]="true">Disabled on</ui-slide-toggle>
+      </div>
+    </section>
+
+    <!-- Label Positions -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Label Positions</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <ui-slide-toggle labelPosition="after">Label after</ui-slide-toggle>
+        <ui-slide-toggle labelPosition="before">Label before</ui-slide-toggle>
+      </div>
+    </section>
+
+    <!-- Reactive Form -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Reactive Form</h3>
+      <ui-card>
+        <ui-card-header>
+          <ui-card-title>Notification Preferences</ui-card-title>
+          <ui-card-description>Manage how you receive updates.</ui-card-description>
+        </ui-card-header>
+        <ui-card-content>
+          <div class="space-y-4">
+            <ui-slide-toggle [formControl]="notificationsToggle">Email notifications</ui-slide-toggle>
+            <ui-slide-toggle [formControl]="marketingToggle">Marketing emails</ui-slide-toggle>
+          </div>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>

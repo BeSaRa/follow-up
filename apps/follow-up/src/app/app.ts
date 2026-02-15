@@ -39,6 +39,7 @@ import {
   UiBreadcrumb,
   UiBreadcrumbItem,
   UiBreadcrumbSeparatorItem,
+  UiSlideToggle,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -83,6 +84,7 @@ import { Endpoints } from './constants/endpoints'
     UiBreadcrumb,
     UiBreadcrumbItem,
     UiBreadcrumbSeparatorItem,
+    UiSlideToggle,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -194,4 +196,8 @@ export class App {
     email: new FormControl('', [Validators.required, Validators.email]),
     bio: new FormControl(''),
   })
+
+  // Slide toggle demo
+  readonly notificationsToggle = new FormControl(true)
+  readonly marketingToggle = new FormControl(false)
 }
