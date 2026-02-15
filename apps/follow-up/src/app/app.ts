@@ -1,12 +1,28 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core'
 import { DOCUMENT } from '@angular/common'
 import { injectConfigService, injectUrlService } from '@follow-up/core'
-import { UiButton } from '@follow-up/ui'
+import {
+  UiButton,
+  UiCard,
+  UiCardHeader,
+  UiCardTitle,
+  UiCardDescription,
+  UiCardContent,
+  UiCardFooter,
+} from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
 import { Endpoints } from './constants/endpoints'
 
 @Component({
-  imports: [UiButton],
+  imports: [
+    UiButton,
+    UiCard,
+    UiCardHeader,
+    UiCardTitle,
+    UiCardDescription,
+    UiCardContent,
+    UiCardFooter,
+  ],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
