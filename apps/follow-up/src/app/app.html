@@ -438,5 +438,182 @@
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Table
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Table</h2>
+
+    <!-- Basic -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic</h3>
+      <div class="overflow-hidden rounded-md border border-border">
+        <table uiTable>
+          <thead uiTableHeader>
+            <tr uiTableRow>
+              <th uiTableHead>Name</th>
+              <th uiTableHead>Email</th>
+              <th uiTableHead>Role</th>
+            </tr>
+          </thead>
+          <tbody uiTableBody>
+            @for (row of tableData().slice(0, 5); track row.id) {
+              <tr uiTableRow>
+                <td uiTableCell>{{ row.name }}</td>
+                <td uiTableCell>{{ row.email }}</td>
+                <td uiTableCell>{{ row.role }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Striped -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Striped Rows</h3>
+      <div class="overflow-hidden rounded-md border border-border">
+        <table uiTable striped>
+          <thead uiTableHeader>
+            <tr uiTableRow>
+              <th uiTableHead>Name</th>
+              <th uiTableHead>Email</th>
+              <th uiTableHead>Role</th>
+              <th uiTableHead>Status</th>
+            </tr>
+          </thead>
+          <tbody uiTableBody>
+            @for (row of tableData().slice(0, 6); track row.id) {
+              <tr uiTableRow>
+                <td uiTableCell>{{ row.name }}</td>
+                <td uiTableCell>{{ row.email }}</td>
+                <td uiTableCell>{{ row.role }}</td>
+                <td uiTableCell>
+                  <ui-badge [variant]="row.status === 'Active' ? 'success' : 'secondary'" size="sm">
+                    {{ row.status }}
+                  </ui-badge>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Sticky Header -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Sticky Header</h3>
+      <div class="max-h-[300px] overflow-auto rounded-md border border-border">
+        <table uiTable stickyHeader>
+          <thead uiTableHeader>
+            <tr uiTableRow>
+              <th uiTableHead>Name</th>
+              <th uiTableHead>Email</th>
+              <th uiTableHead>Role</th>
+              <th uiTableHead>Status</th>
+            </tr>
+          </thead>
+          <tbody uiTableBody>
+            @for (row of tableData(); track row.id) {
+              <tr uiTableRow>
+                <td uiTableCell>{{ row.name }}</td>
+                <td uiTableCell>{{ row.email }}</td>
+                <td uiTableCell>{{ row.role }}</td>
+                <td uiTableCell>{{ row.status }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Sortable -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Sortable Columns</h3>
+      <div class="overflow-hidden rounded-md border border-border">
+        <table uiTable>
+          <thead uiTableHeader>
+            <tr uiTableRow>
+              <th uiTableHead sortable [sortDirection]="nameSort()" (sortChange)="onSortName($event)">Name</th>
+              <th uiTableHead>Email</th>
+              <th uiTableHead>Role</th>
+              <th uiTableHead sortable [sortDirection]="statusSort()" (sortChange)="onSortStatus($event)">Status</th>
+            </tr>
+          </thead>
+          <tbody uiTableBody>
+            @for (row of sortedTableData(); track row.id) {
+              <tr uiTableRow>
+                <td uiTableCell>{{ row.name }}</td>
+                <td uiTableCell>{{ row.email }}</td>
+                <td uiTableCell>{{ row.role }}</td>
+                <td uiTableCell>
+                  <ui-badge [variant]="row.status === 'Active' ? 'success' : 'secondary'" size="sm">
+                    {{ row.status }}
+                  </ui-badge>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Resizable -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Resizable Columns</h3>
+      <div class="overflow-hidden rounded-md border border-border">
+        <table uiTable class="table-fixed">
+          <thead uiTableHeader>
+            <tr uiTableRow>
+              <th uiTableHead resizable style="width: 200px">Name</th>
+              <th uiTableHead resizable style="width: 250px">Email</th>
+              <th uiTableHead resizable style="width: 120px">Role</th>
+              <th uiTableHead>Status</th>
+            </tr>
+          </thead>
+          <tbody uiTableBody>
+            @for (row of tableData().slice(0, 5); track row.id) {
+              <tr uiTableRow>
+                <td uiTableCell>{{ row.name }}</td>
+                <td uiTableCell>{{ row.email }}</td>
+                <td uiTableCell>{{ row.role }}</td>
+                <td uiTableCell>{{ row.status }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Combined -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Combined Features</h3>
+      <div class="max-h-[300px] overflow-auto rounded-md border border-border">
+        <table uiTable striped stickyHeader>
+          <thead uiTableHeader>
+            <tr uiTableRow>
+              <th uiTableHead sortable [sortDirection]="nameSort()" (sortChange)="onSortName($event)">Name</th>
+              <th uiTableHead>Email</th>
+              <th uiTableHead>Role</th>
+              <th uiTableHead sortable [sortDirection]="statusSort()" (sortChange)="onSortStatus($event)">Status</th>
+            </tr>
+          </thead>
+          <tbody uiTableBody>
+            @for (row of sortedTableData(); track row.id) {
+              <tr uiTableRow>
+                <td uiTableCell>{{ row.name }}</td>
+                <td uiTableCell>{{ row.email }}</td>
+                <td uiTableCell>{{ row.role }}</td>
+                <td uiTableCell>
+                  <ui-badge [variant]="row.status === 'Active' ? 'success' : 'secondary'" size="sm">
+                    {{ row.status }}
+                  </ui-badge>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
   </div>
 </div>

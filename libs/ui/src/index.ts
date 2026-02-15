@@ -35,3 +35,14 @@ export {
   UiDropdownItem,
 } from './lib/dropdown/dropdown'
 export type { DropdownPosition } from './lib/dropdown/dropdown'
+
+export {
+  UiTable,
+  UiTableHeader,
+  UiTableBody,
+  UiTableFooter,
+  UiTableRow,
+  UiTableHead,
+  UiTableCell,
+} from './lib/table/table'
+export type { SortDirection } from './lib/table/table'
