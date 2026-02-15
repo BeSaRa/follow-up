@@ -11,6 +11,9 @@ import {
   UiCardFooter,
   UiBadge,
   UiSpinner,
+  UiAlert,
+  UiAlertTitle,
+  UiAlertDescription,
 } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
 import { Endpoints } from './constants/endpoints'
@@ -26,6 +29,9 @@ import { Endpoints } from './constants/endpoints'
     UiCardFooter,
     UiBadge,
     UiSpinner,
+    UiAlert,
+    UiAlertTitle,
+    UiAlertDescription,
   ],
   selector: 'app-root',
   templateUrl: './app.html',

@@ -15,3 +15,6 @@ export type { BadgeVariant, BadgeSize } from './lib/badge/badge'
 
 export { UiSpinner } from './lib/spinner/spinner'
 export type { SpinnerSize } from './lib/spinner/spinner'
+
+export { UiAlert, UiAlertTitle, UiAlertDescription } from './lib/alert/alert'
+export type { AlertVariant } from './lib/alert/alert'

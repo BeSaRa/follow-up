@@ -221,5 +221,60 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Alert
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Alert</h2>
+
+    <!-- Variants -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Variants</h3>
+      <div class="space-y-3">
+        <ui-alert variant="success">
+          <ui-alert-title>Success</ui-alert-title>
+          <ui-alert-description>Your changes have been saved successfully.</ui-alert-description>
+        </ui-alert>
+        <ui-alert variant="warning">
+          <ui-alert-title>Warning</ui-alert-title>
+          <ui-alert-description>Your session will expire in 5 minutes.</ui-alert-description>
+        </ui-alert>
+        <ui-alert variant="error">
+          <ui-alert-title>Error</ui-alert-title>
+          <ui-alert-description>Something went wrong. Please try again.</ui-alert-description>
+        </ui-alert>
+        <ui-alert variant="info">
+          <ui-alert-title>Info</ui-alert-title>
+          <ui-alert-description>A new version is available. Refresh to update.</ui-alert-description>
+        </ui-alert>
+      </div>
+    </section>
+
+    <!-- Dismissible -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Dismissible</h3>
+      <div class="space-y-3">
+        <ui-alert variant="info" [dismissible]="true">
+          <ui-alert-description>This alert can be dismissed with the close button.</ui-alert-description>
+        </ui-alert>
+        <ui-alert variant="warning" [dismissible]="true">
+          <ui-alert-title>Heads up</ui-alert-title>
+          <ui-alert-description>Dismissible alert with a title and description.</ui-alert-description>
+        </ui-alert>
+      </div>
+    </section>
+
+    <!-- Simple (no title) -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Simple (no title)</h3>
+      <div class="space-y-3">
+        <ui-alert variant="success">
+          <ui-alert-description>File uploaded successfully.</ui-alert-description>
+        </ui-alert>
+        <ui-alert variant="error">
+          <ui-alert-description>Invalid email address.</ui-alert-description>
+        </ui-alert>
+      </div>
+    </section>
+
   </div>
 </div>
