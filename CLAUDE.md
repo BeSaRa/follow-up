@@ -96,6 +96,51 @@ nx affected -t test             # Test affected projects
 
 When modifying the `core` library, add a logger statement in `libs/core/src/index.ts` to verify the viewer receives the updated package.
 
+## Plan Workflow
+
+Plans are tracked locally in `docs/` (git-ignored). Each plan is a numbered markdown file that moves between folders as work progresses.
+
+### Folder structure
+
+- `docs/queue/` — planned, not yet started
+- `docs/started/` — currently in progress
+- `docs/completed/` — finished
+
+### File naming
+
+`{NN}-{plan-name}.md` — e.g. `04-input-and-form-field-components.md`
+
+Numbering is sequential and global across all folders (not per-folder).
+
+### File format
+
+Every plan file must have a tracker table at the top:
+
+```markdown
+# NN — Plan Title
+
+| Status    | Date       |
+|-----------|------------|
+| Created   | YYYY-MM-DD |
+| Started   | —          |
+| Completed | —          |
+
+---
+
+## Description
+...
+
+## Deliverables
+- [ ] Task 1
+- [ ] Task 2
+```
+
+### Workflow steps
+
+1. **Create** — write the file in `docs/queue/`, fill in the Created date
+2. **Start** — move the file from `docs/queue/` to `docs/started/`, fill in the Started date
+3. **Complete** — move the file from `docs/started/` to `docs/completed/`, fill in the Completed date, check all deliverable boxes
+
 ## Commit Messages
 
 Do not add any Claude-specific attributes to commit messages.
