@@ -1,4 +1,4 @@
-# 12 — Table Component
+# 11 — Table Component
 
 | Status    | Date       |
 |-----------|------------|

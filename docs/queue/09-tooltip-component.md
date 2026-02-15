@@ -1,4 +1,4 @@
-# 10 — Tooltip Component
+# 09 — Tooltip Component
 
 | Status    | Date       |
 |-----------|------------|

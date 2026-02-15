@@ -1,4 +1,4 @@
-# 07 — Alert Component
+# 06 — Alert Component
 
 | Status    | Date       |
 |-----------|------------|

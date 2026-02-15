@@ -1,4 +1,4 @@
-# 08 — Dialog Component
+# 07 — Dialog Component
 
 | Status    | Date       |
 |-----------|------------|

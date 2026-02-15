@@ -1,4 +1,4 @@
-# 05 — Badge Component
+# 05 — Spinner Component
 
 | Status    | Date       |
 |-----------|------------|
@@ -10,12 +10,12 @@
 
 ## Description
 
-Small status indicator / tag component for labels, counts, and categories.
+Standalone loading spinner for full-page, section, or inline loading indicators.
 
 ## Deliverables
 
-- [ ] `UiBadge` component
-- [ ] Variants: primary, secondary, accent, success, warning, error, info, outline
-- [ ] Sizes: sm, md
+- [ ] `UiSpinner` component
+- [ ] Sizes: sm, md, lg
+- [ ] Inherits color from parent via `currentColor`
 - [ ] Export from `@follow-up/ui`
 - [ ] Add to showcase page

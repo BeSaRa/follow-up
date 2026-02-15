@@ -1,4 +1,4 @@
-# 11 — Tabs Component
+# 10 — Tabs Component
 
 | Status    | Date       |
 |-----------|------------|
