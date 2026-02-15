@@ -9,6 +9,7 @@ import {
   UiCardDescription,
   UiCardContent,
   UiCardFooter,
+  UiBadge,
 } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
 import { Endpoints } from './constants/endpoints'
@@ -22,6 +23,7 @@ import { Endpoints } from './constants/endpoints'
     UiCardDescription,
     UiCardContent,
     UiCardFooter,
+    UiBadge,
   ],
   selector: 'app-root',
   templateUrl: './app.html',

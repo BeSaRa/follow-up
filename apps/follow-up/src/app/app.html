@@ -120,5 +120,56 @@
 
     </div>
 
+    <!-- ══════════════════════════════════════════════════
+         Badge
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Badge</h2>
+
+    <!-- Variants -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Variants</h3>
+      <div class="flex flex-wrap items-center gap-3">
+        <ui-badge variant="primary">Primary</ui-badge>
+        <ui-badge variant="secondary">Secondary</ui-badge>
+        <ui-badge variant="accent">Accent</ui-badge>
+        <ui-badge variant="success">Success</ui-badge>
+        <ui-badge variant="warning">Warning</ui-badge>
+        <ui-badge variant="error">Error</ui-badge>
+        <ui-badge variant="info">Info</ui-badge>
+        <ui-badge variant="outline">Outline</ui-badge>
+      </div>
+    </section>
+
+    <!-- Sizes -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Sizes</h3>
+      <div class="flex flex-wrap items-center gap-3">
+        <ui-badge size="sm">Small</ui-badge>
+        <ui-badge size="md">Medium</ui-badge>
+      </div>
+    </section>
+
+    <!-- In context -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">In Context</h3>
+      <div class="flex flex-wrap items-center gap-3">
+        <button uiButton variant="outline">
+          Notifications <ui-badge variant="error" size="sm">3</ui-badge>
+        </button>
+        <button uiButton variant="ghost">
+          Messages <ui-badge variant="primary" size="sm">12</ui-badge>
+        </button>
+      </div>
+      <ui-card>
+        <ui-card-header>
+          <div class="flex items-center justify-between">
+            <ui-card-title>Deployment</ui-card-title>
+            <ui-badge variant="success" size="sm">Live</ui-badge>
+          </div>
+          <ui-card-description>Production environment is running.</ui-card-description>
+        </ui-card-header>
+      </ui-card>
+    </section>
+
   </div>
 </div>
