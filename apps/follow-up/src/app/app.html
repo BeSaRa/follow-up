@@ -658,5 +658,99 @@
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Input & Form Field
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Input & Form Field</h2>
+
+    <!-- Basic inputs -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic Inputs</h3>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <ui-form-field>
+          <label uiLabel for="basic-name">Name</label>
+          <input uiInput id="basic-name" placeholder="Enter your name" />
+        </ui-form-field>
+        <ui-form-field>
+          <label uiLabel for="basic-email">Email</label>
+          <input uiInput id="basic-email" type="email" placeholder="you@example.com" />
+          <span uiFormHint>We'll never share your email.</span>
+        </ui-form-field>
+      </div>
+    </section>
+
+    <!-- States -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">States</h3>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <ui-form-field>
+          <label uiLabel for="state-disabled">Disabled</label>
+          <input uiInput id="state-disabled" placeholder="Can't type here" disabled />
+        </ui-form-field>
+        <ui-form-field>
+          <label uiLabel for="state-readonly">Readonly</label>
+          <input uiInput id="state-readonly" value="Read only value" readonly />
+        </ui-form-field>
+        <ui-form-field>
+          <label uiLabel for="state-error">Error</label>
+          <input uiInput id="state-error" error placeholder="Something is wrong" />
+          <span uiFormError>This field is required.</span>
+        </ui-form-field>
+      </div>
+    </section>
+
+    <!-- Textarea -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Textarea</h3>
+      <ui-form-field>
+        <label uiLabel for="textarea-bio">Bio</label>
+        <textarea uiInput id="textarea-bio" placeholder="Tell us about yourself" rows="3"></textarea>
+        <span uiFormHint>Max 200 characters.</span>
+      </ui-form-field>
+    </section>
+
+    <!-- Reactive Form -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Reactive Form</h3>
+      <ui-card>
+        <ui-card-header>
+          <ui-card-title>Profile</ui-card-title>
+          <ui-card-description>Fill in the form and see validation in action.</ui-card-description>
+        </ui-card-header>
+        <ui-card-content>
+          <form [formGroup]="demoForm" class="space-y-4">
+            <ui-form-field>
+              <label uiLabel for="demo-name">Name</label>
+              <input uiInput id="demo-name" formControlName="name"
+                [error]="demoForm.controls.name.touched && demoForm.controls.name.invalid"
+                placeholder="Your full name" />
+              @if (demoForm.controls.name.touched && demoForm.controls.name.hasError('required')) {
+                <span uiFormError>Name is required.</span>
+              } @else if (demoForm.controls.name.touched && demoForm.controls.name.hasError('minlength')) {
+                <span uiFormError>Name must be at least 2 characters.</span>
+              }
+            </ui-form-field>
+            <ui-form-field>
+              <label uiLabel for="demo-email">Email</label>
+              <input uiInput id="demo-email" formControlName="email" type="email"
+                [error]="demoForm.controls.email.touched && demoForm.controls.email.invalid"
+                placeholder="you@example.com" />
+              @if (demoForm.controls.email.touched && demoForm.controls.email.hasError('required')) {
+                <span uiFormError>Email is required.</span>
+              } @else if (demoForm.controls.email.touched && demoForm.controls.email.hasError('email')) {
+                <span uiFormError>Please enter a valid email address.</span>
+              }
+            </ui-form-field>
+            <ui-form-field>
+              <label uiLabel for="demo-bio">Bio</label>
+              <textarea uiInput id="demo-bio" formControlName="bio" rows="3"
+                placeholder="Tell us about yourself"></textarea>
+              <span uiFormHint>Optional.</span>
+            </ui-form-field>
+          </form>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core'
 import { DOCUMENT } from '@angular/common'
+import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms'
 import { injectConfigService, injectUrlService } from '@follow-up/core'
 import {
   UiButton,
@@ -29,6 +30,11 @@ import {
   UiTableHead,
   UiTableCell,
   UiPagination,
+  UiInput,
+  UiLabel,
+  UiFormHint,
+  UiFormError,
+  UiFormField,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -63,6 +69,12 @@ import { Endpoints } from './constants/endpoints'
     UiTableHead,
     UiTableCell,
     UiPagination,
+    ReactiveFormsModule,
+    UiInput,
+    UiLabel,
+    UiFormHint,
+    UiFormError,
+    UiFormField,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -167,4 +179,11 @@ export class App {
     this.paginationPageIndex.set(event.pageIndex)
     this.paginationPageSize.set(event.pageSize)
   }
+
+  // Form field demo
+  readonly demoForm = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    bio: new FormControl(''),
+  })
 }
