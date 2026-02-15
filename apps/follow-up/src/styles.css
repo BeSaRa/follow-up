@@ -1,2 +1,14 @@
-@import "tailwindcss" source('./../src/');
-@source './../../../libs/core/'
+@import "tailwindcss" source('./../src');
+@import './theme.css';
+@source './../../../libs/core/';
+@source './../../../libs/ui/';
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+body {
+  background-color: var(--clr-background);
+  color: var(--clr-foreground);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}

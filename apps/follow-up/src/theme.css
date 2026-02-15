@@ -1,0 +1,287 @@
+/* ============================================
+   Design Tokens — CSS Custom Properties
+   ============================================
+   Toggle dark mode by adding class="dark" to <html>.
+   Components use semantic Tailwind classes (bg-surface, text-primary, etc.)
+   — no need for dark: prefixes anywhere.
+   ============================================ */
+
+/* ---------- Light Mode (default) ---------- */
+:root {
+
+  /* ── Brand ─────────────────────────────────────────────────────────────
+   * Primary — The main brand color. Used for primary actions, active states
+   *           and key UI elements that need to stand out.
+   *   Usage: bg-primary, text-primary, border-primary
+   *   Example: <button class="bg-primary text-primary-foreground">Save</button>
+   *
+   * -hover:      Darker shade applied on pointer hover.
+   *              Usage: hover:bg-primary-hover
+   * -foreground: Text/icon color ON TOP of a primary background.
+   *              Usage: text-primary-foreground
+   * ──────────────────────────────────────────────────────────────────── */
+  --clr-primary: #4f46e5;
+  --clr-primary-hover: #4338ca;
+  --clr-primary-foreground: #ffffff;
+
+  /* ── Secondary — A complementary brand color for secondary actions,
+   *   less prominent buttons, or alternative highlighted sections.
+   *   Usage: bg-secondary, text-secondary
+   *   Example: <button class="bg-secondary text-secondary-foreground">Details</button>
+   * ──────────────────────────────────────────────────────────────────── */
+  --clr-secondary: #0f766e;
+  --clr-secondary-hover: #0d6560;
+  --clr-secondary-foreground: #ffffff;
+
+  /* ── Accent — An eye-catching color for highlights, badges, counters,
+   *   or promotional banners that need to grab attention.
+   *   Usage: bg-accent, text-accent
+   *   Example: <span class="bg-accent text-accent-foreground">New</span>
+   * ──────────────────────────────────────────────────────────────────── */
+  --clr-accent: #f59e0b;
+  --clr-accent-hover: #d97706;
+  --clr-accent-foreground: #1c1917;
+
+  /* ── Semantic ──────────────────────────────────────────────────────────
+   * Success — Positive outcomes: saved, completed, approved.
+   *   Usage: bg-success, text-success, border-success
+   *   Example: <div class="bg-success text-success-foreground">Saved!</div>
+   *
+   * Warning — Caution states: unsaved changes, expiring sessions.
+   *   Usage: bg-warning, text-warning, border-warning
+   *   Example: <div class="border border-warning text-warning">Unsaved changes</div>
+   *
+   * Error — Destructive/failure states: validation errors, failed requests.
+   *   Usage: bg-error, text-error, border-error
+   *   Example: <span class="text-error">This field is required</span>
+   *
+   * Info — Neutral informational messages: tips, notes, help text.
+   *   Usage: bg-info, text-info, border-info
+   *   Example: <div class="bg-info text-info-foreground">Tip: ...</div>
+   *
+   * Each has a -foreground variant for text/icons placed on top.
+   * ──────────────────────────────────────────────────────────────────── */
+  --clr-success: #16a34a;
+  --clr-success-foreground: #ffffff;
+  --clr-warning: #eab308;
+  --clr-warning-foreground: #1c1917;
+  --clr-error: #dc2626;
+  --clr-error-hover: #b91c1c;
+  --clr-error-foreground: #ffffff;
+  --clr-info: #2563eb;
+  --clr-info-foreground: #ffffff;
+
+  /* ── Surfaces ──────────────────────────────────────────────────────────
+   * background — The root page background. Applied to <body>.
+   *   Usage: bg-background
+   *
+   * surface — Slightly tinted background for content areas, sidebars,
+   *           and grouped sections that sit on top of the page background.
+   *   Usage: bg-surface
+   *   Example: <aside class="bg-surface">Sidebar</aside>
+   *
+   * surface-hover — Interactive surface state (hovered list items, table rows).
+   *   Usage: hover:bg-surface-hover
+   *
+   * surface-raised — Elevated containers like cards, modals, and popovers
+   *                  that appear to "float" above the surface.
+   *   Usage: bg-surface-raised
+   *   Example: <div class="bg-surface-raised shadow-md">Card</div>
+   * ──────────────────────────────────────────────────────────────────── */
+  --clr-background: #ffffff;
+  --clr-surface: #f8fafc;
+  --clr-surface-hover: #f1f5f9;
+  --clr-surface-raised: #ffffff;
+
+  /* ── Borders ───────────────────────────────────────────────────────────
+   * border — Default border color for dividers, input outlines, and cards.
+   *   Usage: border-border
+   *   Example: <input class="border border-border" />
+   *
+   * border-hover — Stronger border on hover/focus for interactive elements.
+   *   Usage: hover:border-border-hover, focus:border-border-hover
+   *
+   * ring — Focus ring color for keyboard-accessible focus indicators.
+   *   Usage: ring-ring
+   *   Example: <button class="focus:ring-2 ring-ring">...</button>
+   * ──────────────────────────────────────────────────────────────────── */
+  --clr-border: #e2e8f0;
+  --clr-border-hover: #cbd5e1;
+  --clr-ring: #4f46e5;
+
+  /* ── Text ──────────────────────────────────────────────────────────────
+   * foreground — Primary text color for headings, body copy, and labels.
+   *   Usage: text-foreground
+   *   Example: <h1 class="text-foreground">Title</h1>
+   *
+   * foreground-muted — Secondary text for descriptions, helper text,
+   *                    and less important information.
+   *   Usage: text-foreground-muted
+   *   Example: <p class="text-foreground-muted">Last updated 2 hours ago</p>
+   *
+   * foreground-subtle — Tertiary text for placeholders, disabled labels,
+   *                     and decorative text.
+   *   Usage: text-foreground-subtle
+   *   Example: <input placeholder="Search..." class="placeholder:text-foreground-subtle" />
+   * ──────────────────────────────────────────────────────────────────── */
+  --clr-foreground: #0f172a;
+  --clr-foreground-muted: #64748b;
+  --clr-foreground-subtle: #94a3b8;
+
+  /* ── Misc ──────────────────────────────────────────────────────────────
+   * overlay — Semi-transparent backdrop behind modals and dialogs.
+   *   Usage: bg-overlay
+   *   Example: <div class="fixed inset-0 bg-overlay">...</div>
+   *
+   * shadow — Base shadow color used with Tailwind shadow utilities.
+   *   Usage: shadow-shadow (or use in custom box-shadow)
+   *
+   * radius — Base border-radius value. All radius tokens derive from it.
+   *   Tokens: rounded-sm (0.25rem), rounded-md (0.5rem),
+   *           rounded-lg (0.75rem), rounded-xl (1rem)
+   * ──────────────────────────────────────────────────────────────────── */
+  --clr-overlay: rgb(0 0 0 / 0.4);
+  --clr-shadow: rgb(0 0 0 / 0.1);
+  --radius: 0.5rem;
+}
+
+/* ---------- Dark Mode ----------
+ * Activated by adding class="dark" to <html>.
+ * Every token mirrors its light counterpart but uses lighter brand shades
+ * and darker surface/background values so contrast ratios stay accessible.
+ * No changes needed in component markup — the same Tailwind classes
+ * (bg-primary, text-foreground, etc.) resolve to these values automatically.
+ */
+.dark {
+  /* Brand — lighter tints so they remain visible on dark backgrounds */
+  --clr-primary: #818cf8;
+  --clr-primary-hover: #a5b4fc;
+  --clr-primary-foreground: #0f172a;
+
+  --clr-secondary: #2dd4bf;
+  --clr-secondary-hover: #5eead4;
+  --clr-secondary-foreground: #0f172a;
+
+  --clr-accent: #fbbf24;
+  --clr-accent-hover: #fcd34d;
+  --clr-accent-foreground: #1c1917;
+
+  /* Semantic — lighter variants for dark surfaces */
+  --clr-success: #4ade80;
+  --clr-success-foreground: #0f172a;
+  --clr-warning: #facc15;
+  --clr-warning-foreground: #1c1917;
+  --clr-error: #f87171;
+  --clr-error-hover: #fca5a5;
+  --clr-error-foreground: #0f172a;
+  --clr-info: #60a5fa;
+  --clr-info-foreground: #0f172a;
+
+  /* Surfaces — dark slate palette */
+  --clr-background: #0f172a;
+  --clr-surface: #1e293b;
+  --clr-surface-hover: #334155;
+  --clr-surface-raised: #1e293b;
+
+  /* Borders — slightly lighter lines for visibility on dark surfaces */
+  --clr-border: #334155;
+  --clr-border-hover: #475569;
+  --clr-ring: #818cf8;
+
+  /* Text — inverted from light mode */
+  --clr-foreground: #f1f5f9;
+  --clr-foreground-muted: #94a3b8;
+  --clr-foreground-subtle: #64748b;
+
+  /* Misc — stronger overlay & shadow to compensate for dark backgrounds */
+  --clr-overlay: rgb(0 0 0 / 0.6);
+  --clr-shadow: rgb(0 0 0 / 0.4);
+}
+
+/* ============================================
+   Tailwind Theme — Map CSS vars to utilities
+   ============================================
+   Each --color-* entry registers a Tailwind utility.
+   For example  --color-primary  creates:
+     bg-primary, text-primary, border-primary,
+     ring-primary, fill-primary, stroke-primary, etc.
+   ============================================ */
+
+@theme {
+  /* ── Brand utilities ───────────────────────────────────────────────
+   * bg-primary / text-primary         → main brand fill & text
+   * hover:bg-primary-hover            → hovered brand fill
+   * text-primary-foreground           → text on a primary background
+   * (same pattern for secondary & accent)
+   * ──────────────────────────────────────────────────────────────── */
+  --color-primary: var(--clr-primary);
+  --color-primary-hover: var(--clr-primary-hover);
+  --color-primary-foreground: var(--clr-primary-foreground);
+
+  --color-secondary: var(--clr-secondary);
+  --color-secondary-hover: var(--clr-secondary-hover);
+  --color-secondary-foreground: var(--clr-secondary-foreground);
+
+  --color-accent: var(--clr-accent);
+  --color-accent-hover: var(--clr-accent-hover);
+  --color-accent-foreground: var(--clr-accent-foreground);
+
+  /* ── Semantic utilities ────────────────────────────────────────────
+   * text-success / bg-success         → positive state
+   * text-warning / bg-warning         → caution state
+   * text-error / bg-error             → failure / destructive state
+   * text-info / bg-info               → informational state
+   * text-{state}-foreground           → text on that state's background
+   * ──────────────────────────────────────────────────────────────── */
+  --color-success: var(--clr-success);
+  --color-success-foreground: var(--clr-success-foreground);
+  --color-warning: var(--clr-warning);
+  --color-warning-foreground: var(--clr-warning-foreground);
+  --color-error: var(--clr-error);
+  --color-error-hover: var(--clr-error-hover);
+  --color-error-foreground: var(--clr-error-foreground);
+  --color-info: var(--clr-info);
+  --color-info-foreground: var(--clr-info-foreground);
+
+  /* ── Surface utilities ─────────────────────────────────────────────
+   * bg-background                     → page-level background
+   * bg-surface                        → content areas, sidebars
+   * hover:bg-surface-hover            → interactive list/table rows
+   * bg-surface-raised                 → cards, modals, popovers
+   * ──────────────────────────────────────────────────────────────── */
+  --color-background: var(--clr-background);
+  --color-surface: var(--clr-surface);
+  --color-surface-hover: var(--clr-surface-hover);
+  --color-surface-raised: var(--clr-surface-raised);
+
+  /* ── Border utilities ──────────────────────────────────────────────
+   * border-border                     → default borders & dividers
+   * hover:border-border-hover         → borders on hover/focus
+   * ring-ring                         → keyboard focus ring color
+   * ──────────────────────────────────────────────────────────────── */
+  --color-border: var(--clr-border);
+  --color-border-hover: var(--clr-border-hover);
+  --color-ring: var(--clr-ring);
+
+  /* ── Text utilities ────────────────────────────────────────────────
+   * text-foreground                   → primary text (headings, body)
+   * text-foreground-muted             → secondary text (descriptions)
+   * text-foreground-subtle            → placeholders, disabled labels
+   * ──────────────────────────────────────────────────────────────── */
+  --color-foreground: var(--clr-foreground);
+  --color-foreground-muted: var(--clr-foreground-muted);
+  --color-foreground-subtle: var(--clr-foreground-subtle);
+
+  /* ── Misc utilities ────────────────────────────────────────────────
+   * bg-overlay                        → modal/dialog backdrop
+   * shadow-shadow                     → shadow color
+   * rounded-sm / md / lg / xl         → border radius scale
+   * ──────────────────────────────────────────────────────────────── */
+  --color-overlay: var(--clr-overlay);
+  --color-shadow: var(--clr-shadow);
+
+  --radius-sm: calc(var(--radius) - 0.25rem);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 0.25rem);
+  --radius-xl: calc(var(--radius) + 0.5rem);
+}

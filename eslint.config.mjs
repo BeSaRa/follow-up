@@ -26,7 +26,12 @@ export default [
             },
             {
               sourceTag: 'type:app',
-              onlyDependOnLibsWithTags: ['type:app', 'type:core', 'type:util'],
+              onlyDependOnLibsWithTags: [
+                'type:app',
+                'type:core',
+                'type:util',
+                'type:ui',
+              ],
             },
           ],
         },
