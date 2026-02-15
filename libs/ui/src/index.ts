@@ -12,3 +12,6 @@ export {
 
 export { UiBadge } from './lib/badge/badge'
 export type { BadgeVariant, BadgeSize } from './lib/badge/badge'
+
+export { UiSpinner } from './lib/spinner/spinner'
+export type { SpinnerSize } from './lib/spinner/spinner'

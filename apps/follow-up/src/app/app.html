@@ -171,5 +171,55 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Spinner
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Spinner</h2>
+
+    <!-- Sizes -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Sizes</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <div class="flex flex-col items-center gap-2">
+          <ui-spinner size="sm" />
+          <span class="text-xs text-foreground-muted">Small</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <ui-spinner size="md" />
+          <span class="text-xs text-foreground-muted">Medium</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <ui-spinner size="lg" />
+          <span class="text-xs text-foreground-muted">Large</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Color inheritance -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Color Inheritance</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <span class="text-primary"><ui-spinner size="sm" /></span>
+        <span class="text-secondary"><ui-spinner size="sm" /></span>
+        <span class="text-accent"><ui-spinner size="sm" /></span>
+        <span class="text-success"><ui-spinner size="sm" /></span>
+        <span class="text-error"><ui-spinner size="sm" /></span>
+        <span class="text-info"><ui-spinner size="sm" /></span>
+      </div>
+    </section>
+
+    <!-- In context -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">In Context</h3>
+      <ui-card>
+        <ui-card-content class="!pt-6">
+          <div class="flex items-center justify-center gap-3 py-8 text-foreground-muted">
+            <ui-spinner size="md" />
+            <span class="text-sm">Loading data...</span>
+          </div>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>

@@ -3,8 +3,8 @@
 | Status    | Date       |
 |-----------|------------|
 | Created   | 2026-02-15 |
-| Started   | —          |
-| Completed | —          |
+| Started   | 2026-02-15 |
+| Completed | 2026-02-15 |
 
 ---
 
@@ -14,8 +14,8 @@ Standalone loading spinner for full-page, section, or inline loading indicators.
 
 ## Deliverables
 
-- [ ] `UiSpinner` component
-- [ ] Sizes: sm, md, lg
-- [ ] Inherits color from parent via `currentColor`
-- [ ] Export from `@follow-up/ui`
-- [ ] Add to showcase page
+- [x] `UiSpinner` component
+- [x] Sizes: sm, md, lg
+- [x] Inherits color from parent via `currentColor`
+- [x] Export from `@follow-up/ui`
+- [x] Add to showcase page
