@@ -150,8 +150,8 @@ export class UiStepper {
     '[attr.hidden]': 'stepper.orientation() === "horizontal" && !isActive() || null',
   },
   template: `
-    @if (stepper.orientation() === 'vertical') {
-      <div class="flex gap-3">
+    <div [class]="isVertical() ? 'flex gap-3' : ''">
+      @if (isVertical()) {
         <div class="flex flex-col items-center">
           <button
             type="button"
@@ -176,7 +176,9 @@ export class UiStepper {
             <div class="w-px flex-1 bg-border my-1 min-h-4"></div>
           }
         </div>
-        <div class="flex-1 pb-4">
+      }
+      <div [class]="isVertical() ? 'flex-1 pb-4' : ''">
+        @if (isVertical()) {
           <button
             type="button"
             class="text-sm font-medium transition-colors focus-visible:outline-none"
@@ -189,18 +191,12 @@ export class UiStepper {
               <span class="text-xs text-foreground-muted ms-1">(Optional)</span>
             }
           </button>
-          @if (isActive()) {
-            <div class="mt-3">
-              <ng-content />
-            </div>
-          }
+        }
+        <div [class]="isVertical() ? 'mt-3' : ''">
+          <ng-content />
         </div>
       </div>
-    } @else {
-      @if (isActive()) {
-        <ng-content />
-      }
-    }
+    </div>
   `,
 })
 export class UiStep {
@@ -213,6 +209,7 @@ export class UiStep {
   readonly index = computed(() => this.stepper.indexOf(this))
   readonly isActive = computed(() => this.stepper.selectedIndex() === this.index())
   readonly isLast = computed(() => this.index() === this.stepper.stepsList().length - 1)
+  readonly isVertical = computed(() => this.stepper.orientation() === 'vertical')
 
   constructor() {
     this.stepper.register(this)
