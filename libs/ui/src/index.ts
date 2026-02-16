@@ -75,3 +75,6 @@ export {
   UiAutocompleteTrigger,
   UiAutocompleteOption,
 } from './lib/autocomplete/autocomplete'
+
+export { UiCheckbox } from './lib/checkbox/checkbox'
+export type { CheckboxSize, CheckboxLabelPosition } from './lib/checkbox/checkbox'

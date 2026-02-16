@@ -986,5 +986,72 @@
       </ui-autocomplete>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Checkbox
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Checkbox</h2>
+
+    <!-- Basic -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic</h3>
+      <div class="flex flex-col gap-4">
+        <ui-checkbox [(checked)]="agreeCheckbox">I agree to the terms and conditions</ui-checkbox>
+        <p class="text-sm text-foreground-muted">Checked: {{ agreeCheckbox() }}</p>
+      </div>
+    </section>
+
+    <!-- Sizes -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Sizes</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <ui-checkbox size="sm">Small</ui-checkbox>
+        <ui-checkbox size="md">Medium</ui-checkbox>
+      </div>
+    </section>
+
+    <!-- Disabled -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Disabled</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <ui-checkbox disabled>Disabled unchecked</ui-checkbox>
+        <ui-checkbox disabled [checked]="true">Disabled checked</ui-checkbox>
+      </div>
+    </section>
+
+    <!-- Indeterminate -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Indeterminate</h3>
+      <div class="flex flex-col gap-4">
+        <ui-checkbox [(indeterminate)]="indeterminateCheckbox">Select all items</ui-checkbox>
+        <p class="text-sm text-foreground-muted">Indeterminate: {{ indeterminateCheckbox() }}</p>
+      </div>
+    </section>
+
+    <!-- Label Positions -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Label Positions</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <ui-checkbox labelPosition="after">Label after</ui-checkbox>
+        <ui-checkbox labelPosition="before">Label before</ui-checkbox>
+      </div>
+    </section>
+
+    <!-- Reactive Form -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Reactive Form</h3>
+      <ui-card>
+        <ui-card-header>
+          <ui-card-title>Preferences</ui-card-title>
+          <ui-card-description>Manage your preferences with form controls.</ui-card-description>
+        </ui-card-header>
+        <ui-card-content>
+          <div class="space-y-4">
+            <ui-checkbox [formControl]="checkboxFormControl">Subscribe to newsletter</ui-checkbox>
+            <p class="text-sm text-foreground-muted">Value: {{ checkboxFormControl.value }}</p>
+          </div>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>
