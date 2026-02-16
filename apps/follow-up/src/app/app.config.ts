@@ -1,8 +1,11 @@
 import {
   ApplicationConfig,
+  EventEmitter,
   inject,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core'
+import { DOCUMENT } from '@angular/common'
+import { Directionality, Direction } from '@angular/cdk/bidi'
 import { provideRouter } from '@angular/router'
 import { appRoutes } from './app.routes'
 import {
@@ -20,6 +23,18 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(appRoutes),
+    {
+      provide: Directionality,
+      useFactory: () => {
+        const doc = inject(DOCUMENT)
+        const change = new EventEmitter<Direction>()
+        const instance = { change, ngOnDestroy: () => change.complete() }
+        Object.defineProperty(instance, 'value', {
+          get: () => (doc.documentElement.dir === 'rtl' ? 'rtl' : 'ltr') as Direction,
+        })
+        return instance as Directionality
+      },
+    },
     provideConfigService({
       API_VERSION_KEY: 'API_VERSION',
       INCLUDE_API_VERSION_TO_BASE_URL: true,
