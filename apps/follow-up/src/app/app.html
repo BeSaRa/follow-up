@@ -1217,5 +1217,109 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Avatar
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Avatar</h2>
+
+    <!-- With Image -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">With Image</h3>
+      <div class="flex flex-wrap items-center gap-4">
+        <ui-avatar src="https://i.pravatar.cc/150?u=alice" alt="Alice Johnson" />
+        <ui-avatar src="https://i.pravatar.cc/150?u=bob" alt="Bob Smith" />
+        <ui-avatar src="https://i.pravatar.cc/150?u=charlie" alt="Charlie Brown" />
+      </div>
+    </section>
+
+    <!-- Initials Fallback -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Initials Fallback</h3>
+      <div class="flex flex-wrap items-center gap-4">
+        <ui-avatar initials="AJ" />
+        <ui-avatar initials="BS" />
+        <ui-avatar initials="CP" />
+        <ui-avatar initials="D" />
+      </div>
+    </section>
+
+    <!-- Generic Icon Fallback -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Generic Icon Fallback</h3>
+      <div class="flex flex-wrap items-center gap-4">
+        <ui-avatar />
+        <ui-avatar size="sm" />
+        <ui-avatar size="lg" />
+      </div>
+    </section>
+
+    <!-- Sizes -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Sizes</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <div class="flex flex-col items-center gap-2">
+          <ui-avatar size="sm" initials="SM" />
+          <span class="text-xs text-foreground-muted">Small (32px)</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <ui-avatar size="md" initials="MD" />
+          <span class="text-xs text-foreground-muted">Medium (40px)</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <ui-avatar size="lg" initials="LG" />
+          <span class="text-xs text-foreground-muted">Large (56px)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Status Indicators -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Status Indicators</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <div class="flex flex-col items-center gap-2">
+          <ui-avatar src="https://i.pravatar.cc/150?u=online" status="online" />
+          <span class="text-xs text-foreground-muted">Online</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <ui-avatar src="https://i.pravatar.cc/150?u=offline" status="offline" />
+          <span class="text-xs text-foreground-muted">Offline</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <ui-avatar src="https://i.pravatar.cc/150?u=busy" status="busy" />
+          <span class="text-xs text-foreground-muted">Busy</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <ui-avatar src="https://i.pravatar.cc/150?u=away" status="away" />
+          <span class="text-xs text-foreground-muted">Away</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Status with Sizes -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Status with Sizes</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <ui-avatar size="sm" initials="SM" status="online" />
+        <ui-avatar size="md" initials="MD" status="busy" />
+        <ui-avatar size="lg" initials="LG" status="away" />
+      </div>
+    </section>
+
+    <!-- In Context -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">In Context</h3>
+      <ui-card>
+        <ui-card-content class="!pt-6">
+          <div class="flex items-center gap-3">
+            <ui-avatar src="https://i.pravatar.cc/150?u=alice" status="online" />
+            <div>
+              <p class="text-sm font-medium text-foreground">Alice Johnson</p>
+              <p class="text-xs text-foreground-muted">alice&#64;example.com</p>
+            </div>
+          </div>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>

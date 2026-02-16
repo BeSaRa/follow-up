@@ -84,3 +84,6 @@ export type { SelectSize } from './lib/select/select'
 
 export { UiRadioGroup, UiRadioButton } from './lib/radio/radio'
 export type { RadioSize, RadioLabelPosition, RadioOrientation } from './lib/radio/radio'
+
+export { UiAvatar } from './lib/avatar/avatar'
+export type { AvatarSize, AvatarStatus } from './lib/avatar/avatar'

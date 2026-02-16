@@ -3,8 +3,8 @@
 | Status    | Date       |
 |-----------|------------|
 | Created   | 2026-02-16 |
-| Started   | —          |
-| Completed | —          |
+| Started   | 2026-02-16 |
+| Completed | 2026-02-16 |
 
 ---
 
@@ -43,12 +43,12 @@ Sizes: sm (32px)  md (40px)  lg (56px)
 
 ## Deliverables
 
-- [ ] `UiAvatar` component in `libs/ui/src/lib/avatar/avatar.ts`
-- [ ] Image display with error fallback to initials
-- [ ] Initials fallback with background color
-- [ ] Generic user icon fallback when no src or initials
-- [ ] Size variants (`sm`, `md`, `lg`)
-- [ ] Optional status indicator dot (`online`, `offline`, `busy`, `away`)
-- [ ] RTL support (status dot uses logical positioning)
-- [ ] Export `UiAvatar`, `AvatarSize`, `AvatarStatus` from `@follow-up/ui`
-- [ ] Add to showcase page with image, initials, fallback icon, sizes, and status demos
+- [x] `UiAvatar` component in `libs/ui/src/lib/avatar/avatar.ts`
+- [x] Image display with error fallback to initials
+- [x] Initials fallback with background color
+- [x] Generic user icon fallback when no src or initials
+- [x] Size variants (`sm`, `md`, `lg`)
+- [x] Optional status indicator dot (`online`, `offline`, `busy`, `away`)
+- [x] RTL support (status dot uses logical positioning)
+- [x] Export `UiAvatar`, `AvatarSize`, `AvatarStatus` from `@follow-up/ui`
+- [x] Add to showcase page with image, initials, fallback icon, sizes, and status demos
