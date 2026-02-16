@@ -40,6 +40,9 @@ import {
   UiBreadcrumbItem,
   UiBreadcrumbSeparatorItem,
   UiSlideToggle,
+  UiAutocomplete,
+  UiAutocompleteTrigger,
+  UiAutocompleteOption,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -85,6 +88,9 @@ import { Endpoints } from './constants/endpoints'
     UiBreadcrumbItem,
     UiBreadcrumbSeparatorItem,
     UiSlideToggle,
+    UiAutocomplete,
+    UiAutocompleteTrigger,
+    UiAutocompleteOption,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -200,4 +206,28 @@ export class App {
   // Slide toggle demo
   readonly notificationsToggle = new FormControl(true)
   readonly marketingToggle = new FormControl(false)
+
+  // Autocomplete demo
+  readonly fruits = ['Apple', 'Apricot', 'Banana', 'Blueberry', 'Cherry', 'Grape', 'Lemon', 'Mango', 'Orange', 'Peach', 'Pear', 'Strawberry']
+  readonly fruitSearch = signal('')
+  readonly filteredFruits = computed(() => {
+    const q = this.fruitSearch().toLowerCase()
+    return q ? this.fruits.filter(f => f.toLowerCase().includes(q)) : this.fruits
+  })
+
+  readonly users = [
+    { id: 1, name: 'Alice Johnson' },
+    { id: 2, name: 'Bob Smith' },
+    { id: 3, name: 'Charlie Brown' },
+    { id: 4, name: 'Diana Prince' },
+    { id: 5, name: 'Edward Norton' },
+  ]
+  readonly userSearch = signal('')
+  readonly filteredUsers = computed(() => {
+    const q = this.userSearch().toLowerCase()
+    return q ? this.users.filter(u => u.name.toLowerCase().includes(q)) : this.users
+  })
+  readonly displayUserName = (user: { name: string }) => user.name
+
+  readonly selectedUserControl = new FormControl()
 }

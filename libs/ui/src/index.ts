@@ -69,3 +69,9 @@ export {
 
 export { UiSlideToggle } from './lib/slide-toggle/slide-toggle'
 export type { SlideToggleSize, SlideToggleLabelPosition } from './lib/slide-toggle/slide-toggle'
+
+export {
+  UiAutocomplete,
+  UiAutocompleteTrigger,
+  UiAutocompleteOption,
+} from './lib/autocomplete/autocomplete'
