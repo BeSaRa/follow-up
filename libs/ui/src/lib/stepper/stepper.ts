@@ -147,7 +147,7 @@ export class UiStepper {
   host: {
     '[class]': '"block"',
     '[attr.role]': '"tabpanel"',
-    '[attr.hidden]': '!isActive() || null',
+    '[attr.hidden]': 'stepper.orientation() === "horizontal" && !isActive() || null',
   },
   template: `
     @if (stepper.orientation() === 'vertical') {
