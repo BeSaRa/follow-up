@@ -161,9 +161,9 @@ export class UiChipInput implements ControlValueAccessor {
   private touched = false
 
   protected readonly hostClasses = computed(() => {
-    const base = 'flex flex-wrap items-center gap-1.5 rounded-md border border-border bg-surface px-3 py-2 transition-colors focus-within:ring-2 focus-within:ring-ring'
+    const base = 'flex flex-wrap items-center gap-1.5 rounded-md border bg-transparent px-3 py-2 transition-colors focus-within:outline-none focus-within:ring-2 focus-within:ring-ring'
 
-    return base + (this.disabled() ? ' opacity-50 pointer-events-none' : ' cursor-text')
+    return base + (this.disabled() ? ' border-border opacity-50 pointer-events-none' : ' border-border hover:border-border-hover cursor-text')
   })
 
   protected focusInput() {
