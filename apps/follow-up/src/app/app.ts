@@ -50,6 +50,8 @@ import {
   UiAvatar,
   UiDivider,
   UiProgressBar,
+  UiAccordion,
+  UiAccordionItem,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -105,6 +107,8 @@ import { Endpoints } from './constants/endpoints'
     UiAvatar,
     UiDivider,
     UiProgressBar,
+    UiAccordion,
+    UiAccordionItem,
   ],
   selector: 'app-root',
   templateUrl: './app.html',

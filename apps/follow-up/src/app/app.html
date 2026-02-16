@@ -1475,5 +1475,79 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Accordion
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Accordion</h2>
+
+    <!-- Single Expand (default) -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Single Expand</h3>
+      <ui-card>
+        <ui-card-content class="!pt-6">
+          <ui-accordion>
+            <ui-accordion-item>
+              <span accordionHeader>What is Angular?</span>
+              Angular is a platform and framework for building single-page client applications using HTML and TypeScript. It implements core and optional functionality as a set of TypeScript libraries.
+            </ui-accordion-item>
+            <ui-accordion-item>
+              <span accordionHeader>What are standalone components?</span>
+              Standalone components are self-contained building blocks that don't need to be declared in an NgModule. They simplify the authoring experience and reduce boilerplate.
+            </ui-accordion-item>
+            <ui-accordion-item>
+              <span accordionHeader>What are signals?</span>
+              Signals are a reactive primitive that track state changes and notify consumers. They enable fine-grained reactivity and are the foundation of Angular's modern state management.
+            </ui-accordion-item>
+          </ui-accordion>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
+    <!-- Multi Expand -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Multi Expand</h3>
+      <ui-card>
+        <ui-card-content class="!pt-6">
+          <ui-accordion multi>
+            <ui-accordion-item [expanded]="true">
+              <span accordionHeader>Section 1</span>
+              This section starts expanded. In multi mode, multiple sections can be open at the same time.
+            </ui-accordion-item>
+            <ui-accordion-item>
+              <span accordionHeader>Section 2</span>
+              Open this without closing Section 1. Multi mode allows independent toggling.
+            </ui-accordion-item>
+            <ui-accordion-item>
+              <span accordionHeader>Section 3</span>
+              All three sections can be open simultaneously in multi mode.
+            </ui-accordion-item>
+          </ui-accordion>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
+    <!-- Disabled Item -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Disabled Item</h3>
+      <ui-card>
+        <ui-card-content class="!pt-6">
+          <ui-accordion>
+            <ui-accordion-item>
+              <span accordionHeader>Enabled item</span>
+              This item can be toggled normally.
+            </ui-accordion-item>
+            <ui-accordion-item disabled>
+              <span accordionHeader>Disabled item</span>
+              This content cannot be reached.
+            </ui-accordion-item>
+            <ui-accordion-item>
+              <span accordionHeader>Another enabled item</span>
+              This item works as expected.
+            </ui-accordion-item>
+          </ui-accordion>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>

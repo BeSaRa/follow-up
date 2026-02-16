@@ -93,3 +93,5 @@ export type { DividerOrientation } from './lib/divider/divider'
 
 export { UiProgressBar } from './lib/progress-bar/progress-bar'
 export type { ProgressBarVariant, ProgressBarSize, ProgressBarMode } from './lib/progress-bar/progress-bar'
+
+export { UiAccordion, UiAccordionItem } from './lib/accordion/accordion'
