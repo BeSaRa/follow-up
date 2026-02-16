@@ -48,6 +48,7 @@ import {
   UiRadioGroup,
   UiRadioButton,
   UiAvatar,
+  UiDivider,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -101,6 +102,7 @@ import { Endpoints } from './constants/endpoints'
     UiRadioGroup,
     UiRadioButton,
     UiAvatar,
+    UiDivider,
   ],
   selector: 'app-root',
   templateUrl: './app.html',

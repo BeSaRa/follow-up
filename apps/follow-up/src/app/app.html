@@ -1321,5 +1321,78 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Divider
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Divider</h2>
+
+    <!-- Horizontal -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Horizontal</h3>
+      <div class="space-y-4">
+        <p class="text-sm text-foreground-muted">Content above the divider.</p>
+        <ui-divider />
+        <p class="text-sm text-foreground-muted">Content below the divider.</p>
+      </div>
+    </section>
+
+    <!-- With Label -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">With Label</h3>
+      <div class="space-y-4">
+        <ui-divider>OR</ui-divider>
+        <ui-divider>Continue with</ui-divider>
+        <ui-divider>Section 3</ui-divider>
+      </div>
+    </section>
+
+    <!-- Inset -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Inset</h3>
+      <div class="space-y-4">
+        <p class="text-sm text-foreground-muted">Content above the inset divider.</p>
+        <ui-divider inset />
+        <p class="text-sm text-foreground-muted">Content below the inset divider.</p>
+      </div>
+    </section>
+
+    <!-- Vertical -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Vertical</h3>
+      <div class="flex items-center gap-4 h-8">
+        <span class="text-sm text-foreground">Home</span>
+        <ui-divider orientation="vertical" />
+        <span class="text-sm text-foreground">About</span>
+        <ui-divider orientation="vertical" />
+        <span class="text-sm text-foreground">Contact</span>
+      </div>
+    </section>
+
+    <!-- In Context -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">In Context</h3>
+      <ui-card>
+        <ui-card-content class="!pt-6">
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <ui-avatar src="https://i.pravatar.cc/150?u=alice" size="sm" />
+              <div>
+                <p class="text-sm font-medium text-foreground">Alice Johnson</p>
+                <p class="text-xs text-foreground-muted">Admin</p>
+              </div>
+            </div>
+            <ui-divider />
+            <div class="flex items-center gap-3">
+              <ui-avatar src="https://i.pravatar.cc/150?u=bob" size="sm" />
+              <div>
+                <p class="text-sm font-medium text-foreground">Bob Smith</p>
+                <p class="text-xs text-foreground-muted">Editor</p>
+              </div>
+            </div>
+          </div>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>

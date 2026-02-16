@@ -3,8 +3,8 @@
 | Status    | Date       |
 |-----------|------------|
 | Created   | 2026-02-16 |
-| Started   | —          |
-| Completed | —          |
+| Started   | 2026-02-16 |
+| Completed | 2026-02-16 |
 
 ---
 
@@ -39,11 +39,11 @@ Inset:                                            │
 
 ## Deliverables
 
-- [ ] `UiDivider` component in `libs/ui/src/lib/divider/divider.ts`
-- [ ] Horizontal and vertical orientations
-- [ ] Optional text label (content projection) with split-line styling
-- [ ] Inset variant (indented start edge)
-- [ ] `role="separator"` with `aria-orientation`
-- [ ] RTL support (logical properties for inset)
-- [ ] Export `UiDivider`, `DividerOrientation` from `@follow-up/ui`
-- [ ] Add to showcase page with horizontal, vertical, labeled, and inset demos
+- [x] `UiDivider` component in `libs/ui/src/lib/divider/divider.ts`
+- [x] Horizontal and vertical orientations
+- [x] Optional text label (content projection) with split-line styling
+- [x] Inset variant (indented start edge)
+- [x] `role="separator"` with `aria-orientation`
+- [x] RTL support (logical properties for inset)
+- [x] Export `UiDivider`, `DividerOrientation` from `@follow-up/ui`
+- [x] Add to showcase page with horizontal, vertical, labeled, and inset demos

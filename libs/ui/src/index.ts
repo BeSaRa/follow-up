@@ -87,3 +87,6 @@ export type { RadioSize, RadioLabelPosition, RadioOrientation } from './lib/radi
 
 export { UiAvatar } from './lib/avatar/avatar'
 export type { AvatarSize, AvatarStatus } from './lib/avatar/avatar'
+
+export { UiDivider } from './lib/divider/divider'
+export type { DividerOrientation } from './lib/divider/divider'
