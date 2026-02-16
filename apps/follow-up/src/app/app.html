@@ -1958,5 +1958,75 @@
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Popover
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Popover</h2>
+
+    <!-- Basic -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic</h3>
+      <button uiButton variant="outline" [uiPopoverTrigger]="basicPopover">Info</button>
+      <ui-popover #basicPopover>
+        <div class="p-4 space-y-2">
+          <h4 class="text-sm font-semibold text-foreground">Details</h4>
+          <p class="text-sm text-foreground-muted">
+            This is a popover with rich content. Unlike tooltips, popovers support interactive elements.
+          </p>
+        </div>
+      </ui-popover>
+    </section>
+
+    <!-- With close button -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">With Close Button</h3>
+      <button uiButton variant="destructive" [uiPopoverTrigger]="confirmPopover">Delete</button>
+      <ui-popover #confirmPopover position="below-end">
+        <div class="p-4 space-y-3">
+          <p class="text-sm text-foreground">Are you sure you want to delete this item?</p>
+          <div class="flex gap-2 justify-end">
+            <button uiButton variant="ghost" size="sm" uiPopoverClose>Cancel</button>
+            <button uiButton variant="destructive" size="sm" uiPopoverClose>Delete</button>
+          </div>
+        </div>
+      </ui-popover>
+    </section>
+
+    <!-- Positions -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Positions</h3>
+      <div class="flex flex-wrap gap-3">
+        <button uiButton variant="outline" [uiPopoverTrigger]="popAbove">Above</button>
+        <ui-popover #popAbove position="above">
+          <div class="p-3 text-sm text-foreground">Position: above</div>
+        </ui-popover>
+
+        <button uiButton variant="outline" [uiPopoverTrigger]="popBelow">Below</button>
+        <ui-popover #popBelow position="below">
+          <div class="p-3 text-sm text-foreground">Position: below</div>
+        </ui-popover>
+
+        <button uiButton variant="outline" [uiPopoverTrigger]="popStart">Start</button>
+        <ui-popover #popStart position="start">
+          <div class="p-3 text-sm text-foreground">Position: start</div>
+        </ui-popover>
+
+        <button uiButton variant="outline" [uiPopoverTrigger]="popEnd">End</button>
+        <ui-popover #popEnd position="end">
+          <div class="p-3 text-sm text-foreground">Position: end</div>
+        </ui-popover>
+
+        <button uiButton variant="outline" [uiPopoverTrigger]="popBelowStart">Below Start</button>
+        <ui-popover #popBelowStart position="below-start">
+          <div class="p-3 text-sm text-foreground">Position: below-start</div>
+        </ui-popover>
+
+        <button uiButton variant="outline" [uiPopoverTrigger]="popBelowEnd">Below End</button>
+        <ui-popover #popBelowEnd position="below-end">
+          <div class="p-3 text-sm text-foreground">Position: below-end</div>
+        </ui-popover>
+      </div>
+    </section>
+
   </div>
 </div>

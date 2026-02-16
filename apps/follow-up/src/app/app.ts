@@ -63,6 +63,9 @@ import {
   UiMenuItem,
   UiMenuTrigger,
   UiSubMenuTrigger,
+  UiPopover,
+  UiPopoverTrigger,
+  UiPopoverClose,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent, ToastPosition } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -130,6 +133,9 @@ import { Endpoints } from './constants/endpoints'
     UiMenuItem,
     UiMenuTrigger,
     UiSubMenuTrigger,
+    UiPopover,
+    UiPopoverTrigger,
+    UiPopoverClose,
   ],
   selector: 'app-root',
   templateUrl: './app.html',

@@ -117,3 +117,10 @@ export {
   UiSubMenuTrigger,
 } from './lib/menu/menu'
 export type { MenuPosition } from './lib/menu/menu'
+
+export {
+  UiPopover,
+  UiPopoverTrigger,
+  UiPopoverClose,
+} from './lib/popover/popover'
+export type { PopoverPosition } from './lib/popover/popover'

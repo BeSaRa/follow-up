@@ -3,8 +3,8 @@
 | Status    | Date       |
 |-----------|------------|
 | Created   | 2026-02-16 |
-| Started   | —          |
-| Completed | —          |
+| Started   | 2026-02-16 |
+| Completed | 2026-02-16 |
 
 ---
 
@@ -143,14 +143,14 @@ Export from `libs/ui/src/index.ts`.
 
 ## Deliverables
 
-- [ ] Create `UiPopover` component with CDK Overlay positioning and 8-position support
-- [ ] Create `UiPopoverTrigger` directive for click-based toggle
-- [ ] Create `UiPopoverClose` directive for closing from within the popover
-- [ ] Implement focus management (move to content on open, restore on close)
-- [ ] Implement close on outside click, Escape, and Tab-out
-- [ ] Add entry animation (scale + fade)
-- [ ] Add ARIA attributes (`role="dialog"`, `aria-haspopup`, `aria-expanded`, `aria-controls`)
-- [ ] Add `opened` and `closed` outputs
-- [ ] Write unit tests
-- [ ] Export all public APIs from `libs/ui/src/index.ts`
-- [ ] Add popover demo section to the showcase app (`app.ts` / `app.html`)
+- [x] Create `UiPopover` component with CDK Overlay positioning and 8-position support
+- [x] Create `UiPopoverTrigger` directive for click-based toggle
+- [x] Create `UiPopoverClose` directive for closing from within the popover
+- [x] Implement focus management (move to content on open, restore on close)
+- [x] Implement close on outside click, Escape, and Tab-out
+- [x] Add entry animation (scale + fade)
+- [x] Add ARIA attributes (`role="dialog"`, `aria-haspopup`, `aria-expanded`, `aria-controls`)
+- [x] Add `opened` and `closed` outputs
+- [x] Write unit tests
+- [x] Export all public APIs from `libs/ui/src/index.ts`
+- [x] Add popover demo section to the showcase app (`app.ts` / `app.html`)
