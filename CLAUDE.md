@@ -98,7 +98,7 @@ When modifying the `core` library, add a logger statement in `libs/core/src/inde
 
 ## Plan Workflow
 
-Plans are tracked locally in `docs/` (git-ignored). Each plan is a numbered markdown file that moves between folders as work progresses.
+Plans are tracked in `docs/`. Each plan is a numbered markdown file that moves between folders as work progresses.
 
 ### Folder structure
 
