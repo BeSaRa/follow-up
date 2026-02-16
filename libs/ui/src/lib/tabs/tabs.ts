@@ -2,10 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  contentChildren,
   input,
   model,
-  signal,
 } from '@angular/core'
 
 @Component({

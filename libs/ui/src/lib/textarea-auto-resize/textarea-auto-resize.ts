@@ -33,12 +33,12 @@ export class UiTextareaAutoResize {
       const desc = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value')
       if (desc?.set) {
         const originalSet = desc.set
-        const self = this
+        const resize = () => this.resize()
         Object.defineProperty(this.el, 'value', {
           ...desc,
           set(val: string) {
             originalSet.call(this, val)
-            self.resize()
+            resize()
           },
         })
       }
