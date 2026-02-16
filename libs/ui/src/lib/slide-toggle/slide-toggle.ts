@@ -57,8 +57,12 @@ export class UiSlideToggle implements ControlValueAccessor {
   readonly labelPosition = input<SlideToggleLabelPosition>('after')
 
   private readonly cvaTouched = signal(false)
-  private onChange: (value: boolean) => void = () => {}
-  private onTouched: () => void = () => {}
+  private onChange: (value: boolean) => void = () => {
+    /* empty */
+  }
+  private onTouched: () => void = () => {
+    /* empty */
+  }
 
   protected readonly trackClasses = computed(() => {
     const isOn = this.checked()
