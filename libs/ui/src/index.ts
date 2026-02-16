@@ -124,3 +124,22 @@ export {
   UiPopoverClose,
 } from './lib/popover/popover'
 export type { PopoverPosition } from './lib/popover/popover'
+
+export { UiCalendar } from './lib/date-picker/calendar'
+export type { CalendarView } from './lib/date-picker/calendar'
+
+export {
+  UiDatePicker,
+  UiDatePickerInput,
+  UiDatePickerToggle,
+} from './lib/date-picker/date-picker'
+
+export {
+  UiDateRangePicker,
+  UiDateRangeStartInput,
+  UiDateRangeEndInput,
+} from './lib/date-picker/date-range-picker'
+export type { DateRange } from './lib/date-picker/date-range-picker'
+
+export { formatDate, parseDate } from './lib/date-picker/date-utils'
+export type { CalendarCell } from './lib/date-picker/date-utils'

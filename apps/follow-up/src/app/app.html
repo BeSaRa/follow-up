@@ -2028,5 +2028,59 @@
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Date Picker
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Date Picker</h2>
+
+    <!-- Single Date Picker -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Single Date Picker</h3>
+      <p class="text-sm text-foreground-muted">Popup calendar attached to an input with reactive form support.</p>
+      <div class="flex flex-col gap-4">
+        <ui-date-picker [min]="minDate" [max]="maxDate" [formControl]="datePickerControl">
+          <input uiDatePickerInput placeholder="MM/DD/YYYY" />
+          <ui-date-picker-toggle />
+        </ui-date-picker>
+        <p class="text-sm text-foreground-muted">
+          Selected: {{ datePickerControl.value?.toLocaleDateString() ?? 'None' }}
+        </p>
+      </div>
+    </section>
+
+    <!-- Date Range Picker -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Date Range Picker</h3>
+      <p class="text-sm text-foreground-muted">Pick a start and end date. First click sets the start, second click sets the end.</p>
+      <div class="flex flex-col gap-4">
+        <ui-date-range-picker [min]="minDate" [max]="maxDate" [formControl]="dateRangeControl">
+          <input uiDateRangeStart placeholder="Start date" />
+          <input uiDateRangeEnd placeholder="End date" />
+          <ui-date-picker-toggle />
+        </ui-date-range-picker>
+        <p class="text-sm text-foreground-muted">
+          Range: {{ dateRangeControl.value?.start?.toLocaleDateString() ?? '—' }}
+          to {{ dateRangeControl.value?.end?.toLocaleDateString() ?? '—' }}
+        </p>
+      </div>
+    </section>
+
+    <!-- Inline Calendar -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Inline Calendar</h3>
+      <p class="text-sm text-foreground-muted">Standalone calendar rendered directly in the page.</p>
+      <div class="flex flex-col gap-4">
+        <div class="w-72 rounded-md border border-border bg-surface-raised p-3 shadow-sm">
+          <ui-calendar
+            [selected]="inlineSelectedDate()"
+            (selectedChange)="inlineSelectedDate.set($event)"
+          />
+        </div>
+        <p class="text-sm text-foreground-muted">
+          Selected: {{ inlineSelectedDate()?.toLocaleDateString() ?? 'None' }}
+        </p>
+      </div>
+    </section>
+
   </div>
 </div>

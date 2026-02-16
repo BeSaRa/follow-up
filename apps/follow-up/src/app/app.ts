@@ -66,8 +66,15 @@ import {
   UiPopover,
   UiPopoverTrigger,
   UiPopoverClose,
+  UiCalendar,
+  UiDatePicker,
+  UiDatePickerInput,
+  UiDatePickerToggle,
+  UiDateRangePicker,
+  UiDateRangeStartInput,
+  UiDateRangeEndInput,
 } from '@follow-up/ui'
-import type { SortDirection, PageChangeEvent, ToastPosition } from '@follow-up/ui'
+import type { SortDirection, PageChangeEvent, ToastPosition, DateRange } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
 import { Endpoints } from './constants/endpoints'
 
@@ -136,6 +143,13 @@ import { Endpoints } from './constants/endpoints'
     UiPopover,
     UiPopoverTrigger,
     UiPopoverClose,
+    UiCalendar,
+    UiDatePicker,
+    UiDatePickerInput,
+    UiDatePickerToggle,
+    UiDateRangePicker,
+    UiDateRangeStartInput,
+    UiDateRangeEndInput,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -303,6 +317,13 @@ export class App {
 
   // Textarea auto-resize demo
   readonly autoResizeControl = new FormControl('')
+
+  // Date picker demo
+  readonly datePickerControl = new FormControl<Date | null>(null)
+  readonly dateRangeControl = new FormControl<DateRange | null>(null)
+  readonly minDate = new Date(2020, 0, 1)
+  readonly maxDate = new Date(2030, 11, 31)
+  readonly inlineSelectedDate = signal<Date | null>(null)
 
   // Chip demo
   readonly chipTags = signal(['Angular', 'TypeScript', 'RxJS', 'Signals', 'Vite'])
