@@ -45,6 +45,12 @@ describe('UiPopover', () => {
     return overlayContainerEl.querySelector('[role="dialog"]')
   }
 
+  function getPanelOrFail(): HTMLElement {
+    const panel = getPanel()
+    expect(panel).toBeTruthy()
+    return panel as HTMLElement
+  }
+
   function clickTrigger(fixture: ComponentFixture<unknown>) {
     const btn = fixture.nativeElement.querySelector('button') as HTMLElement
     btn.click()
@@ -86,7 +92,7 @@ describe('UiPopover', () => {
       clickTrigger(fixture)
       expect(getPanel()).toBeTruthy()
 
-      const panel = getPanel()!
+      const panel = getPanelOrFail()
       panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
       fixture.detectChanges()
 
@@ -98,7 +104,7 @@ describe('UiPopover', () => {
       clickTrigger(fixture)
       expect(getPanel()).toBeTruthy()
 
-      const panel = getPanel()!
+      const panel = getPanelOrFail()
       panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }))
       fixture.detectChanges()
 
@@ -180,7 +186,7 @@ describe('UiPopover', () => {
     it('should set aria-controls on trigger pointing to panel id', () => {
       clickTrigger(fixture)
       const btn = getTriggerButton(fixture)
-      const panel = getPanel()!
+      const panel = getPanelOrFail()
       expect(btn.getAttribute('aria-controls')).toBe(panel.id)
     })
 
