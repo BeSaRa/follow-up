@@ -2082,5 +2082,94 @@
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Drawer
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Drawer</h2>
+
+    <!-- Start position (default) -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Start Position</h3>
+      <button uiButton variant="outline" (click)="drawerStartOpen.set(true)">Open Start Drawer</button>
+      <ui-drawer [(open)]="drawerStartOpen" ariaLabel="Navigation drawer">
+        <ui-drawer-header><h3 class="text-base font-semibold text-foreground">Navigation</h3></ui-drawer-header>
+        <ui-drawer-content>
+          <nav class="flex flex-col gap-1">
+            <a class="px-3 py-2 text-sm rounded-md hover:bg-surface-hover cursor-pointer text-foreground">Home</a>
+            <a class="px-3 py-2 text-sm rounded-md hover:bg-surface-hover cursor-pointer text-foreground">Dashboard</a>
+            <a class="px-3 py-2 text-sm rounded-md hover:bg-surface-hover cursor-pointer text-foreground">Projects</a>
+            <a class="px-3 py-2 text-sm rounded-md hover:bg-surface-hover cursor-pointer text-foreground">Settings</a>
+          </nav>
+        </ui-drawer-content>
+      </ui-drawer>
+    </section>
+
+    <!-- End position with footer -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">End Position with Footer</h3>
+      <button uiButton variant="outline" (click)="drawerEndOpen.set(true)">Open End Drawer</button>
+      <ui-drawer [(open)]="drawerEndOpen" position="end" ariaLabel="Detail panel">
+        <ui-drawer-header><h3 class="text-base font-semibold text-foreground">Item Details</h3></ui-drawer-header>
+        <ui-drawer-content>
+          <div class="space-y-4">
+            <p class="text-sm text-foreground-muted">Review the item details below and make any changes as needed.</p>
+            <ui-form-field>
+              <label uiLabel for="drawer-name">Name</label>
+              <input uiInput id="drawer-name" placeholder="Enter name" />
+            </ui-form-field>
+            <ui-form-field>
+              <label uiLabel for="drawer-desc">Description</label>
+              <textarea uiInput id="drawer-desc" placeholder="Enter description" rows="3"></textarea>
+            </ui-form-field>
+          </div>
+        </ui-drawer-content>
+        <ui-drawer-footer>
+          <div class="flex gap-2 justify-end">
+            <button uiButton variant="ghost" uiDrawerClose>Cancel</button>
+            <button uiButton variant="primary" uiDrawerClose>Save</button>
+          </div>
+        </ui-drawer-footer>
+      </ui-drawer>
+    </section>
+
+    <!-- Push mode -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Push Mode</h3>
+      <p class="text-sm text-foreground-muted">The drawer pushes the content aside instead of overlaying it.</p>
+      <ui-drawer-container class="h-64 rounded-lg border border-border">
+        <ui-drawer [(open)]="drawerPushOpen" mode="push" ariaLabel="Push drawer">
+          <ui-drawer-header><h3 class="text-base font-semibold text-foreground">Sidebar</h3></ui-drawer-header>
+          <ui-drawer-content>
+            <nav class="flex flex-col gap-1">
+              <a class="px-3 py-2 text-sm rounded-md hover:bg-surface-hover cursor-pointer text-foreground">Inbox</a>
+              <a class="px-3 py-2 text-sm rounded-md hover:bg-surface-hover cursor-pointer text-foreground">Drafts</a>
+              <a class="px-3 py-2 text-sm rounded-md hover:bg-surface-hover cursor-pointer text-foreground">Sent</a>
+            </nav>
+          </ui-drawer-content>
+        </ui-drawer>
+        <div class="p-4">
+          <button uiButton variant="outline" size="sm" (click)="drawerPushOpen.set(!drawerPushOpen())">Toggle Drawer</button>
+          <p class="mt-3 text-sm text-foreground-muted">This content shifts when the drawer opens.</p>
+        </div>
+      </ui-drawer-container>
+    </section>
+
+    <!-- No backdrop -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">No Backdrop</h3>
+      <p class="text-sm text-foreground-muted">The drawer overlays content without a backdrop. Close it via the header X or Escape.</p>
+      <button uiButton variant="outline" (click)="drawerNoBackdropOpen.set(true)">Open Without Backdrop</button>
+      <ui-drawer [(open)]="drawerNoBackdropOpen" [hasBackdrop]="false" ariaLabel="Filter panel">
+        <ui-drawer-header><h3 class="text-base font-semibold text-foreground">Filters</h3></ui-drawer-header>
+        <ui-drawer-content>
+          <div class="space-y-4">
+            <ui-checkbox>Active only</ui-checkbox>
+            <ui-checkbox>With attachments</ui-checkbox>
+            <ui-checkbox>Unread</ui-checkbox>
+          </div>
+        </ui-drawer-content>
+      </ui-drawer>
+    </section>
+
   </div>
 </div>

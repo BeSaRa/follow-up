@@ -73,6 +73,12 @@ import {
   UiDateRangePicker,
   UiDateRangeStartInput,
   UiDateRangeEndInput,
+  UiDrawer,
+  UiDrawerContainer,
+  UiDrawerHeader,
+  UiDrawerContent,
+  UiDrawerFooter,
+  UiDrawerClose,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent, ToastPosition, DateRange } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -150,6 +156,12 @@ import { Endpoints } from './constants/endpoints'
     UiDateRangePicker,
     UiDateRangeStartInput,
     UiDateRangeEndInput,
+    UiDrawer,
+    UiDrawerContainer,
+    UiDrawerHeader,
+    UiDrawerContent,
+    UiDrawerFooter,
+    UiDrawerClose,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -324,6 +336,12 @@ export class App {
   readonly minDate = new Date(2020, 0, 1)
   readonly maxDate = new Date(2030, 11, 31)
   readonly inlineSelectedDate = signal<Date | null>(null)
+
+  // Drawer demo
+  readonly drawerStartOpen = signal(false)
+  readonly drawerEndOpen = signal(false)
+  readonly drawerPushOpen = signal(false)
+  readonly drawerNoBackdropOpen = signal(false)
 
   // Chip demo
   readonly chipTags = signal(['Angular', 'TypeScript', 'RxJS', 'Signals', 'Vite'])
