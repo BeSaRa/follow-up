@@ -3,8 +3,8 @@
 | Status    | Date       |
 |-----------|------------|
 | Created   | 2026-02-16 |
-| Started   | —          |
-| Completed | —          |
+| Started   | 2026-02-17 |
+| Completed | 2026-02-17 |
 
 ---
 
@@ -146,14 +146,14 @@ Export from `libs/ui/src/index.ts`.
 
 ## Deliverables
 
-- [ ] Create `UiTree` component built on `CdkTree`
-- [ ] Create `UiTreeNode` component with expand/collapse toggle
-- [ ] Create `UiTreeNodeToggle` directive
-- [ ] Create `UiTreeNodePadding` directive for depth-based indentation
-- [ ] Implement `single` and `multi` selection modes with `selectionChange` output
-- [ ] Implement full keyboard navigation (Arrow keys, Enter, Space, Home, End, asterisk)
-- [ ] Add ARIA attributes (`role="tree"`, `role="treeitem"`, `aria-expanded`, `aria-selected`, etc.)
-- [ ] Support lazy-loaded children via `Observable<T[]>` in `childrenAccessor`
-- [ ] Write unit tests
-- [ ] Export all public APIs from `libs/ui/src/index.ts`
-- [ ] Add tree view demo section to the showcase app
+- [x] Create `UiTree` component built on `CdkTree`
+- [x] Create `UiTreeNode` component with expand/collapse toggle
+- [x] Create `UiTreeNodeToggle` directive
+- [x] Create `UiTreeNodePadding` directive for depth-based indentation
+- [x] Implement `single` and `multi` selection modes with `selectionChange` output
+- [x] Implement full keyboard navigation (Arrow keys, Enter, Space, Home, End, asterisk)
+- [x] Add ARIA attributes (`role="tree"`, `role="treeitem"`, `aria-expanded`, `aria-selected`, etc.)
+- [x] Support lazy-loaded children via `Observable<T[]>` in `childrenAccessor`
+- [x] Write unit tests
+- [x] Export all public APIs from `libs/ui/src/index.ts`
+- [x] Add tree view demo section to the showcase app

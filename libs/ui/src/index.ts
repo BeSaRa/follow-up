@@ -161,3 +161,12 @@ export {
   UiNavbarActions,
   UiNavbarLink,
 } from './lib/navbar/navbar'
+
+export {
+  UiTree,
+  UiTreeNode,
+  UiTreeNodeToggle,
+  UiTreeNodePadding,
+  UiTreeNodeOutlet,
+} from './lib/tree/tree'
+export type { TreeSelectionMode } from './lib/tree/tree'

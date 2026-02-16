@@ -2238,5 +2238,98 @@
       <p class="text-sm text-foreground-muted">No shadow applied when elevated is false.</p>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Tree View
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Tree View</h2>
+
+    <!-- Basic Tree -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic Tree</h3>
+      <div class="rounded-lg border border-border p-4">
+        <ui-tree #basicTree [dataSource]="fileTree" [childrenAccessor]="getFileChildren">
+          <ui-tree-node *cdkTreeNodeDef="let node" uiTreeNodePadding>
+            <button
+              uiTreeNodeToggle
+              [style.visibility]="basicTree.isNodeExpandable(node) ? 'visible' : 'hidden'"
+            >
+              <svg
+                class="size-4 text-foreground-muted transition-transform duration-200"
+                [class.rotate-90]="basicTree.isExpanded(node)"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+            </button>
+            <span class="text-foreground">{{ node.name }}</span>
+          </ui-tree-node>
+        </ui-tree>
+      </div>
+      <p class="text-sm text-foreground-muted">Click the chevron to expand/collapse. Use arrow keys to navigate.</p>
+    </section>
+
+    <!-- Single Selection -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Single Selection</h3>
+      <div class="rounded-lg border border-border p-4">
+        <ui-tree #singleTree [dataSource]="fileTree" [childrenAccessor]="getFileChildren" selectionMode="single" (selectionChange)="onTreeSelect($event)">
+          <ui-tree-node *cdkTreeNodeDef="let node" uiTreeNodePadding>
+            <button
+              uiTreeNodeToggle
+              [style.visibility]="singleTree.isNodeExpandable(node) ? 'visible' : 'hidden'"
+            >
+              <svg
+                class="size-4 text-foreground-muted transition-transform duration-200"
+                [class.rotate-90]="singleTree.isExpanded(node)"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+            </button>
+            <span class="text-foreground">{{ node.name }}</span>
+          </ui-tree-node>
+        </ui-tree>
+        <p class="mt-2 text-sm text-foreground-muted">
+          Selected: {{ treeSelected()?.name ?? 'None' }}
+        </p>
+      </div>
+    </section>
+
+    <!-- Multi Selection -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Multi Selection</h3>
+      <div class="rounded-lg border border-border p-4">
+        <ui-tree #multiTree [dataSource]="fileTree" [childrenAccessor]="getFileChildren" selectionMode="multi" (selectionChange)="onTreeMultiSelect($event)">
+          <ui-tree-node *cdkTreeNodeDef="let node" uiTreeNodePadding>
+            <button
+              uiTreeNodeToggle
+              [style.visibility]="multiTree.isNodeExpandable(node) ? 'visible' : 'hidden'"
+            >
+              <svg
+                class="size-4 text-foreground-muted transition-transform duration-200"
+                [class.rotate-90]="multiTree.isExpanded(node)"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+            </button>
+            <span class="text-foreground">{{ node.name }}</span>
+          </ui-tree-node>
+        </ui-tree>
+        <p class="mt-2 text-sm text-foreground-muted">
+          Selected: {{ treeMultiSelected().length }} items
+        </p>
+      </div>
+    </section>
+
   </div>
 </div>

@@ -84,10 +84,20 @@ import {
   UiNavbarNav,
   UiNavbarActions,
   UiNavbarLink,
+  UiTree,
+  UiTreeNode,
+  UiTreeNodeToggle,
+  UiTreeNodePadding,
 } from '@follow-up/ui'
+import { CdkTreeNodeDef } from '@angular/cdk/tree'
 import type { SortDirection, PageChangeEvent, ToastPosition, DateRange } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
 import { Endpoints } from './constants/endpoints'
+
+interface FileNode {
+  name: string
+  children?: FileNode[]
+}
 
 @Component({
   imports: [
@@ -172,6 +182,11 @@ import { Endpoints } from './constants/endpoints'
     UiNavbarNav,
     UiNavbarActions,
     UiNavbarLink,
+    UiTree,
+    UiTreeNode,
+    UiTreeNodeToggle,
+    UiTreeNodePadding,
+    CdkTreeNodeDef,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -412,5 +427,53 @@ export class App {
 
   dismissAllToasts() {
     this.toastService.dismissAll()
+  }
+
+  // Tree demo
+  readonly fileTree: FileNode[] = [
+    {
+      name: 'src',
+      children: [
+        {
+          name: 'app',
+          children: [
+            { name: 'app.ts' },
+            { name: 'app.html' },
+            { name: 'app.css' },
+          ],
+        },
+        {
+          name: 'assets',
+          children: [
+            { name: 'logo.svg' },
+          ],
+        },
+        { name: 'main.ts' },
+        { name: 'styles.css' },
+      ],
+    },
+    {
+      name: 'node_modules',
+      children: [
+        { name: '@angular', children: [] },
+        { name: 'rxjs', children: [] },
+      ],
+    },
+    { name: 'package.json' },
+    { name: 'tsconfig.json' },
+    { name: 'README.md' },
+  ]
+
+  readonly getFileChildren = (node: FileNode): FileNode[] => node.children ?? []
+
+  readonly treeSelected = signal<FileNode | null>(null)
+  readonly treeMultiSelected = signal<FileNode[]>([])
+
+  onTreeSelect(nodes: FileNode[]) {
+    this.treeSelected.set(nodes[0] ?? null)
+  }
+
+  onTreeMultiSelect(nodes: FileNode[]) {
+    this.treeMultiSelected.set(nodes)
   }
 }
