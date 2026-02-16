@@ -78,3 +78,6 @@ export {
 
 export { UiCheckbox } from './lib/checkbox/checkbox'
 export type { CheckboxSize, CheckboxLabelPosition } from './lib/checkbox/checkbox'
+
+export { UiSelect, UiSelectOption } from './lib/select/select'
+export type { SelectSize } from './lib/select/select'

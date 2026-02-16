@@ -1053,5 +1053,78 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Select
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Select</h2>
+
+    <!-- Basic -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic</h3>
+      <div class="flex flex-col gap-4">
+        <ui-select [(value)]="selectedRole" placeholder="Choose a role" class="w-64">
+          <ui-select-option value="admin">Admin</ui-select-option>
+          <ui-select-option value="editor">Editor</ui-select-option>
+          <ui-select-option value="viewer">Viewer</ui-select-option>
+        </ui-select>
+        <p class="text-sm text-foreground-muted">Selected: {{ selectedRole() ?? 'none' }}</p>
+      </div>
+    </section>
+
+    <!-- With Disabled Options -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">With Disabled Options</h3>
+      <ui-select [(value)]="selectedStatus" placeholder="Choose status" class="w-64">
+        <ui-select-option value="active">Active</ui-select-option>
+        <ui-select-option value="inactive">Inactive</ui-select-option>
+        <ui-select-option value="archived" disabled>Archived</ui-select-option>
+      </ui-select>
+    </section>
+
+    <!-- Sizes -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Sizes</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <ui-select size="sm" placeholder="Small" class="w-48">
+          <ui-select-option value="a">Option A</ui-select-option>
+          <ui-select-option value="b">Option B</ui-select-option>
+        </ui-select>
+        <ui-select size="md" placeholder="Medium" class="w-48">
+          <ui-select-option value="a">Option A</ui-select-option>
+          <ui-select-option value="b">Option B</ui-select-option>
+        </ui-select>
+      </div>
+    </section>
+
+    <!-- Disabled -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Disabled</h3>
+      <ui-select disabled placeholder="Can't select" class="w-64">
+        <ui-select-option value="a">Option A</ui-select-option>
+        <ui-select-option value="b">Option B</ui-select-option>
+      </ui-select>
+    </section>
+
+    <!-- Reactive Form -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Reactive Form</h3>
+      <ui-card>
+        <ui-card-header>
+          <ui-card-title>User Role</ui-card-title>
+          <ui-card-description>Select a role using a form control.</ui-card-description>
+        </ui-card-header>
+        <ui-card-content>
+          <div class="space-y-4">
+            <ui-select [formControl]="selectFormControl" class="w-64">
+              <ui-select-option value="admin">Admin</ui-select-option>
+              <ui-select-option value="editor">Editor</ui-select-option>
+              <ui-select-option value="viewer">Viewer</ui-select-option>
+            </ui-select>
+            <p class="text-sm text-foreground-muted">Value: {{ selectFormControl.value }}</p>
+          </div>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>

@@ -44,6 +44,8 @@ import {
   UiAutocompleteTrigger,
   UiAutocompleteOption,
   UiCheckbox,
+  UiSelect,
+  UiSelectOption,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -93,6 +95,8 @@ import { Endpoints } from './constants/endpoints'
     UiAutocompleteTrigger,
     UiAutocompleteOption,
     UiCheckbox,
+    UiSelect,
+    UiSelectOption,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -237,4 +241,9 @@ export class App {
   readonly agreeCheckbox = signal(false)
   readonly indeterminateCheckbox = signal(true)
   readonly checkboxFormControl = new FormControl(false)
+
+  // Select demo
+  readonly selectedRole = signal<string | null>(null)
+  readonly selectedStatus = signal('active')
+  readonly selectFormControl = new FormControl('editor')
 }
