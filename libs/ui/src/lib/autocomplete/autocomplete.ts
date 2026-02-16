@@ -94,6 +94,7 @@ export class UiAutocompleteOption {
     '(keydown)': 'onKeydown($event)',
   },
   template: `
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <div
       cdkOverlayOrigin
       #trigger="cdkOverlayOrigin"
