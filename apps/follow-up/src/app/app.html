@@ -1128,5 +1128,94 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Radio Button
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Radio Button</h2>
+
+    <!-- Basic -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic</h3>
+      <div class="flex flex-col gap-4">
+        <ui-radio-group [(value)]="selectedColor">
+          <ui-radio-button value="red">Red</ui-radio-button>
+          <ui-radio-button value="green">Green</ui-radio-button>
+          <ui-radio-button value="blue">Blue</ui-radio-button>
+        </ui-radio-group>
+        <p class="text-sm text-foreground-muted">Selected: {{ selectedColor() ?? 'none' }}</p>
+      </div>
+    </section>
+
+    <!-- Horizontal -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Horizontal</h3>
+      <ui-radio-group orientation="horizontal" [(value)]="selectedColor">
+        <ui-radio-button value="red">Red</ui-radio-button>
+        <ui-radio-button value="green">Green</ui-radio-button>
+        <ui-radio-button value="blue">Blue</ui-radio-button>
+      </ui-radio-group>
+    </section>
+
+    <!-- Sizes -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Sizes</h3>
+      <div class="flex flex-wrap items-start gap-12">
+        <ui-radio-group>
+          <ui-radio-button value="a" size="sm">Small option A</ui-radio-button>
+          <ui-radio-button value="b" size="sm">Small option B</ui-radio-button>
+        </ui-radio-group>
+        <ui-radio-group>
+          <ui-radio-button value="a" size="md">Medium option A</ui-radio-button>
+          <ui-radio-button value="b" size="md">Medium option B</ui-radio-button>
+        </ui-radio-group>
+      </div>
+    </section>
+
+    <!-- Disabled -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Disabled</h3>
+      <div class="flex flex-wrap items-start gap-12">
+        <ui-radio-group disabled>
+          <ui-radio-button value="a">Disabled group A</ui-radio-button>
+          <ui-radio-button value="b">Disabled group B</ui-radio-button>
+        </ui-radio-group>
+        <ui-radio-group>
+          <ui-radio-button value="x">Enabled</ui-radio-button>
+          <ui-radio-button value="y" disabled>Disabled option</ui-radio-button>
+          <ui-radio-button value="z">Enabled</ui-radio-button>
+        </ui-radio-group>
+      </div>
+    </section>
+
+    <!-- Label Positions -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Label Positions</h3>
+      <ui-radio-group orientation="horizontal">
+        <ui-radio-button value="after" labelPosition="after">Label after</ui-radio-button>
+        <ui-radio-button value="before" labelPosition="before">Label before</ui-radio-button>
+      </ui-radio-group>
+    </section>
+
+    <!-- Reactive Form -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Reactive Form</h3>
+      <ui-card>
+        <ui-card-header>
+          <ui-card-title>Shipping Speed</ui-card-title>
+          <ui-card-description>Choose your preferred shipping option.</ui-card-description>
+        </ui-card-header>
+        <ui-card-content>
+          <div class="space-y-4">
+            <ui-radio-group [formControl]="radioFormControl">
+              <ui-radio-button value="standard">Standard (5-7 days)</ui-radio-button>
+              <ui-radio-button value="medium">Medium (3-5 days)</ui-radio-button>
+              <ui-radio-button value="express">Express (1-2 days)</ui-radio-button>
+            </ui-radio-group>
+            <p class="text-sm text-foreground-muted">Value: {{ radioFormControl.value }}</p>
+          </div>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>

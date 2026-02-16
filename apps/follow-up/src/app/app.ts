@@ -45,6 +45,8 @@ import {
   UiCheckbox,
   UiSelect,
   UiSelectOption,
+  UiRadioGroup,
+  UiRadioButton,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -95,6 +97,8 @@ import { Endpoints } from './constants/endpoints'
     UiCheckbox,
     UiSelect,
     UiSelectOption,
+    UiRadioGroup,
+    UiRadioButton,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -250,4 +254,8 @@ export class App {
   readonly selectedRole = signal<string | null>(null)
   readonly selectedStatus = signal('active')
   readonly selectFormControl = new FormControl('editor')
+
+  // Radio demo
+  readonly selectedColor = signal<string | null>(null)
+  readonly radioFormControl = new FormControl('medium')
 }

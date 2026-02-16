@@ -81,3 +81,6 @@ export type { CheckboxSize, CheckboxLabelPosition } from './lib/checkbox/checkbo
 
 export { UiSelect, UiSelectOption } from './lib/select/select'
 export type { SelectSize } from './lib/select/select'
+
+export { UiRadioGroup, UiRadioButton } from './lib/radio/radio'
+export type { RadioSize, RadioLabelPosition, RadioOrientation } from './lib/radio/radio'
