@@ -72,9 +72,9 @@ export type { SlideToggleSize, SlideToggleLabelPosition } from './lib/slide-togg
 
 export {
   UiAutocomplete,
-  UiAutocompleteTrigger,
   UiAutocompleteOption,
 } from './lib/autocomplete/autocomplete'
+export type { AutocompleteSize } from './lib/autocomplete/autocomplete'
 
 export { UiCheckbox } from './lib/checkbox/checkbox'
 export type { CheckboxSize, CheckboxLabelPosition } from './lib/checkbox/checkbox'

@@ -949,35 +949,32 @@
     <!-- Basic string list -->
     <section class="space-y-3">
       <h3 class="text-lg font-semibold text-foreground">Basic</h3>
-      <ui-form-field>
-        <label uiLabel for="ac-fruit">Fruit</label>
-        <input uiInput id="ac-fruit"
-          [uiAutocompleteTrigger]="fruitAc"
+      <div class="flex flex-col gap-4">
+        <ui-autocomplete
           placeholder="Search fruits..."
-          (input)="fruitSearch.set($any($event.target).value)" />
-        <span uiFormHint>Try typing "ap" or "be".</span>
-      </ui-form-field>
-      <ui-autocomplete #fruitAc>
-        @for (fruit of filteredFruits(); track fruit) {
-          <ui-autocomplete-option [value]="fruit">{{ fruit }}</ui-autocomplete-option>
-        } @empty {
-          <div class="px-3 py-2 text-sm text-foreground-muted">No results found.</div>
-        }
-      </ui-autocomplete>
+          class="w-64"
+          (searchChange)="fruitSearch.set($event)"
+        >
+          @for (fruit of filteredFruits(); track fruit) {
+            <ui-autocomplete-option [value]="fruit">{{ fruit }}</ui-autocomplete-option>
+          } @empty {
+            <div class="px-3 py-2 text-sm text-foreground-muted">No results found.</div>
+          }
+        </ui-autocomplete>
+        <p class="text-sm text-foreground-muted">Try typing "ap" or "be".</p>
+      </div>
     </section>
 
     <!-- Object list with displayWith -->
     <section class="space-y-3">
       <h3 class="text-lg font-semibold text-foreground">Object List with displayWith</h3>
-      <ui-form-field>
-        <label uiLabel for="ac-user">User</label>
-        <input uiInput id="ac-user"
-          [uiAutocompleteTrigger]="userAc"
-          [formControl]="selectedUserControl"
-          placeholder="Search users..."
-          (input)="userSearch.set($any($event.target).value)" />
-      </ui-form-field>
-      <ui-autocomplete #userAc [displayWith]="displayUserName">
+      <ui-autocomplete
+        placeholder="Search users..."
+        class="w-64"
+        [formControl]="selectedUserControl"
+        [displayWith]="displayUserName"
+        (searchChange)="userSearch.set($event)"
+      >
         @for (user of filteredUsers(); track user.id) {
           <ui-autocomplete-option [value]="user">{{ user.name }}</ui-autocomplete-option>
         } @empty {
