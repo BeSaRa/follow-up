@@ -103,3 +103,6 @@ export { UiTextareaAutoResize } from './lib/textarea-auto-resize/textarea-auto-r
 
 export { UiStepper, UiStep } from './lib/stepper/stepper'
 export type { StepperOrientation } from './lib/stepper/stepper'
+
+export { ToastService, ToastRef, provideToastDefaults } from './lib/toast/toast'
+export type { ToastOptions, ToastConfig, ToastPosition, ToastVariant, ToastDefaults } from './lib/toast/toast'

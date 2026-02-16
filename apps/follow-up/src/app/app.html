@@ -1797,5 +1797,48 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Toast
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Toast</h2>
+
+    <!-- Variants -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Variants</h3>
+      <div class="flex flex-wrap gap-3">
+        <button uiButton variant="primary" (click)="showToastSuccess()">Success</button>
+        <button uiButton variant="destructive" (click)="showToastError()">Error</button>
+        <button uiButton variant="accent" (click)="showToastWarning()">Warning</button>
+        <button uiButton variant="outline" (click)="showToastInfo()">Info</button>
+      </div>
+    </section>
+
+    <!-- Persistent & Action -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Persistent & Action</h3>
+      <div class="flex flex-wrap gap-3">
+        <button uiButton variant="secondary" (click)="showToastPersistent()">Persistent</button>
+        <button uiButton variant="secondary" (click)="showToastAction()">With Action</button>
+        <button uiButton variant="ghost" (click)="dismissAllToasts()">Dismiss All</button>
+      </div>
+    </section>
+
+    <!-- Position -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Position</h3>
+      <div class="flex flex-wrap gap-3">
+        <ui-select [(value)]="toastPosition" class="w-48">
+          <ui-select-option value="top-start">Top Start</ui-select-option>
+          <ui-select-option value="top-center">Top Center</ui-select-option>
+          <ui-select-option value="top-end">Top End</ui-select-option>
+          <ui-select-option value="bottom-start">Bottom Start</ui-select-option>
+          <ui-select-option value="bottom-center">Bottom Center</ui-select-option>
+          <ui-select-option value="bottom-end">Bottom End</ui-select-option>
+        </ui-select>
+        <button uiButton variant="primary" (click)="showToastSuccess()">Show Toast</button>
+      </div>
+      <p class="text-sm text-foreground-muted">Position: {{ toastPosition() }}</p>
+    </section>
+
   </div>
 </div>

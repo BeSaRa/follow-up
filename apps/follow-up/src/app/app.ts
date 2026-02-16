@@ -57,8 +57,9 @@ import {
   UiTextareaAutoResize,
   UiStepper,
   UiStep,
+  ToastService,
 } from '@follow-up/ui'
-import type { SortDirection, PageChangeEvent } from '@follow-up/ui'
+import type { SortDirection, PageChangeEvent, ToastPosition } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
 import { Endpoints } from './constants/endpoints'
 
@@ -128,6 +129,7 @@ import { Endpoints } from './constants/endpoints'
 export class App {
   private doc = inject(DOCUMENT)
   private dialogService = inject(DialogService)
+  private toastService = inject(ToastService)
   service = injectConfigService<AppConfigs>()
   urls = injectUrlService<Endpoints>()
 
@@ -292,5 +294,58 @@ export class App {
 
   removeChipTag(tag: string) {
     this.chipTags.update(tags => tags.filter(t => t !== tag))
+  }
+
+  // Toast demo
+  readonly toastPosition = signal<ToastPosition>('bottom-end')
+
+  showToastSuccess() {
+    this.toastService.success('Your changes have been saved successfully.', {
+      title: 'Saved',
+      position: this.toastPosition(),
+    })
+  }
+
+  showToastError() {
+    this.toastService.error('Something went wrong. Please try again.', {
+      title: 'Error',
+      position: this.toastPosition(),
+    })
+  }
+
+  showToastWarning() {
+    this.toastService.warning('Your session will expire in 5 minutes.', {
+      title: 'Warning',
+      position: this.toastPosition(),
+    })
+  }
+
+  showToastInfo() {
+    this.toastService.info('A new version is available. Refresh to update.', {
+      position: this.toastPosition(),
+    })
+  }
+
+  showToastPersistent() {
+    this.toastService.info('This toast will not auto-dismiss. Close it manually.', {
+      title: 'Persistent',
+      duration: 0,
+      position: this.toastPosition(),
+    })
+  }
+
+  showToastAction() {
+    this.toastService.success('File deleted successfully.', {
+      title: 'Deleted',
+      position: this.toastPosition(),
+      action: {
+        label: 'Undo',
+        callback: () => this.toastService.info('Undo successful!', { position: this.toastPosition() }),
+      },
+    })
+  }
+
+  dismissAllToasts() {
+    this.toastService.dismissAll()
   }
 }
