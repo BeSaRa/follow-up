@@ -2171,5 +2171,72 @@
       </ui-drawer>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Navbar
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Navbar</h2>
+
+    <!-- Basic -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic</h3>
+      <div class="rounded-lg border border-border overflow-hidden">
+        <ui-navbar [fixed]="false">
+          <ui-navbar-brand>
+            <span class="text-lg font-semibold text-foreground">FollowUp</span>
+          </ui-navbar-brand>
+          <ui-navbar-nav>
+            <a uiNavbarLink [active]="true" href="#">Dashboard</a>
+            <a uiNavbarLink href="#">Projects</a>
+            <a uiNavbarLink href="#">Settings</a>
+          </ui-navbar-nav>
+          <ui-navbar-actions>
+            <button uiButton variant="ghost" size="sm">Sign In</button>
+          </ui-navbar-actions>
+        </ui-navbar>
+      </div>
+      <p class="text-sm text-foreground-muted">Resize the browser to see the hamburger toggle.</p>
+    </section>
+
+    <!-- With Brand Logo -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">With Brand Logo</h3>
+      <div class="rounded-lg border border-border overflow-hidden">
+        <ui-navbar>
+          <ui-navbar-brand>
+            <svg class="size-8 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+            </svg>
+            <span class="text-lg font-semibold text-foreground">MyApp</span>
+          </ui-navbar-brand>
+          <ui-navbar-nav>
+            <a uiNavbarLink href="#">Home</a>
+            <a uiNavbarLink [active]="true" href="#">Products</a>
+            <a uiNavbarLink href="#">About</a>
+            <a uiNavbarLink href="#">Contact</a>
+          </ui-navbar-nav>
+          <ui-navbar-actions>
+            <ui-avatar initials="AJ" size="sm" />
+          </ui-navbar-actions>
+        </ui-navbar>
+      </div>
+    </section>
+
+    <!-- Not Elevated -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Not Elevated</h3>
+      <div class="rounded-lg border border-border overflow-hidden">
+        <ui-navbar [elevated]="false">
+          <ui-navbar-brand>
+            <span class="text-lg font-semibold text-foreground">Flat Bar</span>
+          </ui-navbar-brand>
+          <ui-navbar-nav>
+            <a uiNavbarLink [active]="true" href="#">Overview</a>
+            <a uiNavbarLink href="#">Reports</a>
+          </ui-navbar-nav>
+        </ui-navbar>
+      </div>
+      <p class="text-sm text-foreground-muted">No shadow applied when elevated is false.</p>
+    </section>
+
   </div>
 </div>

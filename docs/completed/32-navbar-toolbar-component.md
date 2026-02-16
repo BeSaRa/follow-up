@@ -3,8 +3,8 @@
 | Status    | Date       |
 |-----------|------------|
 | Created   | 2026-02-16 |
-| Started   | —          |
-| Completed | —          |
+| Started   | 2026-02-16 |
+| Completed | 2026-02-16 |
 
 ---
 
@@ -102,12 +102,12 @@ Export from `libs/ui/src/index.ts`.
 
 ## Deliverables
 
-- [ ] Create `UiNavbar` component with horizontal layout
-- [ ] Create `UiNavbarBrand`, `UiNavbarNav`, `UiNavbarActions` content projection slots
-- [ ] Create `UiNavbarLink` directive with active state styling
-- [ ] Implement responsive hamburger toggle for mobile viewports
-- [ ] Support `fixed` and `elevated` modes
-- [ ] Add ARIA attributes (`role="navigation"`, `aria-expanded`, `aria-current`)
-- [ ] Write unit tests
-- [ ] Export all public APIs from `libs/ui/src/index.ts`
-- [ ] Add navbar demo section to the showcase app
+- [x] Create `UiNavbar` component with horizontal layout
+- [x] Create `UiNavbarBrand`, `UiNavbarNav`, `UiNavbarActions` content projection slots
+- [x] Create `UiNavbarLink` directive with active state styling
+- [x] Implement responsive hamburger toggle for mobile viewports
+- [x] Support `fixed` and `elevated` modes
+- [x] Add ARIA attributes (`role="navigation"`, `aria-expanded`, `aria-current`)
+- [x] Write unit tests
+- [x] Export all public APIs from `libs/ui/src/index.ts`
+- [x] Add navbar demo section to the showcase app

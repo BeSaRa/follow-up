@@ -79,6 +79,11 @@ import {
   UiDrawerContent,
   UiDrawerFooter,
   UiDrawerClose,
+  UiNavbar,
+  UiNavbarBrand,
+  UiNavbarNav,
+  UiNavbarActions,
+  UiNavbarLink,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent, ToastPosition, DateRange } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -162,6 +167,11 @@ import { Endpoints } from './constants/endpoints'
     UiDrawerContent,
     UiDrawerFooter,
     UiDrawerClose,
+    UiNavbar,
+    UiNavbarBrand,
+    UiNavbarNav,
+    UiNavbarActions,
+    UiNavbarLink,
   ],
   selector: 'app-root',
   templateUrl: './app.html',

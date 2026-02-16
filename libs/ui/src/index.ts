@@ -153,3 +153,11 @@ export {
   UiDrawerClose,
 } from './lib/drawer/drawer'
 export type { DrawerPosition, DrawerMode } from './lib/drawer/drawer'
+
+export {
+  UiNavbar,
+  UiNavbarBrand,
+  UiNavbarNav,
+  UiNavbarActions,
+  UiNavbarLink,
+} from './lib/navbar/navbar'
