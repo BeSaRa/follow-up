@@ -1674,5 +1674,128 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Stepper
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Stepper</h2>
+
+    <!-- Basic Horizontal -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic Horizontal</h3>
+      <ui-card>
+        <ui-card-content class="!pt-6">
+          <ui-stepper #basicStepper>
+            <ui-step label="Account">
+              <div class="space-y-4">
+                <p class="text-sm text-foreground-muted">Enter your account details to get started.</p>
+                <div class="flex gap-2">
+                  <button uiButton variant="primary" (click)="basicStepper.next()">Next</button>
+                </div>
+              </div>
+            </ui-step>
+            <ui-step label="Profile">
+              <div class="space-y-4">
+                <p class="text-sm text-foreground-muted">Set up your profile information.</p>
+                <div class="flex gap-2">
+                  <button uiButton variant="outline" (click)="basicStepper.previous()">Previous</button>
+                  <button uiButton variant="primary" (click)="basicStepper.next()">Next</button>
+                </div>
+              </div>
+            </ui-step>
+            <ui-step label="Review">
+              <div class="space-y-4">
+                <p class="text-sm text-foreground-muted">Review your information and submit.</p>
+                <div class="flex gap-2">
+                  <button uiButton variant="outline" (click)="basicStepper.previous()">Previous</button>
+                  <button uiButton variant="primary">Submit</button>
+                </div>
+              </div>
+            </ui-step>
+          </ui-stepper>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
+    <!-- Linear Mode -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Linear Mode</h3>
+      <ui-card>
+        <ui-card-content class="!pt-6">
+          <ui-stepper #linearStepper linear>
+            <ui-step label="Personal Info" [completed]="linearStep1Done()">
+              <div class="space-y-4">
+                <p class="text-sm text-foreground-muted">Complete this step before proceeding.</p>
+                <div class="flex gap-2">
+                  <button uiButton variant="primary" (click)="linearStep1Done.set(true); linearStepper.next()">Complete & Next</button>
+                </div>
+              </div>
+            </ui-step>
+            <ui-step label="Address" [completed]="linearStep2Done()">
+              <div class="space-y-4">
+                <p class="text-sm text-foreground-muted">Enter your address details.</p>
+                <div class="flex gap-2">
+                  <button uiButton variant="outline" (click)="linearStepper.previous()">Previous</button>
+                  <button uiButton variant="primary" (click)="linearStep2Done.set(true); linearStepper.next()">Complete & Next</button>
+                </div>
+              </div>
+            </ui-step>
+            <ui-step label="Extras" optional>
+              <div class="space-y-4">
+                <p class="text-sm text-foreground-muted">This step is optional — you can skip it.</p>
+                <div class="flex gap-2">
+                  <button uiButton variant="outline" (click)="linearStepper.previous()">Previous</button>
+                  <button uiButton variant="primary" (click)="linearStepper.next()">Next</button>
+                </div>
+              </div>
+            </ui-step>
+            <ui-step label="Confirm">
+              <div class="space-y-4">
+                <p class="text-sm text-foreground-muted">All steps completed. Ready to submit!</p>
+                <div class="flex gap-2">
+                  <button uiButton variant="outline" (click)="linearStepper.previous()">Previous</button>
+                  <button uiButton variant="primary">Finish</button>
+                </div>
+              </div>
+            </ui-step>
+          </ui-stepper>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
+    <!-- Vertical -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Vertical</h3>
+      <ui-card>
+        <ui-card-content class="!pt-6">
+          <ui-stepper #verticalStepper orientation="vertical">
+            <ui-step label="Select plan">
+              <div class="space-y-4">
+                <p class="text-sm text-foreground-muted">Choose a subscription plan that fits your needs.</p>
+                <button uiButton variant="primary" size="sm" (click)="verticalStepper.next()">Continue</button>
+              </div>
+            </ui-step>
+            <ui-step label="Payment">
+              <div class="space-y-4">
+                <p class="text-sm text-foreground-muted">Enter your payment information.</p>
+                <div class="flex gap-2">
+                  <button uiButton variant="outline" size="sm" (click)="verticalStepper.previous()">Back</button>
+                  <button uiButton variant="primary" size="sm" (click)="verticalStepper.next()">Continue</button>
+                </div>
+              </div>
+            </ui-step>
+            <ui-step label="Confirmation">
+              <div class="space-y-4">
+                <p class="text-sm text-foreground-muted">Review and confirm your subscription.</p>
+                <div class="flex gap-2">
+                  <button uiButton variant="outline" size="sm" (click)="verticalStepper.previous()">Back</button>
+                  <button uiButton variant="primary" size="sm">Confirm</button>
+                </div>
+              </div>
+            </ui-step>
+          </ui-stepper>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>

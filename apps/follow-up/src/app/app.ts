@@ -55,6 +55,8 @@ import {
   UiChip,
   UiChipInput,
   UiTextareaAutoResize,
+  UiStepper,
+  UiStep,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -115,6 +117,8 @@ import { Endpoints } from './constants/endpoints'
     UiChip,
     UiChipInput,
     UiTextareaAutoResize,
+    UiStepper,
+    UiStep,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -274,6 +278,10 @@ export class App {
   // Radio demo
   readonly selectedColor = signal<string | null>(null)
   readonly radioFormControl = new FormControl('medium')
+
+  // Stepper demo
+  readonly linearStep1Done = signal(false)
+  readonly linearStep2Done = signal(false)
 
   // Textarea auto-resize demo
   readonly autoResizeControl = new FormControl('')

@@ -100,3 +100,6 @@ export { UiChip, UiChipInput } from './lib/chip/chip'
 export type { ChipVariant, ChipSize } from './lib/chip/chip'
 
 export { UiTextareaAutoResize } from './lib/textarea-auto-resize/textarea-auto-resize'
+
+export { UiStepper, UiStep } from './lib/stepper/stepper'
+export type { StepperOrientation } from './lib/stepper/stepper'
