@@ -109,3 +109,11 @@ export type { ToastOptions, ToastConfig, ToastPosition, ToastVariant, ToastDefau
 
 export { UiTooltip } from './lib/tooltip/tooltip'
 export type { TooltipPosition } from './lib/tooltip/tooltip'
+
+export {
+  UiMenu,
+  UiMenuItem,
+  UiMenuTrigger,
+  UiSubMenuTrigger,
+} from './lib/menu/menu'
+export type { MenuPosition } from './lib/menu/menu'
