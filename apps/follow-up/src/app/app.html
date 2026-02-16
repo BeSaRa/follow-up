@@ -1606,5 +1606,32 @@
       </div>
     </section>
 
+    <!-- Chip Input -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Chip Input</h3>
+      <div class="max-w-md space-y-4">
+        <ui-chip-input
+          [(values)]="chipInputTags"
+          placeholder="Add a tag and press Enter..."
+        />
+        <p class="text-sm text-foreground-muted">Tags: {{ chipInputTags().join(', ') || 'none' }}</p>
+      </div>
+    </section>
+
+    <!-- Chip Input with Variants -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Chip Input Variants</h3>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div class="space-y-1">
+          <span class="text-xs text-foreground-muted">Primary</span>
+          <ui-chip-input variant="primary" [values]="['Angular', 'Vite']" />
+        </div>
+        <div class="space-y-1">
+          <span class="text-xs text-foreground-muted">Accent</span>
+          <ui-chip-input variant="accent" [values]="['Design', 'UI']" />
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>

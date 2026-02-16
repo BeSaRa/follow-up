@@ -3,10 +3,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  forwardRef,
   input,
   model,
   output,
+  signal,
 } from '@angular/core'
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 
 export type ChipVariant = 'primary' | 'secondary' | 'accent' | 'outline'
 export type ChipSize = 'sm' | 'md'
@@ -105,5 +108,111 @@ export class UiChip {
     if (!this.removable()) return
     event.stopPropagation()
     this.removed.emit()
+  }
+}
+
+@Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: 'ui-chip-input',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [UiChip],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => UiChipInput),
+      multi: true,
+    },
+  ],
+  host: {
+    '[class]': 'hostClasses()',
+    '(click)': 'focusInput()',
+  },
+  template: `
+    @for (chip of values(); track chip) {
+      <ui-chip
+        [variant]="variant()"
+        [size]="size()"
+        removable
+        [disabled]="disabled()"
+        (removed)="removeChip(chip)"
+      >{{ chip }}</ui-chip>
+    }
+    <input
+      #inputEl
+      type="text"
+      class="min-w-[80px] flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-foreground-muted disabled:cursor-not-allowed"
+      [placeholder]="values().length ? '' : placeholder()"
+      [disabled]="disabled()"
+      (keydown.enter)="addChip(inputEl); $event.preventDefault()"
+      (keydown.backspace)="onBackspace(inputEl)"
+    />
+  `,
+})
+export class UiChipInput implements ControlValueAccessor {
+  readonly placeholder = input('Type and press Enter...')
+  readonly variant = input<ChipVariant>('secondary')
+  readonly size = input<ChipSize>('md')
+  readonly disabled = input(false, { transform: booleanAttribute })
+
+  readonly values = model<string[]>([])
+
+  private onChange: (value: string[]) => void = () => {}
+  private onTouched: () => void = () => {}
+  private touched = false
+
+  protected readonly hostClasses = computed(() => {
+    const base = 'flex flex-wrap items-center gap-1.5 rounded-md border border-border bg-surface px-3 py-2 transition-colors focus-within:ring-2 focus-within:ring-ring'
+
+    return base + (this.disabled() ? ' opacity-50 pointer-events-none' : ' cursor-text')
+  })
+
+  protected focusInput() {
+    const host = document.activeElement?.closest('ui-chip-input')
+    const input = host?.querySelector('input')
+    input?.focus()
+  }
+
+  protected addChip(inputEl: HTMLInputElement) {
+    const val = inputEl.value.trim()
+    if (!val || this.disabled()) return
+    if (this.values().includes(val)) {
+      inputEl.value = ''
+      return
+    }
+    this.values.update(v => [...v, val])
+    inputEl.value = ''
+    this.notifyChange()
+  }
+
+  protected removeChip(chip: string) {
+    if (this.disabled()) return
+    this.values.update(v => v.filter(c => c !== chip))
+    this.notifyChange()
+  }
+
+  protected onBackspace(inputEl: HTMLInputElement) {
+    if (inputEl.value || this.disabled()) return
+    this.values.update(v => v.slice(0, -1))
+    this.notifyChange()
+  }
+
+  private notifyChange() {
+    this.onChange(this.values())
+    if (!this.touched) {
+      this.onTouched()
+      this.touched = true
+    }
+  }
+
+  writeValue(value: string[]) {
+    this.values.set(value ?? [])
+  }
+
+  registerOnChange(fn: (value: string[]) => void) {
+    this.onChange = fn
+  }
+
+  registerOnTouched(fn: () => void) {
+    this.onTouched = fn
   }
 }

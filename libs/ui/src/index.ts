@@ -96,5 +96,5 @@ export type { ProgressBarVariant, ProgressBarSize, ProgressBarMode } from './lib
 
 export { UiAccordion, UiAccordionItem } from './lib/accordion/accordion'
 
-export { UiChip } from './lib/chip/chip'
+export { UiChip, UiChipInput } from './lib/chip/chip'
 export type { ChipVariant, ChipSize } from './lib/chip/chip'

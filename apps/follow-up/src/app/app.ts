@@ -53,6 +53,7 @@ import {
   UiAccordion,
   UiAccordionItem,
   UiChip,
+  UiChipInput,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -111,6 +112,7 @@ import { Endpoints } from './constants/endpoints'
     UiAccordion,
     UiAccordionItem,
     UiChip,
+    UiChipInput,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -273,6 +275,7 @@ export class App {
 
   // Chip demo
   readonly chipTags = signal(['Angular', 'TypeScript', 'RxJS', 'Signals', 'Vite'])
+  readonly chipInputTags = signal<string[]>(['Angular', 'TypeScript'])
 
   removeChipTag(tag: string) {
     this.chipTags.update(tags => tags.filter(t => t !== tag))
