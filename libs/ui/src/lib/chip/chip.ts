@@ -7,7 +7,6 @@ import {
   input,
   model,
   output,
-  signal,
 } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 
@@ -31,8 +30,18 @@ export type ChipSize = 'sm' | 'md'
   },
   template: `
     @if (selected()) {
-      <svg class="size-3 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+      <svg
+        class="size-3 shrink-0"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+          clip-rule="evenodd"
+        />
       </svg>
     }
     <span class="truncate"><ng-content /></span>
@@ -45,8 +54,16 @@ export type ChipSize = 'sm' | 'md'
         aria-label="Remove"
         (click)="onRemove($event)"
       >
-        <svg class="size-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-          <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+        <svg
+          class="size-3"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"
+          />
         </svg>
       </button>
     }
@@ -71,7 +88,8 @@ export class UiChip {
     const isSelected = this.selected()
     const isDisabled = this.disabled()
 
-    const base = 'inline-flex items-center gap-1 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring select-none'
+    const base =
+      'inline-flex items-center gap-1 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring select-none'
 
     const sizes: Record<ChipSize, string> = {
       sm: 'text-xs px-2 py-0.5',
@@ -87,20 +105,23 @@ export class UiChip {
 
     const selectedVariants: Record<ChipVariant, string> = {
       primary: 'bg-primary text-primary-foreground ring-2 ring-primary/50',
-      secondary: 'bg-secondary text-secondary-foreground ring-2 ring-secondary/50',
+      secondary:
+        'bg-secondary text-secondary-foreground ring-2 ring-secondary/50',
       accent: 'bg-accent text-accent-foreground ring-2 ring-accent/50',
       outline: 'border-2 border-primary bg-transparent text-primary',
     }
 
     const variantClass = isSelected ? selectedVariants[v] : variants[v]
-    const cursor = isDisabled ? 'opacity-50 pointer-events-none' : 'cursor-pointer'
+    const cursor = isDisabled
+      ? 'opacity-50 pointer-events-none'
+      : 'cursor-pointer'
 
     return `${base} ${sizes[s]} ${variantClass} ${cursor}`
   })
 
   protected toggleSelected() {
     if (this.disabled()) return
-    this.selected.update(v => !v)
+    this.selected.update((v) => !v)
   }
 
   protected onRemove(event: Event) {
@@ -135,12 +156,13 @@ export class UiChip {
         removable
         [disabled]="disabled()"
         (removed)="removeChip(chip)"
-      >{{ chip }}</ui-chip>
+        >{{ chip }}</ui-chip
+      >
     }
     <input
       #inputEl
       type="text"
-      class="min-w-[80px] flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-foreground-muted disabled:cursor-not-allowed"
+      class="min-w-20 flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-foreground-muted disabled:cursor-not-allowed"
       [placeholder]="values().length ? '' : placeholder()"
       [disabled]="disabled()"
       (keydown.enter)="addChip(inputEl); $event.preventDefault()"
@@ -156,14 +178,24 @@ export class UiChipInput implements ControlValueAccessor {
 
   readonly values = model<string[]>([])
 
-  private onChange: (value: string[]) => void = () => {}
-  private onTouched: () => void = () => {}
+  private onChange: (value: string[]) => void = () => {
+    /* empty */
+  }
+  private onTouched: () => void = () => {
+    /* empty */
+  }
   private touched = false
 
   protected readonly hostClasses = computed(() => {
-    const base = 'flex flex-wrap items-center gap-1.5 rounded-md border bg-transparent px-3 py-2 transition-colors focus-within:outline-none focus-within:ring-2 focus-within:ring-ring'
+    const base =
+      'flex flex-wrap items-center gap-1.5 rounded-md border bg-transparent px-3 py-2 transition-colors focus-within:outline-none focus-within:ring-2 focus-within:ring-ring'
 
-    return base + (this.disabled() ? ' border-border opacity-50 pointer-events-none' : ' border-border hover:border-border-hover cursor-text')
+    return (
+      base +
+      (this.disabled()
+        ? ' border-border opacity-50 pointer-events-none'
+        : ' border-border hover:border-border-hover cursor-text')
+    )
   })
 
   protected focusInput() {
@@ -179,20 +211,20 @@ export class UiChipInput implements ControlValueAccessor {
       inputEl.value = ''
       return
     }
-    this.values.update(v => [...v, val])
+    this.values.update((v) => [...v, val])
     inputEl.value = ''
     this.notifyChange()
   }
 
   protected removeChip(chip: string) {
     if (this.disabled()) return
-    this.values.update(v => v.filter(c => c !== chip))
+    this.values.update((v) => v.filter((c) => c !== chip))
     this.notifyChange()
   }
 
   protected onBackspace(inputEl: HTMLInputElement) {
     if (inputEl.value || this.disabled()) return
-    this.values.update(v => v.slice(0, -1))
+    this.values.update((v) => v.slice(0, -1))
     this.notifyChange()
   }
 
