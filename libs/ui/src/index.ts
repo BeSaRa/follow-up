@@ -170,3 +170,6 @@ export {
   UiTreeNodeOutlet,
 } from './lib/tree/tree'
 export type { TreeSelectionMode } from './lib/tree/tree'
+
+export { UiFileUpload, UiFileList, UiFileItem } from './lib/file-upload/file-upload'
+export type { FileUploadStatus, FileValidationError } from './lib/file-upload/file-upload'

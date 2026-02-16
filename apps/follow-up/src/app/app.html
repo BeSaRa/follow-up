@@ -2331,5 +2331,59 @@
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         File Upload
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">File Upload</h2>
+
+    <!-- Basic File Upload -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Drop Zone</h3>
+      <div class="rounded-lg border border-border p-4 space-y-4">
+        <ui-file-upload
+          [formControl]="filesControl"
+          accept=".pdf,.png,.jpg,.jpeg,.docx,image/*"
+          [maxFileSize]="5 * 1024 * 1024"
+          [maxFiles]="5"
+          (fileAdded)="onFilesAdded($event)"
+          (fileRemoved)="onFileRemoved($event)"
+          (validationError)="onUploadValidationError($event)"
+        >
+          <p class="text-sm text-foreground-muted">
+            Drag & drop files here, or <strong class="text-foreground">click to browse</strong>
+          </p>
+          <p class="text-xs text-foreground-muted mt-1">PDF, PNG, JPG, DOCX — max 5 MB each, up to 5 files</p>
+        </ui-file-upload>
+
+        @if (uploadErrors().length) {
+          <div class="space-y-1">
+            @for (error of uploadErrors(); track error) {
+              <p class="text-sm text-error">{{ error }}</p>
+            }
+          </div>
+        }
+
+        @if (uploadFiles().length) {
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-foreground-muted">{{ uploadFiles().length }} file(s) selected</span>
+            <button ui-button variant="outline" size="sm" (click)="simulateUpload()">Simulate Upload</button>
+          </div>
+          <ui-file-list>
+            @for (item of uploadFiles(); track item.file.name) {
+              <ui-file-item
+                [file]="item.file"
+                [progress]="item.progress"
+                [status]="item.status"
+                (removed)="onFileRemoved(item.file)"
+              />
+            }
+          </ui-file-list>
+        }
+      </div>
+      <p class="text-sm text-foreground-muted">
+        Drop files or click the zone. Files are validated for type, size, and count. Use "Simulate Upload" to see progress.
+      </p>
+    </section>
+
   </div>
 </div>

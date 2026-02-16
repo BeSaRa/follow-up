@@ -88,9 +88,12 @@ import {
   UiTreeNode,
   UiTreeNodeToggle,
   UiTreeNodePadding,
+  UiFileUpload,
+  UiFileList,
+  UiFileItem,
 } from '@follow-up/ui'
 import { CdkTreeNodeDef } from '@angular/cdk/tree'
-import type { SortDirection, PageChangeEvent, ToastPosition, DateRange } from '@follow-up/ui'
+import type { SortDirection, PageChangeEvent, ToastPosition, DateRange, FileUploadStatus, FileValidationError } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
 import { Endpoints } from './constants/endpoints'
 
@@ -187,6 +190,9 @@ interface FileNode {
     UiTreeNodeToggle,
     UiTreeNodePadding,
     CdkTreeNodeDef,
+    UiFileUpload,
+    UiFileList,
+    UiFileItem,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -475,5 +481,49 @@ export class App {
 
   onTreeMultiSelect(nodes: FileNode[]) {
     this.treeMultiSelected.set(nodes)
+  }
+
+  // File upload demo
+  readonly filesControl = new FormControl<File[]>([], { nonNullable: true })
+  readonly uploadFiles = signal<{ file: File, progress: number | null, status: FileUploadStatus }[]>([])
+  readonly uploadErrors = signal<string[]>([])
+
+  onFilesAdded(files: File[]) {
+    this.uploadFiles.update(existing => [
+      ...existing,
+      ...files.map(file => ({ file, progress: null, status: 'pending' as FileUploadStatus })),
+    ])
+  }
+
+  onFileRemoved(file: File) {
+    this.uploadFiles.update(list => list.filter(f => f.file !== file))
+  }
+
+  onUploadValidationError(error: FileValidationError) {
+    this.uploadErrors.update(errors => [...errors, error.message])
+    setTimeout(() => this.uploadErrors.update(errors => errors.slice(1)), 4000)
+  }
+
+  simulateUpload() {
+    this.uploadFiles.update(list =>
+      list.map(item =>
+        item.status === 'pending'
+          ? { ...item, status: 'uploading' as FileUploadStatus, progress: 0 }
+          : item,
+      ),
+    )
+
+    let tick = 0
+    const interval = setInterval(() => {
+      tick += 20
+      this.uploadFiles.update(list =>
+        list.map(item => {
+          if (item.status !== 'uploading') return item
+          if (tick >= 100) return { ...item, progress: 100, status: 'success' as FileUploadStatus }
+          return { ...item, progress: tick }
+        }),
+      )
+      if (tick >= 100) clearInterval(interval)
+    }, 400)
   }
 }

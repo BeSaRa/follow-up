@@ -3,8 +3,8 @@
 | Status    | Date       |
 |-----------|------------|
 | Created   | 2026-02-16 |
-| Started   | —          |
-| Completed | —          |
+| Started   | 2026-02-17 |
+| Completed | 2026-02-17 |
 
 ---
 
@@ -137,13 +137,13 @@ Export from `libs/ui/src/index.ts`.
 
 ## Deliverables
 
-- [ ] Create `UiFileUpload` component with drag-and-drop zone and `ControlValueAccessor`
-- [ ] Create `UiFileList` component for displaying selected files
-- [ ] Create `UiFileItem` component with progress bar, status, and remove action
-- [ ] Implement drag-and-drop event handling with visual feedback
-- [ ] Implement file validation (type, size, count) with error output
-- [ ] Support multiple / single file modes
-- [ ] Add ARIA attributes (`role="button"`, `role="progressbar"`, `aria-live`)
-- [ ] Write unit tests
-- [ ] Export all public APIs from `libs/ui/src/index.ts`
-- [ ] Add file upload demo section to the showcase app
+- [x] Create `UiFileUpload` component with drag-and-drop zone and `ControlValueAccessor`
+- [x] Create `UiFileList` component for displaying selected files
+- [x] Create `UiFileItem` component with progress bar, status, and remove action
+- [x] Implement drag-and-drop event handling with visual feedback
+- [x] Implement file validation (type, size, count) with error output
+- [x] Support multiple / single file modes
+- [x] Add ARIA attributes (`role="button"`, `role="progressbar"`, `aria-live`)
+- [x] Write unit tests
+- [x] Export all public APIs from `libs/ui/src/index.ts`
+- [x] Add file upload demo section to the showcase app
