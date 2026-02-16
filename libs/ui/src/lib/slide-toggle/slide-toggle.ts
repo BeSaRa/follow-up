@@ -77,13 +77,13 @@ export class UiSlideToggle implements ControlValueAccessor {
 
     const base = 'pointer-events-none inline-block rounded-full bg-white shadow-sm transition-transform duration-200'
     const sizeClass = s === 'sm' ? 'size-4' : 'size-5'
-    const margin = 'mt-0.5 ml-0.5'
+    const margin = 'mt-0.5 ms-0.5'
 
     let translate: string
     if (s === 'sm') {
-      translate = isOn ? 'translate-x-4' : 'translate-x-0'
+      translate = isOn ? 'ltr:translate-x-4 rtl:-translate-x-4' : 'translate-x-0'
     } else {
-      translate = isOn ? 'translate-x-5' : 'translate-x-0'
+      translate = isOn ? 'ltr:translate-x-5 rtl:-translate-x-5' : 'translate-x-0'
     }
 
     return `${base} ${sizeClass} ${margin} ${translate}`

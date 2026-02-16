@@ -108,10 +108,16 @@ export class App {
   urls = injectUrlService<Endpoints>()
 
   isDark = signal(false)
+  isRtl = signal(false)
 
   toggleDarkMode() {
     this.isDark.update(v => !v)
     this.doc.documentElement.classList.toggle('dark', this.isDark())
+  }
+
+  toggleDirection() {
+    this.isRtl.update(v => !v)
+    this.doc.documentElement.dir = this.isRtl() ? 'rtl' : 'ltr'
   }
 
   openConfirm() {

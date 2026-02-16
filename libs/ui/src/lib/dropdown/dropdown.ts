@@ -82,7 +82,7 @@ export class UiDropdownItem {
 
   protected readonly hostClasses = computed(() => {
     const base =
-      'block w-full cursor-pointer px-3 py-2 text-left text-sm text-foreground ' +
+      'block w-full cursor-pointer px-3 py-2 text-start text-sm text-foreground ' +
       'transition-colors hover:bg-surface-hover ' +
       'focus-visible:outline-none focus-visible:bg-surface-hover'
 

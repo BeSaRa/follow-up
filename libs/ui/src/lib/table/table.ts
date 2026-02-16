@@ -117,7 +117,7 @@ export class UiTableRow {
     </div>
     @if (resizable()) {
       <div
-        class="absolute right-0 top-0 h-full w-1 cursor-col-resize hover:bg-border-hover active:bg-primary"
+        class="absolute end-0 top-0 h-full w-1 cursor-col-resize hover:bg-border-hover active:bg-primary"
         (mousedown)="onResizeStart($event)"
       ></div>
     }
@@ -137,7 +137,7 @@ export class UiTableHead {
   private readonly isResizing = signal(false)
 
   protected readonly hostClasses = computed(() => {
-    const base = 'relative px-4 py-3 text-left text-sm font-medium text-foreground-muted overflow-hidden'
+    const base = 'relative px-4 py-3 text-start text-sm font-medium text-foreground-muted overflow-hidden'
     const sortableClass = this.sortable() ? ' cursor-pointer select-none' : ''
     return `${base}${sortableClass}`
   })
@@ -156,12 +156,13 @@ export class UiTableHead {
     this.isResizing.set(true)
 
     const th = this.el.nativeElement as HTMLElement
+    const isRtl = getComputedStyle(th).direction === 'rtl'
     const startX = event.clientX
     const startWidth = th.offsetWidth
 
     const onMouseMove = (e: MouseEvent) => {
       const delta = e.clientX - startX
-      const newWidth = Math.max(50, startWidth + delta)
+      const newWidth = Math.max(50, startWidth + (isRtl ? -delta : delta))
       th.style.width = `${newWidth}px`
     }
 

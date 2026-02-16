@@ -49,7 +49,7 @@ export interface PageChangeEvent {
           (click)="goToFirst()"
           aria-label="First page"
         >
-          <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg class="size-4 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="m11 17-5-5 5-5" />
             <path d="m18 17-5-5 5-5" />
           </svg>
@@ -62,7 +62,7 @@ export interface PageChangeEvent {
         (click)="goToPrevious()"
         aria-label="Previous page"
       >
-        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg class="size-4 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="m15 18-6-6 6-6" />
         </svg>
       </button>
@@ -73,7 +73,7 @@ export interface PageChangeEvent {
         (click)="goToNext()"
         aria-label="Next page"
       >
-        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg class="size-4 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="m9 18 6-6-6-6" />
         </svg>
       </button>
@@ -85,7 +85,7 @@ export interface PageChangeEvent {
           (click)="goToLast()"
           aria-label="Last page"
         >
-          <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg class="size-4 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="m6 17 5-5-5-5" />
             <path d="m13 17 5-5-5-5" />
           </svg>
