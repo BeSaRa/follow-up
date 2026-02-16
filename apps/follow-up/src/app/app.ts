@@ -58,6 +58,7 @@ import {
   UiStepper,
   UiStep,
   ToastService,
+  UiTooltip,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent, ToastPosition } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -120,6 +121,7 @@ import { Endpoints } from './constants/endpoints'
     UiTextareaAutoResize,
     UiStepper,
     UiStep,
+    UiTooltip,
   ],
   selector: 'app-root',
   templateUrl: './app.html',

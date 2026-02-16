@@ -106,3 +106,6 @@ export type { StepperOrientation } from './lib/stepper/stepper'
 
 export { ToastService, ToastRef, provideToastDefaults } from './lib/toast/toast'
 export type { ToastOptions, ToastConfig, ToastPosition, ToastVariant, ToastDefaults } from './lib/toast/toast'
+
+export { UiTooltip } from './lib/tooltip/tooltip'
+export type { TooltipPosition } from './lib/tooltip/tooltip'

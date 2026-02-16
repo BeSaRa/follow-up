@@ -1840,5 +1840,56 @@
       <p class="text-sm text-foreground-muted">Position: {{ toastPosition() }}</p>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Tooltip
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Tooltip</h2>
+
+    <!-- Positions -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Positions</h3>
+      <div class="flex flex-wrap items-center gap-4">
+        <button uiButton variant="outline" uiTooltip="Tooltip above" uiTooltipPosition="above" [uiTooltipShowDelay]="0">Above</button>
+        <button uiButton variant="outline" uiTooltip="Tooltip below" uiTooltipPosition="below" [uiTooltipShowDelay]="0">Below</button>
+        <button uiButton variant="outline" uiTooltip="Tooltip start" uiTooltipPosition="start" [uiTooltipShowDelay]="0">Start</button>
+        <button uiButton variant="outline" uiTooltip="Tooltip end" uiTooltipPosition="end" [uiTooltipShowDelay]="0">End</button>
+      </div>
+    </section>
+
+    <!-- With Delay -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">With Delay</h3>
+      <div class="flex flex-wrap items-center gap-4">
+        <button uiButton variant="outline" uiTooltip="No delay" [uiTooltipShowDelay]="0">0ms</button>
+        <button uiButton variant="outline" uiTooltip="Default delay (200ms)">200ms (default)</button>
+        <button uiButton variant="outline" uiTooltip="Slow tooltip" [uiTooltipShowDelay]="500">500ms</button>
+      </div>
+    </section>
+
+    <!-- Long Text -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Long Text</h3>
+      <button uiButton variant="outline" uiTooltip="This is a much longer tooltip message that demonstrates word wrapping within the max-width constraint of the tooltip panel." [uiTooltipShowDelay]="0">Hover for long tooltip</button>
+    </section>
+
+    <!-- Disabled -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Disabled</h3>
+      <div class="flex flex-wrap items-center gap-4">
+        <button uiButton variant="outline" uiTooltip="You won't see this" uiTooltipDisabled>Tooltip disabled</button>
+        <button uiButton variant="outline" uiTooltip="This one works" [uiTooltipShowDelay]="0">Tooltip enabled</button>
+      </div>
+    </section>
+
+    <!-- On Other Elements -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">On Other Elements</h3>
+      <div class="flex flex-wrap items-center gap-6">
+        <ui-badge variant="info" uiTooltip="Badge with a tooltip" [uiTooltipShowDelay]="0">Hover me</ui-badge>
+        <ui-avatar initials="TT" uiTooltip="Tooltip on avatar" [uiTooltipShowDelay]="0" />
+        <span class="text-sm text-foreground underline decoration-dotted cursor-help" tabindex="0" uiTooltip="Inline text tooltip" [uiTooltipShowDelay]="0">What is this?</span>
+      </div>
+    </section>
+
   </div>
 </div>
