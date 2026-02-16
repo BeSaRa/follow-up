@@ -1394,5 +1394,86 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Progress Bar
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Progress Bar</h2>
+
+    <!-- Determinate -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Determinate</h3>
+      <div class="space-y-4">
+        <ui-progress-bar [value]="25" />
+        <ui-progress-bar [value]="50" />
+        <ui-progress-bar [value]="75" />
+        <ui-progress-bar [value]="100" />
+      </div>
+    </section>
+
+    <!-- Indeterminate -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Indeterminate</h3>
+      <ui-progress-bar mode="indeterminate" />
+    </section>
+
+    <!-- Variants -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Variants</h3>
+      <div class="space-y-4">
+        <div class="space-y-1">
+          <span class="text-xs text-foreground-muted">Primary</span>
+          <ui-progress-bar [value]="60" variant="primary" />
+        </div>
+        <div class="space-y-1">
+          <span class="text-xs text-foreground-muted">Accent</span>
+          <ui-progress-bar [value]="60" variant="accent" />
+        </div>
+        <div class="space-y-1">
+          <span class="text-xs text-foreground-muted">Success</span>
+          <ui-progress-bar [value]="60" variant="success" />
+        </div>
+        <div class="space-y-1">
+          <span class="text-xs text-foreground-muted">Warning</span>
+          <ui-progress-bar [value]="60" variant="warning" />
+        </div>
+        <div class="space-y-1">
+          <span class="text-xs text-foreground-muted">Error</span>
+          <ui-progress-bar [value]="60" variant="error" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Sizes -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Sizes</h3>
+      <div class="space-y-4">
+        <div class="space-y-1">
+          <span class="text-xs text-foreground-muted">Small (4px)</span>
+          <ui-progress-bar [value]="60" size="sm" />
+        </div>
+        <div class="space-y-1">
+          <span class="text-xs text-foreground-muted">Medium (8px)</span>
+          <ui-progress-bar [value]="60" size="md" />
+        </div>
+      </div>
+    </section>
+
+    <!-- In Context -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">In Context</h3>
+      <ui-card>
+        <ui-card-header>
+          <ui-card-title>Upload Progress</ui-card-title>
+          <ui-card-description>Uploading 3 of 5 files...</ui-card-description>
+        </ui-card-header>
+        <ui-card-content>
+          <div class="space-y-2">
+            <ui-progress-bar [value]="60" variant="primary" />
+            <p class="text-xs text-foreground-muted text-end">60%</p>
+          </div>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>

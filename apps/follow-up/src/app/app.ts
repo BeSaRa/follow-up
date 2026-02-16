@@ -49,6 +49,7 @@ import {
   UiRadioButton,
   UiAvatar,
   UiDivider,
+  UiProgressBar,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -103,6 +104,7 @@ import { Endpoints } from './constants/endpoints'
     UiRadioButton,
     UiAvatar,
     UiDivider,
+    UiProgressBar,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
