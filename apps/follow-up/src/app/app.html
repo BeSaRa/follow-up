@@ -1633,5 +1633,46 @@
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Textarea Auto-Resize
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Textarea Auto-Resize</h2>
+
+    <!-- Basic -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Basic</h3>
+      <ui-form-field>
+        <label uiLabel for="auto-basic">Auto-growing textarea</label>
+        <textarea uiInput uiAutoResize id="auto-basic" placeholder="Type multiple lines and watch it grow..."></textarea>
+      </ui-form-field>
+    </section>
+
+    <!-- Max Rows -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Max Rows</h3>
+      <ui-form-field>
+        <label uiLabel for="auto-max">Capped at 5 rows</label>
+        <textarea uiInput uiAutoResize [uiAutoResizeMaxRows]="5" id="auto-max" placeholder="Grows up to 5 rows, then scrolls..."></textarea>
+        <span uiFormHint>Scrollbar appears after 5 rows.</span>
+      </ui-form-field>
+    </section>
+
+    <!-- Reactive Form -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Reactive Form</h3>
+      <ui-card>
+        <ui-card-header>
+          <ui-card-title>Notes</ui-card-title>
+          <ui-card-description>Auto-resize works with reactive form controls.</ui-card-description>
+        </ui-card-header>
+        <ui-card-content>
+          <ui-form-field>
+            <label uiLabel for="auto-reactive">Comment</label>
+            <textarea uiInput uiAutoResize [uiAutoResizeMaxRows]="8" id="auto-reactive" [formControl]="autoResizeControl" placeholder="Write a comment..."></textarea>
+          </ui-form-field>
+        </ui-card-content>
+      </ui-card>
+    </section>
+
   </div>
 </div>

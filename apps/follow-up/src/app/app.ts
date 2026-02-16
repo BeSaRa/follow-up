@@ -54,6 +54,7 @@ import {
   UiAccordionItem,
   UiChip,
   UiChipInput,
+  UiTextareaAutoResize,
 } from '@follow-up/ui'
 import type { SortDirection, PageChangeEvent } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
@@ -113,6 +114,7 @@ import { Endpoints } from './constants/endpoints'
     UiAccordionItem,
     UiChip,
     UiChipInput,
+    UiTextareaAutoResize,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -272,6 +274,9 @@ export class App {
   // Radio demo
   readonly selectedColor = signal<string | null>(null)
   readonly radioFormControl = new FormControl('medium')
+
+  // Textarea auto-resize demo
+  readonly autoResizeControl = new FormControl('')
 
   // Chip demo
   readonly chipTags = signal(['Angular', 'TypeScript', 'RxJS', 'Signals', 'Vite'])
