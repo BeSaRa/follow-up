@@ -1549,5 +1549,62 @@
       </ui-card>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Chip
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Chip</h2>
+
+    <!-- Variants -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Variants</h3>
+      <div class="flex flex-wrap items-center gap-3">
+        <ui-chip variant="primary">Primary</ui-chip>
+        <ui-chip variant="secondary">Secondary</ui-chip>
+        <ui-chip variant="accent">Accent</ui-chip>
+        <ui-chip variant="outline">Outline</ui-chip>
+      </div>
+    </section>
+
+    <!-- Sizes -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Sizes</h3>
+      <div class="flex flex-wrap items-center gap-3">
+        <ui-chip size="sm">Small</ui-chip>
+        <ui-chip size="md">Medium</ui-chip>
+      </div>
+    </section>
+
+    <!-- Removable -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Removable</h3>
+      <div class="flex flex-wrap items-center gap-3">
+        @for (tag of chipTags(); track tag) {
+          <ui-chip removable (removed)="removeChipTag(tag)">{{ tag }}</ui-chip>
+        }
+      </div>
+    </section>
+
+    <!-- Selectable -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Selectable</h3>
+      <div class="flex flex-wrap items-center gap-3">
+        <ui-chip variant="primary">Frontend</ui-chip>
+        <ui-chip variant="primary">Backend</ui-chip>
+        <ui-chip variant="primary">DevOps</ui-chip>
+        <ui-chip variant="primary">Design</ui-chip>
+      </div>
+      <p class="text-sm text-foreground-muted">Click to toggle selection.</p>
+    </section>
+
+    <!-- Disabled -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Disabled</h3>
+      <div class="flex flex-wrap items-center gap-3">
+        <ui-chip disabled>Disabled</ui-chip>
+        <ui-chip disabled [selected]="true">Disabled selected</ui-chip>
+        <ui-chip disabled removable>Disabled removable</ui-chip>
+      </div>
+    </section>
+
   </div>
 </div>

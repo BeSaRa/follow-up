@@ -95,3 +95,6 @@ export { UiProgressBar } from './lib/progress-bar/progress-bar'
 export type { ProgressBarVariant, ProgressBarSize, ProgressBarMode } from './lib/progress-bar/progress-bar'
 
 export { UiAccordion, UiAccordionItem } from './lib/accordion/accordion'
+
+export { UiChip } from './lib/chip/chip'
+export type { ChipVariant, ChipSize } from './lib/chip/chip'
