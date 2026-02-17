@@ -95,6 +95,11 @@ import {
   UiBottomSheetHeader,
   UiBottomSheetContent,
   UiBottomSheetClose,
+  UiTimeline,
+  UiTimelineItem,
+  UiTimelineDot,
+  UiTimelineContent,
+  UiTimelineConnector,
 } from '@follow-up/ui'
 import { CdkTreeNodeDef } from '@angular/cdk/tree'
 import type { SortDirection, PageChangeEvent, ToastPosition, DateRange, FileUploadStatus, FileValidationError, BottomSheetSnapPoint } from '@follow-up/ui'
@@ -201,6 +206,11 @@ interface FileNode {
     UiBottomSheetHeader,
     UiBottomSheetContent,
     UiBottomSheetClose,
+    UiTimeline,
+    UiTimelineItem,
+    UiTimelineDot,
+    UiTimelineContent,
+    UiTimelineConnector,
   ],
   selector: 'app-root',
   templateUrl: './app.html',

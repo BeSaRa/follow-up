@@ -3,7 +3,7 @@
 | Status    | Date       |
 |-----------|------------|
 | Created   | 2026-02-17 |
-| Started   | —          |
+| Started   | 2026-02-17 |
 | Completed | —          |
 
 ---

@@ -2434,5 +2434,113 @@
       </p>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Timeline
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Timeline</h2>
+
+    <!-- Vertical (start-aligned) -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Vertical — Start Aligned</h3>
+      <ui-timeline>
+        <ui-timeline-item status="completed" timestamp="Jan 2026">
+          <ui-timeline-dot />
+          <ui-timeline-connector />
+          <ui-timeline-content>
+            <h4 class="text-sm font-semibold text-foreground">Project Kickoff</h4>
+            <p class="text-sm text-foreground-muted">Initial planning and requirements gathering.</p>
+          </ui-timeline-content>
+        </ui-timeline-item>
+
+        <ui-timeline-item status="active" timestamp="Feb 2026">
+          <ui-timeline-dot />
+          <ui-timeline-connector />
+          <ui-timeline-content>
+            <h4 class="text-sm font-semibold text-foreground">Development</h4>
+            <p class="text-sm text-foreground-muted">Core feature implementation in progress.</p>
+          </ui-timeline-content>
+        </ui-timeline-item>
+
+        <ui-timeline-item status="pending" timestamp="Mar 2026">
+          <ui-timeline-dot />
+          <ui-timeline-connector />
+          <ui-timeline-content>
+            <h4 class="text-sm font-semibold text-foreground">Testing</h4>
+            <p class="text-sm text-foreground-muted">QA and integration testing.</p>
+          </ui-timeline-content>
+        </ui-timeline-item>
+
+        <ui-timeline-item status="pending" timestamp="Apr 2026">
+          <ui-timeline-dot />
+          <ui-timeline-content>
+            <h4 class="text-sm font-semibold text-foreground">Release</h4>
+            <p class="text-sm text-foreground-muted">Production deployment.</p>
+          </ui-timeline-content>
+        </ui-timeline-item>
+      </ui-timeline>
+    </section>
+
+    <!-- Horizontal -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Horizontal</h3>
+      <ui-timeline orientation="horizontal">
+        <ui-timeline-item status="completed">
+          <ui-timeline-dot />
+          <ui-timeline-connector />
+          <ui-timeline-content>
+            <p class="text-sm font-medium text-foreground">Step 1</p>
+          </ui-timeline-content>
+        </ui-timeline-item>
+
+        <ui-timeline-item status="completed">
+          <ui-timeline-dot />
+          <ui-timeline-connector />
+          <ui-timeline-content>
+            <p class="text-sm font-medium text-foreground">Step 2</p>
+          </ui-timeline-content>
+        </ui-timeline-item>
+
+        <ui-timeline-item status="active">
+          <ui-timeline-dot />
+          <ui-timeline-connector />
+          <ui-timeline-content>
+            <p class="text-sm font-medium text-foreground">Step 3</p>
+          </ui-timeline-content>
+        </ui-timeline-item>
+
+        <ui-timeline-item status="pending">
+          <ui-timeline-dot />
+          <ui-timeline-content>
+            <p class="text-sm font-medium text-foreground">Step 4</p>
+          </ui-timeline-content>
+        </ui-timeline-item>
+      </ui-timeline>
+    </section>
+
+    <!-- Custom dot content -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Custom Dot Content</h3>
+      <ui-timeline>
+        <ui-timeline-item status="completed" timestamp="Done">
+          <ui-timeline-dot>
+            <svg class="size-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white" aria-hidden="true">
+              <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+            </svg>
+          </ui-timeline-dot>
+          <ui-timeline-connector [active]="true" />
+          <ui-timeline-content>
+            <p class="text-sm text-foreground">Task completed with custom check icon.</p>
+          </ui-timeline-content>
+        </ui-timeline-item>
+
+        <ui-timeline-item status="active" timestamp="Now">
+          <ui-timeline-dot />
+          <ui-timeline-content>
+            <p class="text-sm text-foreground">Current task in progress.</p>
+          </ui-timeline-content>
+        </ui-timeline-item>
+      </ui-timeline>
+    </section>
+
   </div>
 </div>

@@ -184,3 +184,12 @@ export {
   BOTTOM_SHEET_DATA,
 } from './lib/bottom-sheet/bottom-sheet'
 export type { BottomSheetSnapPoint, BottomSheetConfig } from './lib/bottom-sheet/bottom-sheet'
+
+export {
+  UiTimeline,
+  UiTimelineItem,
+  UiTimelineDot,
+  UiTimelineContent,
+  UiTimelineConnector,
+} from './lib/timeline/timeline'
+export type { TimelineOrientation, TimelineAlign, TimelineItemStatus } from './lib/timeline/timeline'
