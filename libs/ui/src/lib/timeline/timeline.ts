@@ -120,15 +120,15 @@ export class UiTimelineDot {
         </div>
       </div>
     } @else {
-      <!-- Horizontal layout -->
-      <div class="flex flex-col items-center gap-2">
+      <!-- Horizontal layout: axis row (dot + connector), then content below -->
+      <div class="flex items-center">
         <ng-content select="ui-timeline-dot" />
-        @if (timestamp()) {
-          <time class="text-xs text-foreground-muted">{{ timestamp() }}</time>
-        }
-        <ng-content select="ui-timeline-content" />
+        <ng-content select="ui-timeline-connector" />
       </div>
-      <ng-content select="ui-timeline-connector" />
+      @if (timestamp()) {
+        <time class="text-xs text-foreground-muted mt-1 block">{{ timestamp() }}</time>
+      }
+      <ng-content select="ui-timeline-content" />
     }
   `,
 })
@@ -158,7 +158,7 @@ export class UiTimelineItem {
     const idx = this._index()
 
     if (!isVert) {
-      return 'flex items-start flex-1'
+      return 'block flex-1'
     }
 
     // Vertical layout
