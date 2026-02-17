@@ -173,3 +173,14 @@ export type { TreeSelectionMode } from './lib/tree/tree'
 
 export { UiFileUpload, UiFileList, UiFileItem } from './lib/file-upload/file-upload'
 export type { FileUploadStatus, FileValidationError } from './lib/file-upload/file-upload'
+
+export {
+  UiBottomSheet,
+  UiBottomSheetHeader,
+  UiBottomSheetContent,
+  UiBottomSheetClose,
+  BottomSheetService,
+  BottomSheetRef,
+  BOTTOM_SHEET_DATA,
+} from './lib/bottom-sheet/bottom-sheet'
+export type { BottomSheetSnapPoint, BottomSheetConfig } from './lib/bottom-sheet/bottom-sheet'

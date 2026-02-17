@@ -3,8 +3,8 @@
 | Status    | Date       |
 |-----------|------------|
 | Created   | 2026-02-16 |
-| Started   | —          |
-| Completed | —          |
+| Started   | 2026-02-17 |
+| Completed | 2026-02-17 |
 
 ---
 
@@ -157,15 +157,15 @@ Export from `libs/ui/src/index.ts`.
 
 ## Deliverables
 
-- [ ] Create `UiBottomSheet` component with snap points and slide animation
-- [ ] Create `UiBottomSheetHeader`, `UiBottomSheetContent` sub-components
-- [ ] Create `UiBottomSheetClose` directive
-- [ ] Create `BottomSheetService` for imperative open/close with `BottomSheetRef`
-- [ ] Implement snap-point system (`peek`, `half`, `full`) with drag behavior
-- [ ] Implement swipe-to-dismiss gesture
-- [ ] Implement backdrop with close-on-click
-- [ ] Add focus trap and focus restoration
-- [ ] Add ARIA attributes (`role="dialog"`, `aria-modal`, drag handle `role="slider"`)
-- [ ] Write unit tests
-- [ ] Export all public APIs from `libs/ui/src/index.ts`
-- [ ] Add bottom sheet demo section to the showcase app
+- [x] Create `UiBottomSheet` component with snap points and slide animation
+- [x] Create `UiBottomSheetHeader`, `UiBottomSheetContent` sub-components
+- [x] Create `UiBottomSheetClose` directive
+- [x] Create `BottomSheetService` for imperative open/close with `BottomSheetRef`
+- [x] Implement snap-point system (`peek`, `half`, `full`) with drag behavior
+- [x] Implement swipe-to-dismiss gesture
+- [x] Implement backdrop with close-on-click
+- [x] Add focus trap and focus restoration
+- [x] Add ARIA attributes (`role="dialog"`, `aria-modal`, drag handle `role="slider"`)
+- [x] Write unit tests
+- [x] Export all public APIs from `libs/ui/src/index.ts`
+- [x] Add bottom sheet demo section to the showcase app

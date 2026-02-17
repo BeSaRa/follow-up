@@ -2385,5 +2385,54 @@
       </p>
     </section>
 
+    <!-- ══════════════════════════════════════════════════
+         Bottom Sheet
+         ══════════════════════════════════════════════════ -->
+    <h2 class="text-xl font-bold text-foreground border-b border-border pb-2">Bottom Sheet</h2>
+
+    <!-- Template-driven -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Template-driven</h3>
+      <div class="flex flex-wrap gap-3">
+        <button uiButton variant="primary" (click)="bottomSheetOpen.set(true)">Open Bottom Sheet</button>
+        <button uiButton variant="outline" (click)="bottomSheetPeekOpen.set(true)">Open with Peek</button>
+      </div>
+
+      <ui-bottom-sheet [(open)]="bottomSheetOpen" [snapPoints]="['half', 'full']">
+        <ui-bottom-sheet-header>
+          <h3 class="text-lg font-semibold text-foreground">Actions</h3>
+        </ui-bottom-sheet-header>
+        <ui-bottom-sheet-content>
+          <div class="space-y-2">
+            <button uiButton variant="ghost" class="w-full justify-start" uiBottomSheetClose>Share</button>
+            <button uiButton variant="ghost" class="w-full justify-start" uiBottomSheetClose>Copy Link</button>
+            <button uiButton variant="ghost" class="w-full justify-start" uiBottomSheetClose>Download</button>
+            <button uiButton variant="ghost" class="w-full justify-start text-error" uiBottomSheetClose>Delete</button>
+          </div>
+        </ui-bottom-sheet-content>
+      </ui-bottom-sheet>
+
+      <ui-bottom-sheet [(open)]="bottomSheetPeekOpen" [snapPoints]="['peek', 'half', 'full']" initialSnap="peek">
+        <ui-bottom-sheet-header>
+          <h3 class="text-lg font-semibold text-foreground">All Snap Points</h3>
+        </ui-bottom-sheet-header>
+        <ui-bottom-sheet-content>
+          <p class="text-foreground-muted mb-4">
+            This sheet has three snap points: peek (25vh), half (50vh), and full (100vh - 2rem).
+            Drag the handle to resize.
+          </p>
+          <div class="space-y-2">
+            @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
+              <div class="rounded-lg bg-surface-hover p-3">Item {{ i }}</div>
+            }
+          </div>
+        </ui-bottom-sheet-content>
+      </ui-bottom-sheet>
+
+      <p class="text-sm text-foreground-muted">
+        Drag the handle to resize between snap points. Swipe down to dismiss.
+      </p>
+    </section>
+
   </div>
 </div>

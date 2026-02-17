@@ -91,9 +91,13 @@ import {
   UiFileUpload,
   UiFileList,
   UiFileItem,
+  UiBottomSheet,
+  UiBottomSheetHeader,
+  UiBottomSheetContent,
+  UiBottomSheetClose,
 } from '@follow-up/ui'
 import { CdkTreeNodeDef } from '@angular/cdk/tree'
-import type { SortDirection, PageChangeEvent, ToastPosition, DateRange, FileUploadStatus, FileValidationError } from '@follow-up/ui'
+import type { SortDirection, PageChangeEvent, ToastPosition, DateRange, FileUploadStatus, FileValidationError, BottomSheetSnapPoint } from '@follow-up/ui'
 import { AppConfigs } from './constants/app-configs'
 import { Endpoints } from './constants/endpoints'
 
@@ -193,6 +197,10 @@ interface FileNode {
     UiFileUpload,
     UiFileList,
     UiFileItem,
+    UiBottomSheet,
+    UiBottomSheetHeader,
+    UiBottomSheetContent,
+    UiBottomSheetClose,
   ],
   selector: 'app-root',
   templateUrl: './app.html',
@@ -482,6 +490,10 @@ export class App {
   onTreeMultiSelect(nodes: FileNode[]) {
     this.treeMultiSelected.set(nodes)
   }
+
+  // Bottom sheet demo
+  readonly bottomSheetOpen = signal(false)
+  readonly bottomSheetPeekOpen = signal(false)
 
   // File upload demo
   readonly filesControl = new FormControl<File[]>([], { nonNullable: true })
