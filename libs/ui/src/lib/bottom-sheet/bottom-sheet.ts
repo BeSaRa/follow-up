@@ -460,7 +460,8 @@ export class UiBottomSheetClose {
   `,
   template: `
     <ui-bottom-sheet
-      [(open)]="_open"
+      [open]="_open()"
+      (openChange)="_open.set($event)"
       [snapPoints]="_snapPoints()"
       [initialSnap]="_initialSnap()"
       [swipeToDismiss]="_swipeToDismiss()"
