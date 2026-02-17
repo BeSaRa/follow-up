@@ -103,33 +103,18 @@ export class UiTimelineDot {
     '[attr.aria-label]': 'ariaLabel()',
   },
   template: `
-    @if (isVertical()) {
-      <div class="flex gap-4">
-        <!-- Axis column: dot + connector -->
-        <div class="flex flex-col items-center">
-          <ng-content select="ui-timeline-dot" />
-          <ng-content select="ui-timeline-connector" />
-        </div>
-
-        <!-- Content column -->
-        <div class="flex-1 min-w-0">
-          @if (timestamp()) {
-            <time class="text-xs text-foreground-muted mb-1 block">{{ timestamp() }}</time>
-          }
-          <ng-content select="ui-timeline-content" />
-        </div>
-      </div>
-    } @else {
-      <!-- Horizontal layout: axis row (dot + connector), then content below -->
-      <div class="flex items-center">
+    <div [class]="wrapperClasses()">
+      <div [class]="axisClasses()">
         <ng-content select="ui-timeline-dot" />
         <ng-content select="ui-timeline-connector" />
       </div>
-      @if (timestamp()) {
-        <time class="text-xs text-foreground-muted mt-1 block">{{ timestamp() }}</time>
-      }
-      <ng-content select="ui-timeline-content" />
-    }
+      <div [class]="contentAreaClasses()">
+        @if (timestamp()) {
+          <time [class]="timestampClasses()">{{ timestamp() }}</time>
+        }
+        <ng-content select="ui-timeline-content" />
+      </div>
+    </div>
   `,
 })
 export class UiTimelineItem {
@@ -142,6 +127,26 @@ export class UiTimelineItem {
   readonly index = this._index.asReadonly()
 
   readonly isVertical = computed(() => this.timeline.orientation() === 'vertical')
+
+  protected readonly wrapperClasses = computed(() =>
+    this.isVertical() ? 'flex gap-4' : 'block',
+  )
+
+  protected readonly axisClasses = computed(() =>
+    this.isVertical()
+      ? 'flex flex-col items-center'
+      : 'flex items-center',
+  )
+
+  protected readonly contentAreaClasses = computed(() =>
+    this.isVertical() ? 'flex-1 min-w-0' : 'mt-1',
+  )
+
+  protected readonly timestampClasses = computed(() =>
+    this.isVertical()
+      ? 'text-xs text-foreground-muted mb-1 block'
+      : 'text-xs text-foreground-muted block',
+  )
 
   protected readonly ariaLabel = computed(() => {
     const idx = this._index()
