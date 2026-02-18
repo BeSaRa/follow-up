@@ -2480,6 +2480,35 @@
       </ui-timeline>
     </section>
 
+    <!-- Vertical reversed (bottom to top) -->
+    <section class="space-y-3">
+      <h3 class="text-lg font-semibold text-foreground">Vertical — Bottom to Top</h3>
+      <ui-timeline [reverse]="true">
+        <ui-timeline-item status="completed" timestamp="Jan 2026">
+          <ui-timeline-dot />
+          <ui-timeline-connector />
+          <ui-timeline-content>
+            <h4 class="text-sm font-semibold text-foreground">Project Kickoff</h4>
+          </ui-timeline-content>
+        </ui-timeline-item>
+
+        <ui-timeline-item status="active" timestamp="Feb 2026">
+          <ui-timeline-dot />
+          <ui-timeline-connector />
+          <ui-timeline-content>
+            <h4 class="text-sm font-semibold text-foreground">Development</h4>
+          </ui-timeline-content>
+        </ui-timeline-item>
+
+        <ui-timeline-item status="pending" timestamp="Mar 2026">
+          <ui-timeline-dot />
+          <ui-timeline-content>
+            <h4 class="text-sm font-semibold text-foreground">Release</h4>
+          </ui-timeline-content>
+        </ui-timeline-item>
+      </ui-timeline>
+    </section>
+
     <!-- Horizontal -->
     <section class="space-y-3">
       <h3 class="text-lg font-semibold text-foreground">Horizontal</h3>
