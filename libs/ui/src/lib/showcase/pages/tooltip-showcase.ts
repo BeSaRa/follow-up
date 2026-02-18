@@ -88,6 +88,7 @@ const EXAMPLES = {
               title="Positions"
               description="Tooltips can be positioned above, below, at the start, or at the end of the host element."
               [htmlCode]="positionsHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3 justify-center py-8">
                 <button uiButton variant="outline" uiTooltip="Tooltip above" uiTooltipPosition="above">Above</button>
@@ -101,6 +102,7 @@ const EXAMPLES = {
               title="Show Delay"
               description="Configure the delay before the tooltip appears."
               [htmlCode]="delaysHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3 justify-center py-8">
                 <button uiButton variant="outline" uiTooltip="Instant tooltip" [uiTooltipShowDelay]="0">No Delay</button>
@@ -112,6 +114,7 @@ const EXAMPLES = {
               title="Disabled"
               description="Tooltips can be disabled to prevent them from showing."
               [htmlCode]="disabledHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3 justify-center py-8">
                 <button uiButton variant="outline" uiTooltip="This won't show" [uiTooltipDisabled]="true">Disabled Tooltip</button>
@@ -137,4 +140,5 @@ export class TooltipShowcase {
   protected readonly positionsHtml = EXAMPLES.positions
   protected readonly delaysHtml = EXAMPLES.delays
   protected readonly disabledHtml = EXAMPLES.disabled
+  protected readonly focusTerms = ['uiTooltip', 'uiTooltipPosition', 'uiTooltipShowDelay', 'uiTooltipHideDelay', 'uiTooltipDisabled']
 }

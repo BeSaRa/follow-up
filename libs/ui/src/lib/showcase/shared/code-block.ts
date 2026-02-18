@@ -7,7 +7,39 @@ import {
   signal,
 } from '@angular/core'
 import { DomSanitizer, type SafeHtml } from '@angular/platform-browser'
+import type { DecorationItem } from '@shikijs/types'
 import { type CodeLanguage, ShikiService } from './shiki.service'
+
+const FOCUS_STYLES = `<style>.sf .line>span:not(.focused){opacity:.35;transition:opacity 150ms}.sf .focused,.sf .focused span{opacity:1}</style>`
+
+function computeFocusDecorations(code: string, terms: string[]): DecorationItem[] {
+  if (!terms.length) return []
+  const escaped = terms
+    .sort((a, b) => b.length - a.length)
+    .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const pattern = new RegExp(
+    `\\[?(${escaped.join('|')})\\]?(=(?:"[^"]*"|'[^']*'))?`,
+    'g',
+  )
+  const lines = code.split('\n')
+  const decorations: DecorationItem[] = []
+  for (let line = 0; line < lines.length; line++) {
+    let match: RegExpExecArray | null
+    pattern.lastIndex = 0
+    while ((match = pattern.exec(lines[line])) !== null) {
+      decorations.push({
+        start: { line, character: match.index },
+        end: { line, character: match.index + match[0].length },
+        properties: { class: 'focused' },
+      })
+    }
+  }
+  return decorations
+}
+
+function injectFocusClass(html: string): string {
+  return FOCUS_STYLES + html.replace('<pre class="shiki', '<pre class="shiki sf')
+}
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -53,6 +85,7 @@ export class ShowcaseCodeBlock {
 
   readonly code = input.required<string>()
   readonly language = input<CodeLanguage>('typescript')
+  readonly focusTerms = input<string[]>([])
 
   protected readonly highlightedHtml = signal<SafeHtml>('')
   protected readonly copied = signal(false)
@@ -61,8 +94,12 @@ export class ShowcaseCodeBlock {
     effect(() => {
       const code = this.code()
       const lang = this.language()
-      this.shikiService.highlight(code, lang).then(html => {
-        this.highlightedHtml.set(this.sanitizer.bypassSecurityTrustHtml(html))
+      const terms = this.focusTerms()
+      const decorations = computeFocusDecorations(code, terms)
+      this.shikiService.highlight(code, lang, decorations.length ? decorations : undefined).then(html => {
+        this.highlightedHtml.set(
+          this.sanitizer.bypassSecurityTrustHtml(decorations.length ? injectFocusClass(html) : html),
+        )
       })
     })
   }

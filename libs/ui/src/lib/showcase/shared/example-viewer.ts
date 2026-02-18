@@ -84,13 +84,13 @@ type CodeTab = 'html' | 'ts' | 'css'
           </div>
           @switch (activeTab()) {
             @case ('html') {
-              <showcase-code-block [code]="htmlCode()" language="html" />
+              <showcase-code-block [code]="htmlCode()" language="html" [focusTerms]="focusTerms()" />
             }
             @case ('ts') {
-              <showcase-code-block [code]="tsCode()" language="typescript" />
+              <showcase-code-block [code]="tsCode()" language="typescript" [focusTerms]="focusTerms()" />
             }
             @case ('css') {
-              <showcase-code-block [code]="cssCode()" language="css" />
+              <showcase-code-block [code]="cssCode()" language="css" [focusTerms]="focusTerms()" />
             }
           }
         </div>
@@ -107,6 +107,7 @@ export class ShowcaseExampleViewer {
   readonly htmlCode = input('')
   readonly tsCode = input('')
   readonly cssCode = input('')
+  readonly focusTerms = input<string[]>([])
 
   protected readonly showCode = signal(false)
   protected readonly activeTab = signal<CodeTab>('html')
