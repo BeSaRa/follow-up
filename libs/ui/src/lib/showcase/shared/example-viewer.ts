@@ -113,5 +113,12 @@ export class ShowcaseExampleViewer {
 
   protected toggleCode() {
     this.showCode.update(v => !v)
+    if (this.showCode()) {
+      this.activeTab.set(
+        this.htmlCode() ? 'html' :
+        this.tsCode() ? 'ts' :
+        this.cssCode() ? 'css' : 'html',
+      )
+    }
   }
 }
