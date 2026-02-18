@@ -89,6 +89,7 @@ const EXAMPLES = {
               title="Basic Popover"
               description="A simple popover with a title, description, and a close button."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3 justify-center py-8">
                 <button uiButton variant="outline" [uiPopoverTrigger]="basicPopover">Open Popover</button>
@@ -107,6 +108,7 @@ const EXAMPLES = {
               title="Positions"
               description="Popovers can be positioned above, below, at the start, or at the end of the trigger."
               [htmlCode]="positionsHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3 justify-center py-12">
                 <button uiButton variant="outline" [uiPopoverTrigger]="abovePopover">Above</button>
@@ -157,4 +159,5 @@ export class PopoverShowcase {
   protected readonly cssProperties = CSS_PROPERTIES
   protected readonly basicHtml = EXAMPLES.basic
   protected readonly positionsHtml = EXAMPLES.positions
+  protected readonly focusTerms = ['uiPopoverTrigger', 'uiPopoverClose', 'position']
 }

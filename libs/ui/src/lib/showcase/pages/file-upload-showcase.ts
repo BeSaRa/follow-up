@@ -149,6 +149,7 @@ const EXAMPLES = {
               title="Basic File Upload"
               description="Drag and drop files or click to browse. Uploaded files appear below."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="max-w-md space-y-3">
                 <ui-file-upload (fileAdded)="onFilesAdded($event)" />
@@ -171,6 +172,7 @@ const EXAMPLES = {
               title="With Validation"
               description="Restrict accepted file types, maximum file size (5 MB), and maximum file count (3)."
               [htmlCode]="acceptHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="max-w-md">
                 <ui-file-upload
@@ -214,4 +216,5 @@ export class FileUploadShowcase {
   removeFile(file: File) {
     this.uploadedFiles.update(current => current.filter(f => f !== file))
   }
+  protected readonly focusTerms = ['accept', 'maxFileSize', 'maxFiles', 'multiple', 'disabled', 'fileAdded', 'fileRemoved']
 }

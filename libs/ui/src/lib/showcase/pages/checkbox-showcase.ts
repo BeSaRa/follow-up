@@ -88,6 +88,7 @@ const EXAMPLES = {
               title="Basic Checkbox"
               description="A simple checkbox with a label."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-checkbox>Accept terms and conditions</ui-checkbox>
             </showcase-example-viewer>
@@ -96,6 +97,7 @@ const EXAMPLES = {
               title="Indeterminate"
               description="The indeterminate state is useful for 'select all' checkboxes where only some children are selected."
               [htmlCode]="indeterminateHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-checkbox [indeterminate]="true">Select all</ui-checkbox>
             </showcase-example-viewer>
@@ -104,6 +106,7 @@ const EXAMPLES = {
               title="Disabled"
               description="Checkboxes can be disabled in both checked and unchecked states."
               [htmlCode]="disabledHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-4">
                 <ui-checkbox disabled>Disabled unchecked</ui-checkbox>
@@ -115,6 +118,7 @@ const EXAMPLES = {
               title="Label Positions"
               description="The label can be placed before or after the checkbox."
               [htmlCode]="labelPositionsHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-6">
                 <ui-checkbox labelPosition="after">Label after</ui-checkbox>
@@ -126,6 +130,7 @@ const EXAMPLES = {
               title="Sizes"
               description="Checkboxes come in small and medium sizes."
               [htmlCode]="sizesHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap items-center gap-6">
                 <ui-checkbox size="sm">Small checkbox</ui-checkbox>
@@ -154,4 +159,5 @@ export class CheckboxShowcase {
   protected readonly disabledHtml = EXAMPLES.disabled
   protected readonly labelPositionsHtml = EXAMPLES.labelPositions
   protected readonly sizesHtml = EXAMPLES.sizes
+  protected readonly focusTerms = ['checked', 'indeterminate', 'disabled', 'size', 'labelPosition']
 }

@@ -59,6 +59,7 @@ const EXAMPLES = {
               title="Sizes"
               description="The spinner comes in three sizes: small, medium, and large."
               [htmlCode]="sizesHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap items-center gap-6">
                 <ui-spinner size="sm" />
@@ -71,6 +72,7 @@ const EXAMPLES = {
               title="Inline Usage"
               description="A small spinner can be placed inline alongside text or inside buttons."
               [htmlCode]="inlineHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap items-center gap-6">
                 <div class="inline-flex items-center gap-2 text-sm text-foreground-muted">
@@ -98,4 +100,5 @@ export class SpinnerShowcase {
   protected readonly cssProperties = CSS_PROPERTIES
   protected readonly sizesHtml = EXAMPLES.sizes
   protected readonly inlineHtml = EXAMPLES.inline
+  protected readonly focusTerms = ['size']
 }

@@ -163,6 +163,7 @@ const EXAMPLES = {
               title="Basic Table"
               description="A simple table displaying rows of data."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="overflow-x-auto rounded-lg border border-border">
                 <table uiTable>
@@ -190,6 +191,7 @@ const EXAMPLES = {
               title="Striped Rows"
               description="Alternating row colors improve scanability of dense data."
               [htmlCode]="stripedHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="overflow-x-auto rounded-lg border border-border">
                 <table uiTable striped>
@@ -217,6 +219,7 @@ const EXAMPLES = {
               title="Sortable Headers"
               description="Click a sortable column header to toggle between ascending and descending sort."
               [htmlCode]="sortableHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="overflow-x-auto rounded-lg border border-border">
                 <table uiTable>
@@ -285,4 +288,5 @@ export class TableShowcase {
 
     return data
   })
+  protected readonly focusTerms = ['striped', 'stickyHeader', 'sortable', 'sortDirection', 'resizable', 'sortChange']
 }

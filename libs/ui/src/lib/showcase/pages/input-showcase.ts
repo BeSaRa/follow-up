@@ -75,6 +75,7 @@ const EXAMPLES = {
               title="Basic Input"
               description="A simple text input with a placeholder."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="max-w-sm">
                 <input uiInput placeholder="Enter your name" />
@@ -85,6 +86,7 @@ const EXAMPLES = {
               title="Textarea"
               description="The uiInput directive also works on textarea elements."
               [htmlCode]="textareaHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="max-w-sm">
                 <textarea uiInput placeholder="Enter a description"></textarea>
@@ -95,6 +97,7 @@ const EXAMPLES = {
               title="With Label and Hint"
               description="Use UiFormField, UiLabel, and UiFormHint for a complete form field composition."
               [htmlCode]="labelHintHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="max-w-sm">
                 <ui-form-field>
@@ -109,6 +112,7 @@ const EXAMPLES = {
               title="With Error State"
               description="Set the error input to display error styling, and use UiFormError for the error message."
               [htmlCode]="errorHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="max-w-sm">
                 <ui-form-field>
@@ -123,6 +127,7 @@ const EXAMPLES = {
               title="Form Field Composition"
               description="Compose multiple form fields using the UiFormField wrapper."
               [htmlCode]="formFieldHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="max-w-sm space-y-4">
                 <ui-form-field>
@@ -160,4 +165,5 @@ export class InputShowcase {
   protected readonly labelHintHtml = EXAMPLES.labelHint
   protected readonly errorHtml = EXAMPLES.error
   protected readonly formFieldHtml = EXAMPLES.formField
+  protected readonly focusTerms = ['uiInput', 'uiLabel', 'uiFormHint', 'uiFormError', 'error']
 }

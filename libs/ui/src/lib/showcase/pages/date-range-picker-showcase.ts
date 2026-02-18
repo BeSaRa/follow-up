@@ -79,6 +79,7 @@ const EXAMPLES = {
               title="Basic Date Range Picker"
               description="Select a start date first, then an end date. The calendar stays open between picks. Dates are automatically swapped if the end is before the start."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-date-range-picker>
                 <input uiDateRangeStart placeholder="Start date" />
@@ -104,4 +105,5 @@ export class DateRangePickerShowcase {
   protected readonly apiProperties = API_PROPERTIES
   protected readonly cssProperties = CSS_PROPERTIES
   protected readonly basicHtml = EXAMPLES.basic
+  protected readonly focusTerms = ['uiDateRangeStart', 'uiDateRangeEnd', 'min', 'max', 'dateFilter', 'disabled']
 }

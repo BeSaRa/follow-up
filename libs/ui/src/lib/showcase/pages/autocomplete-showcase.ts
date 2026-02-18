@@ -141,6 +141,7 @@ const ALL_FRUITS = [
               title="Basic Autocomplete"
               description="Type to filter the fruit list. Select an option from the dropdown."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-autocomplete
                 placeholder="Search fruits..."
@@ -159,6 +160,7 @@ const ALL_FRUITS = [
               title="Disabled"
               description="The autocomplete can be disabled to prevent interaction."
               [htmlCode]="disabledHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-autocomplete placeholder="Disabled" disabled style="width: 260px">
                 <ui-autocomplete-option value="apple">Apple</ui-autocomplete-option>
@@ -197,4 +199,5 @@ export class AutocompleteShowcase {
       ALL_FRUITS.filter(f => f.toLowerCase().includes(lower)),
     )
   }
+  protected readonly focusTerms = ['placeholder', 'disabled', 'searchChange', 'size', 'displayWith', 'value']
 }

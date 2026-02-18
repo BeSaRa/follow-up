@@ -128,6 +128,7 @@ function getChildren(node: FileNode): FileNode[] {
               title="Basic Tree"
               description="A file-system-like tree with expandable folders."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="rounded-lg border border-border p-4">
                 <ui-tree #basicTree
@@ -155,6 +156,7 @@ function getChildren(node: FileNode): FileNode[] {
               title="With Selection"
               description="Enable single selection mode to allow picking one node at a time."
               [htmlCode]="selectionHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="rounded-lg border border-border p-4">
                 <ui-tree #selTree
@@ -200,4 +202,5 @@ export class TreeShowcase {
 
   protected readonly data = BASIC_DATA
   protected readonly childrenAccessor = getChildren
+  protected readonly focusTerms = ['dataSource', 'childrenAccessor', 'selectionMode', 'selectionChange', 'uiTreeNodeToggle', 'uiTreeNodePadding']
 }

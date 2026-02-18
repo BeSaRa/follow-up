@@ -98,6 +98,7 @@ const EXAMPLES = {
               title="Variants"
               description="The chip supports four visual variants."
               [htmlCode]="variantsHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3">
                 <ui-chip variant="primary">Primary</ui-chip>
@@ -111,6 +112,7 @@ const EXAMPLES = {
               title="Sizes"
               description="Chips come in two sizes: small and medium."
               [htmlCode]="sizesHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap items-center gap-3">
                 <ui-chip size="sm">Small</ui-chip>
@@ -122,6 +124,7 @@ const EXAMPLES = {
               title="Removable"
               description="Chips can display a remove button that emits when clicked."
               [htmlCode]="removableHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3">
                 <ui-chip removable>Removable Primary</ui-chip>
@@ -134,6 +137,7 @@ const EXAMPLES = {
               title="Selectable"
               description="Chips can be toggled between selected and unselected states by clicking."
               [htmlCode]="selectableHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3">
                 <ui-chip [(selected)]="selectedPrimary" variant="primary">Primary</ui-chip>
@@ -147,6 +151,7 @@ const EXAMPLES = {
               title="Disabled"
               description="Chips can be disabled to prevent interaction."
               [htmlCode]="disabledHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3">
                 <ui-chip disabled>Disabled</ui-chip>
@@ -176,6 +181,7 @@ export class ChipShowcase {
   protected readonly selectableHtml = EXAMPLES.selectable
   protected readonly disabledHtml = EXAMPLES.disabled
 
+  protected readonly focusTerms = ['variant', 'size', 'removable', 'disabled', 'selected', 'removed']
   protected readonly selectedPrimary = signal(false)
   protected readonly selectedSecondary = signal(true)
   protected readonly selectedAccent = signal(false)

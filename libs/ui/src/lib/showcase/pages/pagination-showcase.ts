@@ -114,6 +114,7 @@ const EXAMPLES = {
               title="Basic Pagination"
               description="A fully-featured pagination control with page size selector and first/last buttons."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-pagination
                 [totalItems]="100"
@@ -127,6 +128,7 @@ const EXAMPLES = {
               title="Custom Page Sizes"
               description="The page size options can be customized to fit the data set."
               [htmlCode]="pageSizesHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-pagination
                 [totalItems]="200"
@@ -141,6 +143,7 @@ const EXAMPLES = {
               title="Minimal Pagination"
               description="Hide the page size selector and first/last buttons for a compact pagination control."
               [htmlCode]="minimalHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-pagination
                 [totalItems]="50"
@@ -195,4 +198,5 @@ export class PaginationShowcase {
     this.minimalPageIndex.set(event.pageIndex)
     this.minimalPageSize.set(event.pageSize)
   }
+  protected readonly focusTerms = ['totalItems', 'pageSize', 'pageIndex', 'pageSizeOptions', 'showFirstLastButtons', 'showPageSizeSelector', 'pageChange']
 }

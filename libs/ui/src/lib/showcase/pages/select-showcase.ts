@@ -119,6 +119,7 @@ const EXAMPLES = {
               title="Basic Select"
               description="A simple select with three options."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-select style="width: 200px">
                 <ui-select-option value="apple">Apple</ui-select-option>
@@ -131,6 +132,7 @@ const EXAMPLES = {
               title="With Placeholder"
               description="Customize the placeholder text shown before a selection is made."
               [htmlCode]="placeholderHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-select placeholder="Pick a fruit" style="width: 200px">
                 <ui-select-option value="apple">Apple</ui-select-option>
@@ -143,6 +145,7 @@ const EXAMPLES = {
               title="Disabled"
               description="The entire select or individual options can be disabled."
               [htmlCode]="disabledHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-4">
                 <ui-select placeholder="Disabled" disabled style="width: 200px">
@@ -162,6 +165,7 @@ const EXAMPLES = {
               title="Sizes"
               description="The select trigger comes in two sizes: small and medium."
               [htmlCode]="sizesHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap items-center gap-4">
                 <ui-select size="sm" placeholder="Small" style="width: 180px">
@@ -201,4 +205,5 @@ export class SelectShowcase {
   protected readonly placeholderHtml = EXAMPLES.placeholder
   protected readonly disabledHtml = EXAMPLES.disabled
   protected readonly sizesHtml = EXAMPLES.sizes
+  protected readonly focusTerms = ['placeholder', 'disabled', 'size', 'value']
 }

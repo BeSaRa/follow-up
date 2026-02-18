@@ -68,6 +68,7 @@ const EXAMPLES = {
               title="Horizontal"
               description="The default horizontal divider spans the full width of its container."
               [htmlCode]="horizontalHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="space-y-4">
                 <p class="text-sm text-foreground">Content above the divider.</p>
@@ -80,6 +81,7 @@ const EXAMPLES = {
               title="Vertical"
               description="A vertical divider for separating inline content."
               [htmlCode]="verticalHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex items-center h-6 gap-4">
                 <span class="text-sm text-foreground">Left</span>
@@ -92,6 +94,7 @@ const EXAMPLES = {
               title="With Label"
               description="Horizontal dividers can include a centered text label."
               [htmlCode]="withLabelHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="space-y-6">
                 <ui-divider>OR</ui-divider>
@@ -103,6 +106,7 @@ const EXAMPLES = {
               title="Inset"
               description="An inset divider adds padding to the start of the line."
               [htmlCode]="insetHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="space-y-4">
                 <p class="text-sm text-foreground">Content above.</p>
@@ -131,4 +135,5 @@ export class DividerShowcase {
   protected readonly verticalHtml = EXAMPLES.vertical
   protected readonly withLabelHtml = EXAMPLES.withLabel
   protected readonly insetHtml = EXAMPLES.inset
+  protected readonly focusTerms = ['orientation', 'inset']
 }

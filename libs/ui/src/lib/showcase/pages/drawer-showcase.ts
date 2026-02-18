@@ -166,6 +166,7 @@ const EXAMPLES = {
               title="Start Position"
               description="A drawer that slides in from the start (left in LTR) side of the viewport."
               [htmlCode]="startHtml"
+              [focusTerms]="focusTerms"
             >
               <button
                 class="px-4 py-2 text-sm rounded-md bg-primary text-on-primary hover:bg-primary/90 transition-colors"
@@ -196,6 +197,7 @@ const EXAMPLES = {
               title="End Position"
               description="A drawer that slides in from the end (right in LTR) side of the viewport."
               [htmlCode]="endHtml"
+              [focusTerms]="focusTerms"
             >
               <button
                 class="px-4 py-2 text-sm rounded-md bg-primary text-on-primary hover:bg-primary/90 transition-colors"
@@ -218,6 +220,7 @@ const EXAMPLES = {
               title="Push Mode"
               description="The drawer pushes the main content instead of overlaying it. Wrap in ui-drawer-container."
               [htmlCode]="pushHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-drawer-container class="h-64 border border-border rounded-lg overflow-hidden">
                 <ui-drawer [(open)]="pushOpen" mode="push" position="start" ariaLabel="Push drawer">
@@ -267,4 +270,5 @@ export class DrawerShowcase {
   protected togglePush() {
     this.pushOpen.update(v => !v)
   }
+  protected readonly focusTerms = ['open', 'position', 'mode', 'hasBackdrop', 'closeOnBackdropClick', 'closeOnEscape', 'opened', 'closed', 'uiDrawerClose']
 }

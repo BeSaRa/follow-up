@@ -132,6 +132,7 @@ const EXAMPLES = {
               title="Horizontal Stepper"
               description="The default horizontal layout with navigation buttons inside each step."
               [htmlCode]="horizontalHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-stepper #hStepper [(selectedIndex)]="horizontalStep">
                 <ui-step label="Account">
@@ -165,6 +166,7 @@ const EXAMPLES = {
               title="Vertical Stepper"
               description="A vertical layout where steps are stacked with connecting lines."
               [htmlCode]="verticalHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-stepper #vStepper orientation="vertical" [(selectedIndex)]="verticalStep">
                 <ui-step label="Step One">
@@ -195,6 +197,7 @@ const EXAMPLES = {
               title="Linear Mode"
               description="In linear mode, users must complete each step before moving forward. Optional steps can be skipped."
               [htmlCode]="linearHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-stepper #lStepper linear [(selectedIndex)]="linearStep">
                 <ui-step label="Required Step" [completed]="linearStep1Done()">
@@ -249,4 +252,5 @@ export class StepperShowcase {
   protected completeLinearStep1() {
     this.linearStep1Done.set(true)
   }
+  protected readonly focusTerms = ['selectedIndex', 'linear', 'orientation', 'label', 'completed', 'optional']
 }

@@ -80,6 +80,7 @@ const EXAMPLES = {
               title="Basic Toggle"
               description="A simple slide toggle with a label."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-slide-toggle>Enable notifications</ui-slide-toggle>
             </showcase-example-viewer>
@@ -88,6 +89,7 @@ const EXAMPLES = {
               title="Sizes"
               description="Slide toggles come in small and medium sizes."
               [htmlCode]="sizesHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap items-center gap-6">
                 <ui-slide-toggle size="sm">Small</ui-slide-toggle>
@@ -99,6 +101,7 @@ const EXAMPLES = {
               title="Label Positions"
               description="The label can be placed before or after the toggle."
               [htmlCode]="labelPositionsHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-6">
                 <ui-slide-toggle labelPosition="after">Label after</ui-slide-toggle>
@@ -110,6 +113,7 @@ const EXAMPLES = {
               title="Disabled"
               description="Slide toggles can be disabled in both on and off states."
               [htmlCode]="disabledHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-6">
                 <ui-slide-toggle disabled>Disabled off</ui-slide-toggle>
@@ -137,4 +141,5 @@ export class SlideToggleShowcase {
   protected readonly sizesHtml = EXAMPLES.sizes
   protected readonly labelPositionsHtml = EXAMPLES.labelPositions
   protected readonly disabledHtml = EXAMPLES.disabled
+  protected readonly focusTerms = ['checked', 'disabled', 'size', 'labelPosition']
 }

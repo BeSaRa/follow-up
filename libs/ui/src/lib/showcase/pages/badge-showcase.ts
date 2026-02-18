@@ -69,6 +69,7 @@ const EXAMPLES = {
               title="Variants"
               description="The badge supports eight visual variants for different semantic meanings."
               [htmlCode]="variantsHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3">
                 <ui-badge variant="primary">Primary</ui-badge>
@@ -86,6 +87,7 @@ const EXAMPLES = {
               title="Sizes"
               description="Badges come in two sizes: small and medium."
               [htmlCode]="sizesHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap items-center gap-3">
                 <ui-badge size="sm">Small</ui-badge>
@@ -111,4 +113,5 @@ export class BadgeShowcase {
   protected readonly cssProperties = CSS_PROPERTIES
   protected readonly variantsHtml = EXAMPLES.variants
   protected readonly sizesHtml = EXAMPLES.sizes
+  protected readonly focusTerms = ['variant', 'size']
 }

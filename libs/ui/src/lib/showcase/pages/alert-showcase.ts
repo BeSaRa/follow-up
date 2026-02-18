@@ -90,6 +90,7 @@ const EXAMPLES = {
               title="Variants"
               description="Alerts come in four variants for different contextual feedback."
               [htmlCode]="variantsHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="space-y-3">
                 <ui-alert variant="success">
@@ -115,6 +116,7 @@ const EXAMPLES = {
               title="Dismissible"
               description="Alerts can be dismissed by the user when the dismissible input is set."
               [htmlCode]="dismissibleHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="space-y-3">
                 @if (showDismissible()) {
@@ -157,4 +159,5 @@ export class AlertShowcase {
   dismissAlert() {
     this.showDismissible.set(false)
   }
+  protected readonly focusTerms = ['variant', 'dismissible', 'dismissed']
 }

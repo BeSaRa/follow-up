@@ -124,6 +124,7 @@ const EXAMPLES = {
               title="Basic Group"
               description="A vertical radio group with three options."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-radio-group>
                 <ui-radio-button value="apple">Apple</ui-radio-button>
@@ -136,6 +137,7 @@ const EXAMPLES = {
               title="Horizontal Layout"
               description="Set orientation to horizontal to lay out radio buttons in a row."
               [htmlCode]="horizontalHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-radio-group orientation="horizontal">
                 <ui-radio-button value="sm">Small</ui-radio-button>
@@ -148,6 +150,7 @@ const EXAMPLES = {
               title="Disabled"
               description="The entire group or individual radio buttons can be disabled."
               [htmlCode]="disabledHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="space-y-6">
                 <div>
@@ -193,4 +196,5 @@ export class RadioShowcase {
   protected readonly basicHtml = EXAMPLES.basic
   protected readonly horizontalHtml = EXAMPLES.horizontal
   protected readonly disabledHtml = EXAMPLES.disabled
+  protected readonly focusTerms = ['value', 'disabled', 'orientation', 'size']
 }

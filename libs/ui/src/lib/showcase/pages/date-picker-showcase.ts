@@ -112,6 +112,7 @@ const EXAMPLES = {
               title="Basic Date Picker"
               description="Click the calendar icon or press Enter/ArrowDown in the input to open the calendar. Type a date directly or pick from the calendar."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-date-picker>
                 <input uiDatePickerInput placeholder="MM/DD/YYYY" />
@@ -141,4 +142,5 @@ export class DatePickerShowcase {
   protected readonly toggleApiProperties = TOGGLE_API_PROPERTIES
   protected readonly cssProperties = CSS_PROPERTIES
   protected readonly basicHtml = EXAMPLES.basic
+  protected readonly focusTerms = ['uiDatePickerInput', 'placeholder', 'min', 'max', 'dateFilter', 'startAt', 'disabled', 'value']
 }

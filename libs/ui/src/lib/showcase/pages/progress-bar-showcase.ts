@@ -82,6 +82,7 @@ const EXAMPLES = {
               title="All Variants"
               description="Five color variants to convey different meanings."
               [htmlCode]="variantsHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="space-y-4">
                 <div class="space-y-1">
@@ -111,6 +112,7 @@ const EXAMPLES = {
               title="All Sizes"
               description="Available in small and medium heights."
               [htmlCode]="sizesHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="space-y-4">
                 <div class="space-y-1">
@@ -128,6 +130,7 @@ const EXAMPLES = {
               title="Indeterminate Mode"
               description="An animated bar for operations with unknown duration."
               [htmlCode]="indeterminateHtml"
+              [focusTerms]="focusTerms"
             >
               <div class="space-y-4">
                 <div class="space-y-1">
@@ -160,4 +163,5 @@ export class ProgressBarShowcase {
   protected readonly variantsHtml = EXAMPLES.variants
   protected readonly sizesHtml = EXAMPLES.sizes
   protected readonly indeterminateHtml = EXAMPLES.indeterminate
+  protected readonly focusTerms = ['variant', 'value', 'mode', 'size']
 }

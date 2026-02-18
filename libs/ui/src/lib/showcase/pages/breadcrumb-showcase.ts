@@ -70,6 +70,7 @@ const EXAMPLES = {
               title="Basic Breadcrumb"
               description="A standard breadcrumb trail with the default slash separator."
               [htmlCode]="basicHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-breadcrumb>
                 <ui-breadcrumb-item><a href="#">Home</a></ui-breadcrumb-item>
@@ -84,6 +85,7 @@ const EXAMPLES = {
               title="Custom Separator"
               description="The separator can be customized by projecting content into ui-breadcrumb-separator."
               [htmlCode]="customSeparatorHtml"
+              [focusTerms]="focusTerms"
             >
               <ui-breadcrumb>
                 <ui-breadcrumb-item><a href="#">Home</a></ui-breadcrumb-item>
@@ -112,4 +114,5 @@ export class BreadcrumbShowcase {
   protected readonly cssProperties = CSS_PROPERTIES
   protected readonly basicHtml = EXAMPLES.basic
   protected readonly customSeparatorHtml = EXAMPLES.customSeparator
+  protected readonly focusTerms = ['active']
 }
