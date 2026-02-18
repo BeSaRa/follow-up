@@ -96,7 +96,6 @@ const EXAMPLES = {
               title="Sizes"
               description="Avatars come in three sizes: small, medium, and large."
               [htmlCode]="sizesHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap items-center gap-4">
                 <ui-avatar size="sm" initials="SM" />
@@ -109,7 +108,6 @@ const EXAMPLES = {
               title="With Image"
               description="Avatars can display an image when a src URL is provided."
               [htmlCode]="withImageHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap items-center gap-4">
                 <ui-avatar src="https://i.pravatar.cc/150?img=1" alt="User avatar" />
@@ -121,7 +119,6 @@ const EXAMPLES = {
               title="Initials"
               description="When no image is provided, initials are displayed as the fallback."
               [htmlCode]="initialsHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap items-center gap-4">
                 <ui-avatar initials="AB" />
@@ -134,7 +131,6 @@ const EXAMPLES = {
               title="Default Fallback"
               description="When neither image nor initials are provided, a default user icon is displayed."
               [htmlCode]="fallbackHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap items-center gap-4">
                 <ui-avatar size="sm" />
@@ -147,7 +143,6 @@ const EXAMPLES = {
               title="Status Indicator"
               description="Avatars can show a status dot indicating online, offline, busy, or away."
               [htmlCode]="statusHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap items-center gap-4">
                 <ui-avatar initials="ON" status="online" />
@@ -178,5 +173,4 @@ export class AvatarShowcase {
   protected readonly initialsHtml = EXAMPLES.initials
   protected readonly fallbackHtml = EXAMPLES.fallback
   protected readonly statusHtml = EXAMPLES.status
-  protected readonly focusTerms = ['size', 'src', 'alt', 'initials', 'status']
 }

@@ -78,7 +78,6 @@ const EXAMPLES = {
               title="Text Lines"
               description="The default line variant simulates paragraphs of text."
               [htmlCode]="textHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="space-y-2 max-w-sm">
                 <ui-skeleton />
@@ -91,7 +90,6 @@ const EXAMPLES = {
               title="Circle"
               description="Circular skeletons for avatars and profile pictures."
               [htmlCode]="circleHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="flex items-center gap-4">
                 <ui-skeleton variant="circle" />
@@ -104,7 +102,6 @@ const EXAMPLES = {
               title="Rectangle"
               description="Rectangular skeletons for images, cards, and content blocks."
               [htmlCode]="rectHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="space-y-4 max-w-sm">
                 <ui-skeleton variant="rect" />
@@ -131,5 +128,4 @@ export class SkeletonShowcase {
   protected readonly textHtml = EXAMPLES.text
   protected readonly circleHtml = EXAMPLES.circle
   protected readonly rectHtml = EXAMPLES.rect
-  protected readonly focusTerms = ['variant', 'width', 'height']
 }

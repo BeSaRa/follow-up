@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core'
 import type { HighlighterCore } from 'shiki'
-import type { DecorationItem } from '@shikijs/types'
 
 export type CodeLanguage = 'typescript' | 'html' | 'css'
 
@@ -20,7 +19,7 @@ export class ShikiService {
     return this.highlighterPromise
   }
 
-  async highlight(code: string, lang: CodeLanguage, decorations?: DecorationItem[]): Promise<string> {
+  async highlight(code: string, lang: CodeLanguage): Promise<string> {
     const highlighter = await this.getHighlighter()
     return highlighter.codeToHtml(code, {
       lang,
@@ -28,7 +27,6 @@ export class ShikiService {
         light: 'github-light',
         dark: 'github-dark',
       },
-      decorations,
     })
   }
 }

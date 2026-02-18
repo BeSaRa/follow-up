@@ -140,7 +140,6 @@ const EXAMPLES = {
               title="Vertical Timeline"
               description="The default vertical layout with completed, active, and pending steps."
               [htmlCode]="verticalHtml"
-              [focusTerms]="focusTerms"
             >
               <ui-timeline>
                 <ui-timeline-item status="completed" timestamp="Jan 1">
@@ -173,7 +172,6 @@ const EXAMPLES = {
               title="Horizontal Timeline"
               description="A horizontal layout for step-by-step progress indicators."
               [htmlCode]="horizontalHtml"
-              [focusTerms]="focusTerms"
             >
               <ui-timeline orientation="horizontal">
                 <ui-timeline-item status="completed">
@@ -206,7 +204,6 @@ const EXAMPLES = {
               title="Alternate Layout"
               description="Items alternate sides on a vertical axis for a balanced visual flow."
               [htmlCode]="alternateHtml"
-              [focusTerms]="focusTerms"
             >
               <ui-timeline align="alternate">
                 <ui-timeline-item status="completed" timestamp="2024">
@@ -254,5 +251,4 @@ export class TimelineShowcase {
   protected readonly verticalHtml = EXAMPLES.vertical
   protected readonly horizontalHtml = EXAMPLES.horizontal
   protected readonly alternateHtml = EXAMPLES.alternate
-  protected readonly focusTerms = ['status', 'timestamp', 'orientation', 'align', 'reverse']
 }

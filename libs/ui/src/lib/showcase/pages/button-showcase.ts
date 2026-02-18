@@ -86,7 +86,6 @@ const EXAMPLES = {
               title="Variants"
               description="The button supports six visual variants."
               [htmlCode]="variantsHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3">
                 <button uiButton variant="primary">Primary</button>
@@ -102,7 +101,6 @@ const EXAMPLES = {
               title="Sizes"
               description="Buttons come in three sizes: small, medium, and large."
               [htmlCode]="sizesHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap items-center gap-3">
                 <button uiButton size="sm">Small</button>
@@ -115,7 +113,6 @@ const EXAMPLES = {
               title="Disabled"
               description="Buttons can be disabled to prevent interaction."
               [htmlCode]="disabledHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3">
                 <button uiButton disabled>Disabled Primary</button>
@@ -127,7 +124,6 @@ const EXAMPLES = {
               title="Loading"
               description="Buttons can show a loading spinner and become disabled while an operation is in progress."
               [htmlCode]="loadingHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3">
                 <button uiButton loading>Loading</button>
@@ -155,5 +151,4 @@ export class ButtonShowcase {
   protected readonly sizesHtml = EXAMPLES.sizes
   protected readonly disabledHtml = EXAMPLES.disabled
   protected readonly loadingHtml = EXAMPLES.loading
-  protected readonly focusTerms = ['uiButton', 'variant', 'size', 'disabled', 'loading']
 }

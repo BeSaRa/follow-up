@@ -94,7 +94,6 @@ const EXAMPLES = {
               title="Basic Navbar"
               description="A simple navbar with navigation links. The active link is visually highlighted."
               [htmlCode]="basicHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="border border-border rounded-lg overflow-hidden">
                 <ui-navbar [elevated]="false">
@@ -111,7 +110,6 @@ const EXAMPLES = {
               title="With Brand and Actions"
               description="A full navbar with a brand logo, navigation links, and action buttons."
               [htmlCode]="brandAndActionsHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="border border-border rounded-lg overflow-hidden">
                 <ui-navbar [elevated]="false">
@@ -150,5 +148,4 @@ export class NavbarShowcase {
   protected readonly cssProperties = CSS_PROPERTIES
   protected readonly basicHtml = EXAMPLES.basic
   protected readonly brandAndActionsHtml = EXAMPLES.brandAndActions
-  protected readonly focusTerms = ['fixed', 'elevated', 'active', 'uiNavbarLink']
 }

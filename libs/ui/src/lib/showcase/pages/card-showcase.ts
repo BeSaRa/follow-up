@@ -126,7 +126,8 @@ const EXAMPLES = {
             <showcase-example-viewer
               title="Basic Card"
               description="A simple card with a title and content."
-              [htmlCode]="basicHtml"            >
+              [htmlCode]="basicHtml"
+            >
               <ui-card>
                 <ui-card-header>
                   <ui-card-title>Card Title</ui-card-title>
@@ -140,7 +141,8 @@ const EXAMPLES = {
             <showcase-example-viewer
               title="Card with All Sections"
               description="A card using header, title, description, content, and footer."
-              [htmlCode]="allSectionsHtml"            >
+              [htmlCode]="allSectionsHtml"
+            >
               <ui-card>
                 <ui-card-header>
                   <ui-card-title>Project Update</ui-card-title>
@@ -158,7 +160,8 @@ const EXAMPLES = {
             <showcase-example-viewer
               title="Card with Footer Actions"
               description="A card with action buttons in the footer."
-              [htmlCode]="footerActionsHtml"            >
+              [htmlCode]="footerActionsHtml"
+            >
               <ui-card>
                 <ui-card-header>
                   <ui-card-title>Confirm Action</ui-card-title>

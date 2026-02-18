@@ -100,7 +100,6 @@ const EXAMPLES = {
               title="Basic Tabs"
               description="A simple tab group with three panels. Use arrow keys to navigate between tabs."
               [htmlCode]="basicHtml"
-              [focusTerms]="focusTerms"
             >
               <ui-tabs #demoTabs activeTab="tab1">
                 <ui-tab-list>
@@ -124,7 +123,6 @@ const EXAMPLES = {
               title="Dynamic Tabs"
               description="A tab group with four panels demonstrating multiple content sections."
               [htmlCode]="dynamicHtml"
-              [focusTerms]="focusTerms"
             >
               <ui-tabs #dynTabs activeTab="overview">
                 <ui-tab-list>
@@ -166,5 +164,4 @@ export class TabsShowcase {
   protected readonly cssProperties = CSS_PROPERTIES
   protected readonly basicHtml = EXAMPLES.basic
   protected readonly dynamicHtml = EXAMPLES.dynamic
-  protected readonly focusTerms = ['activeTab', 'value']
 }

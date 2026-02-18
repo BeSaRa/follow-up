@@ -68,7 +68,6 @@ const EXAMPLES = {
               title="Basic Auto-Resize"
               description="The textarea grows automatically as you type."
               [htmlCode]="basicHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="max-w-sm">
                 <textarea uiInput uiAutoResize placeholder="Start typing..."></textarea>
@@ -79,7 +78,6 @@ const EXAMPLES = {
               title="With Min and Max Rows"
               description="Configure the minimum and maximum number of visible rows. The textarea scrolls after reaching the max."
               [htmlCode]="minMaxHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="max-w-sm">
                 <textarea
@@ -110,5 +108,4 @@ export class TextareaShowcase {
   protected readonly cssProperties = CSS_PROPERTIES
   protected readonly basicHtml = EXAMPLES.basic
   protected readonly minMaxHtml = EXAMPLES.minMax
-  protected readonly focusTerms = ['uiAutoResize', 'uiAutoResizeMinRows', 'uiAutoResizeMaxRows']
 }

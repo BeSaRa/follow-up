@@ -108,7 +108,6 @@ const EXAMPLES = {
               title="Single Expand"
               description="Only one item can be expanded at a time. Opening a new item closes the previous one."
               [htmlCode]="singleHtml"
-              [focusTerms]="focusTerms"
             >
               <ui-accordion>
                 <ui-accordion-item>
@@ -130,7 +129,6 @@ const EXAMPLES = {
               title="Multi Expand"
               description="Multiple items can be expanded simultaneously when the multi input is set."
               [htmlCode]="multiHtml"
-              [focusTerms]="focusTerms"
             >
               <ui-accordion multi>
                 <ui-accordion-item>
@@ -152,7 +150,6 @@ const EXAMPLES = {
               title="Disabled Item"
               description="Individual accordion items can be disabled to prevent interaction."
               [htmlCode]="disabledHtml"
-              [focusTerms]="focusTerms"
             >
               <ui-accordion>
                 <ui-accordion-item>
@@ -189,5 +186,4 @@ export class AccordionShowcase {
   protected readonly singleHtml = EXAMPLES.single
   protected readonly multiHtml = EXAMPLES.multi
   protected readonly disabledHtml = EXAMPLES.disabled
-  protected readonly focusTerms = ['multi', 'expanded', 'disabled', 'accordionHeader']
 }

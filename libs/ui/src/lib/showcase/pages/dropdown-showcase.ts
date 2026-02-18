@@ -98,7 +98,6 @@ const EXAMPLES = {
               title="Basic Dropdown"
               description="A dropdown menu with selectable items and a disabled option."
               [htmlCode]="basicHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3">
                 <button uiButton variant="outline" [uiDropdownTrigger]="basicMenu">Options</button>
@@ -121,7 +120,6 @@ const EXAMPLES = {
               title="With Icons"
               description="Dropdown items can contain icons alongside text."
               [htmlCode]="withIconsHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3">
                 <button uiButton variant="outline" [uiDropdownTrigger]="iconMenu">Actions</button>
@@ -159,7 +157,6 @@ const EXAMPLES = {
               title="Positions"
               description="Dropdown menus can be positioned in different directions relative to the trigger."
               [htmlCode]="positionsHtml"
-              [focusTerms]="focusTerms"
             >
               <div class="flex flex-wrap gap-3 justify-center py-8">
                 <button uiButton variant="outline" [uiDropdownTrigger]="belowStartMenu">Below Start</button>
@@ -206,5 +203,4 @@ export class DropdownShowcase {
   protected readonly positionsHtml = EXAMPLES.positions
 
   readonly lastAction = signal('')
-  protected readonly focusTerms = ['uiDropdownTrigger', 'position', 'disabled', 'selected']
 }

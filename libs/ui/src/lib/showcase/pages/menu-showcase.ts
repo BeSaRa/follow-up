@@ -124,7 +124,6 @@ const EXAMPLES = {
               title="Basic Menu"
               description="A simple menu with three items triggered by a button."
               [htmlCode]="basicHtml"
-              [focusTerms]="focusTerms"
             >
               <button uiButton variant="outline" [uiMenuTrigger]="basicMenu">
                 Open Menu
@@ -140,7 +139,6 @@ const EXAMPLES = {
               title="Nested Submenu"
               description="Menu items can open child submenus using the uiSubMenuTrigger directive."
               [htmlCode]="nestedHtml"
-              [focusTerms]="focusTerms"
             >
               <button uiButton variant="outline" [uiMenuTrigger]="nestedMenu">
                 Open Menu
@@ -161,7 +159,6 @@ const EXAMPLES = {
               title="With Icons and Disabled Items"
               description="Menu items can contain icons and be individually disabled."
               [htmlCode]="withIconsHtml"
-              [focusTerms]="focusTerms"
             >
               <button uiButton variant="outline" [uiMenuTrigger]="iconMenu">
                 Actions
@@ -207,5 +204,4 @@ export class MenuShowcase {
   protected readonly basicHtml = EXAMPLES.basic
   protected readonly nestedHtml = EXAMPLES.nested
   protected readonly withIconsHtml = EXAMPLES.withIcons
-  protected readonly focusTerms = ['uiMenuTrigger', 'menuPosition', 'uiSubMenuTrigger', 'disabled']
 }
