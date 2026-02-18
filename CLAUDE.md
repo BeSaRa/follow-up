@@ -92,6 +92,13 @@ nx affected -t test             # Test affected projects
 - Must pass all AXE checks
 - Follow all WCAG AA minimums, including focus management, color contrast, and ARIA attributes
 
+## Showcase
+
+- Every new UI component in `libs/ui/src/lib/` **must** have a showcase page at `libs/ui/src/lib/showcase/pages/{slug}-showcase.ts`
+- The page must be added to `libs/ui/src/lib/showcase/showcase.routes.ts` as a lazy-loaded route
+- The component must be registered in `libs/ui/src/lib/showcase/component-registry.ts` under the appropriate category
+- The showcase page must include: Examples tab (all variants with copyable code), API tab (all inputs/outputs), Styles tab (CSS custom properties)
+
 ## Core Library Changes
 
 When modifying the `core` library, add a logger statement in `libs/core/src/index.ts` to verify the viewer receives the updated package.

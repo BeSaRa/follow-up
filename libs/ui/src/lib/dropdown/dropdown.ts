@@ -115,7 +115,7 @@ export class UiDropdownItem {
       [cdkConnectedOverlayOrigin]="triggerElement()!"
       [cdkConnectedOverlayOpen]="isOpen()"
       [cdkConnectedOverlayPositions]="positions()"
-      [cdkConnectedOverlayOffsetY]="4"
+      [cdkConnectedOverlayOffsetY]="offsetY()"
       (overlayOutsideClick)="onOutsideClick($event)"
       (overlayKeydown)="onOverlayKeydown($event)"
       (detach)="close()"
@@ -135,6 +135,10 @@ export class UiDropdownMenu {
   readonly items = contentChildren(UiDropdownItem)
 
   protected readonly positions = computed(() => POSITION_MAP[this.position()])
+
+  protected readonly offsetY = computed(() =>
+    this.position().startsWith('above') ? -4 : 4,
+  )
 
   protected readonly panelClasses =
     'min-w-[8rem] rounded-md border border-border bg-surface-raised py-1 shadow-md'

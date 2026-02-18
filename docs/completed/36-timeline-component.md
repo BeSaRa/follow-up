@@ -4,7 +4,7 @@
 |-----------|------------|
 | Created   | 2026-02-17 |
 | Started   | 2026-02-17 |
-| Completed | —          |
+| Completed | 2026-02-18 |
 
 ---
 
@@ -209,16 +209,16 @@ libs/ui/src/index.ts   # Re-export all public symbols
 
 ## Deliverables
 
-- [ ] Create `UiTimeline` container component with `orientation` and `align` signal inputs
-- [ ] Create `UiTimelineItem` component with `status`, `icon`, and `timestamp` signal inputs
-- [ ] Create `UiTimelineDot` component with optional content projection and status styling
-- [ ] Create `UiTimelineContent` directive for content projection
-- [ ] Create `UiTimelineConnector` component with active state support
-- [ ] Implement vertical layout with start, end, and alternate alignment
-- [ ] Implement horizontal layout with responsive collapse to vertical
-- [ ] Apply status-based host classes and CSS custom properties for theming
-- [ ] Add ARIA roles, labels, and decorative markers for accessibility
-- [ ] Support RTL via directional-aware CSS
-- [ ] Write unit tests covering all orientations, alignments, statuses, and projected content
-- [ ] Export all public symbols from `libs/ui/src/index.ts`
-- [ ] Add logger entry in core library index if core changes are needed
+- [x] Create `UiTimeline` container component with `orientation` and `align` signal inputs
+- [x] Create `UiTimelineItem` component with `status`, `icon`, and `timestamp` signal inputs
+- [x] Create `UiTimelineDot` component with optional content projection and status styling
+- [x] Create `UiTimelineContent` directive for content projection
+- [x] Create `UiTimelineConnector` component with active state support
+- [x] Implement vertical layout with start, end, and alternate alignment
+- [x] Implement horizontal layout with responsive collapse to vertical
+- [x] Apply status-based host classes and CSS custom properties for theming
+- [x] Add ARIA roles, labels, and decorative markers for accessibility
+- [x] Support RTL via directional-aware CSS
+- [x] Write unit tests covering all orientations, alignments, statuses, and projected content
+- [x] Export all public symbols from `libs/ui/src/index.ts`
+- [x] Add logger entry in core library index if core changes are needed
