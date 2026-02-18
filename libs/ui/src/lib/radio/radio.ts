@@ -31,9 +31,6 @@ let nextGroupId = 0
     '(keydown.enter)': 'select()',
   },
   template: `
-    @if (labelPosition() === 'before') {
-      <span class="text-sm text-foreground select-none"><ng-content /></span>
-    }
     <span
       role="radio"
       [tabindex]="tabIndex()"
@@ -45,9 +42,7 @@ let nextGroupId = 0
         <span [class]="dotClasses()"></span>
       }
     </span>
-    @if (labelPosition() === 'after') {
-      <span class="text-sm text-foreground select-none"><ng-content /></span>
-    }
+    <span class="text-sm text-foreground select-none"><ng-content /></span>
   `,
 })
 export class UiRadioButton {
@@ -77,7 +72,8 @@ export class UiRadioButton {
   protected readonly hostClasses = computed(() => {
     const base = 'inline-flex items-center gap-2 cursor-pointer'
     const disabledClass = this.isDisabled() ? ' pointer-events-none opacity-50' : ''
-    return `${base}${disabledClass}`
+    const reverseClass = this.labelPosition() === 'before' ? ' flex-row-reverse' : ''
+    return `${base}${disabledClass}${reverseClass}`
   })
 
   protected readonly circleClasses = computed(() => {

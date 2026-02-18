@@ -18,8 +18,8 @@ import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition } from '@angul
 export type SelectSize = 'sm' | 'md'
 
 const PANEL_POSITIONS: ConnectedPosition[] = [
-  { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
-  { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
+  { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 4 },
+  { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -4 },
 ]
 
 let nextId = 0
@@ -123,7 +123,7 @@ export class UiSelectOption {
       [cdkConnectedOverlayOrigin]="trigger"
       [cdkConnectedOverlayOpen]="isOpen()"
       [cdkConnectedOverlayPositions]="positions"
-      [cdkConnectedOverlayOffsetY]="4"
+      [cdkConnectedOverlayOffsetY]="0"
       [cdkConnectedOverlayMinWidth]="triggerWidth()"
       (overlayOutsideClick)="onOutsideClick($event)"
     >

@@ -28,14 +28,12 @@ export type CheckboxLabelPosition = 'before' | 'after'
     class: 'inline-flex items-center gap-2 cursor-pointer',
     '[class.pointer-events-none]': 'disabled()',
     '[class.opacity-50]': 'disabled()',
+    '[class.flex-row-reverse]': 'labelPosition() === "before"',
     '(click)': 'toggle()',
     '(keydown.space)': '$event.preventDefault(); toggle()',
     '(keydown.enter)': 'toggle()',
   },
   template: `
-    @if (labelPosition() === 'before') {
-      <span class="text-sm text-foreground select-none"><ng-content /></span>
-    }
     <span
       role="checkbox"
       tabindex="0"
@@ -53,9 +51,7 @@ export type CheckboxLabelPosition = 'before' | 'after'
         </svg>
       }
     </span>
-    @if (labelPosition() === 'after') {
-      <span class="text-sm text-foreground select-none"><ng-content /></span>
-    }
+    <span class="text-sm text-foreground select-none"><ng-content /></span>
   `,
 })
 export class UiCheckbox implements ControlValueAccessor {

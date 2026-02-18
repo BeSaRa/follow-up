@@ -28,14 +28,12 @@ export type SlideToggleLabelPosition = 'before' | 'after'
     class: 'inline-flex items-center gap-2 cursor-pointer',
     '[class.pointer-events-none]': 'disabled()',
     '[class.opacity-50]': 'disabled()',
+    '[class.flex-row-reverse]': 'labelPosition() === "before"',
     '(click)': 'toggle()',
     '(keydown.space)': '$event.preventDefault(); toggle()',
     '(keydown.enter)': 'toggle()',
   },
   template: `
-    @if (labelPosition() === 'before') {
-      <span class="text-sm text-foreground select-none"><ng-content /></span>
-    }
     <span
       role="switch"
       tabindex="0"
@@ -45,9 +43,7 @@ export type SlideToggleLabelPosition = 'before' | 'after'
     >
       <span [class]="thumbClasses()"></span>
     </span>
-    @if (labelPosition() === 'after') {
-      <span class="text-sm text-foreground select-none"><ng-content /></span>
-    }
+    <span class="text-sm text-foreground select-none"><ng-content /></span>
   `,
 })
 export class UiSlideToggle implements ControlValueAccessor {
