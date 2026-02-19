@@ -1,8 +1,6 @@
 {
   "ENVIRONMENTS": {
-    "DEV": "http://localhost:4200/dev",
-    "STG": "http://localhost:4200/stg",
-    "PROD": "http://localhost:4200/prod"
+    "DEV": "http://192.168.56.4:5005/PMO-Followup/api"
   },
   "ENV": "DEV"
 }

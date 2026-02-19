@@ -41,14 +41,14 @@ export const appConfig: ApplicationConfig = {
         const change = new EventEmitter<Direction>()
         const instance = { change, ngOnDestroy: () => change.complete() }
         Object.defineProperty(instance, 'value', {
-          get: () => (doc.documentElement.dir === 'rtl' ? 'rtl' : 'ltr') as Direction,
+          get: () =>
+            (doc.documentElement.dir === 'rtl' ? 'rtl' : 'ltr') as Direction,
         })
         return instance as Directionality
       },
     },
     provideConfigService({
-      API_VERSION_KEY: 'API_VERSION',
-      INCLUDE_API_VERSION_TO_BASE_URL: true,
+      INCLUDE_API_VERSION_TO_BASE_URL: false,
       CONFIG_FILE_URL: './configurations.json',
       EMBEDDED_CONFIG: appConfigs,
     }),
