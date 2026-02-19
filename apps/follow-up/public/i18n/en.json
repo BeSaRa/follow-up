@@ -1,2 +1,15 @@
 {
+  "login": {
+    "title": "Sign In",
+    "description": "Enter your credentials to access your account",
+    "username_label": "Username",
+    "username_placeholder": "Enter your username",
+    "username_required": "Username is required",
+    "password_label": "Password",
+    "password_placeholder": "Enter your password",
+    "password_required": "Password is required",
+    "submit": "Sign In",
+    "error_invalid_credentials": "Invalid username or password",
+    "error_generic": "An error occurred, please try again"
+  }
 }

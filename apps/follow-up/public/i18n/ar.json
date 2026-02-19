@@ -1,2 +1,15 @@
 {
+  "login": {
+    "title": "تسجيل الدخول",
+    "description": "أدخل بياناتك للدخول إلى حسابك",
+    "username_label": "اسم المستخدم",
+    "username_placeholder": "أدخل اسم المستخدم",
+    "username_required": "اسم المستخدم مطلوب",
+    "password_label": "كلمة المرور",
+    "password_placeholder": "أدخل كلمة المرور",
+    "password_required": "كلمة المرور مطلوبة",
+    "submit": "دخول",
+    "error_invalid_credentials": "اسم المستخدم أو كلمة المرور غير صحيحة",
+    "error_generic": "حدث خطأ، يرجى المحاولة مرة أخرى"
+  }
 }

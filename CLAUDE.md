@@ -154,7 +154,8 @@ Every plan file must have a tracker table at the top:
 - Supported languages: Arabic (`ar`) and English (`en`). Default/fallback is Arabic (`ar`)
 - **All user-facing text must go through translation** — do NOT hardcode any display text in templates or components
 - Translation files are in `apps/follow-up/public/i18n/` (`ar.json`, `en.json`)
-- Use the `TranslatePipe` in templates: `{{ 'KEY' | translate }}`
+- Use the `TranslatePipe` in templates: `{{ 'key' | translate }}`
+- All translation keys must be **lowercase** (e.g., `login.title`, `login.username_label`)
 - Every new string must be added to **both** `ar.json` and `en.json`
 
 ## Commit Messages
