@@ -148,6 +148,15 @@ Every plan file must have a tracker table at the top:
 2. **Start** — move the file from `docs/queue/` to `docs/started/`, fill in the Started date
 3. **Complete** — move the file from `docs/started/` to `docs/completed/`, fill in the Completed date, check all deliverable boxes
 
+## Internationalization (i18n)
+
+- This app is multilingual using `@ngx-translate/core` and `@ngx-translate/http-loader`
+- Supported languages: Arabic (`ar`) and English (`en`). Default/fallback is Arabic (`ar`)
+- **All user-facing text must go through translation** — do NOT hardcode any display text in templates or components
+- Translation files are in `apps/follow-up/public/i18n/` (`ar.json`, `en.json`)
+- Use the `TranslatePipe` in templates: `{{ 'KEY' | translate }}`
+- Every new string must be added to **both** `ar.json` and `en.json`
+
 ## Commit Messages
 
 Do not add any Claude-specific attributes to commit messages.

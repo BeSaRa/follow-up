@@ -5,8 +5,11 @@ import {
   provideBrowserGlobalErrorListeners,
 } from '@angular/core'
 import { DOCUMENT } from '@angular/common'
+import { provideHttpClient } from '@angular/common/http'
 import { Directionality, Direction } from '@angular/cdk/bidi'
 import { provideRouter } from '@angular/router'
+import { provideTranslateService } from '@ngx-translate/core'
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader'
 import { appRoutes } from './app.routes'
 import {
   injectConfigService,
@@ -22,7 +25,15 @@ import { ENDPOINTS } from './constants/endpoints'
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideHttpClient(),
     provideRouter(appRoutes),
+    provideTranslateService({
+      fallbackLang: 'ar',
+    }),
+    provideTranslateHttpLoader({
+      prefix: './i18n/',
+      suffix: '.json',
+    }),
     {
       provide: Directionality,
       useFactory: () => {
