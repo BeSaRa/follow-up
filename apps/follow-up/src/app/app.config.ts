@@ -5,7 +5,7 @@ import {
   provideBrowserGlobalErrorListeners,
 } from '@angular/core'
 import { DOCUMENT } from '@angular/common'
-import { provideHttpClient } from '@angular/common/http'
+import { provideHttpClient, withInterceptors } from '@angular/common/http'
 import { Directionality, Direction } from '@angular/cdk/bidi'
 import { provideRouter } from '@angular/router'
 import { provideTranslateService } from '@ngx-translate/core'
@@ -16,6 +16,7 @@ import {
   provideConfigService,
   provideSequentialAppInitializer,
   provideUrlService,
+  tokenInterceptor,
 } from '@follow-up/core'
 import { of } from 'rxjs'
 import { DomSanitizer } from '@angular/platform-browser'
@@ -25,7 +26,7 @@ import { ENDPOINTS } from './constants/endpoints'
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([tokenInterceptor])),
     provideRouter(appRoutes),
     provideTranslateService({
       fallbackLang: 'ar',
