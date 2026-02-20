@@ -1,4 +1,13 @@
 {
+  "errors": {
+    "required": "This field is required",
+    "minlength": "Must be at least {{requiredLength}} characters",
+    "maxlength": "Must be no more than {{requiredLength}} characters",
+    "min": "Must be at least {{min}}",
+    "max": "Must be no more than {{max}}",
+    "email": "Please enter a valid email address",
+    "pattern": "Invalid format"
+  },
   "login": {
     "title": "Sign In",
     "description": "Enter your credentials to access your account",
