@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core'
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core'
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 import { TranslatePipe } from '@ngx-translate/core'
-import { HttpErrorResponse } from '@angular/common/http'
 import {
   UiCard,
   UiCardHeader,
@@ -17,8 +16,7 @@ import {
   UiAlert,
   UiAlertDescription,
 } from '@follow-up/ui'
-import { AuthService, injectUrlService } from '@follow-up/core'
-import { Endpoints } from '../../constants/endpoints'
+import { AuthStore } from '@follow-up/core'
 
 @Component({
   selector: 'app-login-page',
@@ -48,9 +46,9 @@ import { Endpoints } from '../../constants/endpoints'
         </ui-card-header>
 
         <ui-card-content>
-          @if (errorMessage()) {
+          @if (store.error()) {
             <ui-alert variant="error" class="mb-4">
-              <ui-alert-description>{{ errorMessage() | translate }}</ui-alert-description>
+              <ui-alert-description>{{ store.error() | translate }}</ui-alert-description>
             </ui-alert>
           }
 
@@ -91,9 +89,9 @@ import { Endpoints } from '../../constants/endpoints'
               uiButton
               type="submit"
               variant="primary"
-              size="lg"
+              size="md"
               class="w-full"
-              [loading]="loading()"
+              [loading]="store.loading()"
               [disabled]="form.invalid"
             >
               {{ 'login.submit' | translate }}
@@ -107,38 +105,26 @@ import { Endpoints } from '../../constants/endpoints'
 export class LoginPage {
   private readonly fb = inject(FormBuilder)
   private readonly router = inject(Router)
-  private readonly authService = inject(AuthService)
-  private readonly urlService = injectUrlService<Endpoints>()
 
-  protected readonly loading = signal(false)
-  protected readonly errorMessage = signal('')
+  protected readonly store = inject(AuthStore)
 
   protected readonly form = this.fb.nonNullable.group({
     userName: ['', [Validators.required]],
     password: ['', [Validators.required]],
   })
 
+  constructor() {
+    effect(() => {
+      if (this.store.isAuthenticated()) {
+        this.router.navigate(['/showcase'])
+      }
+    })
+  }
+
   onSubmit() {
     if (this.form.invalid) return
 
-    this.loading.set(true)
-    this.errorMessage.set('')
-
     const { userName, password } = this.form.getRawValue()
-
-    this.authService.login(this.urlService.URLS.AUTH, { userName, password }).subscribe({
-      next: () => {
-        this.loading.set(false)
-        this.router.navigate(['/showcase'])
-      },
-      error: (err: HttpErrorResponse) => {
-        this.loading.set(false)
-        this.errorMessage.set(
-          err.status === 401
-            ? 'login.error_invalid_credentials'
-            : 'login.error_generic',
-        )
-      },
-    })
+    this.store.login({ userName, password })
   }
 }

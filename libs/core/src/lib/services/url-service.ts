@@ -4,6 +4,7 @@ import {
   UrlServiceProviderOptions,
 } from '../providers/provide-url-service'
 import { removeLeadingSlash } from '@follow-up/util'
+import { BehaviorSubject } from 'rxjs'
 
 /**
  * Service for managing and preparing API endpoint URLs.
@@ -27,6 +28,13 @@ import { removeLeadingSlash } from '@follow-up/util'
  */
 @Injectable()
 export class UrlService<T extends Record<string, string>> {
+  private urlsPreparedEmitter$ = new BehaviorSubject<boolean>(false)
+  /**
+   * Observable that emits the preparation state of URLs.
+   * Emits `false` initially, then `true` after `prepareUrls()` completes.
+   * Subscribe to this to know when all endpoint URLs are ready for use.
+   */
+  urlsPrepared$ = this.urlsPreparedEmitter$.asObservable()
   /**
    * Configuration options for the URL service, including endpoints and external protocols.
    */
@@ -34,7 +42,7 @@ export class UrlService<T extends Record<string, string>> {
     URL_SERVICE_OPTIONS_TOKEN,
   )
   /**
-   * Object containing prepared, fully-qualified URLs for all configured endpoints.
+   * Object containing prepared, fully qualified URLs for all configured endpoints.
    * Populated by the `prepareUrls` method during application initialization.
    */
   URLS: T = {} as T
@@ -56,6 +64,7 @@ export class UrlService<T extends Record<string, string>> {
         ? this.options.ENDPOINTS[key]
         : `${baseUrl}/${removeLeadingSlash(this.options.ENDPOINTS[key])}`
     })
+    this.urlsPreparedEmitter$.next(true)
   }
 
   /**

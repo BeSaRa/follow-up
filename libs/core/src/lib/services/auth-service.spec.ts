@@ -26,13 +26,7 @@ describe('AuthService', () => {
     expect(service).toBeTruthy()
   })
 
-  it('should not be authenticated initially', () => {
-    expect(service.isAuthenticated()).toBe(false)
-    expect(service.accessToken()).toBeNull()
-    expect(service.refreshToken()).toBeNull()
-  })
-
-  it('should store tokens in memory on login', () => {
+  it('should POST credentials and return auth response', () => {
     const mockResponse = {
       accessToken: 'test-access-token',
       refreshToken: 'test-refresh-token',
@@ -45,9 +39,7 @@ describe('AuthService', () => {
       })
       .subscribe((response) => {
         expect(response.accessToken).toBe('test-access-token')
-        expect(service.isAuthenticated()).toBe(true)
-        expect(service.accessToken()).toBe('test-access-token')
-        expect(service.refreshToken()).toBe('test-refresh-token')
+        expect(response.refreshToken).toBe('test-refresh-token')
       })
 
     const req = httpMock.expectOne('https://api.example.com/auth')
@@ -57,29 +49,5 @@ describe('AuthService', () => {
       password: 'testpass',
     })
     req.flush(mockResponse)
-  })
-
-  it('should clear tokens on logout', () => {
-    const mockResponse = {
-      accessToken: 'token',
-      refreshToken: 'refresh',
-    }
-
-    service
-      .login('https://api.example.com/auth', {
-        userName: 'user',
-        password: 'pass',
-      })
-      .subscribe()
-
-    httpMock.expectOne('https://api.example.com/auth').flush(mockResponse)
-
-    expect(service.isAuthenticated()).toBe(true)
-
-    service.logout()
-
-    expect(service.isAuthenticated()).toBe(false)
-    expect(service.accessToken()).toBeNull()
-    expect(service.refreshToken()).toBeNull()
   })
 })

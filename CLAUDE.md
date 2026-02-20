@@ -88,6 +88,13 @@ nx affected -t test             # Test affected projects
 ### Routing
 - Implement lazy loading for feature routes
 
+### Animations
+- Do NOT use the legacy `@angular/animations` API (`trigger`, `transition`, `animate`, `style`) or `provideAnimationsAsync()`
+- Use Angular's built-in `animate.enter` and `animate.leave` with standard CSS keyframes/transitions
+- `animate.enter="class-name"` — applies a CSS class on enter (use with `@keyframes`)
+- `animate.leave="class-name"` — applies a CSS class on leave (use with CSS `transition`); Angular waits for the animation to complete before removing the element
+- Do NOT mix legacy animations and `animate.enter`/`animate.leave` in the same component
+
 ### Accessibility
 - Must pass all AXE checks
 - Follow all WCAG AA minimums, including focus management, color contrast, and ARIA attributes

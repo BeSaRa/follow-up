@@ -1,6 +1,7 @@
-import { computed, inject, Injectable, signal } from '@angular/core'
+import { inject, Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable, tap } from 'rxjs'
+import { Observable } from 'rxjs'
+import { injectUrlService } from '../providers/provide-url-service'
 
 export type AuthCredentials = {
   userName: string
@@ -12,28 +13,27 @@ export type AuthResponse = {
   refreshToken: string
 }
 
+export type RequiredAuthEndpoints = Record<
+  'AUTH' | 'REFRESH_TOKEN' | 'LOGOUT',
+  string
+>
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient)
+  private readonly urlService = injectUrlService<RequiredAuthEndpoints>()
 
-  private readonly _accessToken = signal<string | null>(null)
-  private readonly _refreshToken = signal<string | null>(null)
-
-  readonly isAuthenticated = computed(() => !!this._accessToken())
-  readonly accessToken = computed(() => this._accessToken())
-  readonly refreshToken = computed(() => this._refreshToken())
-
-  login(url: string, credentials: AuthCredentials): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(url, credentials).pipe(
-      tap((response) => {
-        this._accessToken.set(response.accessToken)
-        this._refreshToken.set(response.refreshToken)
-      }),
-    )
+  login(credentials: AuthCredentials): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(this.urlService.URLS.AUTH, credentials)
   }
 
-  logout() {
-    this._accessToken.set(null)
-    this._refreshToken.set(null)
+  refreshToken(token: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(this.urlService.URLS.REFRESH_TOKEN, {
+      refreshToken: token,
+    })
+  }
+
+  logout(): Observable<void> {
+    return this.http.post<void>(this.urlService.URLS.LOGOUT, {})
   }
 }

@@ -7,15 +7,15 @@ import {
 import { UrlService } from '../services/url-service'
 import { firstValueFrom, isObservable, map, Observable, of } from 'rxjs'
 
-export const URL_SERVICE_OPTIONS_TOKEN = new InjectionToken<object>(
-  'URL_SERVICE_ENDPOINTS_TOKEN',
-)
 export type UrlServiceProviderOptions = {
   ENDPOINTS: Record<string, string>
   PREPARE: boolean
   BASE_URL: string | Observable<string>
   EXTERNAL_PROTOCOLS?: string[]
 }
+
+export const URL_SERVICE_OPTIONS_TOKEN =
+  new InjectionToken<UrlServiceProviderOptions>('URL_SERVICE_ENDPOINTS_TOKEN')
 
 export type ContextInjectionCallback = () => UrlServiceProviderOptions
 

@@ -50,13 +50,39 @@ export class UiLabel {}
 })
 export class UiFormHint {}
 
-@Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
+@Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: '[uiFormError]',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'block text-xs text-error mt-1.5',
     role: 'alert',
+    'animate.enter': 'slide-error-enter',
+    'animate.leave': 'slide-error-leave',
   },
+  template: `<ng-content />`,
+  styles: `
+    :host(.slide-error-enter) {
+      animation: slide-error-in 150ms ease-out;
+    }
+
+    @keyframes slide-error-in {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    :host(.slide-error-leave) {
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 150ms ease-in, transform 150ms ease-in;
+    }
+  `,
 })
 export class UiFormError {}
 
