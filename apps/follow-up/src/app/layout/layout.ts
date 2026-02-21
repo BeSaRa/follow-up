@@ -16,6 +16,7 @@ import {
   UiDrawerContainer,
   UiDrawerContent,
   UiButton,
+  UiTooltip,
 } from '@follow-up/ui'
 import { AuthStore } from '@follow-up/core'
 
@@ -34,6 +35,7 @@ import { AuthStore } from '@follow-up/core'
     UiDrawerContainer,
     UiDrawerContent,
     UiButton,
+    UiTooltip,
   ],
   template: `
     <div class="flex h-screen flex-col">
@@ -58,6 +60,8 @@ import { AuthStore } from '@follow-up/core'
             class="relative inline-flex h-7 w-14 items-center rounded-full transition-colors duration-300"
             [class]="darkMode() ? 'bg-slate-700' : 'bg-amber-200'"
             [attr.aria-label]="'layout.toggle_dark_mode' | translate"
+            [uiTooltip]="(darkMode() ? 'layout.switch_to_light' : 'layout.switch_to_dark') | translate"
+            uiTooltipPosition="below"
             (click)="darkMode.set(!darkMode())"
           >
             <span

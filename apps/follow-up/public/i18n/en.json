@@ -29,7 +29,9 @@
     "settings": "Settings",
     "logout": "Logout",
     "toggle_sidebar": "Toggle sidebar",
-    "toggle_dark_mode": "Toggle dark mode"
+    "toggle_dark_mode": "Toggle dark mode",
+    "switch_to_dark": "Switch to dark mode",
+    "switch_to_light": "Switch to light mode"
   },
   "dashboard": {
     "title": "Dashboard"
