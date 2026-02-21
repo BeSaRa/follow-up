@@ -19,6 +19,8 @@
     "password_required": "كلمة المرور مطلوبة",
     "submit": "دخول",
     "error_invalid_credentials": "اسم المستخدم أو كلمة المرور غير صحيحة",
-    "error_generic": "حدث خطأ، يرجى المحاولة مرة أخرى"
+    "error_generic": "حدث خطأ، يرجى المحاولة مرة أخرى",
+    "show_password": "إظهار كلمة المرور",
+    "hide_password": "إخفاء كلمة المرور"
   }
 }

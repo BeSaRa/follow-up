@@ -19,6 +19,8 @@
     "password_required": "Password is required",
     "submit": "Sign In",
     "error_invalid_credentials": "Invalid username or password",
-    "error_generic": "An error occurred, please try again"
+    "error_generic": "An error occurred, please try again",
+    "show_password": "Show password",
+    "hide_password": "Hide password"
   }
 }
