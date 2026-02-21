@@ -122,7 +122,7 @@ import { AuthStore } from '@follow-up/core'
         </ui-navbar-actions>
       </ui-navbar>
 
-      <ui-drawer-container class="flex-1 overflow-hidden">
+      <ui-drawer-container class="flex-1 overflow-hidden" style="--ui-drawer-width: 250px">
         <ui-drawer
           [(open)]="sidebarOpen"
           position="start"
