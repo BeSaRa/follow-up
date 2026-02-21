@@ -50,16 +50,10 @@ export const AuthStore = signalStore(
     ),
     logout: rxMethod<void>(
       pipe(
-        tap(() => patchState(store, { loading: true })),
+        tap(() => patchState(store, { ...initialState })),
         switchMap(() =>
           authService.logout().pipe(
-            tap(() => {
-              patchState(store, { ...initialState })
-            }),
-            catchError(() => {
-              patchState(store, { ...initialState })
-              return EMPTY
-            }),
+            catchError(() => EMPTY),
           ),
         ),
       ),
