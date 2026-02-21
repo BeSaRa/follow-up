@@ -6,8 +6,8 @@ import {
   signal,
 } from '@angular/core'
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms'
-import { Router } from '@angular/router'
-import { TranslatePipe } from '@ngx-translate/core'
+import { ActivatedRoute, Router } from '@angular/router'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import {
   UiCard,
   UiCardHeader,
@@ -20,6 +20,7 @@ import {
   UiButton,
   UiAlert,
   UiAlertDescription,
+  ToastService,
 } from '@follow-up/ui'
 import { AuthStore } from '@follow-up/core'
 
@@ -137,6 +138,9 @@ import { AuthStore } from '@follow-up/core'
 export class LoginPage {
   private readonly fb = inject(FormBuilder)
   private readonly router = inject(Router)
+  private readonly route = inject(ActivatedRoute)
+  private readonly toast = inject(ToastService)
+  private readonly translate = inject(TranslateService)
 
   protected readonly store = inject(AuthStore)
   protected readonly showPassword = signal(false)
@@ -149,9 +153,13 @@ export class LoginPage {
   constructor() {
     effect(() => {
       if (this.store.isAuthenticated()) {
-        this.router.navigate(['/'])
+        this.router.navigate(['/dashboard'])
       }
     })
+
+    if (this.route.snapshot.queryParamMap.get('reason') === 'logout') {
+      this.toast.info(this.translate.instant('login.logged_out'))
+    }
   }
 
   onSubmit() {

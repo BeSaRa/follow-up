@@ -32,8 +32,8 @@ export const AuthStore = signalStore(
           authService.login(credentials).pipe(
             tap((response) => {
               patchState(store, {
-                accessToken: response.accessToken,
-                refreshToken: response.refreshToken,
+                accessToken: response.result.accessToken,
+                refreshToken: response.result.refreshToken,
                 loading: false,
               })
             }),

@@ -21,7 +21,8 @@
     "error_invalid_credentials": "Invalid username or password",
     "error_generic": "An error occurred, please try again",
     "show_password": "Show password",
-    "hide_password": "Hide password"
+    "hide_password": "Hide password",
+    "logged_out": "You have been logged out successfully"
   },
   "layout": {
     "app_title": "Follow Up",

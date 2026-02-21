@@ -8,9 +8,13 @@ export type AuthCredentials = {
   password: string
 }
 
-export type AuthResponse = {
+export type AuthTokens = {
   accessToken: string
   refreshToken: string
+}
+
+export type AuthResponse = {
+  result: AuthTokens
 }
 
 export type RequiredAuthEndpoints = Record<

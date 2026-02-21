@@ -144,6 +144,12 @@ export class Layout {
       this.doc.documentElement.classList.toggle('dark', isDark)
       localStorage.setItem('theme', isDark ? 'dark' : 'light')
     })
+
+    effect(() => {
+      if (!this.store.isAuthenticated()) {
+        this.router.navigate(['/login'], { queryParams: { reason: 'logout' } })
+      }
+    })
   }
 
   protected readonly navItems = [
@@ -163,6 +169,5 @@ export class Layout {
 
   protected logout() {
     this.store.logout()
-    this.router.navigate(['/login'])
   }
 }

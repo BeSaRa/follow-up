@@ -7,4 +7,4 @@ export * from './lib/providers/provide-url-service'
 export * from './lib/interceptors/token-interceptor'
 export * from './lib/stores/auth-store'
 
-console.log('[core] core module loaded')
+console.log('[core] core module loaded — AuthResponse now uses nested result shape')
