@@ -28,7 +28,8 @@
     "dashboard": "Dashboard",
     "settings": "Settings",
     "logout": "Logout",
-    "toggle_sidebar": "Toggle sidebar"
+    "toggle_sidebar": "Toggle sidebar",
+    "toggle_dark_mode": "Toggle dark mode"
   },
   "dashboard": {
     "title": "Dashboard"

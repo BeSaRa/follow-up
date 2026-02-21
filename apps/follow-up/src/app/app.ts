@@ -23,10 +23,18 @@ export class App implements OnInit {
 
   ngOnInit() {
     this.setDocumentDirection(this.translate.currentLang ?? this.translate.defaultLang ?? 'ar')
+    this.initTheme()
 
     this.translate.onLangChange
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(({ lang }) => this.setDocumentDirection(lang))
+  }
+
+  private initTheme() {
+    const saved = localStorage.getItem('theme')
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isDark = saved === 'dark' || (!saved && prefersDark)
+    this.doc.documentElement.classList.toggle('dark', isDark)
   }
 
   private setDocumentDirection(lang: string) {

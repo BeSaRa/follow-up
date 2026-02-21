@@ -28,7 +28,8 @@
     "dashboard": "لوحة التحكم",
     "settings": "الإعدادات",
     "logout": "تسجيل الخروج",
-    "toggle_sidebar": "تبديل الشريط الجانبي"
+    "toggle_sidebar": "تبديل الشريط الجانبي",
+    "toggle_dark_mode": "تبديل الوضع الداكن"
   },
   "dashboard": {
     "title": "لوحة التحكم"
