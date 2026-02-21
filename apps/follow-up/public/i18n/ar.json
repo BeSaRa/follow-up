@@ -32,7 +32,8 @@
     "toggle_sidebar": "تبديل الشريط الجانبي",
     "toggle_dark_mode": "تبديل الوضع الداكن",
     "switch_to_dark": "التبديل إلى الوضع الداكن",
-    "switch_to_light": "التبديل إلى الوضع الفاتح"
+    "switch_to_light": "التبديل إلى الوضع الفاتح",
+    "switch_language": "تبديل اللغة"
   },
   "dashboard": {
     "title": "لوحة التحكم"

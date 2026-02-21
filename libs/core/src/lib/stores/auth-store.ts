@@ -7,6 +7,7 @@ import { AuthService, AuthCredentials } from '../services/auth-service'
 type AuthState = {
   accessToken: string | null
   refreshToken: string | null
+  userName: string | null
   loading: boolean
   error: string
 }
@@ -14,6 +15,7 @@ type AuthState = {
 const initialState: AuthState = {
   accessToken: null,
   refreshToken: null,
+  userName: null,
   loading: false,
   error: '',
 }
@@ -34,6 +36,7 @@ export const AuthStore = signalStore(
               patchState(store, {
                 accessToken: response.result.accessToken,
                 refreshToken: response.result.refreshToken,
+                userName: credentials.userName,
                 loading: false,
               })
             }),

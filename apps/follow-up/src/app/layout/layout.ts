@@ -7,7 +7,7 @@ import {
 } from '@angular/core'
 import { DOCUMENT } from '@angular/common'
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router'
-import { TranslatePipe } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import {
   UiNavbar,
   UiNavbarBrand,
@@ -15,8 +15,11 @@ import {
   UiDrawer,
   UiDrawerContainer,
   UiDrawerContent,
-  UiButton,
   UiTooltip,
+  UiDropdownTrigger,
+  UiDropdownMenu,
+  UiDropdownItem,
+  UiAvatar,
 } from '@follow-up/ui'
 import { AuthStore } from '@follow-up/core'
 
@@ -34,8 +37,11 @@ import { AuthStore } from '@follow-up/core'
     UiDrawer,
     UiDrawerContainer,
     UiDrawerContent,
-    UiButton,
     UiTooltip,
+    UiDropdownTrigger,
+    UiDropdownMenu,
+    UiDropdownItem,
+    UiAvatar,
   ],
   template: `
     <div class="flex h-screen flex-col">
@@ -55,6 +61,16 @@ import { AuthStore } from '@follow-up/core'
         </ui-navbar-brand>
 
         <ui-navbar-actions>
+          <button
+            type="button"
+            class="inline-flex items-center justify-center rounded-md px-2 py-1 text-sm font-medium text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+            [uiTooltip]="'layout.switch_language' | translate"
+            uiTooltipPosition="below"
+            (click)="toggleLanguage()"
+          >
+            {{ currentLang() === 'ar' ? 'EN' : 'عربي' }}
+          </button>
+
           <button
             type="button"
             class="relative inline-flex h-7 w-14 items-center rounded-full transition-colors duration-300"
@@ -80,17 +96,29 @@ import { AuthStore } from '@follow-up/core'
             </span>
           </button>
 
-          <button
-            uiButton
-            variant="ghost"
-            size="sm"
-            (click)="logout()"
-          >
-            <svg class="size-4 me-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
-            </svg>
-            {{ 'layout.logout' | translate }}
-          </button>
+          <div class="relative">
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-md px-2 py-1 text-sm text-foreground hover:bg-surface-hover transition-colors"
+              [uiDropdownTrigger]="userMenu"
+            >
+              <ui-avatar size="sm" [initials]="store.userName() ?? '?'" />
+              <span class="hidden sm:inline">{{ store.userName() }}</span>
+              <svg class="size-4 text-foreground-muted" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+            </button>
+            <ui-dropdown-menu #userMenu position="below-end">
+              <ui-dropdown-item (selected)="logout()">
+                <span class="flex items-center gap-2">
+                  <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                  </svg>
+                  {{ 'layout.logout' | translate }}
+                </span>
+              </ui-dropdown-item>
+            </ui-dropdown-menu>
+          </div>
         </ui-navbar-actions>
       </ui-navbar>
 
@@ -131,9 +159,11 @@ import { AuthStore } from '@follow-up/core'
 export class Layout {
   private readonly doc = inject(DOCUMENT)
   private readonly router = inject(Router)
+  private readonly translate = inject(TranslateService)
   protected readonly store = inject(AuthStore)
 
   protected readonly sidebarOpen = signal(true)
+  protected readonly currentLang = signal(this.translate.currentLang || 'ar')
   protected readonly darkMode = signal(
     this.doc.documentElement.classList.contains('dark'),
   )
@@ -166,6 +196,12 @@ export class Layout {
       exact: false,
     },
   ]
+
+  protected toggleLanguage() {
+    const next = this.currentLang() === 'ar' ? 'en' : 'ar'
+    this.translate.use(next)
+    this.currentLang.set(next)
+  }
 
   protected logout() {
     this.store.logout()
