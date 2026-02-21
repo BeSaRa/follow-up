@@ -13,7 +13,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
+    loadChildren: () =>
+      import('./layout/layout.routes').then(m => m.layoutRoutes),
   },
 ]

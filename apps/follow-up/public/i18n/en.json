@@ -22,5 +22,18 @@
     "error_generic": "An error occurred, please try again",
     "show_password": "Show password",
     "hide_password": "Hide password"
+  },
+  "layout": {
+    "app_title": "Follow Up",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "logout": "Logout",
+    "toggle_sidebar": "Toggle sidebar"
+  },
+  "dashboard": {
+    "title": "Dashboard"
+  },
+  "settings": {
+    "title": "Settings"
   }
 }

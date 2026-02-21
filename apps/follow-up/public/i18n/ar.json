@@ -22,5 +22,18 @@
     "error_generic": "حدث خطأ، يرجى المحاولة مرة أخرى",
     "show_password": "إظهار كلمة المرور",
     "hide_password": "إخفاء كلمة المرور"
+  },
+  "layout": {
+    "app_title": "متابعة",
+    "dashboard": "لوحة التحكم",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج",
+    "toggle_sidebar": "تبديل الشريط الجانبي"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم"
+  },
+  "settings": {
+    "title": "الإعدادات"
   }
 }

@@ -149,7 +149,7 @@ export class LoginPage {
   constructor() {
     effect(() => {
       if (this.store.isAuthenticated()) {
-        this.router.navigate(['/showcase'])
+        this.router.navigate(['/'])
       }
     })
   }
