@@ -26,13 +26,13 @@ export abstract class CrudService<
   @HasInterception
   @CastResponse(undefined, { fallback: '$default' })
   create(@InterceptParam() model: Model): Observable<Model> {
-    return this.http.post<Model>(this.getSegmentUrl(), model)
+    return this.http.post<Model>(this.getSegmentUrl() + '/entities', model)
   }
 
   @HasInterception
   @CastResponse(undefined, { fallback: '$default' })
   update(@InterceptParam() model: Model): Observable<Model> {
-    return this.http.put<Model>(this.getSegmentUrl(), model)
+    return this.http.put<Model>(this.getSegmentUrl() + '/entities', model)
   }
 
   delete(id: PrimaryKeyType): Observable<void> {
