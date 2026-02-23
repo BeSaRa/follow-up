@@ -9,12 +9,12 @@ export const layoutRoutes: Route[] = [
       {
         path: 'dashboard',
         loadComponent: () =>
-          import('../pages/dashboard/dashboard-page').then(m => m.DashboardPage),
+          import('../features/dashboard/dashboard-page').then(m => m.DashboardPage),
       },
       {
         path: 'settings',
         loadComponent: () =>
-          import('../pages/settings/settings-page').then(m => m.SettingsPage),
+          import('../features/settings/settings-page').then(m => m.SettingsPage),
       },
       {
         path: '',

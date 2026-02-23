@@ -31,17 +31,43 @@ nx affected -t test             # Test affected projects
 
 ## Architecture
 
-**Apps:**
-- `follow-up` - Main Angular standalone application
+This project uses **feature-based (vertical) architecture**. Code is organized by domain area, not by technical role.
 
-**Libraries:**
-- `core` (`@follow-up/core`) - Shared services and providers
-  - `ConfigService` - Loads configuration from `/configurations.json` with proxy-based validation
-  - `provideConfigService()` - App initializer for configuration loading
-  - `provideSequentialAppInitializer()` - Sequential app initialization handler
-  - `injectConfigService<T>()` - Type-safe config injection
+### App Structure (`apps/follow-up/src/app/`)
 
-**Dependencies:** `follow-up` → `core`
+- `constants/` — app-wide configuration (endpoints, app config, initialization)
+- `layout/` — shared layout shell (navbar, sidebar, authenticated wrapper)
+- `features/` — **all domain features live here**, each self-contained
+
+### Feature Folder Convention
+
+Each feature under `features/` is a self-contained domain area:
+
+```
+features/{feature-name}/
+├── {feature-name}-page.ts       ← entry page component
+├── components/                  ← feature-specific components
+├── services/                    ← feature-specific services
+├── models/                      ← feature-specific models/classes
+├── stores/                      ← feature-specific signal stores
+└── {feature-name}.routes.ts     ← feature-specific child routes (if needed)
+```
+
+- New pages/domain areas go under `features/`, **never** in a flat `pages/` folder
+- Feature-specific services, models, stores, and components stay inside the feature folder
+- Shared/cross-cutting code goes in `libs/` (`core`, `ui`)
+
+### Libraries
+
+- `core` (`@follow-up/core`) — shared services, providers, interceptors, stores
+  - `ConfigService` — loads configuration from `/configurations.json` with proxy-based validation
+  - `CrudService` — generic base CRUD service with `cast-response` integration
+  - `AuthStore` — signal-based auth state with cookie persistence
+  - `CookieService` — cookie management wrapper
+  - `UrlService` — centralized API endpoint management
+- `ui` (`@follow-up/ui`) — reusable UI components (drawer, navbar, form controls, etc.)
+
+**Dependencies:** `follow-up` → `core`, `ui`
 
 ## Angular Best Practices
 
