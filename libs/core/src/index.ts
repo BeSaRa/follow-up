@@ -9,4 +9,4 @@ export * from './lib/providers/provide-url-service'
 export * from './lib/interceptors/token-interceptor'
 export * from './lib/stores/auth-store'
 
-console.log('[core] core module loaded — added CrudService base class')
+console.log('[core] core module loaded — CrudService integrated with cast-response')
