@@ -17,15 +17,15 @@ import { ApplicationUser } from './models/application-user'
         @if (users.length) {
           <div class="overflow-x-auto rounded-lg border border-border">
             <table class="min-w-full divide-y divide-border">
-              <thead class="bg-surface-subtle">
+              <thead class="bg-primary text-primary-foreground">
                 <tr>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider text-foreground-muted">{{ 'application_user.employee_no' | translate }}</th>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider text-foreground-muted">{{ 'application_user.ar_name' | translate }}</th>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider text-foreground-muted">{{ 'application_user.en_name' | translate }}</th>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider text-foreground-muted">{{ 'application_user.email' | translate }}</th>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider text-foreground-muted">{{ 'application_user.mobile' | translate }}</th>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider text-foreground-muted">{{ 'application_user.qid' | translate }}</th>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider text-foreground-muted">{{ 'application_user.status' | translate }}</th>
+                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.employee_no' | translate }}</th>
+                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.ar_name' | translate }}</th>
+                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.en_name' | translate }}</th>
+                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.email' | translate }}</th>
+                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.mobile' | translate }}</th>
+                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.qid' | translate }}</th>
+                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.status' | translate }}</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-border">
