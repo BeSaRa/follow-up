@@ -20,8 +20,8 @@
    * -foreground: Text/icon color ON TOP of a primary background.
    *              Usage: text-primary-foreground
    * ──────────────────────────────────────────────────────────────────── */
-  --clr-primary: #4f46e5;
-  --clr-primary-hover: #4338ca;
+  --clr-primary: #8A1538;
+  --clr-primary-hover: #741230;
   --clr-primary-foreground: #ffffff;
 
   /* ── Secondary — A complementary brand color for secondary actions,
@@ -29,8 +29,8 @@
    *   Usage: bg-secondary, text-secondary
    *   Example: <button class="bg-secondary text-secondary-foreground">Details</button>
    * ──────────────────────────────────────────────────────────────────── */
-  --clr-secondary: #0f766e;
-  --clr-secondary-hover: #0d6560;
+  --clr-secondary: #009C80;
+  --clr-secondary-hover: #008A72;
   --clr-secondary-foreground: #ffffff;
 
   /* ── Accent — An eye-catching color for highlights, badges, counters,
@@ -107,7 +107,7 @@
    * ──────────────────────────────────────────────────────────────────── */
   --clr-border: #e2e8f0;
   --clr-border-hover: #cbd5e1;
-  --clr-ring: #4f46e5;
+  --clr-ring: #8A1538;
 
   /* ── Text ──────────────────────────────────────────────────────────────
    * foreground — Primary text color for headings, body copy, and labels.
@@ -154,12 +154,12 @@
  */
 .dark {
   /* Brand — lighter tints so they remain visible on dark backgrounds */
-  --clr-primary: #818cf8;
-  --clr-primary-hover: #a5b4fc;
+  --clr-primary: #D4506E;
+  --clr-primary-hover: #E8789A;
   --clr-primary-foreground: #0f172a;
 
-  --clr-secondary: #2dd4bf;
-  --clr-secondary-hover: #5eead4;
+  --clr-secondary: #33CFAE;
+  --clr-secondary-hover: #5EEAD4;
   --clr-secondary-foreground: #0f172a;
 
   --clr-accent: #fbbf24;
@@ -186,7 +186,7 @@
   /* Borders — slightly lighter lines for visibility on dark surfaces */
   --clr-border: #334155;
   --clr-border-hover: #475569;
-  --clr-ring: #818cf8;
+  --clr-ring: #D4506E;
 
   /* Text — inverted from light mode */
   --clr-foreground: #f1f5f9;
