@@ -131,7 +131,7 @@ import { AuthStore } from '@follow-up/core'
           [closeOnEscape]="false"
         >
           <ui-drawer-content>
-            <nav class="flex flex-col gap-4 py-2">
+            <nav class="flex flex-col gap-2 py-2">
               @for (group of navGroups; track group.label) {
                 <div>
                   @if (group.label) {
