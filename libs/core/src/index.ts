@@ -8,4 +8,4 @@ export * from './lib/providers/provide-url-service'
 export * from './lib/interceptors/token-interceptor'
 export * from './lib/stores/auth-store'
 
-console.log('[core] core module loaded — added CookieService wrapper')
+console.log('[core] core module loaded — AuthStore now persists tokens in cookies')
