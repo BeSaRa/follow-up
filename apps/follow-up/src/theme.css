@@ -124,7 +124,7 @@
    *   Usage: text-foreground-subtle
    *   Example: <input placeholder="Search..." class="placeholder:text-foreground-subtle" />
    * ──────────────────────────────────────────────────────────────────── */
-  --clr-foreground: #0f172a;
+  --clr-foreground: #1e293b;
   --clr-foreground-muted: #64748b;
   --clr-foreground-subtle: #94a3b8;
 
