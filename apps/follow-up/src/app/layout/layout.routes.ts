@@ -17,6 +17,11 @@ export const layoutRoutes: Route[] = [
           import('../features/settings/settings-page').then(m => m.SettingsPage),
       },
       {
+        path: 'application-user',
+        loadComponent: () =>
+          import('../features/application-user/application-user-page').then(m => m.ApplicationUserPage),
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

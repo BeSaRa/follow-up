@@ -17,4 +17,4 @@ export * from './lib/interfaces/model-has-service'
 export * from './lib/interfaces/service-name-contract'
 export * from './lib/types/constructor'
 
-console.log('[core] core module loaded — CrudModel & ServiceRegistry added')
+console.log('[core] core module loaded — ApplicationUser feature integrated')

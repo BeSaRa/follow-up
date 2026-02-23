@@ -34,12 +34,27 @@
     "toggle_dark_mode": "Toggle dark mode",
     "switch_to_dark": "Switch to dark mode",
     "switch_to_light": "Switch to light mode",
-    "switch_language": "Switch language"
+    "switch_language": "Switch language",
+    "application_user": "Application Users"
   },
   "dashboard": {
     "title": "Dashboard"
   },
   "settings": {
     "title": "Settings"
+  },
+  "application_user": {
+    "title": "Application Users",
+    "employee_no": "Employee No",
+    "ar_name": "Arabic Name",
+    "en_name": "English Name",
+    "email": "Email",
+    "mobile": "Mobile",
+    "qid": "QID",
+    "status": "Status",
+    "email_notification": "Email Notification",
+    "active": "Active",
+    "inactive": "Inactive",
+    "no_data": "No users found"
   }
 }

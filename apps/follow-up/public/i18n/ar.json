@@ -34,12 +34,27 @@
     "toggle_dark_mode": "تبديل الوضع الداكن",
     "switch_to_dark": "التبديل إلى الوضع الداكن",
     "switch_to_light": "التبديل إلى الوضع الفاتح",
-    "switch_language": "تبديل اللغة"
+    "switch_language": "تبديل اللغة",
+    "application_user": "المستخدمين"
   },
   "dashboard": {
     "title": "لوحة التحكم"
   },
   "settings": {
     "title": "الإعدادات"
+  },
+  "application_user": {
+    "title": "المستخدمين",
+    "employee_no": "الرقم الوظيفي",
+    "ar_name": "الاسم بالعربي",
+    "en_name": "الاسم بالإنجليزي",
+    "email": "البريد الإلكتروني",
+    "mobile": "الهاتف المحمول",
+    "qid": "الرقم الشخصي",
+    "status": "الحالة",
+    "email_notification": "إشعارات البريد",
+    "active": "فعال",
+    "inactive": "غير فعال",
+    "no_data": "لا يوجد مستخدمين"
   }
 }
