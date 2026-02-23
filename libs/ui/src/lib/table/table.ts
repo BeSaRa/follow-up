@@ -70,8 +70,12 @@ export class UiTableFooter {}
 })
 export class UiTableRow {
   private readonly table = inject(UiTable, { optional: true })
+  private readonly header = inject(UiTableHeader, { optional: true })
 
   protected readonly hostClasses = computed(() => {
+    if (this.header) {
+      return 'border-b border-border'
+    }
     const base = 'border-b border-border transition-colors hover:bg-surface-hover'
     return this.table?.striped()
       ? `${base} even:bg-surface`

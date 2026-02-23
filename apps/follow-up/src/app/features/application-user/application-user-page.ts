@@ -1,6 +1,11 @@
 import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core'
 import { AsyncPipe } from '@angular/common'
+import { RouterLink } from '@angular/router'
 import { TranslatePipe } from '@ngx-translate/core'
+import {
+  UiBreadcrumb, UiBreadcrumbItem, UiBreadcrumbSeparatorItem,
+  UiTable, UiTableHeader, UiTableBody, UiTableRow, UiTableHead, UiTableCell,
+} from '@follow-up/ui'
 import { Observable } from 'rxjs'
 import { ApplicationUserService } from './services/application-user.service'
 import { ApplicationUser } from './models/application-user'
@@ -8,36 +13,45 @@ import { ApplicationUser } from './models/application-user'
 @Component({
   selector: 'app-application-user-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AsyncPipe, TranslatePipe],
+  imports: [
+    AsyncPipe, RouterLink, TranslatePipe,
+    UiBreadcrumb, UiBreadcrumbItem, UiBreadcrumbSeparatorItem,
+    UiTable, UiTableHeader, UiTableBody, UiTableRow, UiTableHead, UiTableCell,
+  ],
   template: `
-    <div class="space-y-6">
-      <h1 class="text-2xl font-bold">{{ 'application_user.title' | translate }}</h1>
+    <div class="space-y-4">
+      <ui-breadcrumb>
+        <ui-breadcrumb-item><a routerLink="/dashboard">{{ 'layout.dashboard' | translate }}</a></ui-breadcrumb-item>
+        <ui-breadcrumb-separator>»</ui-breadcrumb-separator>
+        <ui-breadcrumb-item active>{{ 'application_user.title' | translate }}</ui-breadcrumb-item>
+      </ui-breadcrumb>
+      <h1 class="text-lg font-semibold">{{ 'application_user.title' | translate }}</h1>
 
       @if (users$ | async; as users) {
         @if (users.length) {
           <div class="overflow-x-auto rounded-lg border border-border">
-            <table class="min-w-full divide-y divide-border">
-              <thead class="bg-primary text-primary-foreground">
-                <tr>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.employee_no' | translate }}</th>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.ar_name' | translate }}</th>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.en_name' | translate }}</th>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.email' | translate }}</th>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.mobile' | translate }}</th>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.qid' | translate }}</th>
-                  <th class="px-4 py-3 text-start text-xs font-semibold uppercase tracking-wider">{{ 'application_user.status' | translate }}</th>
+            <table uiTable striped>
+              <thead uiTableHeader>
+                <tr uiTableRow>
+                  <th uiTableHead>{{ 'application_user.employee_no' | translate }}</th>
+                  <th uiTableHead>{{ 'application_user.ar_name' | translate }}</th>
+                  <th uiTableHead>{{ 'application_user.en_name' | translate }}</th>
+                  <th uiTableHead>{{ 'application_user.email' | translate }}</th>
+                  <th uiTableHead>{{ 'application_user.mobile' | translate }}</th>
+                  <th uiTableHead>{{ 'application_user.qid' | translate }}</th>
+                  <th uiTableHead>{{ 'application_user.status' | translate }}</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-border">
+              <tbody uiTableBody>
                 @for (user of users; track user.id) {
-                  <tr class="hover:bg-surface-hover transition-colors">
-                    <td class="whitespace-nowrap px-4 py-3 text-sm">{{ user.employeeNo }}</td>
-                    <td class="whitespace-nowrap px-4 py-3 text-sm">{{ user.arName }}</td>
-                    <td class="whitespace-nowrap px-4 py-3 text-sm">{{ user.enName }}</td>
-                    <td class="whitespace-nowrap px-4 py-3 text-sm">{{ user.email }}</td>
-                    <td class="whitespace-nowrap px-4 py-3 text-sm">{{ user.mobile }}</td>
-                    <td class="whitespace-nowrap px-4 py-3 text-sm">{{ user.qid }}</td>
-                    <td class="whitespace-nowrap px-4 py-3 text-sm">
+                  <tr uiTableRow>
+                    <td uiTableCell>{{ user.employeeNo }}</td>
+                    <td uiTableCell>{{ user.arName }}</td>
+                    <td uiTableCell>{{ user.enName }}</td>
+                    <td uiTableCell>{{ user.email }}</td>
+                    <td uiTableCell>{{ user.mobile }}</td>
+                    <td uiTableCell>{{ user.qid }}</td>
+                    <td uiTableCell>
                       @if (user.status) {
                         <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
                           {{ 'application_user.active' | translate }}
