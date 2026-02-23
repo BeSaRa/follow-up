@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { CastResponse, HasInterception, InterceptParam } from 'cast-response'
 import { injectUrlService } from '../providers/provide-url-service'
 
-export interface CrudContract<Model, PrimaryKeyType = number> {
+export interface CrudServiceContract<Model, PrimaryKeyType = number> {
   create(model: Model): Observable<Model>
   update(model: Model): Observable<Model>
   delete(id: PrimaryKeyType): Observable<void>
@@ -15,12 +15,12 @@ export interface CrudContract<Model, PrimaryKeyType = number> {
 
 export abstract class CrudService<
   Model,
-  PrimaryKeyType,
   EndPoints extends Record<string, string>,
-> implements CrudContract<Model, PrimaryKeyType>
+  PrimaryKeyType,
+> implements CrudServiceContract<Model, PrimaryKeyType>
 {
   protected readonly http = inject(HttpClient)
-  protected urlService = injectUrlService<EndPoints>()
+  protected readonly urlService = injectUrlService<EndPoints>()
   abstract getSegmentUrl(): string
 
   @HasInterception
