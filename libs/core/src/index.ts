@@ -9,4 +9,12 @@ export * from './lib/providers/provide-url-service'
 export * from './lib/interceptors/token-interceptor'
 export * from './lib/stores/auth-store'
 
-console.log('[core] core module loaded — CrudService integrated with cast-response')
+export * from './lib/classes/crud-model'
+export * from './lib/classes/service-registry'
+export * from './lib/mixins/model-service-mixin'
+export * from './lib/mixins/register-service-mixin'
+export * from './lib/interfaces/model-has-service'
+export * from './lib/interfaces/service-name-contract'
+export * from './lib/types/constructor'
+
+console.log('[core] core module loaded — CrudModel & ServiceRegistry added')

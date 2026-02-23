@@ -57,11 +57,30 @@ features/{feature-name}/
 - Feature-specific services, models, stores, and components stay inside the feature folder
 - Shared/cross-cutting code goes in `libs/` (`core`, `ui`)
 
+### CrudModel & CrudService Pattern
+
+When creating a new feature with CRUD operations, follow this pattern:
+
+1. **Register the endpoint** in `apps/follow-up/src/app/constants/endpoints.ts`
+2. **Create the model** extending `CrudModel<Model, Service, PrimaryKeyType>`:
+   - Set `$$primaryKey` to the model's primary key field
+   - Set `$$service` to a string name matching the service's `$$serviceName`
+   - The model inherits `create()`, `update()`, `delete()`, and `save()` — which delegate to the service automatically
+3. **Create the service** extending both `CrudService` and `RegisterServiceMixin`:
+   - Set `$$serviceName` to the same string used in the model's `$$service`
+   - Implement `getSegmentUrl()` returning the URL from `urlService.URLS`
+   - The `RegisterServiceMixin` auto-registers the service in `ServiceRegistry` on construction (deferred via microtask so the subclass constructor completes first)
+4. **Connection**: Models look up their service from `ServiceRegistry` by the `$$service`/`$$serviceName` string key. This bridges Angular DI (services) with plain classes (models)
+
 ### Libraries
 
 - `core` (`@follow-up/core`) — shared services, providers, interceptors, stores
   - `ConfigService` — loads configuration from `/configurations.json` with proxy-based validation
   - `CrudService` — generic base CRUD service with `cast-response` integration
+  - `CrudModel` — Active Record-style base model that delegates CRUD operations to its service
+  - `ServiceRegistry` — static registry that connects models to services by name
+  - `RegisterServiceMixin` — mixin for services; registers the service instance in `ServiceRegistry` on construction
+  - `ModelServiceMixin` — mixin for models; provides `$$getService()` to look up the service from `ServiceRegistry`
   - `AuthStore` — signal-based auth state with cookie persistence
   - `CookieService` — cookie management wrapper
   - `UrlService` — centralized API endpoint management
