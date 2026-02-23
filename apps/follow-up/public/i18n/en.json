@@ -26,6 +26,7 @@
   },
   "layout": {
     "app_title": "Follow Up",
+    "nav_system": "System Administration",
     "dashboard": "Dashboard",
     "settings": "Settings",
     "logout": "Logout",

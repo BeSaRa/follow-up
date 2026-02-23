@@ -26,6 +26,7 @@
   },
   "layout": {
     "app_title": "متابعة",
+    "nav_system": "إدارة النظام",
     "dashboard": "لوحة التحكم",
     "settings": "الإعدادات",
     "logout": "تسجيل الخروج",
