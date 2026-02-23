@@ -1,0 +1,41 @@
+/* Lusail Font */
+@font-face {
+  font-family: "Lusail";
+  src: url("../public/fonts/Lusail-Regular.otf") format("opentype"),
+  url("../public/fonts/Lusail-Regular.woff") format("woff"),
+  url("../public/fonts/Lusail-Regular.woff2") format("woff2"),
+  url("../public/fonts/Lusail-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lusail";
+  src: url("../public/fonts/Lusail-Medium.otf") format("opentype"),
+  url("../public/fonts/Lusail-Medium.woff") format("woff"),
+  url("../public/fonts/Lusail-Medium.woff2") format("woff2"),
+  url("../public/fonts/Lusail-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lusail";
+  src: url("../public/fonts/Lusail-Light.otf") format("opentype"),
+  url("../public/fonts/Lusail-Light.woff") format("woff"),
+  url("../public/fonts/Lusail-Light.woff2") format("woff2"),
+  url("../public/fonts/Lusail-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lusail";
+  src: url("../public/fonts/Lusail-Bold.otf") format("opentype"),
+  url("../public/fonts/Lusail-Bold.woff") format("woff"),
+  url("../public/fonts/Lusail-Bold.woff2") format("woff2"),
+  url("../public/fonts/Lusail-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}

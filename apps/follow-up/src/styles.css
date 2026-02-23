@@ -1,8 +1,8 @@
 @import "tailwindcss" source('./../src');
 @import './theme.css';
+@import "./fonts.css";
 @source './../../../libs/core/';
 @source './../../../libs/ui/';
-
 /* ============================================
    Animations
    ============================================ */
