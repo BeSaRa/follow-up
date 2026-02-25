@@ -3,6 +3,7 @@ import {
   EventEmitter,
   inject,
   provideBrowserGlobalErrorListeners,
+  provideEnvironmentInitializer,
 } from '@angular/core'
 import { DOCUMENT } from '@angular/common'
 import { provideHttpClient, withInterceptors } from '@angular/common/http'
@@ -10,6 +11,8 @@ import { Direction, Directionality } from '@angular/cdk/bidi'
 import { provideRouter } from '@angular/router'
 import { provideTranslateService } from '@ngx-translate/core'
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader'
+import { MatIconRegistry } from '@angular/material/icon'
+import { DomSanitizer } from '@angular/platform-browser'
 import { appRoutes } from './app.routes'
 import { tokenInterceptor } from '@follow-up/core'
 import { appInit } from './constants/app-init'
@@ -26,6 +29,13 @@ export const appConfig: ApplicationConfig = {
     provideTranslateHttpLoader({
       prefix: './i18n/',
       suffix: '.json',
+    }),
+    provideEnvironmentInitializer(() => {
+      const iconRegistry = inject(MatIconRegistry)
+      const sanitizer = inject(DomSanitizer)
+      iconRegistry.addSvgIconSet(
+        sanitizer.bypassSecurityTrustResourceUrl('./mdi.svg'),
+      )
     }),
     {
       provide: Directionality,
