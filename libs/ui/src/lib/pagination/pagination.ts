@@ -6,6 +6,7 @@ import {
   input,
   output,
 } from '@angular/core'
+import { UiSelect, UiSelectOption } from '../select/select'
 
 export interface PageChangeEvent {
   pageIndex: number
@@ -16,25 +17,28 @@ export interface PageChangeEvent {
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'ui-pagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [UiSelect, UiSelectOption],
   host: {
-    class: 'flex items-center justify-between gap-4 px-4 py-3 text-sm text-foreground-muted',
+    class:
+      'flex items-center justify-between gap-4 px-4 py-3 text-sm text-foreground-muted',
     role: 'navigation',
     'aria-label': 'Pagination',
   },
   template: `
     @if (showPageSizeSelector()) {
       <div class="flex items-center gap-2">
-        <label for="page-size" class="whitespace-nowrap">Rows per page:</label>
-        <select
-          id="page-size"
-          class="rounded-md border border-border bg-surface px-2 py-1 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+        <span class="whitespace-nowrap">Rows per page:</span>
+        <ui-select
+          size="sm"
           [value]="pageSize()"
-          (change)="onPageSizeChange($event)"
+          (valueChange)="onPageSizeChange($event)"
         >
           @for (option of pageSizeOptions(); track option) {
-            <option [value]="option">{{ option }}</option>
+            <ui-select-option [value]="option" [label]="'' + option">{{
+              option
+            }}</ui-select-option>
           }
-        </select>
+        </ui-select>
       </div>
     }
 
@@ -49,7 +53,17 @@ export interface PageChangeEvent {
           (click)="goToFirst()"
           aria-label="First page"
         >
-          <svg class="size-4 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg
+            class="size-4 rtl:rotate-180"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
             <path d="m11 17-5-5 5-5" />
             <path d="m18 17-5-5 5-5" />
           </svg>
@@ -62,7 +76,17 @@ export interface PageChangeEvent {
         (click)="goToPrevious()"
         aria-label="Previous page"
       >
-        <svg class="size-4 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg
+          class="size-4 rtl:rotate-180"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
           <path d="m15 18-6-6 6-6" />
         </svg>
       </button>
@@ -73,7 +97,17 @@ export interface PageChangeEvent {
         (click)="goToNext()"
         aria-label="Next page"
       >
-        <svg class="size-4 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg
+          class="size-4 rtl:rotate-180"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
           <path d="m9 18 6-6-6-6" />
         </svg>
       </button>
@@ -85,7 +119,17 @@ export interface PageChangeEvent {
           (click)="goToLast()"
           aria-label="Last page"
         >
-          <svg class="size-4 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg
+            class="size-4 rtl:rotate-180"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
             <path d="m6 17 5-5-5-5" />
             <path d="m13 17 5-5-5-5" />
           </svg>
@@ -109,7 +153,9 @@ export class UiPagination {
   )
 
   protected readonly isFirstPage = computed(() => this.pageIndex() === 0)
-  protected readonly isLastPage = computed(() => this.pageIndex() >= this.totalPages() - 1)
+  protected readonly isLastPage = computed(
+    () => this.pageIndex() >= this.totalPages() - 1,
+  )
 
   protected readonly rangeLabel = computed(() => {
     const total = this.totalItems()
@@ -120,8 +166,7 @@ export class UiPagination {
     return `${start}–${end} of ${total}`
   })
 
-  protected onPageSizeChange(event: Event) {
-    const newSize = Number((event.target as HTMLSelectElement).value)
+  protected onPageSizeChange(newSize: number) {
     this.pageChange.emit({ pageIndex: 0, pageSize: newSize })
   }
 
@@ -130,14 +175,23 @@ export class UiPagination {
   }
 
   protected goToPrevious() {
-    this.pageChange.emit({ pageIndex: this.pageIndex() - 1, pageSize: this.pageSize() })
+    this.pageChange.emit({
+      pageIndex: this.pageIndex() - 1,
+      pageSize: this.pageSize(),
+    })
   }
 
   protected goToNext() {
-    this.pageChange.emit({ pageIndex: this.pageIndex() + 1, pageSize: this.pageSize() })
+    this.pageChange.emit({
+      pageIndex: this.pageIndex() + 1,
+      pageSize: this.pageSize(),
+    })
   }
 
   protected goToLast() {
-    this.pageChange.emit({ pageIndex: this.totalPages() - 1, pageSize: this.pageSize() })
+    this.pageChange.emit({
+      pageIndex: this.totalPages() - 1,
+      pageSize: this.pageSize(),
+    })
   }
 }

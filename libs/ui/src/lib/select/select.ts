@@ -4,6 +4,7 @@ import {
   Component,
   computed,
   contentChildren,
+  effect,
   ElementRef,
   forwardRef,
   inject,
@@ -42,6 +43,7 @@ let nextId = 0
 export class UiSelectOption {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly value = input.required<any>()
+  readonly label = input<string>()
   readonly disabled = input(false, { transform: booleanAttribute })
 
   readonly id = `ui-select-option-${nextId++}`
@@ -72,7 +74,7 @@ export class UiSelectOption {
   }
 
   getLabel(): string {
-    return this.el.nativeElement.textContent?.trim() ?? ''
+    return this.label() ?? this.el.nativeElement.textContent?.trim() ?? ''
   }
 }
 
@@ -155,6 +157,21 @@ export class UiSelect implements ControlValueAccessor {
   private readonly cvaTouched = signal(false)
   private onChange: (value: unknown) => void = () => {} // eslint-disable-line @typescript-eslint/no-empty-function
   private onTouched: () => void = () => {} // eslint-disable-line @typescript-eslint/no-empty-function
+
+  constructor() {
+    effect(() => {
+      const val = this.value()
+      const opts = this.options()
+      if (val == null || !opts.length) return
+      const match = opts.find(o => {
+        try { return o.value() === val } catch { return false }
+      })
+      if (match) {
+        this.displayLabel.set(match.getLabel())
+        this.markSelected(match)
+      }
+    })
+  }
 
   protected readonly positions = PANEL_POSITIONS
 
@@ -270,7 +287,6 @@ export class UiSelect implements ControlValueAccessor {
 
   writeValue(value: unknown) {
     this.value.set(value)
-    this.syncLabelFromValue(value)
   }
 
   registerOnChange(fn: (value: unknown) => void) {
@@ -279,23 +295,6 @@ export class UiSelect implements ControlValueAccessor {
 
   registerOnTouched(fn: () => void) {
     this.onTouched = fn
-  }
-
-  private syncLabelFromValue(value: unknown) {
-    if (value == null) {
-      this.displayLabel.set('')
-      this.clearSelected()
-      return
-    }
-    // Defer to allow contentChildren to resolve
-    queueMicrotask(() => {
-      const opts = this.options()
-      const match = opts.find(o => o.value() === value)
-      if (match) {
-        this.displayLabel.set(match.getLabel())
-        this.markSelected(match)
-      }
-    })
   }
 
   private moveActive(delta: number) {
