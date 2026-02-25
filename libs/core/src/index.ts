@@ -11,6 +11,7 @@ export * from './lib/stores/auth-store'
 
 export * from './lib/classes/crud-model'
 export * from './lib/classes/service-registry'
+export * from './lib/classes/pagination'
 export * from './lib/mixins/model-service-mixin'
 export * from './lib/mixins/register-service-mixin'
 export * from './lib/interfaces/model-has-service'

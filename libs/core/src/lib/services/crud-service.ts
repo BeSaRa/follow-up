@@ -3,13 +3,14 @@ import { inject } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { CastResponse, HasInterception, InterceptParam } from 'cast-response'
 import { injectUrlService } from '../providers/provide-url-service'
+import { Pagination } from '../classes/pagination'
 
 export interface CrudServiceContract<Model, PrimaryKeyType = number> {
   create(model: Model): Observable<Model>
   update(model: Model): Observable<Model>
   delete(id: PrimaryKeyType): Observable<void>
   getById(id: PrimaryKeyType): Observable<Model>
-  getAll(options?: Record<string, unknown>): Observable<Model[]>
+  getAll(options?: Record<string, unknown>): Observable<Pagination<Model[]>>
   getSegmentUrl(): string
 }
 
@@ -45,8 +46,8 @@ export abstract class CrudService<
   }
 
   @CastResponse(undefined, { fallback: '$pagination' })
-  getAll(options?: Record<string, unknown>): Observable<Model[]> {
-    return this.http.get<Model[]>(this.getSegmentUrl(), {
+  getAll(options?: Record<string, unknown>): Observable<Pagination<Model[]>> {
+    return this.http.get<Pagination<Model[]>>(this.getSegmentUrl(), {
       params: new HttpParams({
         fromObject: options as never,
       }),

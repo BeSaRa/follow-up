@@ -45,6 +45,7 @@
   },
   "application_user": {
     "title": "المستخدمين",
+    "description": "إدارة مستخدمي التطبيق وصلاحياتهم",
     "employee_no": "الرقم الوظيفي",
     "ar_name": "الاسم بالعربي",
     "en_name": "الاسم بالإنجليزي",
@@ -55,6 +56,10 @@
     "email_notification": "إشعارات البريد",
     "active": "فعال",
     "inactive": "غير فعال",
-    "no_data": "لا يوجد مستخدمين"
+    "no_data": "لا يوجد مستخدمين",
+    "search_placeholder": "بحث عن مستخدم...",
+    "add_user": "إضافة مستخدم",
+    "edit": "تعديل",
+    "delete": "حذف"
   }
 }

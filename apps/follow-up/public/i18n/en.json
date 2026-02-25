@@ -45,6 +45,7 @@
   },
   "application_user": {
     "title": "Application Users",
+    "description": "Manage application users and their permissions",
     "employee_no": "Employee No",
     "ar_name": "Arabic Name",
     "en_name": "English Name",
@@ -55,6 +56,10 @@
     "email_notification": "Email Notification",
     "active": "Active",
     "inactive": "Inactive",
-    "no_data": "No users found"
+    "no_data": "No users found",
+    "search_placeholder": "Search users...",
+    "add_user": "Add User",
+    "edit": "Edit",
+    "delete": "Delete"
   }
 }
