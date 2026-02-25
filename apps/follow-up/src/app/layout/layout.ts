@@ -24,6 +24,7 @@ import {
 } from '@follow-up/ui'
 import { MatIcon } from '@angular/material/icon'
 import { AuthStore } from '@follow-up/core'
+import { APP_ICONS } from '../constants/icons'
 
 @Component({
   selector: 'app-layout',
@@ -56,9 +57,7 @@ import { AuthStore } from '@follow-up/core'
             [attr.aria-label]="'layout.toggle_sidebar' | translate"
             (click)="sidebarOpen.set(!sidebarOpen())"
           >
-            <svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
+            <mat-icon class="!text-2xl !size-6 !leading-6" [svgIcon]="icons.MENU" />
           </button>
           <span class="text-lg font-bold text-foreground">{{ 'layout.app_title' | translate }}</span>
         </ui-navbar-brand>
@@ -88,13 +87,9 @@ import { AuthStore } from '@follow-up/core'
               [class]="darkMode() ? 'ltr:translate-x-8 rtl:-translate-x-8' : 'ltr:translate-x-1 rtl:-translate-x-1'"
             >
               @if (darkMode()) {
-                <svg class="size-3 text-slate-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z" clip-rule="evenodd" />
-                </svg>
+                <mat-icon class="!text-xs !size-3 !leading-3 text-slate-700" [svgIcon]="icons.WEATHER_NIGHT" />
               } @else {
-                <svg class="size-3 text-amber-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z" />
-                </svg>
+                <mat-icon class="!text-xs !size-3 !leading-3 text-amber-500" [svgIcon]="icons.WHITE_BALANCE_SUNNY" />
               }
             </span>
           </button>
@@ -107,16 +102,12 @@ import { AuthStore } from '@follow-up/core'
             >
               <ui-avatar size="sm" [initials]="store.userName() ?? '?'" />
               <span class="hidden sm:inline">{{ store.userName() }}</span>
-              <svg class="size-4 text-foreground-muted" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-              </svg>
+              <mat-icon class="!text-base !size-4 !leading-4 text-foreground-muted" [svgIcon]="icons.CHEVRON_DOWN" />
             </button>
             <ui-dropdown-menu #userMenu position="below-end">
               <ui-dropdown-item (selected)="logout()">
                 <span class="flex items-center gap-2">
-                  <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
-                  </svg>
+                  <mat-icon class="!text-base !size-4 !leading-4" [svgIcon]="icons.LOGOUT" />
                   {{ 'layout.logout' | translate }}
                 </span>
               </ui-dropdown-item>
@@ -150,7 +141,7 @@ import { AuthStore } from '@follow-up/core'
                         [routerLinkActiveOptions]="{ exact: item.exact }"
                         class="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
                       >
-                        <mat-icon class="!text-xl !size-5 !leading-5" fontSet="material-icons-outlined">{{ item.icon }}</mat-icon>
+                        <mat-icon class="!text-xl !size-5 !leading-5" [svgIcon]="item.icon" />
                         {{ item.label | translate }}
                       </a>
                     }
@@ -173,6 +164,7 @@ export class Layout {
   private readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
   protected readonly store = inject(AuthStore)
+  protected readonly icons = APP_ICONS
 
   protected readonly sidebarOpen = signal(true)
   protected readonly currentLang = signal(this.translate.currentLang || 'ar')
@@ -201,7 +193,7 @@ export class Layout {
         {
           path: '/dashboard',
           label: 'layout.dashboard',
-          icon: 'dashboard',
+          icon: APP_ICONS.VIEW_DASHBOARD,
           exact: true,
           sortOrder: 1,
         },
@@ -214,14 +206,14 @@ export class Layout {
         {
           path: '/application-user',
           label: 'layout.application_user',
-          icon: 'group',
+          icon: APP_ICONS.ACCOUNT_GROUP,
           exact: false,
           sortOrder: 1,
         },
         {
           path: '/settings',
           label: 'layout.settings',
-          icon: 'settings',
+          icon: APP_ICONS.COG,
           exact: false,
           sortOrder: 2,
         },

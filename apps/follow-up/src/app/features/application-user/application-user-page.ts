@@ -35,6 +35,7 @@ import {
   UiTableRow,
 } from '@follow-up/ui'
 import { Pagination } from '@follow-up/core'
+import { APP_ICONS } from '../../constants/icons'
 import { ApplicationUserService } from './services/application-user.service'
 import { ApplicationUser } from './models/application-user'
 
@@ -90,10 +91,10 @@ import { ApplicationUser } from './models/application-user'
         </div>
         <div class="flex items-center gap-2">
           <button uiButton variant="outline" size="sm" (click)="refresh()">
-            <mat-icon class="!text-lg !size-5 !leading-5">refresh</mat-icon>
+            <mat-icon class="!text-lg !size-5 !leading-5" [svgIcon]="icons.REFRESH" />
           </button>
           <button uiButton variant="primary" size="sm">
-            <mat-icon class="!text-lg !size-5 !leading-5">add</mat-icon>
+            <mat-icon class="!text-lg !size-5 !leading-5" [svgIcon]="icons.PLUS" />
             {{ 'application_user.add_user' | translate }}
           </button>
         </div>
@@ -104,12 +105,12 @@ import { ApplicationUser } from './models/application-user'
         <div class="relative max-w-sm flex-1">
           <mat-icon
             class="absolute start-3 top-1/2 -translate-y-1/2 !text-lg !size-5 !leading-5 text-foreground-subtle"
-            >search</mat-icon
-          >
+            [svgIcon]="icons.MAGNIFY"
+          />
           <input
             uiInput
             type="text"
-            class="bg-surface-raised ps-10"
+            class="bg-surface-raised! ps-10"
             [placeholder]="'application_user.search_placeholder' | translate"
             [value]="searchQuery()"
             (input)="onSearchInput($event)"
@@ -186,24 +187,18 @@ import { ApplicationUser } from './models/application-user'
                           [uiMenuTrigger]="actionMenu"
                           [menuPosition]="'below-end'"
                         >
-                          <mat-icon class="!text-lg !size-5 !leading-5"
-                            >more_vert</mat-icon
-                          >
+                          <mat-icon class="!text-lg !size-5 !leading-5" [svgIcon]="icons.DOTS_VERTICAL" />
                         </button>
                         <ui-menu #actionMenu>
                           <ui-menu-item>
                             <span class="flex items-center gap-2">
-                              <mat-icon class="!text-base !size-4 !leading-4"
-                                >edit</mat-icon
-                              >
+                              <mat-icon class="!text-base !size-4 !leading-4" [svgIcon]="icons.PENCIL" />
                               {{ 'application_user.edit' | translate }}
                             </span>
                           </ui-menu-item>
                           <ui-menu-item>
                             <span class="flex items-center gap-2 text-error">
-                              <mat-icon class="!text-base !size-4 !leading-4"
-                                >delete</mat-icon
-                              >
+                              <mat-icon class="!text-base !size-4 !leading-4" [svgIcon]="icons.DELETE" />
                               {{ 'application_user.delete' | translate }}
                             </span>
                           </ui-menu-item>
@@ -226,9 +221,7 @@ import { ApplicationUser } from './models/application-user'
             <div
               class="flex flex-col items-center justify-center py-12 text-foreground-muted"
             >
-              <mat-icon class="!text-4xl !size-10 !leading-10 mb-3"
-                >group_off</mat-icon
-              >
+              <mat-icon class="!text-4xl !size-10 !leading-10 mb-3" [svgIcon]="icons.ACCOUNT_OFF" />
               <p class="text-sm">
                 {{ 'application_user.no_data' | translate }}
               </p>
@@ -241,6 +234,7 @@ import { ApplicationUser } from './models/application-user'
 })
 export class ApplicationUserPage {
   private readonly service = inject(ApplicationUserService)
+  protected readonly icons = APP_ICONS
 
   protected readonly pageIndex = signal(0)
   protected readonly pageSize = signal(10)

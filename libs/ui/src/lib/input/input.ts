@@ -30,7 +30,7 @@ export class UiInput {
 
   protected readonly hostClasses = computed(() => {
     const base =
-      'w-full rounded-md border bg-transparent px-3 py-2 text-sm text-foreground transition-colors ' +
+      'w-full rounded-md border bg-surface-raised px-3 py-2 text-sm text-foreground transition-colors ' +
       'placeholder:text-foreground-subtle ' +
       'focus:outline-none focus:ring-2 focus:ring-ring ' +
       'disabled:cursor-not-allowed disabled:opacity-50'
