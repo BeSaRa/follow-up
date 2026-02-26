@@ -212,6 +212,17 @@ export class Layout {
     this.doc.documentElement.classList.contains('dark'),
   )
 
+  private readonly navGroups = NAV_GROUPS
+
+  protected readonly sortedNavGroups = computed(() =>
+    [...this.navGroups]
+      .sort((a, b) => a.sortOrder - b.sortOrder)
+      .map((group) => ({
+        ...group,
+        items: [...group.items].sort((a, b) => a.sortOrder - b.sortOrder),
+      })),
+  )
+
   constructor() {
     effect(() => {
       const isDark = this.darkMode()
@@ -227,17 +238,6 @@ export class Layout {
       }
     })
   }
-
-  private readonly navGroups = NAV_GROUPS
-
-  protected readonly sortedNavGroups = computed(() =>
-    [...this.navGroups]
-      .sort((a, b) => a.sortOrder - b.sortOrder)
-      .map((group) => ({
-        ...group,
-        items: [...group.items].sort((a, b) => a.sortOrder - b.sortOrder),
-      })),
-  )
 
   protected toggleLanguage() {
     const next = this.currentLang() === 'ar' ? 'en' : 'ar'
