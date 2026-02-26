@@ -1,19 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  inject,
-  signal,
-  untracked,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { TranslatePipe } from '@ngx-translate/core'
-import { toObservable, toSignal } from '@angular/core/rxjs-interop'
-import { debounceTime, distinctUntilChanged } from 'rxjs'
 import { MatIcon } from '@angular/material/icon'
 import {
-  PageChangeEvent,
   UiBadge,
   UiBreadcrumb,
   UiBreadcrumbItem,
@@ -34,7 +23,7 @@ import {
   UiTableHeader,
   UiTableRow,
 } from '@follow-up/ui'
-import { Pagination } from '@follow-up/core'
+import { CrudPageDirective } from '@follow-up/core'
 import { APP_ICONS } from '../../constants/icons'
 import { ApplicationUserService } from './services/application-user.service'
 import { ApplicationUser } from './models/application-user'
@@ -232,72 +221,10 @@ import { ApplicationUser } from './models/application-user'
     </div>
   `,
 })
-export class ApplicationUserPage {
-  private readonly service = inject(ApplicationUserService)
-  protected readonly icons = APP_ICONS
-
-  protected readonly pageIndex = signal(0)
-  protected readonly pageSize = signal(10)
-  protected readonly searchQuery = signal('')
-  protected readonly loading = signal(false)
-  protected readonly pagination = signal<Pagination<ApplicationUser[]> | null>(
-    null,
-  )
-
-  protected readonly models = computed(
-    () => this.pagination()?.result ?? [],
-  )
-  protected readonly totalElements = computed(
-    () => this.pagination()?.totalElements ?? 0,
-  )
-  protected readonly skeletonRows = Array.from({ length: 5 }, (_, i) => i)
-
-  private readonly debouncedSearch = toSignal(
-    toObservable(this.searchQuery).pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-    ),
-    { initialValue: '' },
-  )
-
-  constructor() {
-    effect(() => {
-      const page = this.pageIndex()
-      const size = this.pageSize()
-      const search = this.debouncedSearch()
-      untracked(() => this.loadData(page, size, search))
-    })
-  }
-
-  private loadData(page: number, size: number, search: string) {
-    this.loading.set(true)
-    const options: Record<string, unknown> = { page, size }
-    if (search) options['search'] = search
-    this.service.getAll(options).subscribe({
-      next: (result) => {
-        this.pagination.set(result)
-        this.loading.set(false)
-      },
-      error: () => this.loading.set(false),
-    })
-  }
-
-  protected onPageChange(event: PageChangeEvent) {
-    this.pageIndex.set(event.pageIndex)
-    this.pageSize.set(event.pageSize)
-  }
-
-  protected onSearchInput(event: Event) {
-    const value = (event.target as HTMLInputElement).value
-    this.searchQuery.set(value)
-    this.pageIndex.set(0)
-  }
-
-  protected refresh() {
-    this.loadData(
-      this.pageIndex(),
-      this.pageSize(),
-      this.debouncedSearch(),
-    )
-  }
+export class ApplicationUserPage extends CrudPageDirective<
+  ApplicationUser,
+  ApplicationUserService
+> {
+  readonly service = inject(ApplicationUserService)
+  readonly icons = APP_ICONS
 }

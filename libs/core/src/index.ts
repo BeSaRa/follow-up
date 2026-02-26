@@ -17,5 +17,6 @@ export * from './lib/mixins/register-service-mixin'
 export * from './lib/interfaces/model-has-service'
 export * from './lib/interfaces/service-name-contract'
 export * from './lib/types/constructor'
+export * from './lib/directives/crud-page.directive'
 
-console.log('[core] core module loaded — ApplicationUser feature integrated')
+console.log('[core] core module loaded — CrudPageDirective added')
