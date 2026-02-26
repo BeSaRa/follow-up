@@ -56,7 +56,7 @@ export class UiAutocompleteOption {
     const base = 'block w-full cursor-pointer px-3 py-2 text-start text-sm text-foreground transition-colors'
     const activeClass = this.isActive() ? ' bg-surface-hover' : ' hover:bg-surface-hover'
     const selectedClass = this.isSelected() ? ' font-medium' : ''
-    const disabledClass = this.disabled() ? ' !cursor-default !opacity-50 !pointer-events-none' : ''
+    const disabledClass = this.disabled() ? ' cursor-default! opacity-50! pointer-events-none!' : ''
     return `${base}${activeClass}${selectedClass}${disabledClass}`
   })
 

@@ -64,7 +64,7 @@ import { NAV_GROUPS } from '../constants/nav-groups'
             (click)="sidebarOpen.set(!sidebarOpen())"
           >
             <mat-icon
-              class="!text-2xl !size-6 !leading-6"
+              class="text-2xl! size-6! leading-6!"
               [svgIcon]="icons.MENU"
             />
           </button>
@@ -106,12 +106,12 @@ import { NAV_GROUPS } from '../constants/nav-groups'
             >
               @if (darkMode()) {
                 <mat-icon
-                  class="!text-xs !size-3 !leading-3 text-slate-700"
+                  class="text-xs! size-3! leading-3! text-slate-700"
                   [svgIcon]="icons.WEATHER_NIGHT"
                 />
               } @else {
                 <mat-icon
-                  class="!text-xs !size-3 !leading-3 text-amber-500"
+                  class="text-xs! size-3! leading-3! text-amber-500"
                   [svgIcon]="icons.WHITE_BALANCE_SUNNY"
                 />
               }
@@ -127,7 +127,7 @@ import { NAV_GROUPS } from '../constants/nav-groups'
               <ui-avatar size="sm" [initials]="store.userName() ?? '?'" />
               <span class="hidden sm:inline">{{ store.userName() }}</span>
               <mat-icon
-                class="!text-base !size-4 !leading-4 text-foreground-muted"
+                class="text-base! size-4! leading-4! text-foreground-muted"
                 [svgIcon]="icons.CHEVRON_DOWN"
               />
             </button>
@@ -135,7 +135,7 @@ import { NAV_GROUPS } from '../constants/nav-groups'
               <ui-dropdown-item (selected)="logout()">
                 <span class="flex items-center gap-2">
                   <mat-icon
-                    class="!text-base !size-4 !leading-4"
+                    class="text-base! size-4! leading-4!"
                     [svgIcon]="icons.LOGOUT"
                   />
                   {{ 'layout.logout' | translate }}
@@ -177,7 +177,7 @@ import { NAV_GROUPS } from '../constants/nav-groups'
                         class="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
                       >
                         <mat-icon
-                          class="!text-xl !size-5 !leading-5"
+                          class="text-xl! size-5! leading-5!"
                           [svgIcon]="item.icon"
                         />
                         {{ item.label | translate }}

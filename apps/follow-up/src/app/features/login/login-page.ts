@@ -106,9 +106,9 @@ import { APP_ICONS } from '../../constants/icons'
                   [attr.aria-label]="(showPassword() ? 'login.hide_password' : 'login.show_password') | translate"
                 >
                   @if (showPassword()) {
-                    <mat-icon class="!text-xl !size-5 !leading-5" [svgIcon]="icons.EYE_OFF" />
+                    <mat-icon class="text-xl! size-5! leading-5!" [svgIcon]="icons.EYE_OFF" />
                   } @else {
-                    <mat-icon class="!text-xl !size-5 !leading-5" [svgIcon]="icons.EYE" />
+                    <mat-icon class="text-xl! size-5! leading-5!" [svgIcon]="icons.EYE" />
                   }
                 </button>
               </div>

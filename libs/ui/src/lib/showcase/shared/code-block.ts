@@ -36,7 +36,7 @@ import { type CodeLanguage, ShikiService } from './shiki.service'
         }
       </button>
       @if (highlightedHtml()) {
-        <div class="overflow-x-auto rounded-md border border-border text-sm [&_pre]:!p-4 [&_pre]:!m-0 [&_pre]:!rounded-md"
+        <div class="overflow-x-auto rounded-md border border-border text-sm [&_pre]:p-4! [&_pre]:m-0! [&_pre]:rounded-md!"
              [innerHTML]="highlightedHtml()"></div>
       } @else {
         <pre class="overflow-x-auto rounded-md border border-border bg-surface p-4 text-sm text-foreground"><code>{{ code() }}</code></pre>

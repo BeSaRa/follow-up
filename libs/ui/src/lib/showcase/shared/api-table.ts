@@ -54,7 +54,7 @@ export interface ApiProperty {
                     <td uiTableCell><code class="text-xs font-mono text-primary">{{ prop.name }}</code></td>
                     <td uiTableCell><code class="text-xs font-mono text-foreground-muted">{{ prop.type }}</code></td>
                     <td uiTableCell><code class="text-xs font-mono">{{ prop.default }}</code></td>
-                    <td uiTableCell class="!whitespace-normal">{{ prop.description }}</td>
+                    <td uiTableCell class="whitespace-normal!">{{ prop.description }}</td>
                   </tr>
                 }
               </tbody>
@@ -80,7 +80,7 @@ export interface ApiProperty {
                   <tr uiTableRow>
                     <td uiTableCell><code class="text-xs font-mono text-primary">{{ prop.name }}</code></td>
                     <td uiTableCell><code class="text-xs font-mono text-foreground-muted">{{ prop.type }}</code></td>
-                    <td uiTableCell class="!whitespace-normal">{{ prop.description }}</td>
+                    <td uiTableCell class="whitespace-normal!">{{ prop.description }}</td>
                   </tr>
                 }
               </tbody>
@@ -108,7 +108,7 @@ export interface ApiProperty {
                     <td uiTableCell><code class="text-xs font-mono text-primary">{{ prop.name }}</code></td>
                     <td uiTableCell><code class="text-xs font-mono text-foreground-muted">{{ prop.type }}</code></td>
                     <td uiTableCell><code class="text-xs font-mono">{{ prop.default }}</code></td>
-                    <td uiTableCell class="!whitespace-normal">{{ prop.description }}</td>
+                    <td uiTableCell class="whitespace-normal!">{{ prop.description }}</td>
                   </tr>
                 }
               </tbody>

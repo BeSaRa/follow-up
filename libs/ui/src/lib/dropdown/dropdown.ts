@@ -87,7 +87,7 @@ export class UiDropdownItem {
       'focus-visible:outline-none focus-visible:bg-surface-hover'
 
     return this.disabled()
-      ? `${base} !cursor-default !opacity-50 !pointer-events-none`
+      ? `${base} cursor-default! opacity-50! pointer-events-none!`
       : base
   })
 
