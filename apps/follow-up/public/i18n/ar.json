@@ -37,7 +37,8 @@
     "switch_language": "تبديل اللغة",
     "application_user": "المستخدمين",
     "attachment_type": "أنواع المرفقات",
-    "external_site": "الجهات الخارجية"
+    "external_site": "الجهات الخارجية",
+    "followup_status": "حالات المتابعة"
   },
   "dashboard": {
     "title": "لوحة التحكم"
@@ -94,6 +95,22 @@
     "no_data": "لا توجد جهات خارجية",
     "search_placeholder": "بحث عن جهة خارجية...",
     "add": "إضافة جهة خارجية",
+    "edit": "تعديل",
+    "delete": "حذف"
+  },
+  "followup_status": {
+    "title": "حالات المتابعة",
+    "description": "إدارة حالات المتابعة في النظام",
+    "ar_name": "الاسم بالعربي",
+    "en_name": "الاسم بالإنجليزي",
+    "lookup_key": "مفتاح البحث",
+    "category": "التصنيف",
+    "status": "الحالة",
+    "active": "فعال",
+    "inactive": "غير فعال",
+    "no_data": "لا توجد حالات متابعة",
+    "search_placeholder": "بحث عن حالة متابعة...",
+    "add": "إضافة حالة متابعة",
     "edit": "تعديل",
     "delete": "حذف"
   }

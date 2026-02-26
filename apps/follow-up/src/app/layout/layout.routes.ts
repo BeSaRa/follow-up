@@ -32,6 +32,11 @@ export const layoutRoutes: Route[] = [
           import('../features/external-site/external-site-page').then(m => m.ExternalSitePage),
       },
       {
+        path: 'followup-status',
+        loadComponent: () =>
+          import('../features/followup-status/followup-status-page').then(m => m.FollowupStatusPage),
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

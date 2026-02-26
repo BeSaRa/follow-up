@@ -21,3 +21,4 @@ export * from './lib/directives/crud-page.directive'
 
 console.log('[core] core module loaded — CrudPageDirective added')
 console.log('[core] ExternalSite feature support added')
+console.log('[core] FollowupStatus feature support added')
