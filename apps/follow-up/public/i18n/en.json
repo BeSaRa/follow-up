@@ -38,7 +38,8 @@
     "application_user": "Application Users",
     "attachment_type": "Attachment Types",
     "external_site": "External Sites",
-    "followup_status": "Followup Statuses"
+    "followup_status": "Followup Statuses",
+    "priority_level": "Priority Levels"
   },
   "dashboard": {
     "title": "Dashboard"
@@ -111,6 +112,22 @@
     "no_data": "No followup statuses found",
     "search_placeholder": "Search followup statuses...",
     "add": "Add Followup Status",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "priority_level": {
+    "title": "Priority Levels",
+    "description": "Manage priority levels in the system",
+    "ar_name": "Arabic Name",
+    "en_name": "English Name",
+    "lookup_key": "Lookup Key",
+    "category": "Category",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "no_data": "No priority levels found",
+    "search_placeholder": "Search priority levels...",
+    "add": "Add Priority Level",
     "edit": "Edit",
     "delete": "Delete"
   }

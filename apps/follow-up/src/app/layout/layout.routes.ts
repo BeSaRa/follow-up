@@ -37,6 +37,11 @@ export const layoutRoutes: Route[] = [
           import('../features/followup-status/followup-status-page').then(m => m.FollowupStatusPage),
       },
       {
+        path: 'priority-level',
+        loadComponent: () =>
+          import('../features/priority-level/priority-level-page').then(m => m.PriorityLevelPage),
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

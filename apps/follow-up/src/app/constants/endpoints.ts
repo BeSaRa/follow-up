@@ -8,6 +8,7 @@ export const ENDPOINTS = {
   ATTACHMENT_TYPE: 'admin/attachment-type',
   EXTERNAL_SITE: 'admin/external-site',
   FOLLOWUP_STATUS: 'admin/followup-status',
+  PRIORITY_LEVEL: 'admin/priority-level',
 } as const satisfies RequiredAuthEndpoints & Record<string, string>
 
 export type Endpoints = typeof ENDPOINTS

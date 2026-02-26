@@ -33,6 +33,7 @@ export const APP_ICONS = {
   PAPERCLIP: 'paperclip',
   WEB: 'web',
   LIST_STATUS: 'list-status',
+  PRIORITY_HIGH: 'priority-high',
 
   // ── Theme ──
   WEATHER_NIGHT: 'weather-night',

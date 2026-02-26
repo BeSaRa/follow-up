@@ -38,7 +38,8 @@
     "application_user": "المستخدمين",
     "attachment_type": "أنواع المرفقات",
     "external_site": "الجهات الخارجية",
-    "followup_status": "حالات المتابعة"
+    "followup_status": "حالات المتابعة",
+    "priority_level": "مستويات الأولوية"
   },
   "dashboard": {
     "title": "لوحة التحكم"
@@ -111,6 +112,22 @@
     "no_data": "لا توجد حالات متابعة",
     "search_placeholder": "بحث عن حالة متابعة...",
     "add": "إضافة حالة متابعة",
+    "edit": "تعديل",
+    "delete": "حذف"
+  },
+  "priority_level": {
+    "title": "مستويات الأولوية",
+    "description": "إدارة مستويات الأولوية في النظام",
+    "ar_name": "الاسم بالعربي",
+    "en_name": "الاسم بالإنجليزي",
+    "lookup_key": "مفتاح البحث",
+    "category": "التصنيف",
+    "status": "الحالة",
+    "active": "فعال",
+    "inactive": "غير فعال",
+    "no_data": "لا توجد مستويات أولوية",
+    "search_placeholder": "بحث عن مستوى أولوية...",
+    "add": "إضافة مستوى أولوية",
     "edit": "تعديل",
     "delete": "حذف"
   }
