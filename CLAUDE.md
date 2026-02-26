@@ -116,6 +116,9 @@ When creating a new feature with CRUD operations, follow this pattern:
 - Keep state transformations pure and predictable
 - Do NOT use `mutate` on signals, use `update` or `set` instead
 
+### Tailwind CSS
+- Use the suffix `!` syntax for important classes (`className!`), NOT the prefix syntax (`!className`)
+
 ### Templates
 - Keep templates simple and avoid complex logic
 - Use native control flow (`@if`, `@for`, `@switch`) instead of `*ngIf`, `*ngFor`, `*ngSwitch`
