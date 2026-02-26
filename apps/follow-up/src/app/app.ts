@@ -22,7 +22,7 @@ export class App implements OnInit {
   private readonly destroyRef = inject(DestroyRef)
 
   ngOnInit() {
-    this.setDocumentDirection(this.translate.currentLang ?? this.translate.defaultLang ?? 'ar')
+    this.setDocumentDirection(this.translate.getCurrentLang() || this.translate.defaultLang || 'ar')
     this.initTheme()
 
     this.translate.onLangChange

@@ -205,7 +205,9 @@ export class Layout {
   protected readonly icons = APP_ICONS
 
   protected readonly sidebarOpen = signal(true)
-  protected readonly currentLang = signal(this.translate.currentLang || 'ar')
+  protected readonly currentLang = signal(
+    this.translate.getCurrentLang() || 'ar',
+  )
   protected readonly darkMode = signal(
     this.doc.documentElement.classList.contains('dark'),
   )
