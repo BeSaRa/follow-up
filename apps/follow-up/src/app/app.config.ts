@@ -16,12 +16,13 @@ import { DomSanitizer } from '@angular/platform-browser'
 import { appRoutes } from './app.routes'
 import { tokenInterceptor } from '@follow-up/core'
 import { appInit } from './constants/app-init'
+import { mockInterceptor } from './interceptors/mock-interceptor'
 
 export const appConfig: ApplicationConfig = {
   providers: [
     appInit,
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withInterceptors([tokenInterceptor])),
+    provideHttpClient(withInterceptors([mockInterceptor, tokenInterceptor])),
     provideRouter(appRoutes),
     provideTranslateService({
       fallbackLang: 'ar',
