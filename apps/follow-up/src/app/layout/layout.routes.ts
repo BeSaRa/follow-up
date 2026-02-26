@@ -27,6 +27,11 @@ export const layoutRoutes: Route[] = [
           import('../features/attachment-type/attachment-type-page').then(m => m.AttachmentTypePage),
       },
       {
+        path: 'external-site',
+        loadComponent: () =>
+          import('../features/external-site/external-site-page').then(m => m.ExternalSitePage),
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

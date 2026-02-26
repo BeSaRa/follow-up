@@ -36,7 +36,8 @@
     "switch_to_light": "التبديل إلى الوضع الفاتح",
     "switch_language": "تبديل اللغة",
     "application_user": "المستخدمين",
-    "attachment_type": "أنواع المرفقات"
+    "attachment_type": "أنواع المرفقات",
+    "external_site": "الجهات الخارجية"
   },
   "dashboard": {
     "title": "لوحة التحكم"
@@ -76,6 +77,23 @@
     "no_data": "لا توجد أنواع مرفقات",
     "search_placeholder": "بحث عن نوع مرفق...",
     "add": "إضافة نوع مرفق",
+    "edit": "تعديل",
+    "delete": "حذف"
+  },
+  "external_site": {
+    "title": "الجهات الخارجية",
+    "description": "إدارة الجهات الخارجية المرتبطة بالنظام",
+    "ar_name": "الاسم بالعربي",
+    "en_name": "الاسم بالإنجليزي",
+    "description_col": "الوصف",
+    "ldap_prefix": "بادئة LDAP",
+    "site_type": "نوع الموقع",
+    "status": "الحالة",
+    "active": "فعال",
+    "inactive": "غير فعال",
+    "no_data": "لا توجد جهات خارجية",
+    "search_placeholder": "بحث عن جهة خارجية...",
+    "add": "إضافة جهة خارجية",
     "edit": "تعديل",
     "delete": "حذف"
   }

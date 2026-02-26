@@ -31,6 +31,7 @@ export const APP_ICONS = {
 
   // ── Content ──
   PAPERCLIP: 'paperclip',
+  WEB: 'web',
 
   // ── Theme ──
   WEATHER_NIGHT: 'weather-night',

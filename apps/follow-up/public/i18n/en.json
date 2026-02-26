@@ -36,7 +36,8 @@
     "switch_to_light": "Switch to light mode",
     "switch_language": "Switch language",
     "application_user": "Application Users",
-    "attachment_type": "Attachment Types"
+    "attachment_type": "Attachment Types",
+    "external_site": "External Sites"
   },
   "dashboard": {
     "title": "Dashboard"
@@ -76,6 +77,23 @@
     "no_data": "No attachment types found",
     "search_placeholder": "Search attachment types...",
     "add": "Add Attachment Type",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "external_site": {
+    "title": "External Sites",
+    "description": "Manage external sites linked to the system",
+    "ar_name": "Arabic Name",
+    "en_name": "English Name",
+    "description_col": "Description",
+    "ldap_prefix": "LDAP Prefix",
+    "site_type": "Site Type",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "no_data": "No external sites found",
+    "search_placeholder": "Search external sites...",
+    "add": "Add External Site",
     "edit": "Edit",
     "delete": "Delete"
   }
