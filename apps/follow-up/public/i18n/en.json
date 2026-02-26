@@ -35,7 +35,8 @@
     "switch_to_dark": "Switch to dark mode",
     "switch_to_light": "Switch to light mode",
     "switch_language": "Switch language",
-    "application_user": "Application Users"
+    "application_user": "Application Users",
+    "attachment_type": "Attachment Types"
   },
   "dashboard": {
     "title": "Dashboard"
@@ -59,6 +60,22 @@
     "no_data": "No users found",
     "search_placeholder": "Search users...",
     "add_user": "Add User",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "attachment_type": {
+    "title": "Attachment Types",
+    "description": "Manage available attachment types in the system",
+    "ar_name": "Arabic Name",
+    "en_name": "English Name",
+    "lookup_key": "Lookup Key",
+    "category": "Category",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "no_data": "No attachment types found",
+    "search_placeholder": "Search attachment types...",
+    "add": "Add Attachment Type",
     "edit": "Edit",
     "delete": "Delete"
   }

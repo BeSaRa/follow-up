@@ -29,6 +29,9 @@ export const APP_ICONS = {
   ACCOUNT_GROUP: 'account-group',
   ACCOUNT_OFF: 'account-off',
 
+  // ── Content ──
+  PAPERCLIP: 'paperclip',
+
   // ── Theme ──
   WEATHER_NIGHT: 'weather-night',
   WHITE_BALANCE_SUNNY: 'white-balance-sunny',

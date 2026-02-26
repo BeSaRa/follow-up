@@ -22,6 +22,11 @@ export const layoutRoutes: Route[] = [
           import('../features/application-user/application-user-page').then(m => m.ApplicationUserPage),
       },
       {
+        path: 'attachment-type',
+        loadComponent: () =>
+          import('../features/attachment-type/attachment-type-page').then(m => m.AttachmentTypePage),
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

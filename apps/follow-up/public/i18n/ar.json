@@ -35,7 +35,8 @@
     "switch_to_dark": "التبديل إلى الوضع الداكن",
     "switch_to_light": "التبديل إلى الوضع الفاتح",
     "switch_language": "تبديل اللغة",
-    "application_user": "المستخدمين"
+    "application_user": "المستخدمين",
+    "attachment_type": "أنواع المرفقات"
   },
   "dashboard": {
     "title": "لوحة التحكم"
@@ -59,6 +60,22 @@
     "no_data": "لا يوجد مستخدمين",
     "search_placeholder": "بحث عن مستخدم...",
     "add_user": "إضافة مستخدم",
+    "edit": "تعديل",
+    "delete": "حذف"
+  },
+  "attachment_type": {
+    "title": "أنواع المرفقات",
+    "description": "إدارة أنواع المرفقات المتاحة في النظام",
+    "ar_name": "الاسم بالعربي",
+    "en_name": "الاسم بالإنجليزي",
+    "lookup_key": "مفتاح البحث",
+    "category": "التصنيف",
+    "status": "الحالة",
+    "active": "فعال",
+    "inactive": "غير فعال",
+    "no_data": "لا توجد أنواع مرفقات",
+    "search_placeholder": "بحث عن نوع مرفق...",
+    "add": "إضافة نوع مرفق",
     "edit": "تعديل",
     "delete": "حذف"
   }

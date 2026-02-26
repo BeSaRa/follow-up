@@ -5,6 +5,7 @@ export const ENDPOINTS = {
   REFRESH_TOKEN: '/auth/refresh-token',
   LOGOUT: '/auth/logout',
   APPLICATION_USER: 'admin/application-user',
+  ATTACHMENT_TYPE: 'admin/attachment-type',
 } as const satisfies RequiredAuthEndpoints & Record<string, string>
 
 export type Endpoints = typeof ENDPOINTS
