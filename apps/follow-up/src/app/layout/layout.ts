@@ -7,7 +7,12 @@ import {
   signal,
 } from '@angular/core'
 import { DOCUMENT } from '@angular/common'
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router'
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import {
   UiNavbar,
@@ -57,9 +62,14 @@ import { APP_ICONS } from '../constants/icons'
             [attr.aria-label]="'layout.toggle_sidebar' | translate"
             (click)="sidebarOpen.set(!sidebarOpen())"
           >
-            <mat-icon class="!text-2xl !size-6 !leading-6" [svgIcon]="icons.MENU" />
+            <mat-icon
+              class="!text-2xl !size-6 !leading-6"
+              [svgIcon]="icons.MENU"
+            />
           </button>
-          <span class="text-lg font-bold text-foreground">{{ 'layout.app_title' | translate }}</span>
+          <span class="text-lg font-bold text-foreground">{{
+            'layout.app_title' | translate
+          }}</span>
         </ui-navbar-brand>
 
         <ui-navbar-actions>
@@ -78,18 +88,31 @@ import { APP_ICONS } from '../constants/icons'
             class="relative inline-flex h-7 w-14 items-center rounded-full transition-colors duration-300"
             [class]="darkMode() ? 'bg-slate-700' : 'bg-amber-200'"
             [attr.aria-label]="'layout.toggle_dark_mode' | translate"
-            [uiTooltip]="(darkMode() ? 'layout.switch_to_light' : 'layout.switch_to_dark') | translate"
+            [uiTooltip]="
+              (darkMode() ? 'layout.switch_to_light' : 'layout.switch_to_dark')
+                | translate
+            "
             uiTooltipPosition="below"
             (click)="darkMode.set(!darkMode())"
           >
             <span
               class="inline-flex size-5 items-center justify-center rounded-full bg-white shadow-sm transition-transform duration-300"
-              [class]="darkMode() ? 'ltr:translate-x-8 rtl:-translate-x-8' : 'ltr:translate-x-1 rtl:-translate-x-1'"
+              [class]="
+                darkMode()
+                  ? 'ltr:translate-x-8 rtl:-translate-x-8'
+                  : 'ltr:translate-x-1 rtl:-translate-x-1'
+              "
             >
               @if (darkMode()) {
-                <mat-icon class="!text-xs !size-3 !leading-3 text-slate-700" [svgIcon]="icons.WEATHER_NIGHT" />
+                <mat-icon
+                  class="!text-xs !size-3 !leading-3 text-slate-700"
+                  [svgIcon]="icons.WEATHER_NIGHT"
+                />
               } @else {
-                <mat-icon class="!text-xs !size-3 !leading-3 text-amber-500" [svgIcon]="icons.WHITE_BALANCE_SUNNY" />
+                <mat-icon
+                  class="!text-xs !size-3 !leading-3 text-amber-500"
+                  [svgIcon]="icons.WHITE_BALANCE_SUNNY"
+                />
               }
             </span>
           </button>
@@ -102,12 +125,18 @@ import { APP_ICONS } from '../constants/icons'
             >
               <ui-avatar size="sm" [initials]="store.userName() ?? '?'" />
               <span class="hidden sm:inline">{{ store.userName() }}</span>
-              <mat-icon class="!text-base !size-4 !leading-4 text-foreground-muted" [svgIcon]="icons.CHEVRON_DOWN" />
+              <mat-icon
+                class="!text-base !size-4 !leading-4 text-foreground-muted"
+                [svgIcon]="icons.CHEVRON_DOWN"
+              />
             </button>
             <ui-dropdown-menu #userMenu position="below-end">
               <ui-dropdown-item (selected)="logout()">
                 <span class="flex items-center gap-2">
-                  <mat-icon class="!text-base !size-4 !leading-4" [svgIcon]="icons.LOGOUT" />
+                  <mat-icon
+                    class="!text-base !size-4 !leading-4"
+                    [svgIcon]="icons.LOGOUT"
+                  />
                   {{ 'layout.logout' | translate }}
                 </span>
               </ui-dropdown-item>
@@ -116,7 +145,10 @@ import { APP_ICONS } from '../constants/icons'
         </ui-navbar-actions>
       </ui-navbar>
 
-      <ui-drawer-container class="flex-1 overflow-hidden bg-surface" style="--ui-drawer-width: 250px">
+      <ui-drawer-container
+        class="flex-1 overflow-hidden bg-surface"
+        style="--ui-drawer-width: 250px"
+      >
         <ui-drawer
           [(open)]="sidebarOpen"
           position="start"
@@ -129,7 +161,9 @@ import { APP_ICONS } from '../constants/icons'
               @for (group of sortedNavGroups(); track group.label) {
                 <div>
                   @if (group.label) {
-                    <span class="px-3 text-xs font-semibold uppercase tracking-wider text-foreground-subtle">
+                    <span
+                      class="px-3 text-xs font-semibold uppercase tracking-wider text-foreground-subtle"
+                    >
                       {{ group.label | translate }}
                     </span>
                   }
@@ -141,7 +175,10 @@ import { APP_ICONS } from '../constants/icons'
                         [routerLinkActiveOptions]="{ exact: item.exact }"
                         class="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
                       >
-                        <mat-icon class="!text-xl !size-5 !leading-5" [svgIcon]="item.icon" />
+                        <mat-icon
+                          class="!text-xl !size-5 !leading-5"
+                          [svgIcon]="item.icon"
+                        />
                         {{ item.label | translate }}
                       </a>
                     }
@@ -181,7 +218,9 @@ export class Layout {
 
     effect(() => {
       if (!this.store.isAuthenticated()) {
-        this.router.navigate(['/login'], { queryParams: { reason: 'logout' } })
+        this.router
+          .navigate(['/login'], { queryParams: { reason: 'logout' } })
+          .then()
       }
     })
   }
@@ -237,13 +276,6 @@ export class Layout {
           icon: APP_ICONS.PRIORITY_HIGH,
           exact: false,
           sortOrder: 5,
-        },
-        {
-          path: '/settings',
-          label: 'layout.settings',
-          icon: APP_ICONS.COG,
-          exact: false,
-          sortOrder: 6,
         },
       ],
     },

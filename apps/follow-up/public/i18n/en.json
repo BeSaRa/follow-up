@@ -28,7 +28,6 @@
     "app_title": "Follow Up",
     "nav_system": "System Administration",
     "dashboard": "Dashboard",
-    "settings": "Settings",
     "logout": "Logout",
     "toggle_sidebar": "Toggle sidebar",
     "toggle_dark_mode": "Toggle dark mode",
@@ -43,9 +42,6 @@
   },
   "dashboard": {
     "title": "Dashboard"
-  },
-  "settings": {
-    "title": "Settings"
   },
   "application_user": {
     "title": "Application Users",

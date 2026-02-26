@@ -28,7 +28,6 @@
     "app_title": "متابعة",
     "nav_system": "إدارة النظام",
     "dashboard": "لوحة التحكم",
-    "settings": "الإعدادات",
     "logout": "تسجيل الخروج",
     "toggle_sidebar": "تبديل الشريط الجانبي",
     "toggle_dark_mode": "تبديل الوضع الداكن",
@@ -43,9 +42,6 @@
   },
   "dashboard": {
     "title": "لوحة التحكم"
-  },
-  "settings": {
-    "title": "الإعدادات"
   },
   "application_user": {
     "title": "المستخدمين",
