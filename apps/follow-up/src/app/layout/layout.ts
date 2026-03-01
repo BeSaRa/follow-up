@@ -151,7 +151,8 @@ import { NAV_GROUPS } from '../constants/nav-groups'
         style="--ui-drawer-width: 250px"
       >
         <ui-drawer
-          [(open)]="sidebarOpen"
+          (openChange)="sidebarOpen.set($event)"
+          [open]="sidebarOpen()"
           position="start"
           mode="push"
           [hasBackdrop]="false"
