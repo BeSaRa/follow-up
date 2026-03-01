@@ -78,6 +78,14 @@ export const AuthStore = signalStore(
         ),
       ),
     ),
+    setTokens(tokens: { accessToken: string, refreshToken: string }) {
+      patchState(store, {
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
+      })
+      cookieService.set(COOKIE_ACCESS_TOKEN, tokens.accessToken, cookieOptions)
+      cookieService.set(COOKIE_REFRESH_TOKEN, tokens.refreshToken, cookieOptions)
+    },
   })),
   withHooks({
     onInit(store, cookieService = inject(CookieService)) {

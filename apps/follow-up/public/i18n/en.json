@@ -111,6 +111,13 @@
     "edit": "Edit",
     "delete": "Delete"
   },
+  "http_errors": {
+    "forbidden": "You don't have permission to access this resource",
+    "bad_request": "Invalid request, please try again",
+    "server_error": "A server error occurred, please try again later",
+    "no_connection": "No internet connection",
+    "session_expired": "Your session has expired, please log in again"
+  },
   "priority_level": {
     "title": "Priority Levels",
     "description": "Manage priority levels in the system",

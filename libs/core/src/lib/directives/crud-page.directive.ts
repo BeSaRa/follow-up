@@ -28,6 +28,7 @@ export interface CrudPageContract<TModel> {
   readonly pageSize: WritableSignal<number>
   readonly searchQuery: WritableSignal<string>
   readonly loading: WritableSignal<boolean>
+  readonly error: Signal<string | null>
   readonly pagination: WritableSignal<Pagination<TModel[]> | null>
   readonly models: Signal<TModel[]>
   readonly totalElements: Signal<number>
@@ -55,6 +56,7 @@ export abstract class CrudPageDirective<
   readonly pageSize: WritableSignal<number>
   readonly searchQuery = signal('')
   readonly loading = signal(false)
+  readonly error = signal<string | null>(null)
   readonly pagination = signal<Pagination<TModel[]> | null>(null)
 
   readonly models: Signal<TModel[]>
@@ -108,13 +110,17 @@ export abstract class CrudPageDirective<
 
   private loadData(page: number, size: number, search: string) {
     this.loading.set(true)
+    this.error.set(null)
     const options = this.buildLoadOptions(page, size, search)
     this.service.getAll(options).subscribe({
       next: (result) => {
         this.pagination.set(result)
         this.loading.set(false)
       },
-      error: () => this.loading.set(false),
+      error: (err) => {
+        this.loading.set(false)
+        this.error.set(err?.message ?? 'unknown_error')
+      },
     })
   }
 
