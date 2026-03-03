@@ -51,3 +51,6 @@ __screenshots__/
 docs/tutorials/
 
 vitest.config.*.timestamp*
+
+docs/ai-tools-adoption-report.md
+docs/ai-tools-adoption-report.html
