@@ -48,4 +48,6 @@ Thumbs.db
 
 __screenshots__/
 
+docs/tutorials/
+
 vitest.config.*.timestamp*
