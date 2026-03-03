@@ -3,6 +3,7 @@ export * from './lib/services/config-service'
 export * from './lib/services/auth-service'
 export * from './lib/services/cookie-service'
 export * from './lib/services/crud-service'
+export * from './lib/services/crud-with-dialog-service'
 export * from './lib/providers/provide-config-service'
 export * from './lib/providers/provide-sequential-app-initializer'
 export * from './lib/providers/provide-url-service'
@@ -24,3 +25,4 @@ console.log('[core] ExternalSite feature support added')
 console.log('[core] FollowupStatus feature support added')
 console.log('[core] PriorityLevel feature support added')
 console.log('[core] AuthStore setTokens method added, CrudPageDirective error signal added')
+console.log('[core] CrudWithDialogService added')
