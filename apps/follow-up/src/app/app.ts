@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core'
-import { DOCUMENT } from '@angular/common'
-import { RouterOutlet } from '@angular/router'
-import { TranslateService } from '@ngx-translate/core'
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit} from '@angular/core'
+import {DOCUMENT} from '@angular/common'
+import {RouterOutlet} from '@angular/router'
+import {TranslateService} from '@ngx-translate/core'
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop'
 
 const LANG_DIR_MAP: Record<string, string> = {
   ar: 'rtl',
@@ -22,7 +22,9 @@ export class App implements OnInit {
   private readonly destroyRef = inject(DestroyRef)
 
   ngOnInit() {
-    this.setDocumentDirection(this.translate.getCurrentLang() || this.translate.defaultLang || 'ar')
+    this.setDocumentDirection(
+      this.translate.getCurrentLang() || this.translate.defaultLang || 'ar',
+    )
     this.initTheme()
 
     this.translate.onLangChange
@@ -32,14 +34,15 @@ export class App implements OnInit {
 
   private initTheme() {
     const saved = localStorage.getItem('theme')
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const prefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)',
+    ).matches
     const isDark = saved === 'dark' || (!saved && prefersDark)
     this.doc.documentElement.classList.toggle('dark', isDark)
   }
 
   private setDocumentDirection(lang: string) {
-    const dir = LANG_DIR_MAP[lang] ?? 'ltr'
-    this.doc.documentElement.dir = dir
+    this.doc.documentElement.dir = LANG_DIR_MAP[lang] ?? 'ltr'
     this.doc.documentElement.lang = lang
   }
 }
