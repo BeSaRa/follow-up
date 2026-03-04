@@ -23,7 +23,7 @@ import {
   UiTableHeader,
   UiTableRow,
 } from '@follow-up/ui'
-import { CrudPageDirective } from '@follow-up/core'
+import { CrudPageWithDialogDirective } from '@follow-up/core'
 import { APP_ICONS } from '../../constants/icons'
 import { ApplicationUserService } from './services/application-user.service'
 import { ApplicationUser } from './models/application-user'
@@ -82,7 +82,7 @@ import { ApplicationUser } from './models/application-user'
           <button uiButton variant="outline" size="sm" (click)="refresh()">
             <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.REFRESH" />
           </button>
-          <button uiButton variant="primary" size="sm">
+          <button uiButton variant="primary" size="sm" (click)="openCreateDialog()">
             <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.PLUS" />
             {{ 'application_user.add_user' | translate }}
           </button>
@@ -179,7 +179,13 @@ import { ApplicationUser } from './models/application-user'
                           <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.DOTS_VERTICAL" />
                         </button>
                         <ui-menu #actionMenu>
-                          <ui-menu-item>
+                          <ui-menu-item (click)="openViewDialog(user)">
+                            <span class="flex items-center gap-2">
+                              <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.EYE" />
+                              {{ 'application_user.view' | translate }}
+                            </span>
+                          </ui-menu-item>
+                          <ui-menu-item (click)="openUpdateDialog(user)">
                             <span class="flex items-center gap-2">
                               <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.PENCIL" />
                               {{ 'application_user.edit' | translate }}
@@ -221,7 +227,7 @@ import { ApplicationUser } from './models/application-user'
     </div>
   `,
 })
-export class ApplicationUserPage extends CrudPageDirective<
+export class ApplicationUserPage extends CrudPageWithDialogDirective<
   ApplicationUser,
   ApplicationUserService
 > {

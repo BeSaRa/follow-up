@@ -59,8 +59,13 @@
     "no_data": "No users found",
     "search_placeholder": "Search users...",
     "add_user": "Add User",
+    "view": "View",
     "edit": "Edit",
     "delete": "Delete"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel"
   },
   "attachment_type": {
     "title": "Attachment Types",

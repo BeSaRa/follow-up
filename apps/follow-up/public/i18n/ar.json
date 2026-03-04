@@ -59,8 +59,13 @@
     "no_data": "لا يوجد مستخدمين",
     "search_placeholder": "بحث عن مستخدم...",
     "add_user": "إضافة مستخدم",
+    "view": "عرض",
     "edit": "تعديل",
     "delete": "حذف"
+  },
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء"
   },
   "attachment_type": {
     "title": "أنواع المرفقات",

@@ -23,6 +23,7 @@ export const APP_ICONS = {
   REFRESH: 'refresh',
   MAGNIFY: 'magnify',
   DOTS_VERTICAL: 'dots-vertical',
+  CLOSE: 'close',
   LOGOUT: 'logout',
 
   // ── Users ──
