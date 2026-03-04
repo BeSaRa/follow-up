@@ -19,10 +19,12 @@ export * from './lib/interfaces/model-has-service'
 export * from './lib/interfaces/service-name-contract'
 export * from './lib/types/constructor'
 export * from './lib/directives/crud-page.directive'
+export * from './lib/directives/crud-page-with-dialog.directive'
 
 console.log('[core] core module loaded — CrudPageDirective added')
 console.log('[core] ExternalSite feature support added')
 console.log('[core] FollowupStatus feature support added')
 console.log('[core] PriorityLevel feature support added')
 console.log('[core] AuthStore setTokens method added, CrudPageDirective error signal added')
-console.log('[core] CrudWithDialogService added')
+console.log('[core] CrudWithDialogService added — VIEW mode support')
+console.log('[core] CrudPageWithDialogDirective added')
