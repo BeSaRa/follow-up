@@ -285,3 +285,11 @@
   --radius-lg: calc(var(--radius) + 0.25rem);
   --radius-xl: calc(var(--radius) + 0.5rem);
 }
+
+/* ── Material Dialog — Sync with theme surfaces ──────────────────────── */
+:root {
+  --mat-dialog-container-color: var(--clr-surface-raised);
+}
+.dark {
+  --mat-dialog-container-color: var(--clr-surface-raised);
+}

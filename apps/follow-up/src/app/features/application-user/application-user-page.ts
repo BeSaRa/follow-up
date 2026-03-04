@@ -11,9 +11,6 @@ import {
   UiCard,
   UiCardContent,
   UiInput,
-  UiMenu,
-  UiMenuItem,
-  UiMenuTrigger,
   UiPagination,
   UiSkeleton,
   UiTable,
@@ -22,6 +19,7 @@ import {
   UiTableHead,
   UiTableHeader,
   UiTableRow,
+  UiTooltip,
 } from '@follow-up/ui'
 import { CrudPageWithDialogDirective } from '@follow-up/core'
 import { APP_ICONS } from '../../constants/icons'
@@ -51,9 +49,7 @@ import { ApplicationUser } from './models/application-user'
     UiInput,
     UiPagination,
     UiSkeleton,
-    UiMenu,
-    UiMenuItem,
-    UiMenuTrigger,
+    UiTooltip,
   ],
   template: `
     <div class="space-y-6">
@@ -142,7 +138,7 @@ import { ApplicationUser } from './models/application-user'
                     <th uiTableHead>
                       {{ 'application_user.status' | translate }}
                     </th>
-                    <th uiTableHead class="w-12"></th>
+                    <th uiTableHead class="w-28"></th>
                   </tr>
                 </thead>
                 <tbody uiTableBody>
@@ -170,34 +166,31 @@ import { ApplicationUser } from './models/application-user'
                         </ui-badge>
                       </td>
                       <td uiTableCell>
-                        <button
-                          type="button"
-                          class="inline-flex items-center justify-center rounded-md p-1 text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
-                          [uiMenuTrigger]="actionMenu"
-                          [menuPosition]="'below-end'"
-                        >
-                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.DOTS_VERTICAL" />
-                        </button>
-                        <ui-menu #actionMenu>
-                          <ui-menu-item (click)="openViewDialog(user)">
-                            <span class="flex items-center gap-2">
-                              <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.EYE" />
-                              {{ 'application_user.view' | translate }}
-                            </span>
-                          </ui-menu-item>
-                          <ui-menu-item (click)="openUpdateDialog(user)">
-                            <span class="flex items-center gap-2">
-                              <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.PENCIL" />
-                              {{ 'application_user.edit' | translate }}
-                            </span>
-                          </ui-menu-item>
-                          <ui-menu-item>
-                            <span class="flex items-center gap-2 text-error">
-                              <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.DELETE" />
-                              {{ 'application_user.delete' | translate }}
-                            </span>
-                          </ui-menu-item>
-                        </ui-menu>
+                        <div class="flex items-center gap-1">
+                          <button
+                            type="button"
+                            class="inline-flex items-center justify-center rounded-md p-1.5 text-foreground-muted hover:text-primary hover:bg-surface-hover transition-colors"
+                            [uiTooltip]="'application_user.view' | translate"
+                            (click)="openViewDialog(user)"
+                          >
+                            <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.EYE" />
+                          </button>
+                          <button
+                            type="button"
+                            class="inline-flex items-center justify-center rounded-md p-1.5 text-foreground-muted hover:text-primary hover:bg-surface-hover transition-colors"
+                            [uiTooltip]="'application_user.edit' | translate"
+                            (click)="openUpdateDialog(user)"
+                          >
+                            <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.PENCIL" />
+                          </button>
+                          <button
+                            type="button"
+                            class="inline-flex items-center justify-center rounded-md p-1.5 text-foreground-muted hover:text-error hover:bg-surface-hover transition-colors"
+                            [uiTooltip]="'application_user.delete' | translate"
+                          >
+                            <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.DELETE" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   }
