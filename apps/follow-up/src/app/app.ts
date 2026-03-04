@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit} from '@angular/core'
-import {DOCUMENT} from '@angular/common'
-import {RouterOutlet} from '@angular/router'
-import {TranslateService} from '@ngx-translate/core'
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop'
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core'
+import { DOCUMENT } from '@angular/common'
+import { RouterOutlet } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 const LANG_DIR_MAP: Record<string, string> = {
   ar: 'rtl',
@@ -22,9 +22,7 @@ export class App implements OnInit {
   private readonly destroyRef = inject(DestroyRef)
 
   ngOnInit() {
-    this.setDocumentDirection(
-      this.translate.getCurrentLang() || this.translate.defaultLang || 'ar',
-    )
+    this.setDocumentDirection(this.translate.getCurrentLang() || 'ar')
     this.initTheme()
 
     this.translate.onLangChange

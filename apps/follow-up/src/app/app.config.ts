@@ -23,7 +23,9 @@ export const appConfig: ApplicationConfig = {
   providers: [
     appInit,
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withInterceptors([mockInterceptor, errorInterceptor, tokenInterceptor])),
+    provideHttpClient(
+      withInterceptors([mockInterceptor, errorInterceptor, tokenInterceptor]),
+    ),
     provideRouter(appRoutes),
     provideTranslateService({
       fallbackLang: 'ar',
@@ -31,6 +33,7 @@ export const appConfig: ApplicationConfig = {
     provideTranslateHttpLoader({
       prefix: './i18n/',
       suffix: '.json',
+      useHttpBackend: true,
     }),
     provideEnvironmentInitializer(() => {
       const iconRegistry = inject(MatIconRegistry)
