@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+} from '@angular/core'
 import { DOCUMENT } from '@angular/common'
 import { RouterOutlet } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'

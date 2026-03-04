@@ -213,6 +213,11 @@ Every plan file must have a tracker table at the top:
 - All translation keys must be **lowercase** (e.g., `login.title`, `login.username_label`)
 - Every new string must be added to **both** `ar.json` and `en.json`
 
+## Shell & Git Commands
+
+- NEVER use `cd <path> && git ...` compound commands — Claude Code blocks these and it cannot be overridden
+- Always use `git -C <path> ...` instead (e.g., `git -C /d/Projects/Nx/follow-up status`)
+
 ## Commit Messages
 
 Do not add any Claude-specific attributes to commit messages.
