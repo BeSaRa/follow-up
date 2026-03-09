@@ -114,7 +114,9 @@
     "inactive": "Inactive",
     "no_data": "No followup statuses found",
     "search_placeholder": "Search followup statuses...",
+    "lookup_str_key": "Lookup String Key",
     "add": "Add Followup Status",
+    "view": "View",
     "edit": "Edit",
     "delete": "Delete"
   },

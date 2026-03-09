@@ -11,9 +11,6 @@ import {
   UiCard,
   UiCardContent,
   UiInput,
-  UiMenu,
-  UiMenuItem,
-  UiMenuTrigger,
   UiPagination,
   UiSkeleton,
   UiTable,
@@ -22,8 +19,9 @@ import {
   UiTableHead,
   UiTableHeader,
   UiTableRow,
+  UiTooltip,
 } from '@follow-up/ui'
-import { CrudPageDirective } from '@follow-up/core'
+import { CrudPageWithDialogDirective } from '@follow-up/core'
 import { APP_ICONS } from '../../constants/icons'
 import { FollowupStatusService } from './services/followup-status.service'
 import { FollowupStatus } from './models/followup-status'
@@ -51,9 +49,7 @@ import { FollowupStatus } from './models/followup-status'
     UiInput,
     UiPagination,
     UiSkeleton,
-    UiMenu,
-    UiMenuItem,
-    UiMenuTrigger,
+    UiTooltip,
   ],
   template: `
     <div class="space-y-6">
@@ -82,7 +78,7 @@ import { FollowupStatus } from './models/followup-status'
           <button uiButton variant="outline" size="sm" (click)="refresh()">
             <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.REFRESH" />
           </button>
-          <button uiButton variant="primary" size="sm">
+          <button uiButton variant="primary" size="sm" (click)="openCreateDialog()">
             <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.PLUS" />
             {{ 'followup_status.add' | translate }}
           </button>
@@ -136,7 +132,7 @@ import { FollowupStatus } from './models/followup-status'
                     <th uiTableHead>
                       {{ 'followup_status.status' | translate }}
                     </th>
-                    <th uiTableHead class="w-12"></th>
+                    <th uiTableHead class="w-28"></th>
                   </tr>
                 </thead>
                 <tbody uiTableBody>
@@ -162,28 +158,31 @@ import { FollowupStatus } from './models/followup-status'
                         </ui-badge>
                       </td>
                       <td uiTableCell>
-                        <button
-                          type="button"
-                          class="inline-flex items-center justify-center rounded-md p-1 text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
-                          [uiMenuTrigger]="actionMenu"
-                          [menuPosition]="'below-end'"
-                        >
-                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.DOTS_VERTICAL" />
-                        </button>
-                        <ui-menu #actionMenu>
-                          <ui-menu-item>
-                            <span class="flex items-center gap-2">
-                              <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.PENCIL" />
-                              {{ 'followup_status.edit' | translate }}
-                            </span>
-                          </ui-menu-item>
-                          <ui-menu-item>
-                            <span class="flex items-center gap-2 text-error">
-                              <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.DELETE" />
-                              {{ 'followup_status.delete' | translate }}
-                            </span>
-                          </ui-menu-item>
-                        </ui-menu>
+                        <div class="flex items-center gap-1">
+                          <button
+                            type="button"
+                            class="inline-flex items-center justify-center rounded-md p-1.5 text-foreground-muted hover:text-primary hover:bg-surface-hover transition-colors"
+                            [uiTooltip]="'followup_status.view' | translate"
+                            (click)="openViewDialog(item)"
+                          >
+                            <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.EYE" />
+                          </button>
+                          <button
+                            type="button"
+                            class="inline-flex items-center justify-center rounded-md p-1.5 text-foreground-muted hover:text-primary hover:bg-surface-hover transition-colors"
+                            [uiTooltip]="'followup_status.edit' | translate"
+                            (click)="openUpdateDialog(item)"
+                          >
+                            <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.PENCIL" />
+                          </button>
+                          <button
+                            type="button"
+                            class="inline-flex items-center justify-center rounded-md p-1.5 text-foreground-muted hover:text-error hover:bg-surface-hover transition-colors"
+                            [uiTooltip]="'followup_status.delete' | translate"
+                          >
+                            <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.DELETE" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   }
@@ -213,7 +212,7 @@ import { FollowupStatus } from './models/followup-status'
     </div>
   `,
 })
-export class FollowupStatusPage extends CrudPageDirective<
+export class FollowupStatusPage extends CrudPageWithDialogDirective<
   FollowupStatus,
   FollowupStatusService
 > {

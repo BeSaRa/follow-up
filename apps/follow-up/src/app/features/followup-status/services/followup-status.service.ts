@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core'
-import { CrudService, Pagination, RegisterServiceMixin } from '@follow-up/core'
+import { Injectable, Type } from '@angular/core'
+import { CrudWithDialogService, Pagination, RegisterServiceMixin } from '@follow-up/core'
 import { FollowupStatus } from '../models/followup-status'
+import { FollowupStatusDialog } from '../components/followup-status-dialog'
 import { Endpoints } from '../../../constants/endpoints'
 import { CastResponseContainer } from 'cast-response'
 
@@ -16,8 +17,9 @@ import { CastResponseContainer } from 'cast-response'
   },
 })
 @Injectable({ providedIn: 'root' })
-export class FollowupStatusService extends RegisterServiceMixin(CrudService)<
+export class FollowupStatusService extends RegisterServiceMixin(CrudWithDialogService)<
   FollowupStatus,
+  FollowupStatusDialog,
   Endpoints,
   number
 > {
@@ -29,5 +31,13 @@ export class FollowupStatusService extends RegisterServiceMixin(CrudService)<
 
   override getGetAllEndpoint(): string {
     return this.urlService.URLS.FOLLOWUP_STATUS_LOOKUPS
+  }
+
+  getDialogComponent(): Type<FollowupStatusDialog> {
+    return FollowupStatusDialog
+  }
+
+  getModelInstance(): FollowupStatus {
+    return new FollowupStatus()
   }
 }
