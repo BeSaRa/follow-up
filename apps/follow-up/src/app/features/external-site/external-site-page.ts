@@ -11,9 +11,6 @@ import {
   UiCard,
   UiCardContent,
   UiInput,
-  UiMenu,
-  UiMenuItem,
-  UiMenuTrigger,
   UiPagination,
   UiSkeleton,
   UiTable,
@@ -22,8 +19,9 @@ import {
   UiTableHead,
   UiTableHeader,
   UiTableRow,
+  UiTooltip,
 } from '@follow-up/ui'
-import { CrudPageDirective } from '@follow-up/core'
+import { CrudPageWithDialogDirective } from '@follow-up/core'
 import { APP_ICONS } from '../../constants/icons'
 import { ExternalSiteService } from './services/external-site.service'
 import { ExternalSite } from './models/external-site'
@@ -51,9 +49,7 @@ import { ExternalSite } from './models/external-site'
     UiInput,
     UiPagination,
     UiSkeleton,
-    UiMenu,
-    UiMenuItem,
-    UiMenuTrigger,
+    UiTooltip,
   ],
   template: `
     <div class="space-y-6">
@@ -82,7 +78,7 @@ import { ExternalSite } from './models/external-site'
           <button uiButton variant="outline" size="sm" (click)="refresh()">
             <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.REFRESH" />
           </button>
-          <button uiButton variant="primary" size="sm">
+          <button uiButton variant="primary" size="sm" (click)="openCreateDialog()">
             <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.PLUS" />
             {{ 'external_site.add' | translate }}
           </button>
@@ -139,7 +135,7 @@ import { ExternalSite } from './models/external-site'
                     <th uiTableHead>
                       {{ 'external_site.status' | translate }}
                     </th>
-                    <th uiTableHead class="w-12"></th>
+                    <th uiTableHead class="w-28"></th>
                   </tr>
                 </thead>
                 <tbody uiTableBody>
@@ -166,28 +162,31 @@ import { ExternalSite } from './models/external-site'
                         </ui-badge>
                       </td>
                       <td uiTableCell>
-                        <button
-                          type="button"
-                          class="inline-flex items-center justify-center rounded-md p-1 text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
-                          [uiMenuTrigger]="actionMenu"
-                          [menuPosition]="'below-end'"
-                        >
-                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.DOTS_VERTICAL" />
-                        </button>
-                        <ui-menu #actionMenu>
-                          <ui-menu-item>
-                            <span class="flex items-center gap-2">
-                              <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.PENCIL" />
-                              {{ 'external_site.edit' | translate }}
-                            </span>
-                          </ui-menu-item>
-                          <ui-menu-item>
-                            <span class="flex items-center gap-2 text-error">
-                              <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.DELETE" />
-                              {{ 'external_site.delete' | translate }}
-                            </span>
-                          </ui-menu-item>
-                        </ui-menu>
+                        <div class="flex items-center gap-1">
+                          <button
+                            type="button"
+                            class="inline-flex items-center justify-center rounded-md p-1.5 text-foreground-muted hover:text-primary hover:bg-surface-hover transition-colors"
+                            [uiTooltip]="'external_site.view' | translate"
+                            (click)="openViewDialog(item)"
+                          >
+                            <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.EYE" />
+                          </button>
+                          <button
+                            type="button"
+                            class="inline-flex items-center justify-center rounded-md p-1.5 text-foreground-muted hover:text-primary hover:bg-surface-hover transition-colors"
+                            [uiTooltip]="'external_site.edit' | translate"
+                            (click)="openUpdateDialog(item)"
+                          >
+                            <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.PENCIL" />
+                          </button>
+                          <button
+                            type="button"
+                            class="inline-flex items-center justify-center rounded-md p-1.5 text-foreground-muted hover:text-error hover:bg-surface-hover transition-colors"
+                            [uiTooltip]="'external_site.delete' | translate"
+                          >
+                            <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.DELETE" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   }
@@ -217,7 +216,7 @@ import { ExternalSite } from './models/external-site'
     </div>
   `,
 })
-export class ExternalSitePage extends CrudPageDirective<
+export class ExternalSitePage extends CrudPageWithDialogDirective<
   ExternalSite,
   ExternalSiteService
 > {

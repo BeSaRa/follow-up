@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core'
-import { CrudService, Pagination, RegisterServiceMixin } from '@follow-up/core'
+import { Injectable, Type } from '@angular/core'
+import { CrudWithDialogService, Pagination, RegisterServiceMixin } from '@follow-up/core'
 import { ExternalSite } from '../models/external-site'
+import { ExternalSiteDialog } from '../components/external-site-dialog'
 import { Endpoints } from '../../../constants/endpoints'
 import { CastResponseContainer } from 'cast-response'
 
@@ -16,8 +17,9 @@ import { CastResponseContainer } from 'cast-response'
   },
 })
 @Injectable({ providedIn: 'root' })
-export class ExternalSiteService extends RegisterServiceMixin(CrudService)<
+export class ExternalSiteService extends RegisterServiceMixin(CrudWithDialogService)<
   ExternalSite,
+  ExternalSiteDialog,
   Endpoints,
   number
 > {
@@ -25,5 +27,13 @@ export class ExternalSiteService extends RegisterServiceMixin(CrudService)<
 
   getSegmentUrl(): string {
     return this.urlService.URLS.EXTERNAL_SITE
+  }
+
+  getDialogComponent(): Type<ExternalSiteDialog> {
+    return ExternalSiteDialog
+  }
+
+  getModelInstance(): ExternalSite {
+    return new ExternalSite()
   }
 }
