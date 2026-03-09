@@ -7,6 +7,7 @@ import { AuthStore, AuthService } from '@follow-up/core'
 import { ToastService } from '@follow-up/ui'
 
 let isRefreshing = false
+let refreshFailed = false
 const refreshSubject = new BehaviorSubject<string | null>(null)
 
 const SKIP_URLS = ['/auth/login', '/auth/refresh-token']
@@ -25,7 +26,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
-        return handle401(req, next, authStore, authService, router, toast, translate)
+        return handle401(req, next, authStore, authService, router)
       }
 
       if (error.status === 403) {
@@ -51,21 +52,27 @@ function handle401(
   authStore: InstanceType<typeof AuthStore>,
   authService: AuthService,
   router: Router,
-  toast: ToastService,
-  translate: TranslateService,
 ) {
+  if (refreshFailed) {
+    return throwError(() => new Error('Session expired'))
+  }
+
   if (!isRefreshing) {
     isRefreshing = true
+    refreshFailed = false
     refreshSubject.next(null)
 
     const refreshToken = authStore.refreshToken()
     if (!refreshToken) {
-      return handleRefreshFailure(authStore, router, toast, translate)
+      isRefreshing = false
+      refreshFailed = true
+      return handleRefreshFailure(authStore, router)
     }
 
     return authService.refreshToken(refreshToken).pipe(
       switchMap((response) => {
         isRefreshing = false
+        refreshFailed = false
         const { accessToken, refreshToken: newRefreshToken } = response.result
         authStore.setTokens({ accessToken, refreshToken: newRefreshToken })
         refreshSubject.next(accessToken)
@@ -76,7 +83,9 @@ function handle401(
       }),
       catchError(() => {
         isRefreshing = false
-        return handleRefreshFailure(authStore, router, toast, translate)
+        refreshFailed = true
+        handleRefreshFailure(authStore, router)
+        return throwError(() => new Error('Session expired'))
       }),
     )
   }
@@ -95,11 +104,8 @@ function handle401(
 function handleRefreshFailure(
   authStore: InstanceType<typeof AuthStore>,
   router: Router,
-  toast: ToastService,
-  translate: TranslateService,
 ) {
   authStore.logout()
-  router.navigate(['/login'])
-  toast.error(translate.instant('http_errors.session_expired'))
+  router.navigate(['/login'], { queryParams: { reason: 'session-expired' } })
   return throwError(() => new Error('Session expired'))
 }

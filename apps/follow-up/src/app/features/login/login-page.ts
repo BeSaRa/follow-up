@@ -154,8 +154,11 @@ export class LoginPage {
       }
     })
 
-    if (this.route.snapshot.queryParamMap.get('reason') === 'logout') {
+    const reason = this.route.snapshot.queryParamMap.get('reason')
+    if (reason === 'logout') {
       this.toast.info(this.translate.instant('login.logged_out'))
+    } else if (reason === 'session-expired') {
+      this.toast.error(this.translate.instant('http_errors.session_expired'))
     }
   }
 
