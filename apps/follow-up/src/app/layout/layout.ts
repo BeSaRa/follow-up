@@ -87,7 +87,7 @@ import { NAV_GROUPS } from '../constants/nav-groups'
           <button
             type="button"
             class="relative inline-flex h-7 w-14 items-center rounded-full transition-colors duration-300"
-            [class]="darkMode() ? 'bg-slate-700' : 'bg-amber-200'"
+            [class]="darkMode() ? 'bg-slate-600' : 'bg-amber-200'"
             [attr.aria-label]="'layout.toggle_dark_mode' | translate"
             [uiTooltip]="
               (darkMode() ? 'layout.switch_to_light' : 'layout.switch_to_dark')
@@ -97,16 +97,16 @@ import { NAV_GROUPS } from '../constants/nav-groups'
             (click)="darkMode.set(!darkMode())"
           >
             <span
-              class="inline-flex size-5 items-center justify-center rounded-full bg-white shadow-sm transition-transform duration-300"
+              class="inline-flex size-5 items-center justify-center rounded-full shadow-sm transition-transform duration-300"
               [class]="
                 darkMode()
-                  ? 'ltr:translate-x-8 rtl:-translate-x-8'
-                  : 'ltr:translate-x-1 rtl:-translate-x-1'
+                  ? 'bg-white ltr:translate-x-8 rtl:-translate-x-8'
+                  : 'bg-white ltr:translate-x-1 rtl:-translate-x-1'
               "
             >
               @if (darkMode()) {
                 <mat-icon
-                  class="text-xs! size-3! leading-3! text-slate-700"
+                  class="text-xs! size-3! leading-3! text-slate-700!"
                   [svgIcon]="icons.WEATHER_NIGHT"
                 />
               } @else {
