@@ -12,6 +12,11 @@ export interface CrudServiceContract<Model, PrimaryKeyType = number> {
   getById(id: PrimaryKeyType): Observable<Model>
   getAll(options?: Record<string, unknown>): Observable<Pagination<Model[]>>
   getSegmentUrl(): string
+  getCreateEndpoint(): string
+  getUpdateEndpoint(): string
+  getDeleteEndpoint(): string
+  getGetByIdEndpoint(): string
+  getGetAllEndpoint(): string
 }
 
 export abstract class CrudService<
@@ -24,30 +29,50 @@ export abstract class CrudService<
   protected readonly urlService = injectUrlService<EndPoints>()
   abstract getSegmentUrl(): string
 
+  getCreateEndpoint(): string {
+    return this.getSegmentUrl()
+  }
+
+  getUpdateEndpoint(): string {
+    return this.getSegmentUrl()
+  }
+
+  getDeleteEndpoint(): string {
+    return this.getSegmentUrl()
+  }
+
+  getGetByIdEndpoint(): string {
+    return this.getSegmentUrl()
+  }
+
+  getGetAllEndpoint(): string {
+    return this.getSegmentUrl()
+  }
+
   @HasInterception
   @CastResponse(undefined, { fallback: '$default' })
   create(@InterceptParam() model: Model): Observable<Model> {
-    return this.http.post<Model>(this.getSegmentUrl() + '/entities', model)
+    return this.http.post<Model>(this.getCreateEndpoint() + '/entities', model)
   }
 
   @HasInterception
   @CastResponse(undefined, { fallback: '$default' })
   update(@InterceptParam() model: Model): Observable<Model> {
-    return this.http.put<Model>(this.getSegmentUrl() + '/entities', model)
+    return this.http.put<Model>(this.getUpdateEndpoint() + '/entities', model)
   }
 
   delete(id: PrimaryKeyType): Observable<void> {
-    return this.http.delete<void>(this.getSegmentUrl() + '/' + id)
+    return this.http.delete<void>(this.getDeleteEndpoint() + '/' + id)
   }
 
   @CastResponse(undefined, { fallback: '$default' })
   getById(id: PrimaryKeyType): Observable<Model> {
-    return this.http.get<Model>(this.getSegmentUrl() + '/' + id)
+    return this.http.get<Model>(this.getGetByIdEndpoint() + '/' + id)
   }
 
   @CastResponse(undefined, { fallback: '$pagination' })
   getAll(options?: Record<string, unknown>): Observable<Pagination<Model[]>> {
-    return this.http.get<Pagination<Model[]>>(this.getSegmentUrl(), {
+    return this.http.get<Pagination<Model[]>>(this.getGetAllEndpoint(), {
       params: new HttpParams({
         fromObject: options as never,
       }),

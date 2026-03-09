@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs'
+import { Cloner } from '@follow-up/util'
 import { ModelServiceMixin } from '../mixins/model-service-mixin'
 import { ModelHasService } from '../interfaces/model-has-service'
 import { CrudServiceContract } from '../services/crud-service'
@@ -16,7 +17,7 @@ export abstract class CrudModel<
     Service extends CrudServiceContract<Model, PrimaryKeyType>,
     PrimaryKeyType = number,
   >
-  extends ModelServiceMixin(class {})
+  extends ModelServiceMixin(Cloner)
   implements CrudModelContract<Model>, ModelHasService
 {
   abstract $$primaryKey: keyof Model

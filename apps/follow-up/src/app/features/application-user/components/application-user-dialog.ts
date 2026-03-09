@@ -144,7 +144,6 @@ export class ApplicationUserDialog implements OnInit {
     if (this.form.invalid || this.isViewMode) return
 
     const model = this.data.model ?? new ApplicationUser()
-    Object.assign(model, this.form.value)
-    this.dialogRef.close(model)
+    this.dialogRef.close(model.clone<ApplicationUser>(this.form.value))
   }
 }

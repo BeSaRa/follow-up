@@ -17,14 +17,13 @@ import { appRoutes } from './app.routes'
 import { tokenInterceptor } from '@follow-up/core'
 import { appInit } from './constants/app-init'
 import { errorInterceptor } from './interceptors/error-interceptor'
-import { mockInterceptor } from './interceptors/mock-interceptor'
 
 export const appConfig: ApplicationConfig = {
   providers: [
     appInit,
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(
-      withInterceptors([mockInterceptor, errorInterceptor, tokenInterceptor]),
+      withInterceptors([errorInterceptor, tokenInterceptor]),
     ),
     provideRouter(appRoutes),
     provideTranslateService({

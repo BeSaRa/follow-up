@@ -26,4 +26,8 @@ export class PriorityLevelService extends RegisterServiceMixin(CrudService)<
   getSegmentUrl(): string {
     return this.urlService.URLS.PRIORITY_LEVEL
   }
+
+  override getGetAllEndpoint(): string {
+    return this.urlService.URLS.PRIORITY_LEVEL_LOOKUPS
+  }
 }

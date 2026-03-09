@@ -26,4 +26,8 @@ export class FollowupStatusService extends RegisterServiceMixin(CrudService)<
   getSegmentUrl(): string {
     return this.urlService.URLS.FOLLOWUP_STATUS
   }
+
+  override getGetAllEndpoint(): string {
+    return this.urlService.URLS.FOLLOWUP_STATUS_LOOKUPS
+  }
 }

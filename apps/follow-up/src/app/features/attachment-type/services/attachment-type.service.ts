@@ -26,4 +26,8 @@ export class AttachmentTypeService extends RegisterServiceMixin(CrudService)<
   getSegmentUrl(): string {
     return this.urlService.URLS.ATTACHMENT_TYPE
   }
+
+  override getGetAllEndpoint(): string {
+    return this.urlService.URLS.ATTACHMENT_TYPE_LOOKUPS
+  }
 }
