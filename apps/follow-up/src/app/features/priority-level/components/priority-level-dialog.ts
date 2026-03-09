@@ -40,31 +40,31 @@ import { PriorityLevel } from '../models/priority-level'
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4 px-6 py-5">
         <div class="grid grid-cols-2 gap-4">
           <ui-form-field>
-            <label uiLabel>{{ 'priority_level.ar_name' | translate }}</label>
-            <input uiInput formControlName="arName" />
+            <label uiLabel for="arName">{{ 'priority_level.ar_name' | translate }}</label>
+            <input uiInput id="arName" formControlName="arName" />
           </ui-form-field>
 
           <ui-form-field>
-            <label uiLabel>{{ 'priority_level.en_name' | translate }}</label>
-            <input uiInput formControlName="enName" />
+            <label uiLabel for="enName">{{ 'priority_level.en_name' | translate }}</label>
+            <input uiInput id="enName" formControlName="enName" />
           </ui-form-field>
         </div>
 
         <div class="grid grid-cols-2 gap-4">
           <ui-form-field>
-            <label uiLabel>{{ 'priority_level.lookup_key' | translate }}</label>
-            <input uiInput type="number" formControlName="lookupKey" />
+            <label uiLabel for="lookupKey">{{ 'priority_level.lookup_key' | translate }}</label>
+            <input uiInput id="lookupKey" type="number" formControlName="lookupKey" />
           </ui-form-field>
 
           <ui-form-field>
-            <label uiLabel>{{ 'priority_level.category' | translate }}</label>
-            <input uiInput type="number" formControlName="category" />
+            <label uiLabel for="category">{{ 'priority_level.category' | translate }}</label>
+            <input uiInput id="category" type="number" formControlName="category" />
           </ui-form-field>
         </div>
 
         <ui-form-field>
-          <label uiLabel>{{ 'priority_level.lookup_str_key' | translate }}</label>
-          <input uiInput formControlName="lookupStrKey" />
+          <label uiLabel for="lookupStrKey">{{ 'priority_level.lookup_str_key' | translate }}</label>
+          <input uiInput id="lookupStrKey" formControlName="lookupStrKey" />
         </ui-form-field>
 
         <div class="flex items-center gap-6">

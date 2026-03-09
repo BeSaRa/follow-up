@@ -40,36 +40,36 @@ import { ApplicationUser } from '../models/application-user'
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4 px-6 py-5">
         <div class="grid grid-cols-2 gap-4">
           <ui-form-field>
-            <label uiLabel>{{ 'application_user.ar_name' | translate }}</label>
-            <input uiInput formControlName="arName" />
+            <label uiLabel for="arName">{{ 'application_user.ar_name' | translate }}</label>
+            <input uiInput id="arName" formControlName="arName" />
           </ui-form-field>
 
           <ui-form-field>
-            <label uiLabel>{{ 'application_user.en_name' | translate }}</label>
-            <input uiInput formControlName="enName" />
+            <label uiLabel for="enName">{{ 'application_user.en_name' | translate }}</label>
+            <input uiInput id="enName" formControlName="enName" />
           </ui-form-field>
         </div>
 
         <ui-form-field>
-          <label uiLabel>{{ 'application_user.employee_no' | translate }}</label>
-          <input uiInput formControlName="employeeNo" />
+          <label uiLabel for="employeeNo">{{ 'application_user.employee_no' | translate }}</label>
+          <input uiInput id="employeeNo" formControlName="employeeNo" />
         </ui-form-field>
 
         <div class="grid grid-cols-2 gap-4">
           <ui-form-field>
-            <label uiLabel>{{ 'application_user.email' | translate }}</label>
-            <input uiInput type="email" formControlName="email" />
+            <label uiLabel for="email">{{ 'application_user.email' | translate }}</label>
+            <input uiInput id="email" type="email" formControlName="email" />
           </ui-form-field>
 
           <ui-form-field>
-            <label uiLabel>{{ 'application_user.mobile' | translate }}</label>
-            <input uiInput formControlName="mobile" />
+            <label uiLabel for="mobile">{{ 'application_user.mobile' | translate }}</label>
+            <input uiInput id="mobile" formControlName="mobile" />
           </ui-form-field>
         </div>
 
         <ui-form-field>
-          <label uiLabel>{{ 'application_user.qid' | translate }}</label>
-          <input uiInput formControlName="qid" />
+          <label uiLabel for="qid">{{ 'application_user.qid' | translate }}</label>
+          <input uiInput id="qid" formControlName="qid" />
         </ui-form-field>
 
         <div class="flex items-center gap-6">

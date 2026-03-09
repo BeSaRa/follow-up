@@ -40,24 +40,24 @@ import { ExternalSite } from '../models/external-site'
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4 px-6 py-5">
         <div class="grid grid-cols-2 gap-4">
           <ui-form-field>
-            <label uiLabel>{{ 'external_site.ar_name' | translate }}</label>
-            <input uiInput formControlName="arName" />
+            <label uiLabel for="arName">{{ 'external_site.ar_name' | translate }}</label>
+            <input uiInput id="arName" formControlName="arName" />
           </ui-form-field>
 
           <ui-form-field>
-            <label uiLabel>{{ 'external_site.en_name' | translate }}</label>
-            <input uiInput formControlName="enName" />
+            <label uiLabel for="enName">{{ 'external_site.en_name' | translate }}</label>
+            <input uiInput id="enName" formControlName="enName" />
           </ui-form-field>
         </div>
 
         <ui-form-field>
-          <label uiLabel>{{ 'external_site.description_col' | translate }}</label>
-          <input uiInput formControlName="description" />
+          <label uiLabel for="description">{{ 'external_site.description_col' | translate }}</label>
+          <input uiInput id="description" formControlName="description" />
         </ui-form-field>
 
         <ui-form-field>
-          <label uiLabel>{{ 'external_site.ldap_prefix' | translate }}</label>
-          <input uiInput formControlName="ldapPrefix" />
+          <label uiLabel for="ldapPrefix">{{ 'external_site.ldap_prefix' | translate }}</label>
+          <input uiInput id="ldapPrefix" formControlName="ldapPrefix" />
         </ui-form-field>
 
         <div class="flex items-center gap-6">
