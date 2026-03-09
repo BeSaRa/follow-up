@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core'
-import { CrudService, Pagination, RegisterServiceMixin } from '@follow-up/core'
+import { Injectable, Type } from '@angular/core'
+import { CrudWithDialogService, Pagination, RegisterServiceMixin } from '@follow-up/core'
 import { PriorityLevel } from '../models/priority-level'
+import { PriorityLevelDialog } from '../components/priority-level-dialog'
 import { Endpoints } from '../../../constants/endpoints'
 import { CastResponseContainer } from 'cast-response'
 
@@ -16,8 +17,9 @@ import { CastResponseContainer } from 'cast-response'
   },
 })
 @Injectable({ providedIn: 'root' })
-export class PriorityLevelService extends RegisterServiceMixin(CrudService)<
+export class PriorityLevelService extends RegisterServiceMixin(CrudWithDialogService)<
   PriorityLevel,
+  PriorityLevelDialog,
   Endpoints,
   number
 > {
@@ -29,5 +31,13 @@ export class PriorityLevelService extends RegisterServiceMixin(CrudService)<
 
   override getGetAllEndpoint(): string {
     return this.urlService.URLS.PRIORITY_LEVEL_LOOKUPS
+  }
+
+  getDialogComponent(): Type<PriorityLevelDialog> {
+    return PriorityLevelDialog
+  }
+
+  getModelInstance(): PriorityLevel {
+    return new PriorityLevel()
   }
 }
