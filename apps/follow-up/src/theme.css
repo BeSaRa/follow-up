@@ -293,3 +293,15 @@
 .dark {
   --mat-dialog-container-color: var(--clr-surface-raised);
 }
+
+/* ── Autofill — Override browser default yellow/blue background ──────── */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--clr-surface-raised) inset;
+  -webkit-text-fill-color: var(--clr-foreground);
+  caret-color: var(--clr-foreground);
+  border-color: var(--clr-border);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s ease;
+}
