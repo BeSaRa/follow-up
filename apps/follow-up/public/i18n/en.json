@@ -65,7 +65,8 @@
   },
   "common": {
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "save_success": "Saved successfully"
   },
   "attachment_type": {
     "title": "Attachment Types",

@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core'
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { MatIcon } from '@angular/material/icon'
-import { TranslatePipe } from '@ngx-translate/core'
-import { UiButton, UiFormField, UiInput, UiLabel, UiSlideToggle } from '@follow-up/ui'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { ToastService, UiButton, UiFormField, UiInput, UiLabel, UiSlideToggle } from '@follow-up/ui'
 import { CrudDialogData } from '@follow-up/core'
 import { ApplicationUser } from '../models/application-user'
 
@@ -91,7 +91,7 @@ import { ApplicationUser } from '../models/application-user'
           <button uiButton variant="outline" type="button" (click)="dialogRef.close()">
             {{ 'common.cancel' | translate }}
           </button>
-          <button uiButton variant="primary" type="button" [disabled]="form.invalid" (click)="onSubmit()">
+          <button uiButton variant="primary" type="button" [disabled]="form.invalid" [loading]="saving()" (click)="onSubmit()">
             {{ 'common.save' | translate }}
           </button>
         </div>
@@ -103,6 +103,8 @@ export class ApplicationUserDialog implements OnInit {
   readonly dialogRef = inject(MatDialogRef<ApplicationUserDialog>)
   readonly data = inject<CrudDialogData<ApplicationUser>>(MAT_DIALOG_DATA)
   private readonly fb = inject(FormBuilder)
+  private readonly toast = inject(ToastService)
+  private readonly translate = inject(TranslateService)
 
   readonly form: FormGroup = this.fb.group({
     arName: ['', Validators.required],
@@ -114,6 +116,8 @@ export class ApplicationUserDialog implements OnInit {
     status: [true],
     enableEmailNotification: [false],
   })
+
+  readonly saving = signal(false)
 
   get isViewMode() {
     return this.data.mode === 'VIEW'
@@ -144,6 +148,14 @@ export class ApplicationUserDialog implements OnInit {
     if (this.form.invalid || this.isViewMode) return
 
     const model = this.data.model ?? new ApplicationUser()
-    this.dialogRef.close(model.clone<ApplicationUser>(this.form.value))
+    const cloned = model.clone<ApplicationUser>(this.form.value)
+    this.saving.set(true)
+    cloned.save().subscribe({
+      next: (saved) => {
+        this.toast.success(this.translate.instant('common.save_success'))
+        this.dialogRef.close(saved)
+      },
+      error: () => this.saving.set(false),
+    })
   }
 }

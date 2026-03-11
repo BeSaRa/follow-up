@@ -65,7 +65,8 @@
   },
   "common": {
     "save": "حفظ",
-    "cancel": "إلغاء"
+    "cancel": "إلغاء",
+    "save_success": "تم الحفظ بنجاح"
   },
   "attachment_type": {
     "title": "أنواع المرفقات",

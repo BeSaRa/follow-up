@@ -29,3 +29,4 @@ console.log('[core] AuthStore setTokens method added, CrudPageDirective error si
 console.log('[core] CrudWithDialogService added — VIEW mode support')
 console.log('[core] CrudPageWithDialogDirective added')
 console.log('[core] CrudService per-endpoint URL methods added')
+console.log('[core] CrudService: moved /entities suffix to getCreateEndpoint/getUpdateEndpoint')

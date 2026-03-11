@@ -30,11 +30,11 @@ export abstract class CrudService<
   abstract getSegmentUrl(): string
 
   getCreateEndpoint(): string {
-    return this.getSegmentUrl()
+    return this.getSegmentUrl() + '/entities'
   }
 
   getUpdateEndpoint(): string {
-    return this.getSegmentUrl()
+    return this.getSegmentUrl() + '/entities'
   }
 
   getDeleteEndpoint(): string {
@@ -52,13 +52,13 @@ export abstract class CrudService<
   @HasInterception
   @CastResponse(undefined, { fallback: '$default' })
   create(@InterceptParam() model: Model): Observable<Model> {
-    return this.http.post<Model>(this.getCreateEndpoint() + '/entities', model)
+    return this.http.post<Model>(this.getCreateEndpoint(), model)
   }
 
   @HasInterception
   @CastResponse(undefined, { fallback: '$default' })
   update(@InterceptParam() model: Model): Observable<Model> {
-    return this.http.put<Model>(this.getUpdateEndpoint() + '/entities', model)
+    return this.http.put<Model>(this.getUpdateEndpoint(), model)
   }
 
   delete(id: PrimaryKeyType): Observable<void> {
