@@ -17,9 +17,11 @@ export * from './lib/mixins/model-service-mixin'
 export * from './lib/mixins/register-service-mixin'
 export * from './lib/interfaces/model-has-service'
 export * from './lib/interfaces/service-name-contract'
+export * from './lib/interfaces/has-form'
 export * from './lib/types/constructor'
 export * from './lib/directives/crud-page.directive'
 export * from './lib/directives/crud-page-with-dialog.directive'
+export * from './lib/directives/crud-dialog.directive'
 
 console.log('[core] core module loaded — CrudPageDirective added')
 console.log('[core] ExternalSite feature support added')
@@ -31,3 +33,4 @@ console.log('[core] CrudPageWithDialogDirective added')
 console.log('[core] CrudService per-endpoint URL methods added')
 console.log('[core] CrudService: moved /entities suffix to getCreateEndpoint/getUpdateEndpoint')
 console.log('[core] CrudPageWithDialogDirective: added confirmDelete with confirmation dialog')
+console.log('[core] CrudDialogDirective: added base dialog directive with contract')
