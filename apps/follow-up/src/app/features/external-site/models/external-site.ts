@@ -1,4 +1,5 @@
-import { CrudModel } from '@follow-up/core'
+import { Validators } from '@angular/forms'
+import { CrudModel, HasForm } from '@follow-up/core'
 import { ExternalSiteService } from '../services/external-site.service'
 
 export class SiteTypeInfo {
@@ -7,7 +8,7 @@ export class SiteTypeInfo {
   enName = ''
 }
 
-export class ExternalSite extends CrudModel<ExternalSite, ExternalSiteService> {
+export class ExternalSite extends CrudModel<ExternalSite, ExternalSiteService> implements HasForm {
   $$primaryKey = 'id' as const
   $$service = 'ExternalSiteService'
 
@@ -18,4 +19,14 @@ export class ExternalSite extends CrudModel<ExternalSite, ExternalSiteService> {
   ldapPrefix = ''
   status = true
   siteTypeInfo = new SiteTypeInfo()
+
+  buildForm() {
+    return {
+      arName: ['', Validators.required],
+      enName: ['', Validators.required],
+      description: [''],
+      ldapPrefix: [''],
+      status: [true],
+    }
+  }
 }
