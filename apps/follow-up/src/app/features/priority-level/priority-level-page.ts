@@ -179,6 +179,7 @@ import { PriorityLevel } from './models/priority-level'
                             type="button"
                             class="inline-flex items-center justify-center rounded-md p-1.5 text-foreground-muted hover:text-error hover:bg-surface-hover transition-colors"
                             [uiTooltip]="'priority_level.delete' | translate"
+                            (click)="confirmDelete(item)"
                           >
                             <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.DELETE" />
                           </button>

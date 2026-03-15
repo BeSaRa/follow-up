@@ -17,14 +17,15 @@ import { appRoutes } from './app.routes'
 import { tokenInterceptor } from '@follow-up/core'
 import { appInit } from './constants/app-init'
 import { errorInterceptor } from './interceptors/error-interceptor'
+import { provideModelInterceptors } from 'cast-response'
+import { GlobalModelInterceptor } from './constants/global-model-interceptor'
 
 export const appConfig: ApplicationConfig = {
   providers: [
     appInit,
+    provideModelInterceptors([GlobalModelInterceptor]),
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(
-      withInterceptors([errorInterceptor, tokenInterceptor]),
-    ),
+    provideHttpClient(withInterceptors([errorInterceptor, tokenInterceptor])),
     provideRouter(appRoutes),
     provideTranslateService({
       fallbackLang: 'ar',
