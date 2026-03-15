@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core'
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ReactiveFormsModule } from '@angular/forms'
 import { MatIcon } from '@angular/material/icon'
-import { TranslatePipe, TranslateService } from '@ngx-translate/core'
-import { ToastService, UiButton, UiFormField, UiInput, UiLabel, UiSlideToggle } from '@follow-up/ui'
-import { CrudDialogData } from '@follow-up/core'
+import { TranslatePipe } from '@ngx-translate/core'
+import { UiButton, UiFormField, UiInput, UiLabel, UiSlideToggle } from '@follow-up/ui'
+import { CrudDialogDirective, CrudDialogTitleKeys } from '@follow-up/core'
 import { ApplicationUser } from '../models/application-user'
 
 @Component({
@@ -99,63 +98,10 @@ import { ApplicationUser } from '../models/application-user'
     </div>
   `,
 })
-export class ApplicationUserDialog implements OnInit {
-  readonly dialogRef = inject(MatDialogRef<ApplicationUserDialog>)
-  readonly data = inject<CrudDialogData<ApplicationUser>>(MAT_DIALOG_DATA)
-  private readonly fb = inject(FormBuilder)
-  private readonly toast = inject(ToastService)
-  private readonly translate = inject(TranslateService)
-
-  readonly form: FormGroup = this.fb.group({
-    arName: ['', Validators.required],
-    enName: ['', Validators.required],
-    employeeNo: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    mobile: [''],
-    qid: [''],
-    status: [true],
-    enableEmailNotification: [false],
-  })
-
-  readonly saving = signal(false)
-
-  get isViewMode() {
-    return this.data.mode === 'VIEW'
-  }
-
-  get titleKey() {
-    switch (this.data.mode) {
-      case 'CREATE':
-        return 'application_user.add_user'
-      case 'UPDATE':
-        return 'application_user.edit'
-      case 'VIEW':
-        return 'application_user.view'
-    }
-  }
-
-  ngOnInit() {
-    if (this.data.model && this.data.mode !== 'CREATE') {
-      this.form.patchValue(this.data.model)
-    }
-
-    if (this.isViewMode) {
-      this.form.disable()
-    }
-  }
-
-  onSubmit() {
-    if (this.form.invalid || this.isViewMode) return
-
-    const model = this.data.model ?? new ApplicationUser()
-    const cloned = model.clone<ApplicationUser>(this.form.value)
-    this.saving.set(true)
-    cloned.save().subscribe({
-      next: (saved) => {
-        this.toast.success(this.translate.instant('common.save_success'))
-        this.dialogRef.close(saved)
-      },
-      error: () => this.saving.set(false),
-    })
+export class ApplicationUserDialog extends CrudDialogDirective<ApplicationUser> {
+  readonly titleKeys: CrudDialogTitleKeys = {
+    create: 'application_user.add_user',
+    update: 'application_user.edit',
+    view: 'application_user.view',
   }
 }
