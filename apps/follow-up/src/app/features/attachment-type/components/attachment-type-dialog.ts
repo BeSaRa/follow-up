@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core'
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ReactiveFormsModule } from '@angular/forms'
 import { MatIcon } from '@angular/material/icon'
-import { TranslatePipe, TranslateService } from '@ngx-translate/core'
-import { ToastService, UiButton, UiFormField, UiInput, UiLabel, UiSlideToggle } from '@follow-up/ui'
-import { CrudDialogData } from '@follow-up/core'
+import { TranslatePipe } from '@ngx-translate/core'
+import { UiButton, UiFormField, UiInput, UiLabel, UiSlideToggle } from '@follow-up/ui'
+import { CrudDialogDirective, CrudDialogTitleKeys } from '@follow-up/core'
 import { AttachmentType } from '../models/attachment-type'
 
 @Component({
@@ -89,61 +88,10 @@ import { AttachmentType } from '../models/attachment-type'
     </div>
   `,
 })
-export class AttachmentTypeDialog implements OnInit {
-  readonly dialogRef = inject(MatDialogRef<AttachmentTypeDialog>)
-  readonly data = inject<CrudDialogData<AttachmentType>>(MAT_DIALOG_DATA)
-  private readonly fb = inject(FormBuilder)
-  private readonly toast = inject(ToastService)
-  private readonly translate = inject(TranslateService)
-
-  readonly form: FormGroup = this.fb.group({
-    arName: ['', Validators.required],
-    enName: ['', Validators.required],
-    lookupKey: [0, Validators.required],
-    lookupStrKey: [''],
-    category: [0],
-    status: [true],
-  })
-
-  readonly saving = signal(false)
-
-  get isViewMode() {
-    return this.data.mode === 'VIEW'
-  }
-
-  get titleKey() {
-    switch (this.data.mode) {
-      case 'CREATE':
-        return 'attachment_type.add'
-      case 'UPDATE':
-        return 'attachment_type.edit'
-      case 'VIEW':
-        return 'attachment_type.view'
-    }
-  }
-
-  ngOnInit() {
-    if (this.data.model && this.data.mode !== 'CREATE') {
-      this.form.patchValue(this.data.model)
-    }
-
-    if (this.isViewMode) {
-      this.form.disable()
-    }
-  }
-
-  onSubmit() {
-    if (this.form.invalid || this.isViewMode) return
-
-    const model = this.data.model ?? new AttachmentType()
-    const cloned = model.clone<AttachmentType>(this.form.value)
-    this.saving.set(true)
-    cloned.save().subscribe({
-      next: (saved) => {
-        this.toast.success(this.translate.instant('common.save_success'))
-        this.dialogRef.close(saved)
-      },
-      error: () => this.saving.set(false),
-    })
+export class AttachmentTypeDialog extends CrudDialogDirective<AttachmentType> {
+  readonly titleKeys: CrudDialogTitleKeys = {
+    create: 'attachment_type.add',
+    update: 'attachment_type.edit',
+    view: 'attachment_type.view',
   }
 }
