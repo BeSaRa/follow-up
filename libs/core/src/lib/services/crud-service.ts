@@ -50,13 +50,13 @@ export abstract class CrudService<
   }
 
   @HasInterception
-  @CastResponse(undefined, { fallback: '$default' })
+  @CastResponse(undefined, { fallback: '$default', unwrap: 'result' })
   create(@InterceptParam() model: Model): Observable<Model> {
     return this.http.post<Model>(this.getCreateEndpoint(), model)
   }
 
   @HasInterception
-  @CastResponse(undefined, { fallback: '$default' })
+  @CastResponse(undefined, { fallback: '$default', unwrap: 'result' })
   update(@InterceptParam() model: Model): Observable<Model> {
     return this.http.put<Model>(this.getUpdateEndpoint(), model)
   }
