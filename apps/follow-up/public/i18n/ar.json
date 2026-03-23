@@ -22,7 +22,8 @@
     "error_generic": "حدث خطأ، يرجى المحاولة مرة أخرى",
     "show_password": "إظهار كلمة المرور",
     "hide_password": "إخفاء كلمة المرور",
-    "logged_out": "تم تسجيل الخروج بنجاح"
+    "logged_out": "تم تسجيل الخروج بنجاح",
+    "unauthenticated": "يرجى تسجيل الدخول للمتابعة"
   },
   "layout": {
     "app_title": "متابعة",

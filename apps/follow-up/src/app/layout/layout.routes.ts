@@ -1,10 +1,12 @@
 import { Route } from '@angular/router'
+import { authGuard } from '@follow-up/core'
 import { Layout } from './layout'
 
 export const layoutRoutes: Route[] = [
   {
     path: '',
     component: Layout,
+    canActivate: [authGuard],
     children: [
       {
         path: 'dashboard',

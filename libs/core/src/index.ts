@@ -22,8 +22,10 @@ export * from './lib/types/constructor'
 export * from './lib/directives/crud-page.directive'
 export * from './lib/directives/crud-page-with-dialog.directive'
 export * from './lib/directives/crud-dialog.directive'
+export * from './lib/guards/auth.guard'
 
 console.log('[core] core module loaded — CrudPageDirective added')
+console.log('[core] authGuard and guestGuard added')
 console.log('[core] ExternalSite feature support added')
 console.log('[core] FollowupStatus feature support added')
 console.log('[core] PriorityLevel feature support added')

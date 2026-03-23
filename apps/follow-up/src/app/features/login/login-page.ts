@@ -159,6 +159,8 @@ export class LoginPage {
       this.toast.info(this.translate.instant('login.logged_out'))
     } else if (reason === 'session-expired') {
       this.toast.error(this.translate.instant('http_errors.session_expired'))
+    } else if (reason === 'unauthenticated') {
+      this.toast.info(this.translate.instant('login.unauthenticated'))
     }
   }
 

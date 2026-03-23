@@ -22,7 +22,8 @@
     "error_generic": "An error occurred, please try again",
     "show_password": "Show password",
     "hide_password": "Hide password",
-    "logged_out": "You have been logged out successfully"
+    "logged_out": "You have been logged out successfully",
+    "unauthenticated": "Please log in to continue"
   },
   "layout": {
     "app_title": "Follow Up",
