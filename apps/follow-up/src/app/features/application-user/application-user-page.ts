@@ -118,6 +118,9 @@ import { ApplicationUser } from './models/application-user'
                 <thead uiTableHeader>
                   <tr uiTableRow>
                     <th uiTableHead>
+                      {{ 'application_user.domain_name' | translate }}
+                    </th>
+                    <th uiTableHead>
                       {{ 'application_user.employee_no' | translate }}
                     </th>
                     <th uiTableHead>
@@ -144,7 +147,10 @@ import { ApplicationUser } from './models/application-user'
                 <tbody uiTableBody>
                   @for (user of models(); track user.id) {
                     <tr uiTableRow>
-                      <td uiTableCell class="font-medium text-primary">
+                      <td uiTableCell class="font-medium">
+                        {{ user.domainName }}
+                      </td>
+                      <td uiTableCell>
                         {{ user.employeeNo }}
                       </td>
                       <td uiTableCell>{{ user.arName }}</td>

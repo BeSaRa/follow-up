@@ -138,7 +138,7 @@ import { PriorityLevel } from './models/priority-level'
                 <tbody uiTableBody>
                   @for (item of models(); track item.id) {
                     <tr uiTableRow>
-                      <td uiTableCell class="font-medium text-primary">
+                      <td uiTableCell class="font-medium">
                         {{ item.arName }}
                       </td>
                       <td uiTableCell>{{ item.enName }}</td>

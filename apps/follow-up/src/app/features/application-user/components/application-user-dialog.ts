@@ -66,10 +66,17 @@ import { ApplicationUser } from '../models/application-user'
           </ui-form-field>
         </div>
 
-        <ui-form-field>
-          <label uiLabel for="qid">{{ 'application_user.qid' | translate }}</label>
-          <input uiInput id="qid" formControlName="qid" />
-        </ui-form-field>
+        <div class="grid grid-cols-2 gap-4">
+          <ui-form-field>
+            <label uiLabel for="domainName">{{ 'application_user.domain_name' | translate }}</label>
+            <input uiInput id="domainName" formControlName="domainName" />
+          </ui-form-field>
+
+          <ui-form-field>
+            <label uiLabel for="qid">{{ 'application_user.qid' | translate }}</label>
+            <input uiInput id="qid" formControlName="qid" />
+          </ui-form-field>
+        </div>
 
         <div class="flex items-center gap-6">
           <label class="flex items-center gap-2 text-sm text-foreground">

@@ -12,6 +12,8 @@ export const ENDPOINTS = {
   FOLLOWUP_STATUS_LOOKUPS: 'admin/followup-status/lookup',
   PRIORITY_LEVEL: 'admin/priority-Level',
   PRIORITY_LEVEL_LOOKUPS: 'admin/priority-Level/lookup',
+  LOOKUP: 'admin/lookup',
+  PERMISSION: 'admin/permission',
 } as const satisfies RequiredAuthEndpoints & Record<string, string>
 
 export type Endpoints = typeof ENDPOINTS

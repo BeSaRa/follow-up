@@ -14,6 +14,7 @@ export class ApplicationUser extends CrudModel<ApplicationUser, ApplicationUserS
   qid = ''
   email = ''
   mobile = ''
+  domainName = ''
   enableEmailNotification = false
 
   buildForm() {
@@ -23,6 +24,7 @@ export class ApplicationUser extends CrudModel<ApplicationUser, ApplicationUserS
       employeeNo: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       mobile: [''],
+      domainName: [''],
       qid: [''],
       status: [true],
       enableEmailNotification: [false],

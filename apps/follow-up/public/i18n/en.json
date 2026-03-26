@@ -52,6 +52,7 @@
     "en_name": "English Name",
     "email": "Email",
     "mobile": "Mobile",
+    "domain_name": "Domain Name",
     "qid": "QID",
     "status": "Status",
     "email_notification": "Email Notification",
