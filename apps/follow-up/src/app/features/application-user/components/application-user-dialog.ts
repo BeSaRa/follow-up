@@ -111,4 +111,10 @@ export class ApplicationUserDialog extends CrudDialogDirective<ApplicationUser> 
     update: 'application_user.edit',
     view: 'application_user.view',
   }
+
+  override afterBuildForm() {
+    if (this.data.mode === 'UPDATE') {
+      this.form.get('domainName')?.disable()
+    }
+  }
 }

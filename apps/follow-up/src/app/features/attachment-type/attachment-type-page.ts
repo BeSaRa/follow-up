@@ -127,9 +127,6 @@ import { AttachmentType } from './models/attachment-type'
                       {{ 'attachment_type.lookup_key' | translate }}
                     </th>
                     <th uiTableHead>
-                      {{ 'attachment_type.category' | translate }}
-                    </th>
-                    <th uiTableHead>
                       {{ 'attachment_type.status' | translate }}
                     </th>
                     <th uiTableHead class="w-28"></th>
@@ -143,7 +140,6 @@ import { AttachmentType } from './models/attachment-type'
                       </td>
                       <td uiTableCell>{{ item.enName }}</td>
                       <td uiTableCell>{{ item.lookupKey }}</td>
-                      <td uiTableCell>{{ item.category }}</td>
                       <td uiTableCell>
                         <ui-badge
                           [variant]="item.status ? 'success' : 'error'"
