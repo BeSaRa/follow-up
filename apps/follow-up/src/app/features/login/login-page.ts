@@ -5,7 +5,6 @@ import {
   inject,
   signal,
 } from '@angular/core'
-import { NgOptimizedImage } from '@angular/common'
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
@@ -34,7 +33,6 @@ import { APP_ICONS } from '../../constants/icons'
     ReactiveFormsModule,
     TranslatePipe,
     MatIcon,
-    NgOptimizedImage,
     UiCard,
     UiCardHeader,
     UiCardTitle,
@@ -54,12 +52,11 @@ import { APP_ICONS } from '../../constants/icons'
       <ui-card class="w-full max-w-md">
         <ui-card-header class="text-center">
           <img
-            ngSrc="logo.png"
+            src="logo.png"
             alt="Logo"
             width="150"
-            height="150"
+            height="124"
             class="mx-auto mb-4"
-            priority
           />
           <ui-card-title>{{ 'login.title' | translate }}</ui-card-title>
           <ui-card-description>{{

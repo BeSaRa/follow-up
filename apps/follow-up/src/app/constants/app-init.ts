@@ -1,4 +1,5 @@
 import { Provider } from '@angular/core'
+import { IMAGE_CONFIG } from '@angular/common'
 import { AppConfigs, appConfigs } from './app-configs'
 import {
   injectConfigService,
@@ -27,4 +28,11 @@ export const appInit = [
   //     return firstValueFrom(service.urlsPrepared$.pipe(filter((val) => val)))
   //   },
   // ),
+  {
+    provide: IMAGE_CONFIG,
+    useValue: {
+      disableImageSizeWarning: true,
+      disableImageLazyLoadWarning: true,
+    },
+  },
 ] satisfies Provider

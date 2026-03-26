@@ -6,7 +6,7 @@ import {
   inject,
   signal,
 } from '@angular/core'
-import { DOCUMENT, NgOptimizedImage } from '@angular/common'
+import { DOCUMENT } from '@angular/common'
 import {
   Router,
   RouterLink,
@@ -52,7 +52,6 @@ import { NAV_GROUPS } from '../constants/nav-groups'
     UiDropdownItem,
     UiAvatar,
     MatIcon,
-    NgOptimizedImage,
   ],
   template: `
     <div class="flex h-screen flex-col">
@@ -162,10 +161,10 @@ import { NAV_GROUPS } from '../constants/nav-groups'
           <ui-drawer-content>
             <div class="flex items-center justify-center border-b border-border py-4">
               <img
-                ngSrc="logo.png"
+                src="logo.png"
                 alt="Logo"
                 width="150"
-                height="150"
+                height="124"
               />
             </div>
             <nav class="flex flex-col gap-2 py-2">
