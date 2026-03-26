@@ -37,3 +37,4 @@ console.log('[core] CrudService: moved /entities suffix to getCreateEndpoint/get
 console.log('[core] CrudPageWithDialogDirective: added confirmDelete with confirmation dialog')
 console.log('[core] CrudDialogDirective: added base dialog directive with contract')
 console.log('[core] types/interfaces moved to @follow-up/contracts')
+console.log('[core] AuthStore: logout sends token before clearing state')

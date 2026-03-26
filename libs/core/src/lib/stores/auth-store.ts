@@ -65,17 +65,17 @@ export const AuthStore = signalStore(
     ),
     logout: rxMethod<void>(
       pipe(
+        switchMap(() =>
+          authService.logout().pipe(
+            catchError(() => EMPTY),
+          ),
+        ),
         tap(() => {
           patchState(store, { ...initialState })
           cookieService.delete(COOKIE_ACCESS_TOKEN, '/')
           cookieService.delete(COOKIE_REFRESH_TOKEN, '/')
           cookieService.delete(COOKIE_USER_NAME, '/')
         }),
-        switchMap(() =>
-          authService.logout().pipe(
-            catchError(() => EMPTY),
-          ),
-        ),
       ),
     ),
     setTokens(tokens: { accessToken: string, refreshToken: string }) {
