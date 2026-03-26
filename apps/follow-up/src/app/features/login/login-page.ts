@@ -47,7 +47,7 @@ import { APP_ICONS } from '../../constants/icons'
   ],
   template: `
     <div
-      class="flex min-h-screen items-center justify-center bg-background p-4"
+      class="flex min-h-screen items-center justify-center bg-surface p-4"
     >
       <ui-card class="w-full max-w-md">
         <ui-card-header class="text-center">
