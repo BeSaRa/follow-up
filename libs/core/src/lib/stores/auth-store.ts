@@ -1,7 +1,7 @@
 import { computed, inject } from '@angular/core'
 import { signalStore, withState, withComputed, withMethods, withHooks, patchState } from '@ngrx/signals'
 import { rxMethod } from '@ngrx/signals/rxjs-interop'
-import { pipe, switchMap, tap, catchError, EMPTY } from 'rxjs'
+import { pipe, switchMap, tap, catchError, EMPTY, finalize } from 'rxjs'
 import { AuthService, AuthCredentials } from '../services/auth-service'
 import { CookieService, CookieOptions } from '../services/cookie-service'
 
@@ -68,14 +68,14 @@ export const AuthStore = signalStore(
         switchMap(() =>
           authService.logout().pipe(
             catchError(() => EMPTY),
+            finalize(() => {
+              patchState(store, { ...initialState })
+              cookieService.delete(COOKIE_ACCESS_TOKEN, '/')
+              cookieService.delete(COOKIE_REFRESH_TOKEN, '/')
+              cookieService.delete(COOKIE_USER_NAME, '/')
+            }),
           ),
         ),
-        tap(() => {
-          patchState(store, { ...initialState })
-          cookieService.delete(COOKIE_ACCESS_TOKEN, '/')
-          cookieService.delete(COOKIE_REFRESH_TOKEN, '/')
-          cookieService.delete(COOKIE_USER_NAME, '/')
-        }),
       ),
     ),
     setTokens(tokens: { accessToken: string, refreshToken: string }) {
