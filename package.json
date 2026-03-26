@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "nx serve follow-up"
+    "dev": "nx serve follow-up",
+    "build": "nx build follow-up"
   },
   "private": true,
   "devDependencies": {
