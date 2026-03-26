@@ -5,6 +5,7 @@ import { CastResponse, CastResponseContainer } from 'cast-response'
 import { injectUrlService, Pagination } from '@follow-up/core'
 import { Endpoints } from '../../constants/endpoints'
 import { Lookup } from '../models/lookup'
+import type { LookupList } from '../models/app-auth'
 
 @CastResponseContainer({
   $pagination: {
@@ -20,6 +21,7 @@ export class LookupService {
   private readonly urlService = injectUrlService<Endpoints>()
 
   readonly models = signal<Lookup[]>([])
+  readonly lookupList = signal<LookupList | null>(null)
   readonly lookupMap = computed(() =>
     this.models().reduce((acc, lookup) => {
       if (!acc[lookup.category]) {
@@ -29,6 +31,10 @@ export class LookupService {
       return acc
     }, {} as Record<number, Record<number, Lookup>>),
   )
+
+  setLookupList(list: LookupList) {
+    this.lookupList.set(list)
+  }
 
   getAll(options?: Record<string, unknown>): Observable<Pagination<Lookup[]>> {
     return this._getAll(options).pipe(

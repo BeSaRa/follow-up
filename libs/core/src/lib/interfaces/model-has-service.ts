@@ -1,4 +1,1 @@
-export interface ModelHasService {
-  $$service: string
-  $$getService<Service>(): Service
-}
+export type { ModelHasService } from '@follow-up/contracts'

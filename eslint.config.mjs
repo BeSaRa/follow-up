@@ -17,16 +17,20 @@ export default [
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$', '@follow-up/ui'],
           depConstraints: [
             {
+              sourceTag: 'type:contracts',
+              onlyDependOnLibsWithTags: [],
+            },
+            {
               sourceTag: 'type:util',
-              onlyDependOnLibsWithTags: ['type:util'],
+              onlyDependOnLibsWithTags: ['type:util', 'type:contracts'],
             },
             {
               sourceTag: 'type:core',
-              onlyDependOnLibsWithTags: ['type:core', 'type:util'],
+              onlyDependOnLibsWithTags: ['type:core', 'type:util', 'type:contracts'],
             },
             {
               sourceTag: 'type:ui',
-              onlyDependOnLibsWithTags: ['type:core', 'type:ui'],
+              onlyDependOnLibsWithTags: ['type:core', 'type:ui', 'type:contracts'],
             },
             {
               sourceTag: 'type:app',
@@ -35,6 +39,7 @@ export default [
                 'type:core',
                 'type:util',
                 'type:ui',
+                'type:contracts',
               ],
             },
           ],

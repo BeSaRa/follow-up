@@ -1,3 +1,1 @@
-export interface ServiceNameContract {
-  $$serviceName: string
-}
+export type { ServiceNameContract } from '@follow-up/contracts'

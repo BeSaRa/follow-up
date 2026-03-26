@@ -18,7 +18,8 @@
       "@follow-up/constans": ["apps/follow-up/src/constans/*"],
       "@follow-up/core": ["libs/core/src/index.ts"],
       "@follow-up/util": ["libs/util/src/index.ts"],
-      "@follow-up/ui": ["libs/ui/src/index.ts"]
+      "@follow-up/ui": ["libs/ui/src/index.ts"],
+      "@follow-up/contracts": ["libs/contracts/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -14,7 +14,8 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader'
 import { MatIconRegistry } from '@angular/material/icon'
 import { DomSanitizer } from '@angular/platform-browser'
 import { appRoutes } from './app.routes'
-import { tokenInterceptor } from '@follow-up/core'
+import { AuthService, tokenInterceptor } from '@follow-up/core'
+import { AppAuthService } from './shared/services/app-auth.service'
 import { appInit } from './constants/app-init'
 import { errorInterceptor } from './interceptors/error-interceptor'
 import { provideModelInterceptors } from 'cast-response'
@@ -23,6 +24,7 @@ import { GlobalModelInterceptor } from './constants/global-model-interceptor'
 export const appConfig: ApplicationConfig = {
   providers: [
     appInit,
+    { provide: AuthService, useExisting: AppAuthService },
     provideModelInterceptors([GlobalModelInterceptor]),
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptors([errorInterceptor, tokenInterceptor])),

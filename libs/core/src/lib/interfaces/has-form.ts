@@ -1,3 +1,1 @@
-export interface HasForm {
-  buildForm(): Record<string, unknown>
-}
+export type { HasForm } from '@follow-up/contracts'

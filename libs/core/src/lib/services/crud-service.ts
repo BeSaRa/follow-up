@@ -2,22 +2,10 @@ import { Observable } from 'rxjs'
 import { inject } from '@angular/core'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { CastResponse, HasInterception, InterceptParam } from 'cast-response'
+export type { CrudServiceContract, Paginated } from '@follow-up/contracts'
+import type { CrudServiceContract } from '@follow-up/contracts'
 import { injectUrlService } from '../providers/provide-url-service'
 import { Pagination } from '../classes/pagination'
-
-export interface CrudServiceContract<Model, PrimaryKeyType = number> {
-  create(model: Model): Observable<Model>
-  update(model: Model): Observable<Model>
-  delete(id: PrimaryKeyType): Observable<void>
-  getById(id: PrimaryKeyType): Observable<Model>
-  getAll(options?: Record<string, unknown>): Observable<Pagination<Model[]>>
-  getSegmentUrl(): string
-  getCreateEndpoint(): string
-  getUpdateEndpoint(): string
-  getDeleteEndpoint(): string
-  getGetByIdEndpoint(): string
-  getGetAllEndpoint(): string
-}
 
 export abstract class CrudService<
   Model,
