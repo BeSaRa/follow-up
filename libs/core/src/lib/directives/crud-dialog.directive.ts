@@ -1,4 +1,4 @@
-import { DestroyRef, Directive, inject, OnInit, signal } from '@angular/core'
+import { computed, DestroyRef, Directive, inject, OnInit, signal } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { TranslateService } from '@ngx-translate/core'
@@ -23,7 +23,10 @@ export interface CrudDialogContract<TModel extends CrudDialogModelContract<TMode
   readonly data: CrudDialogData<TModel>
   readonly form: FormGroup
   readonly saving: ReturnType<typeof signal<boolean>>
-  readonly isViewMode: boolean
+  readonly mode: ReturnType<typeof signal<CrudDialogMode>>
+  readonly isCreateMode: ReturnType<typeof computed<boolean>>
+  readonly isUpdateMode: ReturnType<typeof computed<boolean>>
+  readonly isViewMode: ReturnType<typeof computed<boolean>>
   readonly titleKey: string
   readonly destroyRef: DestroyRef
   readonly titleKeys: CrudDialogTitleKeys
@@ -48,6 +51,10 @@ export abstract class CrudDialogDirective<TModel extends CrudDialogModelContract
 
   form!: FormGroup
   readonly saving = signal(false)
+  readonly mode = signal(this.data.mode)
+  readonly isCreateMode = computed(() => this.mode() === 'CREATE')
+  readonly isUpdateMode = computed(() => this.mode() === 'UPDATE')
+  readonly isViewMode = computed(() => this.mode() === 'VIEW')
 
   abstract readonly titleKeys: CrudDialogTitleKeys
 
@@ -77,10 +84,6 @@ export abstract class CrudDialogDirective<TModel extends CrudDialogModelContract
     }
   }
 
-  get isViewMode() {
-    return this.data.mode === 'VIEW'
-  }
-
   get titleKey() {
     const map: Record<CrudDialogMode, string> = {
       CREATE: this.titleKeys.create,
@@ -99,7 +102,7 @@ export abstract class CrudDialogDirective<TModel extends CrudDialogModelContract
         tap(() => this.afterBuildForm()),
         tap(() => this.populateForm()),
         tap(() => {
-          if (this.isViewMode) {
+          if (this.isViewMode()) {
             this.form.disable()
           }
         }),
@@ -114,7 +117,7 @@ export abstract class CrudDialogDirective<TModel extends CrudDialogModelContract
   }
 
   onSubmit() {
-    if (this.isViewMode) return
+    if (this.isViewMode()) return
 
     of(undefined)
       .pipe(

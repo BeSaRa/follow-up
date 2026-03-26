@@ -1,4 +1,5 @@
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -41,7 +42,8 @@ export class UiTabList {}
     role: 'tab',
     '[class]': 'hostClasses()',
     '[attr.aria-selected]': 'isActive()',
-    '[tabindex]': 'isActive() ? 0 : -1',
+    '[attr.aria-disabled]': 'disabled() || null',
+    '[tabindex]': 'disabled() ? -1 : isActive() ? 0 : -1',
     '(click)': 'activate()',
     '(keydown.ArrowRight)': 'focusNext($event)',
     '(keydown.ArrowLeft)': 'focusPrev($event)',
@@ -50,6 +52,7 @@ export class UiTabList {}
 export class UiTab {
   readonly value = input.required<string>()
   readonly tabs = input.required<UiTabs>()
+  readonly disabled = input(false, { transform: booleanAttribute })
 
   protected readonly isActive = computed(
     () => this.tabs().activeTab() === this.value(),
@@ -57,15 +60,20 @@ export class UiTab {
 
   protected readonly hostClasses = computed(() => {
     const base =
-      'inline-flex items-center justify-center cursor-pointer rounded-sm px-3 py-1.5 text-sm font-medium transition-colors ' +
+      'inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium transition-colors ' +
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring'
 
+    if (this.disabled()) {
+      return `${base} opacity-50 cursor-not-allowed pointer-events-none text-foreground-muted`
+    }
+
     return this.isActive()
-      ? `${base} bg-surface-raised text-foreground shadow-sm`
-      : `${base} text-foreground-muted hover:text-foreground`
+      ? `${base} cursor-pointer bg-surface-raised text-foreground shadow-sm`
+      : `${base} cursor-pointer text-foreground-muted hover:text-foreground`
   })
 
   protected activate() {
+    if (this.disabled()) return
     this.tabs().activeTab.set(this.value())
   }
 

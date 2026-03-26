@@ -75,7 +75,7 @@ import { PriorityLevel } from '../models/priority-level'
       </form>
 
       <!-- Footer -->
-      @if (!isViewMode) {
+      @if (!isViewMode()) {
         <div class="flex items-center justify-end gap-2 border-t border-border px-6 py-4">
           <button uiButton variant="outline" type="button" (click)="dialogRef.close()">
             {{ 'common.cancel' | translate }}

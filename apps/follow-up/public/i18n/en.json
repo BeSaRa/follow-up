@@ -63,7 +63,10 @@
     "add_user": "Add User",
     "view": "View",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "basic_info_tab": "Basic Info",
+    "permissions_tab": "Permissions",
+    "permission_group": "Group"
   },
   "common": {
     "save": "Save",

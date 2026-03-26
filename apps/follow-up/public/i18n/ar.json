@@ -63,7 +63,10 @@
     "add_user": "إضافة مستخدم",
     "view": "عرض",
     "edit": "تعديل",
-    "delete": "حذف"
+    "delete": "حذف",
+    "basic_info_tab": "المعلومات الأساسية",
+    "permissions_tab": "الصلاحيات",
+    "permission_group": "مجموعة"
   },
   "common": {
     "save": "حفظ",
