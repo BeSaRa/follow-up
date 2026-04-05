@@ -125,8 +125,8 @@ import { AppStore } from '../shared/stores/app-store'
               class="inline-flex items-center gap-2 rounded-md px-2 py-1 text-sm text-foreground hover:bg-surface-hover transition-colors"
               [uiDropdownTrigger]="userMenu"
             >
-              <ui-avatar size="sm" [initials]="store.userName() ?? '?'" />
-              <span class="hidden sm:inline">{{ store.userName() }}</span>
+              <ui-avatar size="sm" [initials]="displayName() || '?'" />
+              <span class="hidden sm:inline">{{ displayName() }}</span>
               <mat-icon
                 class="text-base! size-4! leading-4! text-foreground-muted"
                 [svgIcon]="icons.CHEVRON_DOWN"
@@ -215,6 +215,7 @@ export class Layout {
   protected readonly appStore = inject(AppStore)
   protected readonly icons = APP_ICONS
 
+  protected readonly displayName = signal(this.appStore.applicationUser()?.domainName ?? '')
   protected readonly sidebarOpen = signal(true)
   protected readonly currentLang = signal(
     this.translate.getCurrentLang() || 'ar',
@@ -245,7 +246,7 @@ export class Layout {
       if (!this.store.isAuthenticated()) {
         this.router
           .navigate(['/login'], { queryParams: { reason: 'logout' } })
-          .then()
+          .then(() => this.appStore.clearSession())
       }
     })
 
@@ -258,7 +259,6 @@ export class Layout {
   }
 
   protected logout() {
-    this.appStore.clearSession()
     this.store.logout()
   }
 }
