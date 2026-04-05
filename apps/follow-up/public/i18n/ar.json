@@ -66,7 +66,8 @@
     "delete": "حذف",
     "basic_info_tab": "المعلومات الأساسية",
     "permissions_tab": "الصلاحيات",
-    "permission_group": "مجموعة"
+    "permission_group": "مجموعة",
+    "user_type": "نوع المستخدم"
   },
   "common": {
     "save": "حفظ",

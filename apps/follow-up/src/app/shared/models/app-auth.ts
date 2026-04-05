@@ -20,6 +20,12 @@ export type AppAuthResponse = AuthResponse<{
   permissionSet: Permission[]
 }>
 
+export type UserTypeInfo = {
+  id: number
+  arName: string
+  enName: string
+}
+
 export type AppApplicationUser = {
   id: number
   arName: string
@@ -31,4 +37,5 @@ export type AppApplicationUser = {
   mobile: string
   domainName: string
   enableEmailNotification: boolean
+  userTypeInfo: UserTypeInfo
 }

@@ -66,7 +66,8 @@
     "delete": "Delete",
     "basic_info_tab": "Basic Info",
     "permissions_tab": "Permissions",
-    "permission_group": "Group"
+    "permission_group": "Group",
+    "user_type": "User Type"
   },
   "common": {
     "save": "Save",

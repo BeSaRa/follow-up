@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, viewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, computed, inject, viewChild } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
@@ -109,6 +109,11 @@ import { PermissionsTab } from './permissions-tab'
                 </ui-form-field>
               </div>
 
+              <ui-form-field>
+                <label uiLabel for="userTypeInfo">{{ 'application_user.user_type' | translate }}</label>
+                <input uiInput id="userTypeInfo" [value]="userTypeName()" disabled />
+              </ui-form-field>
+
               <div class="flex items-center gap-6">
                 <label class="flex items-center gap-2 text-sm text-foreground">
                   <ui-slide-toggle formControlName="status" />
@@ -152,6 +157,12 @@ import { PermissionsTab } from './permissions-tab'
 export class ApplicationUserDialog extends CrudDialogDirective<ApplicationUser> {
   private readonly userPermissionService = inject(UserPermissionService)
   private readonly permissionsTab = viewChild(PermissionsTab)
+
+  protected readonly userTypeName = computed(() => {
+    const info = this.data.model?.userTypeInfo
+    if (!info) return ''
+    return (this.translate.currentLang || 'ar') === 'ar' ? info.arName : info.enName
+  })
 
   readonly titleKeys: CrudDialogTitleKeys = {
     create: 'application_user.add_user',

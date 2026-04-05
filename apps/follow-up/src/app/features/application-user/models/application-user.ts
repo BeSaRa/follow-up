@@ -16,6 +16,7 @@ export class ApplicationUser extends CrudModel<ApplicationUser, ApplicationUserS
   mobile = ''
   domainName = ''
   enableEmailNotification = false
+  userTypeInfo: { id: number, arName: string, enName: string } = { id: 0, arName: '', enName: '' }
 
   buildForm() {
     return {
