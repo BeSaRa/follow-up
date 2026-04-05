@@ -41,5 +41,13 @@ export const AppStore = signalStore(
     hasPermission(key: string): boolean {
       return !!store.permissionMap()[key]
     },
+    hasAnyPermission(keys: string[]): boolean {
+      const map = store.permissionMap()
+      return keys.some((key) => !!map[key])
+    },
+    hasAllPermissions(keys: string[]): boolean {
+      const map = store.permissionMap()
+      return keys.every((key) => !!map[key])
+    },
   })),
 )
