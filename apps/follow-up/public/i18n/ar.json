@@ -67,7 +67,8 @@
     "basic_info_tab": "المعلومات الأساسية",
     "permissions_tab": "الصلاحيات",
     "permission_group": "مجموعة",
-    "user_type": "نوع المستخدم"
+    "user_type": "نوع المستخدم",
+    "select_user_type": "اختر نوع المستخدم"
   },
   "common": {
     "save": "حفظ",

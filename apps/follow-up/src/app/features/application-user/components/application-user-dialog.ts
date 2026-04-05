@@ -8,6 +8,8 @@ import {
   UiFormField,
   UiInput,
   UiLabel,
+  UiSelect,
+  UiSelectOption,
   UiSlideToggle,
   UiTabs,
   UiTabList,
@@ -17,6 +19,7 @@ import {
 import { CrudDialogDirective, CrudDialogTitleKeys } from '@follow-up/core'
 import { ApplicationUser } from '../models/application-user'
 import { UserPermissionService } from '../services/user-permission.service'
+import { AppStore } from '../../../shared/stores/app-store'
 import { PermissionsTab } from './permissions-tab'
 
 @Component({
@@ -30,6 +33,8 @@ import { PermissionsTab } from './permissions-tab'
     UiFormField,
     UiInput,
     UiLabel,
+    UiSelect,
+    UiSelectOption,
     UiSlideToggle,
     UiTabs,
     UiTabList,
@@ -110,8 +115,14 @@ import { PermissionsTab } from './permissions-tab'
               </div>
 
               <ui-form-field>
-                <label uiLabel for="userTypeInfo">{{ 'application_user.user_type' | translate }}</label>
-                <input uiInput id="userTypeInfo" [value]="userTypeName()" disabled />
+                <label uiLabel>{{ 'application_user.user_type' | translate }}</label>
+                <ui-select ngProjectAs="[uiInput]" class="w-full" formControlName="userType" [placeholder]="'application_user.select_user_type' | translate">
+                  @for (type of userTypes(); track type.lookupKey) {
+                    <ui-select-option [value]="type.lookupKey" [label]="isArabic() ? type.arName : type.enName">
+                      {{ isArabic() ? type.arName : type.enName }}
+                    </ui-select-option>
+                  }
+                </ui-select>
               </ui-form-field>
 
               <div class="flex items-center gap-6">
@@ -156,13 +167,11 @@ import { PermissionsTab } from './permissions-tab'
 })
 export class ApplicationUserDialog extends CrudDialogDirective<ApplicationUser> {
   private readonly userPermissionService = inject(UserPermissionService)
+  private readonly appStore = inject(AppStore)
   private readonly permissionsTab = viewChild(PermissionsTab)
 
-  protected readonly userTypeName = computed(() => {
-    const info = this.data.model?.userTypeInfo
-    if (!info) return ''
-    return (this.translate.currentLang || 'ar') === 'ar' ? info.arName : info.enName
-  })
+  protected readonly userTypes = computed(() => this.appStore.lookupList()?.UserType ?? [])
+  protected readonly isArabic = computed(() => (this.translate.currentLang || 'ar') === 'ar')
 
   readonly titleKeys: CrudDialogTitleKeys = {
     create: 'application_user.add_user',
@@ -174,6 +183,16 @@ export class ApplicationUserDialog extends CrudDialogDirective<ApplicationUser> 
     if (this.isUpdateMode()) {
       this.form.get('domainName')?.disable()
     }
+    if (!this.isCreateMode() && this.data.model?.userTypeInfo) {
+      this.form.get('userType')?.setValue(this.data.model.userTypeInfo.id)
+    }
+  }
+
+  override prepareModel() {
+    const model = super.prepareModel()
+    const selectedUserType = this.form.get('userType')?.value
+    model.userTypeInfo = { id: selectedUserType, arName: '', enName: '' }
+    return model
   }
 
   override afterSaveSuccess(saved: ApplicationUser) {

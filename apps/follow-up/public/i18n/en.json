@@ -67,7 +67,8 @@
     "basic_info_tab": "Basic Info",
     "permissions_tab": "Permissions",
     "permission_group": "Group",
-    "user_type": "User Type"
+    "user_type": "User Type",
+    "select_user_type": "Select user type"
   },
   "common": {
     "save": "Save",

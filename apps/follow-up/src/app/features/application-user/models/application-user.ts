@@ -27,6 +27,7 @@ export class ApplicationUser extends CrudModel<ApplicationUser, ApplicationUserS
       mobile: [''],
       domainName: [''],
       qid: [''],
+      userType: [0],
       status: [true],
       enableEmailNotification: [false],
     }
