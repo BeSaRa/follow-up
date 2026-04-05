@@ -14,7 +14,7 @@ export class AppAuthService extends AuthService {
   override login(credentials: AuthCredentials): Observable<AuthResponse> {
     return this.http.post<AppAuthResponse>(this.urlService.URLS.AUTH, credentials).pipe(
       tap((response) => {
-        this.appStore.setSession(response.result.applicationUser, response.result.lookupList)
+        this.appStore.setSession(response.result.applicationUser, response.result.lookupList, response.result.permissionSet)
         this.lookupService.setLookupList(response.result.lookupList)
       }),
     )
@@ -25,7 +25,7 @@ export class AppAuthService extends AuthService {
       refreshToken: token,
     }).pipe(
       tap((response) => {
-        this.appStore.setSession(response.result.applicationUser, response.result.lookupList)
+        this.appStore.setSession(response.result.applicationUser, response.result.lookupList, response.result.permissionSet)
         this.lookupService.setLookupList(response.result.lookupList)
       }),
     )

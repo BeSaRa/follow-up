@@ -1,5 +1,6 @@
 import type { AuthResponse } from '@follow-up/contracts'
 import type { Lookup } from './lookup'
+import type { Permission } from './permission'
 
 export type LookupCategory =
   | 'SecurityLevel'
@@ -16,6 +17,7 @@ export type LookupList = Record<LookupCategory, Lookup[]>
 export type AppAuthResponse = AuthResponse<{
   applicationUser: AppApplicationUser
   lookupList: LookupList
+  permissionSet: Permission[]
 }>
 
 export type AppApplicationUser = {
