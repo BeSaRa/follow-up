@@ -38,7 +38,16 @@ let nextId = 0
     '(click)': 'select()',
     '(mouseenter)': 'onMouseEnter()',
   },
-  template: `<ng-content />`,
+  template: `
+    <span class="flex items-center justify-between gap-2">
+      <span class="truncate"><ng-content /></span>
+      @if (isSelected()) {
+        <svg class="size-4 shrink-0 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20,6 9,17 4,12" />
+        </svg>
+      }
+    </span>
+  `,
 })
 export class UiSelectOption {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
