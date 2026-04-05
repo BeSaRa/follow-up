@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { BehaviorSubject, catchError, filter, switchMap, take, throwError } from 'rxjs'
 import { AuthStore, AuthService } from '@follow-up/core'
 import { ToastService } from '@follow-up/ui'
+import { AppStore } from '../shared/stores/app-store'
 
 let isRefreshing = false
 let refreshFailed = false
@@ -19,6 +20,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   const authStore = inject(AuthStore)
   const authService = inject(AuthService)
+  const appStore = inject(AppStore)
   const router = inject(Router)
   const toast = inject(ToastService)
   const translate = inject(TranslateService)
@@ -26,7 +28,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
-        return handle401(req, next, authStore, authService, router)
+        return handle401(req, next, authStore, authService, appStore, router)
       }
 
       if (error.status === 403) {
@@ -51,6 +53,7 @@ function handle401(
   next: Parameters<HttpInterceptorFn>[1],
   authStore: InstanceType<typeof AuthStore>,
   authService: AuthService,
+  appStore: InstanceType<typeof AppStore>,
   router: Router,
 ) {
   if (refreshFailed) {
@@ -66,7 +69,7 @@ function handle401(
     if (!refreshToken) {
       isRefreshing = false
       refreshFailed = true
-      return handleRefreshFailure(authStore, router)
+      return handleRefreshFailure(authStore, appStore, router)
     }
 
     return authService.refreshToken(refreshToken).pipe(
@@ -84,7 +87,7 @@ function handle401(
       catchError(() => {
         isRefreshing = false
         refreshFailed = true
-        handleRefreshFailure(authStore, router)
+        handleRefreshFailure(authStore, appStore, router)
         return throwError(() => new Error('Session expired'))
       }),
     )
@@ -103,8 +106,10 @@ function handle401(
 
 function handleRefreshFailure(
   authStore: InstanceType<typeof AuthStore>,
+  appStore: InstanceType<typeof AppStore>,
   router: Router,
 ) {
+  appStore.clearSession()
   authStore.logout()
   router.navigate(['/login'], { queryParams: { reason: 'session-expired' } })
   return throwError(() => new Error('Session expired'))

@@ -31,6 +31,7 @@ import { MatIcon } from '@angular/material/icon'
 import { AuthStore } from '@follow-up/core'
 import { APP_ICONS } from '../constants/icons'
 import { NAV_GROUPS } from '../constants/nav-groups'
+import { AppStore } from '../shared/stores/app-store'
 
 @Component({
   selector: 'app-layout',
@@ -211,6 +212,7 @@ export class Layout {
   private readonly router = inject(Router)
   private readonly translate = inject(TranslateService)
   protected readonly store = inject(AuthStore)
+  protected readonly appStore = inject(AppStore)
   protected readonly icons = APP_ICONS
 
   protected readonly sidebarOpen = signal(true)
@@ -255,6 +257,7 @@ export class Layout {
   }
 
   protected logout() {
+    this.appStore.clearSession()
     this.store.logout()
   }
 }
