@@ -2,6 +2,7 @@ import {
   ApplicationConfig,
   EventEmitter,
   inject,
+  provideAppInitializer,
   provideBrowserGlobalErrorListeners,
   provideEnvironmentInitializer,
 } from '@angular/core'
@@ -14,8 +15,10 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader'
 import { MatIconRegistry } from '@angular/material/icon'
 import { DomSanitizer } from '@angular/platform-browser'
 import { appRoutes } from './app.routes'
-import { AuthService, tokenInterceptor } from '@follow-up/core'
+import { firstValueFrom, filter, of, switchMap } from 'rxjs'
+import { AuthService, AuthStore, injectUrlService, tokenInterceptor } from '@follow-up/core'
 import { AppAuthService } from './shared/services/app-auth.service'
+import { AppStore } from './shared/stores/app-store'
 import { appInit } from './constants/app-init'
 import { errorInterceptor } from './interceptors/error-interceptor'
 import { provideModelInterceptors } from 'cast-response'
@@ -25,6 +28,28 @@ export const appConfig: ApplicationConfig = {
   providers: [
     appInit,
     { provide: AuthService, useExisting: AppAuthService },
+    provideAppInitializer(() => {
+      const authStore = inject(AuthStore)
+      const authService = inject(AuthService)
+      const appStore = inject(AppStore)
+      const urlService = injectUrlService()
+      const refreshToken = authStore.refreshToken()
+      if (!refreshToken) return of(null)
+      return firstValueFrom(
+        urlService.urlsPrepared$.pipe(
+          filter(Boolean),
+          switchMap(() => authService.refreshToken(refreshToken)),
+        ),
+      ).then((response) => {
+        authStore.setTokens({
+          accessToken: response.result.accessToken,
+          refreshToken: response.result.refreshToken,
+        })
+      }).catch(() => {
+        appStore.clearSession()
+        authStore.logout()
+      })
+    }),
     provideModelInterceptors([GlobalModelInterceptor]),
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptors([errorInterceptor, tokenInterceptor])),

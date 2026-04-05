@@ -2,7 +2,7 @@ import { RequiredAuthEndpoints } from '@follow-up/core'
 
 export const ENDPOINTS = {
   AUTH: '/auth/login',
-  REFRESH_TOKEN: '/auth/refresh-token',
+  REFRESH_TOKEN: '/auth/validate-token',
   LOGOUT: '/auth/logout',
   APPLICATION_USER: 'admin/application-user',
   ATTACHMENT_TYPE: 'admin/attachment-type',

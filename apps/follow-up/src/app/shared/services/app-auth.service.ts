@@ -19,4 +19,15 @@ export class AppAuthService extends AuthService {
       }),
     )
   }
+
+  override refreshToken(token: string): Observable<AuthResponse> {
+    return this.http.post<AppAuthResponse>(this.urlService.URLS.REFRESH_TOKEN, {
+      refreshToken: token,
+    }).pipe(
+      tap((response) => {
+        this.appStore.setSession(response.result.applicationUser, response.result.lookupList)
+        this.lookupService.setLookupList(response.result.lookupList)
+      }),
+    )
+  }
 }

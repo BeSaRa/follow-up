@@ -248,6 +248,7 @@ export class Layout {
           .then()
       }
     })
+
   }
 
   protected toggleLanguage() {
