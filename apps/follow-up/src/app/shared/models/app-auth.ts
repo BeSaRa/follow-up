@@ -1,6 +1,7 @@
 import type { AuthResponse } from '@follow-up/contracts'
 import type { Lookup } from './lookup'
 import type { Permission } from './permission'
+import type { InfoType } from '../types/info-type'
 
 export type LookupCategory =
   | 'SecurityLevel'
@@ -20,12 +21,6 @@ export type AppAuthResponse = AuthResponse<{
   permissionSet: Permission[]
 }>
 
-export type UserTypeInfo = {
-  id: number
-  arName: string
-  enName: string
-}
-
 export type AppApplicationUser = {
   id: number
   arName: string
@@ -37,5 +32,6 @@ export type AppApplicationUser = {
   mobile: string
   domainName: string
   enableEmailNotification: boolean
-  userTypeInfo: UserTypeInfo
+  userTypeInfo: InfoType
+  externalEntityInfo?: InfoType
 }

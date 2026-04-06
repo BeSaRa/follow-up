@@ -11,7 +11,7 @@ let isRefreshing = false
 let refreshFailed = false
 const refreshSubject = new BehaviorSubject<string | null>(null)
 
-const SKIP_URLS = ['/auth/login', '/auth/refresh-token']
+const SKIP_URLS = ['/auth/login', '/auth/validate-token']
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   if (SKIP_URLS.some(url => req.url.includes(url))) {
