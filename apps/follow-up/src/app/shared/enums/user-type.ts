@@ -1,0 +1,7 @@
+export enum UserType {
+  INTERNAL_USER = 1,
+  EXTERNAL_USER = 2,
+  PMO_HEAD = 3,
+  SYSTEM_ADMIN = 4,
+  INTEGRATION_USER = 5,
+}
