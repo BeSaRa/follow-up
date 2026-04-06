@@ -23,22 +23,3 @@ export * from './lib/directives/crud-page.directive'
 export * from './lib/directives/crud-page-with-dialog.directive'
 export * from './lib/directives/crud-dialog.directive'
 export * from './lib/guards/auth.guard'
-
-console.log('[core] core module loaded — CrudPageDirective added')
-console.log('[core] authGuard and guestGuard added')
-console.log('[core] ExternalSite feature support added')
-console.log('[core] FollowupStatus feature support added')
-console.log('[core] PriorityLevel feature support added')
-console.log('[core] AuthStore setTokens method added, CrudPageDirective error signal added')
-console.log('[core] CrudWithDialogService added — VIEW mode support')
-console.log('[core] CrudPageWithDialogDirective added')
-console.log('[core] CrudService per-endpoint URL methods added')
-console.log('[core] CrudService: moved /entities suffix to getCreateEndpoint/getUpdateEndpoint')
-console.log('[core] CrudPageWithDialogDirective: added confirmDelete with confirmation dialog')
-console.log('[core] CrudDialogDirective: added base dialog directive with contract')
-console.log('[core] types/interfaces moved to @follow-up/contracts')
-console.log('[core] AuthStore: logout sends token before clearing state')
-console.log('[core] CrudDialogDirective: mode signal with isCreateMode/isUpdateMode/isViewMode computed signals')
-console.log('[core] AuthStore: removed userName cookie, token interceptor skips existing Authorization headers')
-console.log('[core] CrudDialogDirective: added dialogLoading signal')
-console.log('[core] CrudPageDirective: renamed search query param to criteria')
