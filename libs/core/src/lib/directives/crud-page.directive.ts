@@ -104,7 +104,7 @@ export abstract class CrudPageDirective<
     search: string,
   ): Record<string, unknown> {
     const options: Record<string, unknown> = { page, size }
-    if (search) options['search'] = search
+    if (search) options['criteria'] = search
     return options
   }
 
