@@ -1,12 +1,7 @@
 import { Validators } from '@angular/forms'
 import { CrudModel, HasForm } from '@follow-up/core'
+import type { InfoType } from '../../../shared/types/info-type'
 import { ExternalSiteService } from '../services/external-site.service'
-
-export class SiteTypeInfo {
-  id = 0
-  arName = ''
-  enName = ''
-}
 
 export class ExternalSite extends CrudModel<ExternalSite, ExternalSiteService> implements HasForm {
   $$primaryKey = 'id' as const
@@ -18,7 +13,7 @@ export class ExternalSite extends CrudModel<ExternalSite, ExternalSiteService> i
   description = ''
   ldapPrefix = ''
   status = true
-  siteTypeInfo = new SiteTypeInfo()
+  siteTypeInfo: InfoType = { id: 0, arName: '', enName: '' }
 
   buildForm() {
     return {
