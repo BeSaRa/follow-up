@@ -15,8 +15,8 @@ export class AuthService {
   }
 
   refreshToken(token: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(this.urlService.URLS.REFRESH_TOKEN, {
-      refreshToken: token,
+    return this.http.post<AuthResponse>(this.urlService.URLS.REFRESH_TOKEN, {}, {
+      headers: { Authorization: token },
     })
   }
 
