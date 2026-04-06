@@ -11,6 +11,7 @@ import {
   UiSelect,
   UiSelectOption,
   UiSlideToggle,
+  UiSpinner,
   UiTabs,
   UiTabList,
   UiTab,
@@ -39,6 +40,7 @@ import { PermissionsTab } from './permissions-tab'
     UiSelect,
     UiSelectOption,
     UiSlideToggle,
+    UiSpinner,
     UiTabs,
     UiTabList,
     UiTab,
@@ -46,7 +48,13 @@ import { PermissionsTab } from './permissions-tab'
     PermissionsTab,
   ],
   template: `
-    <div class="w-[48rem] max-w-full">
+    <div class="relative w-[48rem] max-w-full">
+      @if (dialogLoading()) {
+        <div class="absolute inset-0 z-10 flex items-center justify-center bg-surface/60">
+          <ui-spinner size="lg" />
+        </div>
+      }
+
       <!-- Header -->
       <div class="flex items-center justify-between border-b border-border px-6 py-4">
         <h2 class="text-lg font-semibold text-foreground">
@@ -163,6 +171,7 @@ import { PermissionsTab } from './permissions-tab'
               <app-permissions-tab
                 [userId]="data.model!.id"
                 [viewMode]="isViewMode()"
+                (loadingChange)="$event ? startLoading() : stopLoading()"
               />
             }
           </ui-tab-panel>
@@ -229,9 +238,16 @@ export class ApplicationUserDialog extends CrudDialogDirective<ApplicationUser> 
   }
 
   private loadExternalSites() {
+    this.startLoading()
     this.externalSiteService.getAll({ limit: -1 })
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((res) => this.externalSites.set(res.result))
+      .subscribe({
+        next: (res) => {
+          this.externalSites.set(res.result)
+          this.stopLoading()
+        },
+        error: () => this.stopLoading(),
+      })
   }
 
   override prepareModel() {

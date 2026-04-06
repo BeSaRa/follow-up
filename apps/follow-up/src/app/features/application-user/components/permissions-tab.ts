@@ -5,6 +5,7 @@ import {
   inject,
   input,
   OnInit,
+  output,
   signal,
 } from '@angular/core'
 import { TranslatePipe } from '@ngx-translate/core'
@@ -56,6 +57,7 @@ type PermissionGroup = {
 export class PermissionsTab implements OnInit {
   readonly userId = input.required<number>()
   readonly viewMode = input(false)
+  readonly loadingChange = output<boolean>()
 
   private readonly permissionService = inject(PermissionService)
   private readonly userPermissionService = inject(UserPermissionService)
@@ -80,6 +82,8 @@ export class PermissionsTab implements OnInit {
   })
 
   ngOnInit() {
+    this.loadingChange.emit(true)
+
     const loadPermissions = this.permissionService.models().length
       ? undefined
       : this.permissionService.getAll().subscribe()
@@ -88,9 +92,11 @@ export class PermissionsTab implements OnInit {
       next: (userPermissions) => {
         this.selectedIds.set(new Set(userPermissions.map((up) => up.permissionId)))
         this.loading.set(false)
+        this.loadingChange.emit(false)
       },
       error: () => {
         this.loading.set(false)
+        this.loadingChange.emit(false)
       },
     })
   }

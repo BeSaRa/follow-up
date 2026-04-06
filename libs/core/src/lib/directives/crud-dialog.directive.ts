@@ -51,6 +51,20 @@ export abstract class CrudDialogDirective<TModel extends CrudDialogModelContract
 
   form!: FormGroup
   readonly saving = signal(false)
+  readonly dialogLoading = signal(false)
+  private readonly loadingCount = signal(0)
+
+  startLoading() {
+    this.loadingCount.update((c) => c + 1)
+    this.dialogLoading.set(true)
+  }
+
+  stopLoading() {
+    this.loadingCount.update((c) => c - 1)
+    if (this.loadingCount() <= 0) {
+      this.dialogLoading.set(false)
+    }
+  }
   readonly mode = signal(this.data.mode)
   readonly isCreateMode = computed(() => this.mode() === 'CREATE')
   readonly isUpdateMode = computed(() => this.mode() === 'UPDATE')
