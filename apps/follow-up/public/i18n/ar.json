@@ -72,6 +72,15 @@
     "external_entity": "الجهة الخارجية",
     "select_external_entity": "اختر الجهة الخارجية"
   },
+  "pagination": {
+    "rows_per_page": "عدد الصفوف:",
+    "page": "صفحة",
+    "of": "من",
+    "first_page": "الصفحة الأولى",
+    "previous_page": "الصفحة السابقة",
+    "next_page": "الصفحة التالية",
+    "last_page": "الصفحة الأخيرة"
+  },
   "common": {
     "save": "حفظ",
     "cancel": "إلغاء",

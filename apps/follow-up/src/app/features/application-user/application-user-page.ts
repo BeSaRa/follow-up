@@ -209,6 +209,13 @@ import { ApplicationUser } from './models/application-user'
                 [totalItems]="totalElements()"
                 [pageSize]="pageSize()"
                 [pageIndex]="pageIndex()"
+                [rowsPerPageLabel]="'pagination.rows_per_page' | translate"
+                [pageLabel]="'pagination.page' | translate"
+                [ofLabel]="'pagination.of' | translate"
+                [firstPageLabel]="'pagination.first_page' | translate"
+                [previousPageLabel]="'pagination.previous_page' | translate"
+                [nextPageLabel]="'pagination.next_page' | translate"
+                [lastPageLabel]="'pagination.last_page' | translate"
                 (pageChange)="onPageChange($event)"
               />
             </div>

@@ -22,12 +22,12 @@ export interface PageChangeEvent {
     class:
       'flex items-center justify-between gap-4 px-4 py-3 text-sm text-foreground-muted',
     role: 'navigation',
-    'aria-label': 'Pagination',
+    '[attr.aria-label]': 'ariaLabel()',
   },
   template: `
     @if (showPageSizeSelector()) {
       <div class="flex items-center gap-2">
-        <span class="whitespace-nowrap">Rows per page:</span>
+        <span class="whitespace-nowrap">{{ rowsPerPageLabel() }}</span>
         <ui-select
           size="sm"
           style="min-width: 5rem"
@@ -52,7 +52,7 @@ export interface PageChangeEvent {
           class="inline-flex size-8 items-center justify-center rounded-md transition-colors hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none"
           [disabled]="isFirstPage()"
           (click)="goToFirst()"
-          aria-label="First page"
+          [attr.aria-label]="firstPageLabel()"
         >
           <svg
             class="size-4 rtl:rotate-180"
@@ -75,7 +75,7 @@ export interface PageChangeEvent {
         class="inline-flex size-8 items-center justify-center rounded-md transition-colors hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none"
         [disabled]="isFirstPage()"
         (click)="goToPrevious()"
-        aria-label="Previous page"
+        [attr.aria-label]="previousPageLabel()"
       >
         <svg
           class="size-4 rtl:rotate-180"
@@ -96,7 +96,7 @@ export interface PageChangeEvent {
         class="inline-flex size-8 items-center justify-center rounded-md transition-colors hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none"
         [disabled]="isLastPage()"
         (click)="goToNext()"
-        aria-label="Next page"
+        [attr.aria-label]="nextPageLabel()"
       >
         <svg
           class="size-4 rtl:rotate-180"
@@ -118,7 +118,7 @@ export interface PageChangeEvent {
           class="inline-flex size-8 items-center justify-center rounded-md transition-colors hover:bg-surface-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none"
           [disabled]="isLastPage()"
           (click)="goToLast()"
-          aria-label="Last page"
+          [attr.aria-label]="lastPageLabel()"
         >
           <svg
             class="size-4 rtl:rotate-180"
@@ -146,6 +146,14 @@ export class UiPagination {
   readonly pageSizeOptions = input([5, 10, 25, 50])
   readonly showFirstLastButtons = input(true, { transform: booleanAttribute })
   readonly showPageSizeSelector = input(true, { transform: booleanAttribute })
+  readonly rowsPerPageLabel = input('Rows per page:')
+  readonly ofLabel = input('of')
+  readonly pageLabel = input('Page')
+  readonly ariaLabel = input('Pagination')
+  readonly firstPageLabel = input('First page')
+  readonly previousPageLabel = input('Previous page')
+  readonly nextPageLabel = input('Next page')
+  readonly lastPageLabel = input('Last page')
 
   readonly pageChange = output<PageChangeEvent>()
 
@@ -160,11 +168,14 @@ export class UiPagination {
 
   protected readonly rangeLabel = computed(() => {
     const total = this.totalItems()
-    if (total === 0) return '0 of 0'
+    const of_ = this.ofLabel()
+    const page_ = this.pageLabel()
+    const currentPage = this.pageIndex() + 1
+    if (total === 0) return `${page_} 0 (0 ${of_} 0)`
 
     const start = this.pageIndex() * this.pageSize() + 1
     const end = Math.min((this.pageIndex() + 1) * this.pageSize(), total)
-    return `${start}–${end} of ${total}`
+    return `${page_} ${currentPage} (${start}–${end} ${of_} ${total})`
   })
 
   protected onPageSizeChange(newSize: number) {

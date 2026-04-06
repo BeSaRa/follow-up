@@ -72,6 +72,15 @@
     "external_entity": "External Entity",
     "select_external_entity": "Select external entity"
   },
+  "pagination": {
+    "rows_per_page": "Rows per page:",
+    "page": "Page",
+    "of": "of",
+    "first_page": "First page",
+    "previous_page": "Previous page",
+    "next_page": "Next page",
+    "last_page": "Last page"
+  },
   "common": {
     "save": "Save",
     "cancel": "Cancel",
