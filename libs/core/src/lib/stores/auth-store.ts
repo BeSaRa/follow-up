@@ -8,7 +8,6 @@ import { CookieService, CookieOptions } from '../services/cookie-service'
 type AuthState = {
   accessToken: string | null
   refreshToken: string | null
-  userName: string | null
   loading: boolean
   error: string
 }
@@ -16,14 +15,12 @@ type AuthState = {
 const initialState: AuthState = {
   accessToken: null,
   refreshToken: null,
-  userName: null,
   loading: false,
   error: '',
 }
 
 const COOKIE_ACCESS_TOKEN = 'access_token'
 const COOKIE_REFRESH_TOKEN = 'refresh_token'
-const COOKIE_USER_NAME = 'user_name'
 
 const cookieOptions: CookieOptions = {
   path: '/',
@@ -48,12 +45,10 @@ export const AuthStore = signalStore(
               patchState(store, {
                 accessToken,
                 refreshToken,
-                userName: credentials.userName,
                 loading: false,
               })
               cookieService.set(COOKIE_ACCESS_TOKEN, accessToken, cookieOptions)
               cookieService.set(COOKIE_REFRESH_TOKEN, refreshToken, cookieOptions)
-              cookieService.set(COOKIE_USER_NAME, credentials.userName, cookieOptions)
             }),
             catchError(() => {
               patchState(store, { loading: false, error: 'login.error_generic' })
@@ -72,7 +67,6 @@ export const AuthStore = signalStore(
               patchState(store, { ...initialState })
               cookieService.delete(COOKIE_ACCESS_TOKEN, '/')
               cookieService.delete(COOKIE_REFRESH_TOKEN, '/')
-              cookieService.delete(COOKIE_USER_NAME, '/')
             }),
           ),
         ),
@@ -91,9 +85,8 @@ export const AuthStore = signalStore(
     onInit(store, cookieService = inject(CookieService)) {
       const accessToken = cookieService.get(COOKIE_ACCESS_TOKEN) || null
       const refreshToken = cookieService.get(COOKIE_REFRESH_TOKEN) || null
-      const userName = cookieService.get(COOKIE_USER_NAME) || null
       if (accessToken) {
-        patchState(store, { accessToken, refreshToken, userName })
+        patchState(store, { accessToken, refreshToken })
       }
     },
   }),

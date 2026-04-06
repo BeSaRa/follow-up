@@ -39,3 +39,4 @@ console.log('[core] CrudDialogDirective: added base dialog directive with contra
 console.log('[core] types/interfaces moved to @follow-up/contracts')
 console.log('[core] AuthStore: logout sends token before clearing state')
 console.log('[core] CrudDialogDirective: mode signal with isCreateMode/isUpdateMode/isViewMode computed signals')
+console.log('[core] AuthStore: removed userName cookie, token interceptor skips existing Authorization headers')
