@@ -30,6 +30,7 @@ export interface PageChangeEvent {
         <span class="whitespace-nowrap">Rows per page:</span>
         <ui-select
           size="sm"
+          style="min-width: 5rem"
           [value]="pageSize()"
           (valueChange)="onPageSizeChange($event)"
         >
