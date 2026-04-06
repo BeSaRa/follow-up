@@ -124,9 +124,6 @@ import { ExternalSite } from './models/external-site'
                       {{ 'external_site.en_name' | translate }}
                     </th>
                     <th uiTableHead>
-                      {{ 'external_site.description_col' | translate }}
-                    </th>
-                    <th uiTableHead>
                       {{ 'external_site.ldap_prefix' | translate }}
                     </th>
                     <th uiTableHead>
@@ -145,7 +142,6 @@ import { ExternalSite } from './models/external-site'
                         {{ item.arName }}
                       </td>
                       <td uiTableCell>{{ item.enName }}</td>
-                      <td uiTableCell>{{ item.description }}</td>
                       <td uiTableCell>{{ item.ldapPrefix }}</td>
                       <td uiTableCell>{{ item.siteTypeInfo.arName }}</td>
                       <td uiTableCell>
