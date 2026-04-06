@@ -18,9 +18,9 @@ export class UserPermissionService {
     )
   }
 
-  saveForUser(permissions: Partial<UserPermission>[]): Observable<UserPermission[]> {
+  saveForUser(userId: number, permissions: Partial<UserPermission>[]): Observable<UserPermission[]> {
     return this.http.post<UserPermission[]>(
-      this.urlService.URLS.USER_PERMISSION_BULK,
+      this.urlService.URLS.USER_PERMISSION_BY_USER + '/' + userId,
       permissions,
     )
   }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, viewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, computed, inject, signal, viewChild } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
@@ -18,8 +18,11 @@ import {
 } from '@follow-up/ui'
 import { CrudDialogDirective, CrudDialogTitleKeys } from '@follow-up/core'
 import { ApplicationUser } from '../models/application-user'
+import { ExternalSite } from '../../external-site/models/external-site'
+import { ExternalSiteService } from '../../external-site/services/external-site.service'
 import { UserPermissionService } from '../services/user-permission.service'
 import { AppStore } from '../../../shared/stores/app-store'
+import { UserType } from '../../../shared/enums/user-type'
 import { PermissionsTab } from './permissions-tab'
 
 @Component({
@@ -114,16 +117,31 @@ import { PermissionsTab } from './permissions-tab'
                 </ui-form-field>
               </div>
 
-              <ui-form-field>
-                <label uiLabel>{{ 'application_user.user_type' | translate }}</label>
-                <ui-select ngProjectAs="[uiInput]" class="w-full" formControlName="userType" [placeholder]="'application_user.select_user_type' | translate">
-                  @for (type of userTypes(); track type.lookupKey) {
-                    <ui-select-option [value]="type.lookupKey" [label]="isArabic() ? type.arName : type.enName">
-                      {{ isArabic() ? type.arName : type.enName }}
-                    </ui-select-option>
-                  }
-                </ui-select>
-              </ui-form-field>
+              <div class="grid grid-cols-2 gap-4">
+                <ui-form-field>
+                  <label uiLabel>{{ 'application_user.user_type' | translate }}</label>
+                  <ui-select ngProjectAs="[uiInput]" class="w-full" formControlName="userType" [placeholder]="'application_user.select_user_type' | translate">
+                    @for (type of userTypes(); track type.lookupKey) {
+                      <ui-select-option [value]="type.lookupKey" [label]="isArabic() ? type.arName : type.enName">
+                        {{ isArabic() ? type.arName : type.enName }}
+                      </ui-select-option>
+                    }
+                  </ui-select>
+                </ui-form-field>
+
+                @if (isExternalUser()) {
+                  <ui-form-field>
+                    <label uiLabel>{{ 'application_user.external_entity' | translate }}</label>
+                    <ui-select ngProjectAs="[uiInput]" class="w-full" formControlName="externalEntity" [placeholder]="'application_user.select_external_entity' | translate">
+                      @for (site of externalSites(); track site.id) {
+                        <ui-select-option [value]="site.id" [label]="isArabic() ? site.arName : site.enName">
+                          {{ isArabic() ? site.arName : site.enName }}
+                        </ui-select-option>
+                      }
+                    </ui-select>
+                  </ui-form-field>
+                }
+              </div>
 
               <div class="flex items-center gap-6">
                 <label class="flex items-center gap-2 text-sm text-foreground">
@@ -167,11 +185,14 @@ import { PermissionsTab } from './permissions-tab'
 })
 export class ApplicationUserDialog extends CrudDialogDirective<ApplicationUser> {
   private readonly userPermissionService = inject(UserPermissionService)
+  private readonly externalSiteService = inject(ExternalSiteService)
   private readonly appStore = inject(AppStore)
   private readonly permissionsTab = viewChild(PermissionsTab)
 
+  protected readonly externalSites = signal<ExternalSite[]>([])
   protected readonly userTypes = computed(() => this.appStore.lookupList()?.UserType ?? [])
   protected readonly isArabic = computed(() => (this.translate.currentLang || 'ar') === 'ar')
+  protected readonly isExternalUser = signal(false)
 
   readonly titleKeys: CrudDialogTitleKeys = {
     create: 'application_user.add_user',
@@ -186,12 +207,43 @@ export class ApplicationUserDialog extends CrudDialogDirective<ApplicationUser> 
     if (!this.isCreateMode() && this.data.model?.userTypeInfo) {
       this.form.get('userType')?.setValue(this.data.model.userTypeInfo.id)
     }
+    if (!this.isCreateMode() && this.data.model?.externalEntityInfo) {
+      this.form.get('externalEntity')?.setValue(this.data.model.externalEntityInfo.id)
+    }
+
+    this.listenToUserTypeChanges()
+    this.loadExternalSites()
+  }
+
+  private listenToUserTypeChanges() {
+    this.isExternalUser.set(this.form.get('userType')?.value === UserType.EXTERNAL_USER)
+
+    this.form.get('userType')?.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value) => {
+        this.isExternalUser.set(value === UserType.EXTERNAL_USER)
+        if (value !== UserType.EXTERNAL_USER) {
+          this.form.get('externalEntity')?.setValue(0)
+        }
+      })
+  }
+
+  private loadExternalSites() {
+    this.externalSiteService.getAll({ limit: -1 })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res) => this.externalSites.set(res.result))
   }
 
   override prepareModel() {
     const model = super.prepareModel()
     const selectedUserType = this.form.get('userType')?.value
     model.userTypeInfo = { id: selectedUserType, arName: '', enName: '' }
+    if (this.isExternalUser()) {
+      const selectedEntity = this.form.get('externalEntity')?.value
+      model.externalEntityInfo = { id: selectedEntity, arName: '', enName: '' }
+    } else {
+      model.externalEntityInfo = undefined
+    }
     return model
   }
 
@@ -202,7 +254,7 @@ export class ApplicationUserDialog extends CrudDialogDirective<ApplicationUser> 
         userId: saved.id,
         permissionId,
       }))
-      this.userPermissionService.saveForUser(permissions)
+      this.userPermissionService.saveForUser(saved.id, permissions)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: () => super.afterSaveSuccess(saved),

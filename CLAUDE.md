@@ -116,6 +116,12 @@ When creating a new feature with CRUD operations, follow this pattern:
 - Keep state transformations pure and predictable
 - Do NOT use `mutate` on signals, use `update` or `set` instead
 
+### CrudDialog Forms
+- In `afterBuildForm()`, extract form value-change listeners and data-loading logic into dedicated private methods
+- For value-change listeners: create a method named `listenTo{FieldName}Changes()` (e.g., `listenToUserTypeChanges()`)
+- For data loading: create a method named `load{Resource}()` (e.g., `loadExternalSites()`)
+- Call these methods from `afterBuildForm()` to keep it clean and readable
+
 ### Tailwind CSS
 - Use the suffix `!` syntax for important classes (`className!`), NOT the prefix syntax (`!className`)
 

@@ -68,7 +68,9 @@
     "permissions_tab": "Permissions",
     "permission_group": "Group",
     "user_type": "User Type",
-    "select_user_type": "Select user type"
+    "select_user_type": "Select user type",
+    "external_entity": "External Entity",
+    "select_external_entity": "Select external entity"
   },
   "common": {
     "save": "Save",

@@ -30,6 +30,7 @@ export class ApplicationUser extends CrudModel<ApplicationUser, ApplicationUserS
       domainName: [''],
       qid: [''],
       userType: [0],
+      externalEntity: [0],
       status: [true],
       enableEmailNotification: [false],
     }
