@@ -105,7 +105,7 @@
     "en_name": "الاسم بالإنجليزي",
     "description_col": "الوصف",
     "ldap_prefix": "بادئة LDAP",
-    "site_type": "نوع الموقع",
+    "site_type": "نوع الجهة",
     "status": "الحالة",
     "active": "فعال",
     "inactive": "غير فعال",

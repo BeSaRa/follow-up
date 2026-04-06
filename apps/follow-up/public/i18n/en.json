@@ -105,7 +105,7 @@
     "en_name": "English Name",
     "description_col": "Description",
     "ldap_prefix": "LDAP Prefix",
-    "site_type": "Site Type",
+    "site_type": "Entity Type",
     "status": "Status",
     "active": "Active",
     "inactive": "Inactive",
