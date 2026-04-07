@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal, viewChild } from '@angular/core'
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule, Validators } from '@angular/forms'
 import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
@@ -225,15 +225,26 @@ export class ApplicationUserDialog extends CrudDialogDirective<ApplicationUser> 
   }
 
   private listenToUserTypeChanges() {
-    this.isExternalUser.set(this.form.get('userType')?.value === UserType.EXTERNAL_USER)
+    const isExternal = this.form.get('userType')?.value === UserType.EXTERNAL_USER
+    this.isExternalUser.set(isExternal)
+    if (isExternal) {
+      this.form.get('externalEntity')?.addValidators(Validators.required)
+      this.form.get('externalEntity')?.updateValueAndValidity()
+    }
 
     this.form.get('userType')?.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => {
-        this.isExternalUser.set(value === UserType.EXTERNAL_USER)
-        if (value !== UserType.EXTERNAL_USER) {
-          this.form.get('externalEntity')?.setValue(0)
+        const isExternal = value === UserType.EXTERNAL_USER
+        this.isExternalUser.set(isExternal)
+        const externalEntity = this.form.get('externalEntity')
+        if (isExternal) {
+          externalEntity?.addValidators(Validators.required)
+        } else {
+          externalEntity?.removeValidators(Validators.required)
+          externalEntity?.setValue(0)
         }
+        externalEntity?.updateValueAndValidity()
       })
   }
 
