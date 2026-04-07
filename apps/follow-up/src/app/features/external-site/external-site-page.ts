@@ -106,37 +106,30 @@ import { ExternalSite } from './models/external-site'
       <!-- Table Card -->
       <ui-card>
         <ui-card-content class="p-0!">
-          @if (loading() && !models().length) {
-            <div class="space-y-4 p-6">
-              @for (i of skeletonRows; track i) {
-                <ui-skeleton width="100%" height="2.5rem" />
-              }
-            </div>
-          } @else if (models().length) {
-            <div class="overflow-x-auto">
-              <table uiTable>
-                <thead uiTableHeader>
-                  <tr uiTableRow>
-                    <th uiTableHead>
-                      {{ 'external_site.ar_name' | translate }}
-                    </th>
-                    <th uiTableHead>
-                      {{ 'external_site.en_name' | translate }}
-                    </th>
-                    <th uiTableHead>
-                      {{ 'external_site.ldap_prefix' | translate }}
-                    </th>
-                    <th uiTableHead>
-                      {{ 'external_site.site_type' | translate }}
-                    </th>
-                    <th uiTableHead>
-                      {{ 'external_site.status' | translate }}
-                    </th>
-                    <th uiTableHead class="w-28"></th>
-                  </tr>
-                </thead>
-                <tbody uiTableBody>
-                  @for (item of models(); track item.id) {
+          <div class="overflow-x-auto">
+            <table uiTable>
+              <thead uiTableHeader>
+                <tr uiTableRow>
+                  <th uiTableHead>
+                    {{ 'external_site.ar_name' | translate }}
+                  </th>
+                  <th uiTableHead>
+                    {{ 'external_site.en_name' | translate }}
+                  </th>
+                  <th uiTableHead>
+                    {{ 'external_site.ldap_prefix' | translate }}
+                  </th>
+                  <th uiTableHead>
+                    {{ 'external_site.site_type' | translate }}
+                  </th>
+                  <th uiTableHead>
+                    {{ 'external_site.status' | translate }}
+                  </th>
+                  <th uiTableHead class="w-28"></th>
+                </tr>
+              </thead>
+              <tbody uiTableBody>
+                @for (item of models(); track item.id) {
                     <tr uiTableRow>
                       <td uiTableCell class="font-medium">
                         {{ item.arName }}
@@ -185,11 +178,31 @@ import { ExternalSite } from './models/external-site'
                           </button>
                         </div>
                       </td>
-                    </tr>
-                  }
-                </tbody>
-              </table>
-            </div>
+                  </tr>
+                } @empty {
+                  <tr uiTableRow>
+                    <td uiTableCell [attr.colspan]="6">
+                      @if (loading()) {
+                        <div class="space-y-4 py-4">
+                          @for (i of skeletonRows; track i) {
+                            <ui-skeleton width="100%" height="2rem" />
+                          }
+                        </div>
+                      } @else {
+                        <div class="flex flex-col items-center justify-center py-12 text-foreground-muted">
+                          <mat-icon class="text-4xl! size-10! leading-10! mb-3" [svgIcon]="icons.WEB" />
+                          <p class="text-sm">
+                            {{ 'external_site.no_data' | translate }}
+                          </p>
+                        </div>
+                      }
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+          @if (models().length) {
             <div class="border-t border-border">
               <ui-pagination
                 [totalItems]="totalElements()"
@@ -204,15 +217,6 @@ import { ExternalSite } from './models/external-site'
                 [lastPageLabel]="'pagination.last_page' | translate"
                 (pageChange)="onPageChange($event)"
               />
-            </div>
-          } @else {
-            <div
-              class="flex flex-col items-center justify-center py-12 text-foreground-muted"
-            >
-              <mat-icon class="text-4xl! size-10! leading-10! mb-3" [svgIcon]="icons.WEB" />
-              <p class="text-sm">
-                {{ 'external_site.no_data' | translate }}
-              </p>
             </div>
           }
         </ui-card-content>
