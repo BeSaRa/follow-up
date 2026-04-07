@@ -10,7 +10,7 @@ import {
   input,
   signal,
 } from '@angular/core'
-import { NgControl } from '@angular/forms'
+import { NgControl, Validators } from '@angular/forms'
 import { toObservable, toSignal } from '@angular/core/rxjs-interop'
 import { EMPTY, switchMap } from 'rxjs'
 import { TranslatePipe } from '@ngx-translate/core'
@@ -104,7 +104,12 @@ export class UiFormError {}
     class: 'block',
   },
   template: `
-    <ng-content select="[uiLabel]" />
+    <div class="flex items-center gap-0.5">
+      <ng-content select="[uiLabel]" />
+      @if (isRequired()) {
+        <span class="text-error text-sm">*</span>
+      }
+    </div>
     <ng-content select="[uiInput]" />
     <div class="min-h-6 overflow-hidden">
       <ng-content select="[uiFormHint]" />
@@ -128,6 +133,11 @@ export class UiFormField {
       switchMap(ctrl => ctrl?.events ?? EMPTY),
     ),
   )
+
+  protected readonly isRequired = computed(() => {
+    const ctrl = this.ngControl()?.control
+    return !!ctrl && ctrl.hasValidator(Validators.required)
+  })
 
   private readonly hasError = computed(() => {
     this.controlEvent()
