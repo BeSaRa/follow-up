@@ -8,7 +8,7 @@ import {
   WritableSignal,
 } from '@angular/core'
 import { toObservable, toSignal } from '@angular/core/rxjs-interop'
-import { debounceTime, distinctUntilChanged } from 'rxjs'
+import { debounceTime, delay, distinctUntilChanged, forkJoin, of, tap } from 'rxjs'
 import { CrudServiceContract } from '../services/crud-service'
 import { Pagination } from '../classes/pagination'
 
@@ -21,6 +21,7 @@ export interface CrudPageConfig {
   debounceTime?: number
   defaultPageSize?: number
   skeletonRowCount?: number
+  minLoadingDuration?: number
 }
 
 export interface CrudPageContract<TModel> {
@@ -42,6 +43,7 @@ const DEFAULT_CONFIG: Required<CrudPageConfig> = {
   debounceTime: 300,
   defaultPageSize: 10,
   skeletonRowCount: 5,
+  minLoadingDuration: 2000,
 }
 
 @Directive()
@@ -64,13 +66,14 @@ export abstract class CrudPageDirective<
   readonly skeletonRows: number[]
 
   private readonly debouncedSearch: Signal<string>
+  private readonly cfg: Required<CrudPageConfig>
 
   protected getConfig(): CrudPageConfig {
     return {}
   }
 
   constructor() {
-    const cfg = { ...DEFAULT_CONFIG, ...this.getConfig() }
+    const cfg = this.cfg = { ...DEFAULT_CONFIG, ...this.getConfig() }
 
     this.pageSize = signal(cfg.defaultPageSize)
     this.models = computed(() => this.pagination()?.result ?? [])
@@ -103,17 +106,20 @@ export abstract class CrudPageDirective<
     size: number,
     search: string,
   ): Record<string, unknown> {
-    const options: Record<string, unknown> = { page, size }
-    if (search) options['criteria'] = search
+    const options: Record<string, unknown> = { page, size, criteria: search || '' }
     return options
   }
 
   private loadData(page: number, size: number, search: string) {
     this.loading.set(true)
+    this.pagination.set(null)
     this.error.set(null)
     const options = this.buildLoadOptions(page, size, search)
-    this.service.getAll(options).subscribe({
-      next: (result) => {
+    const data$ = this.service.getAll(options)
+    const minDelay$ = of(null).pipe(delay(this.cfg.minLoadingDuration))
+
+    forkJoin([data$, minDelay$]).subscribe({
+      next: ([result]) => {
         this.pagination.set(result)
         this.loading.set(false)
       },

@@ -29,10 +29,6 @@ export class AttachmentTypeService extends RegisterServiceMixin(CrudWithDialogSe
     return this.urlService.URLS.ATTACHMENT_TYPE
   }
 
-  override getGetAllEndpoint(): string {
-    return this.urlService.URLS.ATTACHMENT_TYPE_LOOKUPS
-  }
-
   getDialogComponent(): Type<AttachmentTypeDialog> {
     return AttachmentTypeDialog
   }

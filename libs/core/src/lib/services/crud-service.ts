@@ -34,7 +34,7 @@ export abstract class CrudService<
   }
 
   getGetAllEndpoint(): string {
-    return this.getSegmentUrl()
+    return this.getSegmentUrl() + '/criteria'
   }
 
   @HasInterception
