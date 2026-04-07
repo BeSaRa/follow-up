@@ -19,6 +19,8 @@ export type AppAuthResponse = AuthResponse<{
   applicationUser: AppApplicationUser
   lookupList: LookupList
   permissionSet: Permission[]
+  userType: number
+  adminUser: boolean
 }>
 
 export type AppApplicationUser = {
