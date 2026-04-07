@@ -20,7 +20,6 @@
           }
         ],
         "styles": [
-          "apps/follow-up/src/fonts.css",
           "apps/follow-up/src/rtl.css",
           "apps/follow-up/src/styles.css"
         ]

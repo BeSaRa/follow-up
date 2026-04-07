@@ -157,7 +157,7 @@ export class LoginPage {
   constructor() {
     effect(() => {
       if (this.store.isAuthenticated()) {
-        this.router.navigate(['/dashboard'])
+        this.router.navigate(['/followup'])
       }
     })
 

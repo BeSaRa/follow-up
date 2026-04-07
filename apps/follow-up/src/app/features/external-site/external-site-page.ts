@@ -56,7 +56,7 @@ import { ExternalSite } from './models/external-site'
       <!-- Breadcrumb -->
       <ui-breadcrumb>
         <ui-breadcrumb-item>
-          <a routerLink="/dashboard">{{ 'layout.dashboard' | translate }}</a>
+          <a routerLink="/followup">{{ 'layout.followup' | translate }}</a>
         </ui-breadcrumb-item>
         <ui-breadcrumb-separator>»</ui-breadcrumb-separator>
         <ui-breadcrumb-item active>

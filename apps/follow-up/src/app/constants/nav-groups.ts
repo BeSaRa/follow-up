@@ -5,8 +5,8 @@ export const NAV_GROUPS = [
     sortOrder: 1,
     items: [
       {
-        path: '/dashboard',
-        label: 'layout.dashboard',
+        path: '/followup',
+        label: 'layout.followup',
         icon: APP_ICONS.VIEW_DASHBOARD,
         exact: true,
         sortOrder: 1,

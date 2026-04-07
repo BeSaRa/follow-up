@@ -28,7 +28,7 @@
   "layout": {
     "app_title": "متابعة",
     "nav_system": "إدارة النظام",
-    "dashboard": "لوحة التحكم",
+    "followup": "المتابعة",
     "logout": "تسجيل الخروج",
     "toggle_sidebar": "تبديل الشريط الجانبي",
     "toggle_dark_mode": "تبديل الوضع الداكن",
@@ -41,8 +41,8 @@
     "followup_status": "حالات المتابعة",
     "priority_level": "مستويات الأولوية"
   },
-  "dashboard": {
-    "title": "لوحة التحكم"
+  "followup": {
+    "title": "المتابعة"
   },
   "application_user": {
     "title": "المستخدمين",

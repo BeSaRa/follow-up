@@ -9,9 +9,9 @@ export const layoutRoutes: Route[] = [
     canActivate: [authGuard],
     children: [
       {
-        path: 'dashboard',
+        path: 'followup',
         loadComponent: () =>
-          import('../features/dashboard/dashboard-page').then(m => m.DashboardPage),
+          import('../features/followup/followup-page').then(m => m.FollowupPage),
       },
       {
         path: 'application-user',
@@ -40,7 +40,7 @@ export const layoutRoutes: Route[] = [
       },
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'followup',
         pathMatch: 'full',
       },
     ],

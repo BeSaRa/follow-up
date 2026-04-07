@@ -28,7 +28,7 @@
   "layout": {
     "app_title": "Follow Up",
     "nav_system": "System Administration",
-    "dashboard": "Dashboard",
+    "followup": "Follow Up",
     "logout": "Logout",
     "toggle_sidebar": "Toggle sidebar",
     "toggle_dark_mode": "Toggle dark mode",
@@ -41,8 +41,8 @@
     "followup_status": "Followup Statuses",
     "priority_level": "Priority Levels"
   },
-  "dashboard": {
-    "title": "Dashboard"
+  "followup": {
+    "title": "Follow Up"
   },
   "application_user": {
     "title": "Application Users",

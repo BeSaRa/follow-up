@@ -56,7 +56,7 @@ import { PriorityLevel } from './models/priority-level'
       <!-- Breadcrumb -->
       <ui-breadcrumb>
         <ui-breadcrumb-item>
-          <a routerLink="/dashboard">{{ 'layout.dashboard' | translate }}</a>
+          <a routerLink="/followup">{{ 'layout.followup' | translate }}</a>
         </ui-breadcrumb-item>
         <ui-breadcrumb-separator>»</ui-breadcrumb-separator>
         <ui-breadcrumb-item active>
