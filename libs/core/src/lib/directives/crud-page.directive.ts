@@ -40,7 +40,7 @@ export interface CrudPageContract<TModel> {
 }
 
 const DEFAULT_CONFIG: Required<CrudPageConfig> = {
-  debounceTime: 300,
+  debounceTime: 500,
   defaultPageSize: 10,
   skeletonRowCount: 5,
   minLoadingDuration: 2000,
