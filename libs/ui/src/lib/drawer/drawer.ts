@@ -257,8 +257,11 @@ export class UiDrawer {
     }
 
     .ui-drawer-container-content {
+      display: flex;
+      flex-direction: column;
       flex: 1;
       min-width: 0;
+      overflow: hidden;
       transition: margin 200ms ease-out;
     }
   `,

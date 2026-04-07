@@ -180,8 +180,8 @@ import { ExternalSite } from './models/external-site'
                       </td>
                   </tr>
                 } @empty {
-                  <tr uiTableRow>
-                    <td uiTableCell [attr.colspan]="6">
+                  <tr>
+                    <td [attr.colspan]="6">
                       @if (loading()) {
                         <div class="space-y-4 py-4">
                           @for (i of skeletonRows; track i) {

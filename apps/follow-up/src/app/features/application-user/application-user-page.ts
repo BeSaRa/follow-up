@@ -194,8 +194,8 @@ import { ApplicationUser } from './models/application-user'
                       </td>
                   </tr>
                 } @empty {
-                  <tr uiTableRow>
-                    <td uiTableCell [attr.colspan]="9">
+                  <tr>
+                    <td [attr.colspan]="9">
                       @if (loading()) {
                         <div class="space-y-4 py-4">
                           @for (i of skeletonRows; track i) {

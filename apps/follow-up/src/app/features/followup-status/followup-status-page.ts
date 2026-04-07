@@ -176,8 +176,8 @@ import { FollowupStatus } from './models/followup-status'
                       </td>
                   </tr>
                 } @empty {
-                  <tr uiTableRow>
-                    <td uiTableCell [attr.colspan]="5">
+                  <tr>
+                    <td [attr.colspan]="5">
                       @if (loading()) {
                         <div class="space-y-4 py-4">
                           @for (i of skeletonRows; track i) {
