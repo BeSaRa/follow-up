@@ -176,10 +176,10 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> {
   readonly icons = APP_ICONS
 
   private readonly priorityVariants: Record<number, BadgeVariant> = {
-    1: 'error',
-    2: 'warning',
-    3: 'info',
-    4: 'success',
+    1: 'outline-error',
+    2: 'outline-warning',
+    3: 'outline-info',
+    4: 'outline-success',
   }
 
   getPriorityVariant(id: number): BadgeVariant {

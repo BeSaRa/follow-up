@@ -14,6 +14,13 @@ export type BadgeVariant =
   | 'error'
   | 'info'
   | 'outline'
+  | 'outline-primary'
+  | 'outline-secondary'
+  | 'outline-accent'
+  | 'outline-success'
+  | 'outline-warning'
+  | 'outline-error'
+  | 'outline-info'
 export type BadgeSize = 'sm' | 'md'
 
 @Component({
@@ -42,6 +49,13 @@ export class UiBadge {
       error: 'bg-error text-error-foreground',
       info: 'bg-info text-info-foreground',
       outline: 'border border-border bg-transparent text-foreground',
+      'outline-primary': 'border border-primary bg-primary/10 text-primary',
+      'outline-secondary': 'border border-secondary bg-secondary/10 text-secondary',
+      'outline-accent': 'border border-accent bg-accent/10 text-accent',
+      'outline-success': 'border border-success bg-success/10 text-success',
+      'outline-warning': 'border border-warning bg-warning/10 text-warning',
+      'outline-error': 'border border-error bg-error/10 text-error',
+      'outline-info': 'border border-info bg-info/10 text-info',
     }
 
     const sizes: Record<BadgeSize, string> = {

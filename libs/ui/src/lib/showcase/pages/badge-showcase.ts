@@ -11,7 +11,7 @@ import { UiBadge } from '../../badge/badge'
 const API_PROPERTIES: ApiProperty[] = [
   {
     name: 'variant',
-    type: "'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'error' | 'info' | 'outline'",
+    type: "'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'error' | 'info' | 'outline' | 'outline-primary' | 'outline-secondary' | 'outline-accent' | 'outline-success' | 'outline-warning' | 'outline-error' | 'outline-info'",
     default: "'primary'",
     description: 'The visual style variant of the badge.',
     kind: 'input',
@@ -36,6 +36,13 @@ const EXAMPLES = {
 <ui-badge variant="error">Error</ui-badge>
 <ui-badge variant="info">Info</ui-badge>
 <ui-badge variant="outline">Outline</ui-badge>`,
+  outlineVariants: `<ui-badge variant="outline-primary">Primary</ui-badge>
+<ui-badge variant="outline-secondary">Secondary</ui-badge>
+<ui-badge variant="outline-accent">Accent</ui-badge>
+<ui-badge variant="outline-success">Success</ui-badge>
+<ui-badge variant="outline-warning">Warning</ui-badge>
+<ui-badge variant="outline-error">Error</ui-badge>
+<ui-badge variant="outline-info">Info</ui-badge>`,
   sizes: `<ui-badge size="sm">Small</ui-badge>
 <ui-badge size="md">Medium</ui-badge>`,
 }
@@ -83,6 +90,22 @@ const EXAMPLES = {
             </showcase-example-viewer>
 
             <showcase-example-viewer
+              title="Outline Variants"
+              description="Outline variants with colored borders and text on a transparent background."
+              [htmlCode]="outlineVariantsHtml"
+            >
+              <div class="flex flex-wrap gap-3">
+                <ui-badge variant="outline-primary">Primary</ui-badge>
+                <ui-badge variant="outline-secondary">Secondary</ui-badge>
+                <ui-badge variant="outline-accent">Accent</ui-badge>
+                <ui-badge variant="outline-success">Success</ui-badge>
+                <ui-badge variant="outline-warning">Warning</ui-badge>
+                <ui-badge variant="outline-error">Error</ui-badge>
+                <ui-badge variant="outline-info">Info</ui-badge>
+              </div>
+            </showcase-example-viewer>
+
+            <showcase-example-viewer
               title="Sizes"
               description="Badges come in two sizes: small and medium."
               [htmlCode]="sizesHtml"
@@ -110,5 +133,6 @@ export class BadgeShowcase {
   protected readonly apiProperties = API_PROPERTIES
   protected readonly cssProperties = CSS_PROPERTIES
   protected readonly variantsHtml = EXAMPLES.variants
+  protected readonly outlineVariantsHtml = EXAMPLES.outlineVariants
   protected readonly sizesHtml = EXAMPLES.sizes
 }
