@@ -1,6 +1,8 @@
 import { Route } from '@angular/router'
 import { authGuard } from '@follow-up/core'
 import { Layout } from './layout'
+import { defaultRedirectGuard } from './default-redirect.guard'
+import { adminGuard, nonAdminGuard } from './admin.guard'
 
 export const layoutRoutes: Route[] = [
   {
@@ -10,18 +12,21 @@ export const layoutRoutes: Route[] = [
     children: [
       {
         path: 'followup',
+        canActivate: [nonAdminGuard],
         loadComponent: () =>
           import('../features/followup/followup-page').then(m => m.FollowupPage),
       },
       {
         path: 'admin',
+        canActivate: [adminGuard],
         loadChildren: () =>
           import('../features/admin/admin.routes').then(m => m.adminRoutes),
       },
       {
         path: '',
-        redirectTo: 'followup',
         pathMatch: 'full',
+        canActivate: [defaultRedirectGuard],
+        children: [],
       },
     ],
   },

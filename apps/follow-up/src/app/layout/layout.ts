@@ -32,6 +32,7 @@ import { AuthStore } from '@follow-up/core'
 import { APP_ICONS } from '../constants/icons'
 import { NAV_GROUPS } from '../constants/nav-groups'
 import { AppStore } from '../shared/stores/app-store'
+import { UserType } from '../shared/enums/user-type'
 
 @Component({
   selector: 'app-layout',
@@ -224,16 +225,18 @@ export class Layout {
     this.doc.documentElement.classList.contains('dark'),
   )
 
-  private readonly navGroups = NAV_GROUPS
+  protected readonly isAdmin = computed(() => this.appStore.userType() === UserType.SYSTEM_ADMIN)
 
-  protected readonly sortedNavGroups = computed(() =>
-    [...this.navGroups]
+  protected readonly sortedNavGroups = computed(() => {
+    const isAdmin = this.isAdmin()
+    return NAV_GROUPS
+      .filter((group) => isAdmin ? group.adminOnly : !group.adminOnly)
       .sort((a, b) => a.sortOrder - b.sortOrder)
       .map((group) => ({
         ...group,
         items: [...group.items].sort((a, b) => a.sortOrder - b.sortOrder),
-      })),
-  )
+      }))
+  })
 
   constructor() {
     effect(() => {

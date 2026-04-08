@@ -25,6 +25,8 @@ import {
 } from '@follow-up/ui'
 import { AuthStore } from '@follow-up/core'
 import { APP_ICONS } from '../../constants/icons'
+import { AppStore } from '../../shared/stores/app-store'
+import { UserType } from '../../shared/enums/user-type'
 
 @Component({
   selector: 'app-login-page',
@@ -146,6 +148,7 @@ export class LoginPage {
   private readonly translate = inject(TranslateService)
 
   protected readonly store = inject(AuthStore)
+  private readonly appStore = inject(AppStore)
   protected readonly icons = APP_ICONS
   protected readonly showPassword = signal(false)
 
@@ -157,7 +160,8 @@ export class LoginPage {
   constructor() {
     effect(() => {
       if (this.store.isAuthenticated()) {
-        this.router.navigate(['/followup'])
+        const route = this.appStore.userType() === UserType.SYSTEM_ADMIN ? '/admin' : '/followup'
+        this.router.navigate([route])
       }
     })
 

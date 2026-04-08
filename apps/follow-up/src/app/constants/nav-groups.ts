@@ -3,6 +3,7 @@ import { APP_ICONS } from './icons'
 export const NAV_GROUPS = [
   {
     sortOrder: 1,
+    adminOnly: false,
     items: [
       {
         path: '/followup',
@@ -15,6 +16,7 @@ export const NAV_GROUPS = [
   },
   {
     sortOrder: 2,
+    adminOnly: true,
     label: 'layout.nav_system',
     items: [
       {

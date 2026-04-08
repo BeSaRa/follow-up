@@ -6,7 +6,8 @@
     "min": "Must be at least {{min}}",
     "max": "Must be no more than {{max}}",
     "email": "Please enter a valid email address",
-    "pattern": "Invalid format"
+    "pattern": "Invalid format",
+    "no_page_access": "You don't have permission to access this page"
   },
   "login": {
     "title": "Sign In",
