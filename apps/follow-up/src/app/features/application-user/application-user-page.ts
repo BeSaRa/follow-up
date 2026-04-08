@@ -197,7 +197,7 @@ import { ApplicationUser } from './models/application-user'
                   <tr>
                     <td [attr.colspan]="9">
                       @if (loading()) {
-                        <div class="space-y-4 py-4">
+                        <div class="space-y-4 px-4 py-4">
                           @for (i of skeletonRows; track i) {
                             <ui-skeleton width="100%" height="2rem" />
                           }
