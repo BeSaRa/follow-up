@@ -1,7 +1,6 @@
-import type { AuthResponse } from '@follow-up/contracts'
+import type { AuthResponse, InfoType } from '@follow-up/contracts'
 import type { Lookup } from './lookup'
 import type { Permission } from './permission'
-import type { InfoType } from '../types/info-type'
 
 export type LookupCategory =
   | 'SecurityLevel'

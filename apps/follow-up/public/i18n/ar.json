@@ -41,6 +41,10 @@
     "followup_status": "حالات المتابعة",
     "priority_level": "مستويات الأولوية"
   },
+  "admin": {
+    "title": "الإدارة",
+    "description": "إدارة إعدادات النظام والتكوينات"
+  },
   "followup": {
     "title": "المتابعة"
   },

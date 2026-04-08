@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms'
 import { CrudModel, HasForm } from '@follow-up/core'
-import type { InfoType } from '../../../shared/types/info-type'
+import type { InfoType } from '@follow-up/contracts'
 import { ExternalSiteService } from '../services/external-site.service'
 
 export class ExternalSite extends CrudModel<ExternalSite, ExternalSiteService> implements HasForm {

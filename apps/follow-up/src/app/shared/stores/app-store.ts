@@ -7,12 +7,14 @@ type AppState = {
   applicationUser: AppApplicationUser | null
   lookupList: LookupList | null
   permissionSet: Permission[]
+  userType: number
 }
 
 const initialState: AppState = {
   applicationUser: null,
   lookupList: null,
   permissionSet: [],
+  userType: 0,
 }
 
 export const AppStore = signalStore(
@@ -32,8 +34,8 @@ export const AppStore = signalStore(
     ),
   })),
   withMethods((store) => ({
-    setSession(user: AppApplicationUser, lookups: LookupList, permissions: Permission[]) {
-      patchState(store, { applicationUser: user, lookupList: lookups, permissionSet: permissions })
+    setSession(user: AppApplicationUser, lookups: LookupList, permissions: Permission[], userType: number) {
+      patchState(store, { applicationUser: user, lookupList: lookups, permissionSet: permissions, userType })
     },
     clearSession() {
       patchState(store, { ...initialState })

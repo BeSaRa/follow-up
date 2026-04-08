@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core'
 import { TranslatePipe } from '@ngx-translate/core'
+import { FollowupService } from './services/followup.service'
+import { AppStore } from '../../shared/stores/app-store'
 
 @Component({
   selector: 'app-followup-page',
@@ -11,4 +13,13 @@ import { TranslatePipe } from '@ngx-translate/core'
     </h1>
   `,
 })
-export class FollowupPage {}
+export class FollowupPage implements OnInit {
+  private followupService = inject(FollowupService)
+  private appStore = inject(AppStore)
+
+  ngOnInit(): void {
+    this.followupService.load(this.appStore.userType()).subscribe(res => {
+      console.log(res)
+    })
+  }
+}

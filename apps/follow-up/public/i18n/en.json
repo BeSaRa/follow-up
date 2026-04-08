@@ -41,6 +41,10 @@
     "followup_status": "Followup Statuses",
     "priority_level": "Priority Levels"
   },
+  "admin": {
+    "title": "Administration",
+    "description": "Manage system settings and configurations"
+  },
   "followup": {
     "title": "Follow Up"
   },

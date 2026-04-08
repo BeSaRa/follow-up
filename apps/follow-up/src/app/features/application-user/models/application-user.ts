@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms'
 import { CrudModel, HasForm } from '@follow-up/core'
-import type { InfoType } from '../../../shared/types/info-type'
+import type { InfoType } from '@follow-up/contracts'
 import { ApplicationUserService } from '../services/application-user.service'
 
 export class ApplicationUser extends CrudModel<ApplicationUser, ApplicationUserService> implements HasForm {
