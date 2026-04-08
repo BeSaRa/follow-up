@@ -29,6 +29,7 @@ import {
 } from '@follow-up/ui'
 import { MatIcon } from '@angular/material/icon'
 import { AuthStore } from '@follow-up/core'
+import { LangTracker } from '@follow-up/util'
 import { APP_ICONS } from '../constants/icons'
 import { NAV_GROUPS } from '../constants/nav-groups'
 import { AppStore } from '../shared/stores/app-store'
@@ -259,6 +260,7 @@ export class Layout {
     const next = this.currentLang() === 'ar' ? 'en' : 'ar'
     this.translate.use(next)
     this.currentLang.set(next)
+    LangTracker.setLang(next, 'Layout')
   }
 
   protected logout() {
