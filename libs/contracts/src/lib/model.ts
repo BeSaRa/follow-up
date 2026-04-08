@@ -1,4 +1,4 @@
-export type InfoType = {
+export interface InfoContract {
   id: number
   arName: string
   enName: string

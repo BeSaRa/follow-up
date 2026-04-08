@@ -1,4 +1,4 @@
-import type { AuthResponse, InfoType } from '@follow-up/contracts'
+import type { AuthResponse, InfoContract } from '@follow-up/contracts'
 import type { Lookup } from './lookup'
 import type { Permission } from './permission'
 
@@ -33,6 +33,6 @@ export type AppApplicationUser = {
   mobile: string
   domainName: string
   enableEmailNotification: boolean
-  userTypeInfo: InfoType
-  externalEntityInfo?: InfoType
+  userTypeInfo: InfoContract
+  externalEntityInfo?: InfoContract
 }

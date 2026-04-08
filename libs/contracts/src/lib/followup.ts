@@ -1,19 +1,19 @@
-import type { InfoType } from './model'
+import type { InfoContract } from './model'
 
 export interface FollowupContract {
   id: number
   followUpReference: string
   documentVSID: string
   docFullSerial: string
-  docClassInfo: InfoType
+  docClassInfo: InfoContract
   docSubject: string
-  externalEntityInfo: InfoType
-  subExternalEntityInfo: InfoType
-  securityLevelInfo: InfoType
-  siteTypeInfo: InfoType
-  priorityLevelInfo: InfoType
-  followUpStatusInfo: InfoType
-  assignedUserInfo: InfoType
+  externalEntityInfo: InfoContract
+  subExternalEntityInfo: InfoContract
+  securityLevelInfo: InfoContract
+  siteTypeInfo: InfoContract
+  priorityLevelInfo: InfoContract
+  followUpStatusInfo: InfoContract
+  assignedUserInfo: InfoContract
   status: boolean
   dueDate: string
   receivedDate: string

@@ -1,6 +1,6 @@
 import { Validators } from '@angular/forms'
 import { CrudModel, HasForm } from '@follow-up/core'
-import type { InfoType } from '@follow-up/contracts'
+import type { InfoContract } from '@follow-up/contracts'
 import { ApplicationUserService } from '../services/application-user.service'
 
 export class ApplicationUser extends CrudModel<ApplicationUser, ApplicationUserService> implements HasForm {
@@ -17,8 +17,8 @@ export class ApplicationUser extends CrudModel<ApplicationUser, ApplicationUserS
   mobile = ''
   domainName = ''
   enableEmailNotification = false
-  userTypeInfo: InfoType = { id: 0, arName: '', enName: '' }
-  externalEntityInfo?: InfoType
+  userTypeInfo: InfoContract = { id: 0, arName: '', enName: '' }
+  externalEntityInfo?: InfoContract
 
   buildForm() {
     return {
