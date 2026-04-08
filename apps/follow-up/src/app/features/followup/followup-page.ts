@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
-import { TranslatePipe } from '@ngx-translate/core'
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { MatIcon } from '@angular/material/icon'
 import {
   BadgeVariant,
@@ -109,15 +109,15 @@ import { Followup } from './models/followup'
                   <tr uiTableRow>
                     <td uiTableCell class="font-medium">{{ item.followUpReference }}</td>
                     <td uiTableCell>{{ item.docSubject }}</td>
-                    <td uiTableCell>{{ item.docClassInfo.arName }}</td>
-                    <td uiTableCell>{{ item.externalEntityInfo.arName }}</td>
+                    <td uiTableCell>{{ item.docClassInfo.getName(lang()) }}</td>
+                    <td uiTableCell>{{ item.externalEntityInfo.getName(lang()) }}</td>
                     <td uiTableCell>
                       <ui-badge [variant]="getPriorityVariant(item.priorityLevelInfo.id)" size="sm">
-                        {{ item.priorityLevelInfo.arName }}
+                        {{ item.priorityLevelInfo.getName(lang()) }}
                       </ui-badge>
                     </td>
-                    <td uiTableCell>{{ item.followUpStatusInfo.arName }}</td>
-                    <td uiTableCell>{{ item.assignedUserInfo.arName }}</td>
+                    <td uiTableCell>{{ item.followUpStatusInfo.getName(lang()) }}</td>
+                    <td uiTableCell>{{ item.assignedUserInfo.getName(lang()) }}</td>
                     <td uiTableCell>{{ item.dueDate }}</td>
                     <td uiTableCell>
                       <ui-badge
@@ -174,6 +174,17 @@ import { Followup } from './models/followup'
 export class FollowupPage extends CrudPageDirective<Followup, FollowupService> {
   readonly service = inject(FollowupService)
   readonly icons = APP_ICONS
+  private readonly translate = inject(TranslateService)
+  protected readonly lang = signal(this.translate.currentLang || 'ar')
+
+  constructor() {
+    super()
+    this.listenToLangChanges()
+  }
+
+  private listenToLangChanges() {
+    this.translate.onLangChange.subscribe(({ lang }) => this.lang.set(lang))
+  }
 
   private readonly priorityVariants: Record<number, BadgeVariant> = {
     1: 'outline-error',

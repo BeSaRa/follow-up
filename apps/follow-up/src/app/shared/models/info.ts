@@ -5,4 +5,8 @@ export class Info extends Cloner implements InfoContract {
   id = 0
   arName = ''
   enName = ''
+
+  getName(lang: string): string {
+    return lang === 'ar' ? this.arName : this.enName
+  }
 }
