@@ -47,7 +47,21 @@
     "description": "Manage system settings and configurations"
   },
   "followup": {
-    "title": "Follow Up"
+    "title": "Follow Up",
+    "description": "Track and manage follow-up items",
+    "search_placeholder": "Search follow-ups...",
+    "reference": "Reference",
+    "doc_subject": "Subject",
+    "doc_class": "Document Class",
+    "external_entity": "External Entity",
+    "priority_level": "Priority Level",
+    "followup_status": "Status",
+    "assigned_user": "Assigned User",
+    "due_date": "Due Date",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "no_data": "No follow-up items found"
   },
   "application_user": {
     "title": "Application Users",

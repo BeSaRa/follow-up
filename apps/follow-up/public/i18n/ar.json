@@ -47,7 +47,21 @@
     "description": "إدارة إعدادات النظام والتكوينات"
   },
   "followup": {
-    "title": "المتابعة"
+    "title": "المتابعة",
+    "description": "تتبع وإدارة عناصر المتابعة",
+    "search_placeholder": "بحث في المتابعات...",
+    "reference": "المرجع",
+    "doc_subject": "الموضوع",
+    "doc_class": "تصنيف المستند",
+    "external_entity": "الجهة الخارجية",
+    "priority_level": "مستوى الأولوية",
+    "followup_status": "الحالة",
+    "assigned_user": "المستخدم المكلف",
+    "due_date": "تاريخ الاستحقاق",
+    "status": "الحالة",
+    "active": "فعال",
+    "inactive": "غير فعال",
+    "no_data": "لا توجد عناصر متابعة"
   },
   "application_user": {
     "title": "المستخدمين",
