@@ -1,7 +1,11 @@
-import type { FollowupContract, InfoType } from '@follow-up/contracts'
+import type { FollowupContract } from '@follow-up/contracts'
 import { CrudModel } from '@follow-up/core'
+import { InterceptModel } from 'cast-response'
 import { FollowupService } from '../services/followup.service'
+import { FollowupModelInterceptor } from './followup-model-interceptor'
+import { Info } from '../../../shared/models/info'
 
+@InterceptModel(new FollowupModelInterceptor())
 export class Followup extends CrudModel<Followup, FollowupService> implements FollowupContract {
   $$primaryKey = 'id' as const
   $$service = 'FollowupService'
@@ -10,15 +14,15 @@ export class Followup extends CrudModel<Followup, FollowupService> implements Fo
   followUpReference = ''
   documentVSID = ''
   docFullSerial = ''
-  docClassInfo: InfoType = { arName: '', enName: '', id: 0 }
+  docClassInfo = new Info()
   docSubject = ''
-  externalEntityInfo: InfoType = { arName: '', enName: '', id: 0 }
-  subExternalEntityInfo: InfoType = { arName: '', enName: '', id: 0 }
-  securityLevelInfo: InfoType = { arName: '', enName: '', id: 0 }
-  siteTypeInfo: InfoType = { arName: '', enName: '', id: 0 }
-  priorityLevelInfo: InfoType = { arName: '', enName: '', id: 0 }
-  followUpStatusInfo: InfoType = { arName: '', enName: '', id: 0 }
-  assignedUserInfo: InfoType = { arName: '', enName: '', id: 0 }
+  externalEntityInfo = new Info()
+  subExternalEntityInfo = new Info()
+  securityLevelInfo = new Info()
+  siteTypeInfo = new Info()
+  priorityLevelInfo = new Info()
+  followUpStatusInfo = new Info()
+  assignedUserInfo = new Info()
   status = true
   dueDate = ''
   receivedDate = ''
