@@ -336,15 +336,20 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
               <ui-skeleton width="100%" height="400px" />
               <ui-skeleton width="100%" height="400px" />
             </div>
-          } @else if (pages().length) {
-            <div class="flex flex-col items-center gap-6">
-              @for (page of pages(); track $index) {
-                <img
-                  class="w-full max-w-[800px] rounded-sm bg-white shadow-md"
-                  [src]="page"
-                  [alt]="'Document page ' + ($index + 1)"
-                />
-              }
+          } @else if (documentUrl(); as url) {
+            <div class="flex justify-center">
+              <img
+                class="w-full max-w-[800px] rounded-sm bg-white shadow-md"
+                [src]="url"
+                alt="Document preview"
+              />
+              <!-- TODO: when the real API is wired up, replace the <img> above with the iframe below for PDF rendering
+              <iframe
+                class="h-[1000px] w-full max-w-[800px] rounded-sm bg-white shadow-md"
+                [src]="url"
+                title="Document preview"
+              ></iframe>
+              -->
             </div>
           } @else {
             <div class="flex h-full items-center justify-center text-foreground-muted">
@@ -410,11 +415,12 @@ export class FollowupOpenDialog implements OnInit {
     this.sidebarOpen.update((open) => !open)
   }
 
-  readonly pages = computed<SafeResourceUrl[]>(() => {
+  readonly documentUrl = computed<SafeResourceUrl | null>(() => {
     const f = this.followup()
-    if (!f) return []
-    return f.content.map((base64) =>
-      this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/svg+xml;base64,${base64}`),
+    if (!f || !f.content) return null
+    // Mock uses SVG; once the real API is wired up switch to `data:application/pdf;base64,${f.content}`
+    return this.sanitizer.bypassSecurityTrustResourceUrl(
+      `data:image/svg+xml;base64,${f.content}`,
     )
   })
 
@@ -444,7 +450,7 @@ export class FollowupOpenDialog implements OnInit {
 
   private _generateMockFollowupOpen(subject: string): FollowupOpen {
     const mock = new FollowupOpen()
-    mock.content = [this._mockPage(1, subject), this._mockPage(2, subject)]
+    mock.content = this._mockDocument(subject)
     mock.linkedAttachments = [
       this._mockAttachment('REF-2026-018', 'Reference Letter', 'Reference', { official: true }),
       this._mockAttachment('REF-2026-022', 'Supporting Memo', 'Memo', { official: true, annotation: true }),
@@ -544,26 +550,42 @@ export class FollowupOpenDialog implements OnInit {
     return info
   }
 
-  private _mockPage(pageNum: number, subject: string): string {
+  private _mockDocument(subject: string): string {
     const escapedSubject = subject.replace(/[<>&"]/g, '')
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
-      <rect width="100%" height="100%" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
-      <text x="60" y="80" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#0f172a">${escapedSubject}</text>
-      <text x="60" y="115" font-family="Arial, sans-serif" font-size="13" fill="#64748b">Mock document preview · page ${pageNum}</text>
-      <line x1="60" y1="140" x2="740" y2="140" stroke="#cbd5e1" stroke-width="1"/>
-      <text x="60" y="195" font-family="Arial, sans-serif" font-size="14" fill="#334155">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod</text>
-      <text x="60" y="220" font-family="Arial, sans-serif" font-size="14" fill="#334155">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</text>
-      <text x="60" y="245" font-family="Arial, sans-serif" font-size="14" fill="#334155">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</text>
-      <text x="60" y="295" font-family="Arial, sans-serif" font-size="14" fill="#334155">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</text>
-      <text x="60" y="320" font-family="Arial, sans-serif" font-size="14" fill="#334155">eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,</text>
-      <text x="60" y="345" font-family="Arial, sans-serif" font-size="14" fill="#334155">sunt in culpa qui officia deserunt mollit anim id est laborum.</text>
-      <rect x="60" y="400" width="680" height="180" fill="#f8fafc" stroke="#e2e8f0"/>
-      <text x="80" y="440" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#475569">Highlights</text>
-      <text x="80" y="475" font-family="Arial, sans-serif" font-size="12" fill="#64748b">• Mock highlight one for demonstration purposes.</text>
-      <text x="80" y="500" font-family="Arial, sans-serif" font-size="12" fill="#64748b">• Mock highlight two showing list-style content.</text>
-      <text x="80" y="525" font-family="Arial, sans-serif" font-size="12" fill="#64748b">• Mock highlight three to fill out the layout.</text>
-      <text x="80" y="550" font-family="Arial, sans-serif" font-size="12" fill="#64748b">• Replace this preview once the real base64 PDF stream is wired up.</text>
-      <text x="60" y="950" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8">Page ${pageNum} · Mock generated client-side</text>
+    const pageCount = 4
+    const pageWidth = 800
+    const pageHeight = 1000
+    const gap = 32
+    const totalHeight = pageCount * pageHeight + (pageCount - 1) * gap
+
+    const pages = Array.from({ length: pageCount }, (_, i) => {
+      const offset = i * (pageHeight + gap)
+      const pageNum = i + 1
+      return `
+        <g transform="translate(0, ${offset})">
+          <rect width="${pageWidth}" height="${pageHeight}" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+          <text x="60" y="80" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#0f172a">${escapedSubject}</text>
+          <text x="60" y="115" font-family="Arial, sans-serif" font-size="13" fill="#64748b">Mock document preview</text>
+          <line x1="60" y1="140" x2="${pageWidth - 60}" y2="140" stroke="#cbd5e1" stroke-width="1"/>
+          <text x="60" y="195" font-family="Arial, sans-serif" font-size="14" fill="#334155">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod</text>
+          <text x="60" y="220" font-family="Arial, sans-serif" font-size="14" fill="#334155">tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</text>
+          <text x="60" y="245" font-family="Arial, sans-serif" font-size="14" fill="#334155">quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</text>
+          <text x="60" y="295" font-family="Arial, sans-serif" font-size="14" fill="#334155">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</text>
+          <text x="60" y="320" font-family="Arial, sans-serif" font-size="14" fill="#334155">eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,</text>
+          <text x="60" y="345" font-family="Arial, sans-serif" font-size="14" fill="#334155">sunt in culpa qui officia deserunt mollit anim id est laborum.</text>
+          <rect x="60" y="400" width="${pageWidth - 120}" height="180" fill="#f8fafc" stroke="#e2e8f0"/>
+          <text x="80" y="440" font-family="Arial, sans-serif" font-size="13" font-weight="600" fill="#475569">Section ${pageNum}</text>
+          <text x="80" y="475" font-family="Arial, sans-serif" font-size="12" fill="#64748b">• Mock highlight one for demonstration purposes.</text>
+          <text x="80" y="500" font-family="Arial, sans-serif" font-size="12" fill="#64748b">• Mock highlight two showing list-style content.</text>
+          <text x="80" y="525" font-family="Arial, sans-serif" font-size="12" fill="#64748b">• Mock highlight three to fill out the layout.</text>
+          <text x="80" y="550" font-family="Arial, sans-serif" font-size="12" fill="#64748b">• Replace this preview once the real base64 PDF stream is wired up.</text>
+          <text x="${pageWidth / 2}" y="${pageHeight - 40}" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#94a3b8" text-anchor="middle">Page ${pageNum} of ${pageCount}</text>
+        </g>
+      `
+    }).join('')
+
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${pageWidth}" height="${totalHeight}" viewBox="0 0 ${pageWidth} ${totalHeight}">
+      ${pages}
     </svg>`
     // btoa requires latin1 — strip non-ASCII characters that might sneak in via subject
     return btoa(svg.replace(/[^\x00-\x7F]/g, '?'))

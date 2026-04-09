@@ -64,7 +64,7 @@ export interface FollowupMetaDataContract {
 }
 
 export interface FollowupOpenContract {
-  content: string[]
+  content: string
   linkedAttachments: FollowupAttachmentContract[]
   followupAttachments: FollowupAttachmentContract[]
   guidanceAttachments: FollowupAttachmentContract[]

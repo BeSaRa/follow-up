@@ -4,7 +4,7 @@ import { FollowupAttachment } from './followup-attachment'
 import { FollowupMetaData } from './followup-meta-data'
 
 export class FollowupOpen extends Cloner implements FollowupOpenContract {
-  content: string[] = []
+  content = ''
   linkedAttachments: FollowupAttachment[] = []
   followupAttachments: FollowupAttachment[] = []
   guidanceAttachments: FollowupAttachment[] = []
