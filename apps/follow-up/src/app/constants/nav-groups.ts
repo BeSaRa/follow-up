@@ -8,7 +8,7 @@ export const NAV_GROUPS = [
       {
         path: '/followup',
         label: 'layout.followup',
-        icon: APP_ICONS.VIEW_DASHBOARD,
+        icon: APP_ICONS.CLIPBOARD_TEXT_CLOCK,
         exact: true,
         sortOrder: 1,
       },

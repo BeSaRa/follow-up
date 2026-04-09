@@ -18,6 +18,7 @@ import {
   UiTableHead,
   UiTableHeader,
   UiTableRow,
+  UiTooltip,
 } from '@follow-up/ui'
 import { CrudPageDirective } from '@follow-up/core'
 import { APP_ICONS } from '../../constants/icons'
@@ -45,6 +46,7 @@ import { Followup } from './models/followup'
     UiTableHead,
     UiTableHeader,
     UiTableRow,
+    UiTooltip,
   ],
   template: `
     <div class="space-y-6">
@@ -94,14 +96,15 @@ import { Followup } from './models/followup'
               <thead uiTableHeader>
                 <tr uiTableRow>
                   <th uiTableHead>{{ 'followup.reference' | translate }}</th>
-                  <th uiTableHead>{{ 'followup.doc_subject' | translate }}</th>
+                  <th uiTableHead resizable>{{ 'followup.doc_subject' | translate }}</th>
+                  <th uiTableHead>{{ 'followup.priority_level' | translate }}</th>
                   <th uiTableHead>{{ 'followup.doc_class' | translate }}</th>
                   <th uiTableHead>{{ 'followup.external_entity' | translate }}</th>
-                  <th uiTableHead>{{ 'followup.priority_level' | translate }}</th>
                   <th uiTableHead>{{ 'followup.followup_status' | translate }}</th>
                   <th uiTableHead>{{ 'followup.assigned_user' | translate }}</th>
                   <th uiTableHead>{{ 'followup.due_date' | translate }}</th>
                   <th uiTableHead>{{ 'followup.status' | translate }}</th>
+                  <th uiTableHead class="w-[160px] [&>div]:justify-center">{{ 'followup.actions' | translate }}</th>
                 </tr>
               </thead>
               <tbody uiTableBody>
@@ -109,13 +112,13 @@ import { Followup } from './models/followup'
                   <tr uiTableRow>
                     <td uiTableCell class="font-medium">{{ item.followUpReference }}</td>
                     <td uiTableCell>{{ item.docSubject }}</td>
-                    <td uiTableCell>{{ item.docClassInfo.getName() }}</td>
-                    <td uiTableCell>{{ item.externalEntityInfo.getName() }}</td>
                     <td uiTableCell>
                       <ui-badge [variant]="getPriorityVariant(item.priorityLevelInfo.id)" size="sm">
                         {{ item.priorityLevelInfo.getName() }}
                       </ui-badge>
                     </td>
+                    <td uiTableCell>{{ item.docClassInfo.getName() }}</td>
+                    <td uiTableCell>{{ item.externalEntityInfo.getName() }}</td>
                     <td uiTableCell>{{ item.followUpStatusInfo.getName() }}</td>
                     <td uiTableCell>{{ item.assignedUserInfo.getName() }}</td>
                     <td uiTableCell>{{ item.dueDate }}</td>
@@ -127,10 +130,44 @@ import { Followup } from './models/followup'
                         {{ (item.status ? 'followup.active' : 'followup.inactive') | translate }}
                       </ui-badge>
                     </td>
+                    <td uiTableCell class="w-[160px]">
+                      <div class="flex w-full items-center justify-center gap-1">
+                        <button
+                          uiButton
+                          variant="ghost"
+                          size="sm"
+                          [attr.aria-label]="'followup.view' | translate"
+                          [uiTooltip]="'followup.view' | translate"
+                          (click)="view(item)"
+                        >
+                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.EYE_OUTLINE" />
+                        </button>
+                        <button
+                          uiButton
+                          variant="ghost"
+                          size="sm"
+                          [attr.aria-label]="'followup.show_logs' | translate"
+                          [uiTooltip]="'followup.show_logs' | translate"
+                          (click)="showLogs(item)"
+                        >
+                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.HISTORY" />
+                        </button>
+                        <button
+                          uiButton
+                          variant="ghost"
+                          size="sm"
+                          [attr.aria-label]="'followup.comments' | translate"
+                          [uiTooltip]="'followup.comments' | translate"
+                          (click)="showComments(item)"
+                        >
+                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.COMMENT_TEXT_OUTLINE" />
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 } @empty {
                   <tr>
-                    <td [attr.colspan]="9">
+                    <td [attr.colspan]="10">
                       @if (loading()) {
                         <div class="space-y-4 px-4 py-4">
                           @for (i of skeletonRows; track i) {
@@ -184,5 +221,17 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> {
 
   getPriorityVariant(id: number): BadgeVariant {
     return this.priorityVariants[id] ?? 'outline'
+  }
+
+  view(item: Followup): void {
+    this.service.view(item.id).subscribe((result) => console.log('view followup', result))
+  }
+
+  showLogs(item: Followup): void {
+    this.service.viewLogs(item)
+  }
+
+  showComments(item: Followup): void {
+    this.service.getComments(item.id).subscribe((comments) => console.log('followup comments', comments))
   }
 }

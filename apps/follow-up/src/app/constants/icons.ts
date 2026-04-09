@@ -13,6 +13,7 @@ export const APP_ICONS = {
   // ── Navigation ──
   MENU: 'menu',
   VIEW_DASHBOARD: 'view-dashboard',
+  CLIPBOARD_TEXT_CLOCK: 'clipboard-text-clock',
   COG: 'cog',
   CHEVRON_DOWN: 'chevron-down',
 
@@ -35,6 +36,9 @@ export const APP_ICONS = {
   WEB: 'web',
   LIST_STATUS: 'list-status',
   PRIORITY_HIGH: 'priority-high',
+  EYE_OUTLINE: 'eye-outline',
+  COMMENT_TEXT_OUTLINE: 'comment-text-outline',
+  HISTORY: 'history',
 
   // ── Theme ──
   WEATHER_NIGHT: 'weather-night',

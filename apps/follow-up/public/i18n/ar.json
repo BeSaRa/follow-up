@@ -61,7 +61,21 @@
     "status": "الحالة",
     "active": "فعال",
     "inactive": "غير فعال",
-    "no_data": "لا توجد عناصر متابعة"
+    "no_data": "لا توجد عناصر متابعة",
+    "actions": "الإجراءات",
+    "view": "عرض",
+    "show_logs": "عرض السجلات",
+    "comments": "التعليقات",
+    "logs_title": "سجلات المتابعة",
+    "logs_no_data": "لا توجد سجلات",
+    "log_action_time": "وقت الإجراء",
+    "log_action_type": "نوع الإجراء",
+    "log_user": "المستخدم",
+    "log_old_status": "الحالة السابقة",
+    "log_new_status": "الحالة الجديدة",
+    "log_old_assignee": "المكلف السابق",
+    "log_new_assignee": "المكلف الجديد",
+    "log_comments": "التعليقات"
   },
   "application_user": {
     "title": "المستخدمين",

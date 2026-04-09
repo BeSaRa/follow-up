@@ -18,6 +18,9 @@ export const ENDPOINTS = {
   USER_PERMISSION_BULK: 'admin/user/permission/bulk',
   USER_PERMISSION_BY_USER: 'admin/user/permission/user-id',
   FOLLOWUP: 'user/followup',
+  LOGS: 'user/followup/logs/history/followup-id',
+  CORRESPONDENCE: 'user/tawasol/cor',
+  ATTACHMENTS: 'user/tawasol/attachment',
 } as const satisfies RequiredAuthEndpoints & Record<string, string>
 
 export type Endpoints = typeof ENDPOINTS

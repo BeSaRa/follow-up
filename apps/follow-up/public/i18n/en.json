@@ -61,7 +61,21 @@
     "status": "Status",
     "active": "Active",
     "inactive": "Inactive",
-    "no_data": "No follow-up items found"
+    "no_data": "No follow-up items found",
+    "actions": "Actions",
+    "view": "View",
+    "show_logs": "Show logs",
+    "comments": "Comments",
+    "logs_title": "Follow-up Logs",
+    "logs_no_data": "No logs found",
+    "log_action_time": "Action Time",
+    "log_action_type": "Action Type",
+    "log_user": "User",
+    "log_old_status": "Old Status",
+    "log_new_status": "New Status",
+    "log_old_assignee": "Old Assignee",
+    "log_new_assignee": "New Assignee",
+    "log_comments": "Comments"
   },
   "application_user": {
     "title": "Application Users",
