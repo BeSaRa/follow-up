@@ -6,7 +6,9 @@ import { CrudService, Pagination, RegisterServiceMixin } from '@follow-up/core'
 import { DialogService } from '@follow-up/ui'
 import { Followup } from '../models/followup'
 import { FollowupLog } from '../models/followup-log'
+import { FollowupOpen } from '../models/followup-open'
 import { FollowupLogsDialog, FollowupLogsDialogData } from '../components/followup-logs-dialog'
+import { FollowupOpenDialog, FollowupOpenDialogData } from '../components/followup-open-dialog'
 import { Endpoints } from '../../../constants/endpoints'
 import { UserType } from '../../../shared/enums/user-type'
 import { AppStore } from '../../../shared/stores/app-store'
@@ -42,9 +44,21 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
     })
   }
 
-  // @CastResponse()
-  view(id: number): Observable<Followup> {
-    return this.http.get<Followup>(`${this.urlService.URLS.CORRESPONDENCE}/${id}`)
+  @CastResponse(() => FollowupOpen, { unwrap: 'result' })
+  private _open(id: number): Observable<FollowupOpen> {
+    return this.http.get<FollowupOpen>(`${this.urlService.URLS.CORRESPONDENCE}/${id}`)
+  }
+
+  view(followup: Followup): MatDialogRef<FollowupOpenDialog> {
+    const loadFollowup = () => this._open(followup.id)
+    return this.dialogService.open<FollowupOpenDialog, FollowupOpenDialogData>(
+      FollowupOpenDialog,
+      {
+        data: { docSubject: followup.docSubject, loadFollowup },
+        width: '80rem',
+        maxWidth: '95vw',
+      },
+    )
   }
 
   @CastResponse(() => FollowupLog, { unwrap: 'result' })

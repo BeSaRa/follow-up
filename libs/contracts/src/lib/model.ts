@@ -2,6 +2,7 @@ export interface InfoContract {
   id: number
   arName: string
   enName: string
+  parent?: number
 }
 
 export interface HasForm {

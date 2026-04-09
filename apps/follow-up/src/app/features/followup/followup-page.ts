@@ -224,7 +224,7 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> {
   }
 
   view(item: Followup): void {
-    this.service.view(item.id).subscribe((result) => console.log('view followup', result))
+    this.service.view(item)
   }
 
   showLogs(item: Followup): void {

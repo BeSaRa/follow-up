@@ -5,4 +5,5 @@ export class Info extends LangNameMixin(Cloner) implements InfoContract {
   id = 0
   override arName = ''
   override enName = ''
+  parent = 0
 }
