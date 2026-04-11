@@ -4,9 +4,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { MatIcon } from '@angular/material/icon'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { TranslatePipe } from '@ngx-translate/core'
-import { Observable } from 'rxjs'
-import { UiBadge, UiSkeleton } from '@follow-up/ui'
+import { Observable, of, tap } from 'rxjs'
+import { DialogService, UiBadge, UiSkeleton, UiTooltip } from '@follow-up/ui'
 import { APP_ICONS } from '../../../constants/icons'
+import { AttachmentViewerDialog } from './attachment-viewer-dialog'
 import { FollowupAttachment } from '../models/followup-attachment'
 import { FollowupOpen } from '../models/followup-open'
 import { FollowupService } from '../services/followup.service'
@@ -21,7 +22,7 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
 @Component({
   selector: 'app-followup-open-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, NgTemplateOutlet, TranslatePipe, MatIcon, UiBadge, UiSkeleton],
+  imports: [DatePipe, NgTemplateOutlet, TranslatePipe, MatIcon, UiBadge, UiSkeleton, UiTooltip],
   styles: [
     `
       @keyframes sidebar-slide-in-ltr {
@@ -335,9 +336,25 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
               <ui-skeleton width="100%" height="400px" />
             </div>
           } @else if (documentUrl(); as url) {
-            <div class="flex h-full justify-center">
+            <div class="flex h-full flex-col">
+              @if (viewingAttachment(); as att) {
+                <div class="flex items-center justify-between gap-3 border-b border-border bg-surface-raised px-4 py-2">
+                  <div class="flex min-w-0 items-center gap-2">
+                    <mat-icon [svgIcon]="icons.PAPERCLIP" class="text-base! size-4! leading-4! shrink-0 text-primary" />
+                    <span class="truncate text-sm font-medium text-foreground">{{ att.documentTitle || att.docSubject }}</span>
+                    <span class="shrink-0 text-xs text-foreground-muted">{{ att.attachmentTypeInfo.getName() }}</span>
+                  </div>
+                  <button
+                    type="button"
+                    class="shrink-0 rounded px-2 py-1 text-xs font-medium text-primary transition-colors hover:bg-primary/10"
+                    (click)="backToMainDocument()"
+                  >
+                    {{ 'followup.back_to_document' | translate }}
+                  </button>
+                </div>
+              }
               <iframe
-                class="h-full w-full rounded-sm bg-white shadow-md"
+                class="h-full w-full flex-1 bg-white"
                 [src]="url"
                 title="Document preview"
               ></iframe>
@@ -356,12 +373,42 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
         <div class="space-y-3">
           @for (att of items; track att.vsId) {
             <div
-              class="cursor-pointer rounded-md border border-border bg-surface-raised p-3 transition-colors hover:bg-surface-hover"
-              (click)="onAttachmentClick(att)"
+              class="rounded-md border p-3 transition-colors hover:bg-surface-hover"
+              [class.border-primary]="viewingAttachment()?.vsId === att.vsId"
+              [class.bg-primary/5]="viewingAttachment()?.vsId === att.vsId"
+              [class.border-border]="viewingAttachment()?.vsId !== att.vsId"
+              [class.bg-surface-raised]="viewingAttachment()?.vsId !== att.vsId"
             >
-              <div class="text-sm font-medium text-foreground">{{ att.documentTitle || att.docSubject }}</div>
-              <div class="mt-1 text-xs text-foreground-muted">
-                {{ att.attachmentTypeInfo.getName() }}
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <button
+                    class="cursor-pointer text-sm font-medium text-primary hover:underline"
+                    (click)="openAttachmentInDialog(att)"
+                  >{{ att.documentTitle || att.docSubject }}</button>
+                  <div class="mt-1 text-xs text-foreground-muted">
+                    {{ att.attachmentTypeInfo.getName() }}
+                  </div>
+                </div>
+                <div class="flex items-center gap-1">
+                  <button
+                    type="button"
+                    class="rounded p-1 text-foreground-muted transition-colors hover:bg-surface-hover hover:text-foreground"
+                    [attr.aria-label]="'followup.view_in_viewer' | translate"
+                    [uiTooltip]="'followup.view_in_viewer' | translate"
+                    (click)="viewAttachmentInViewer(att)"
+                  >
+                    <mat-icon [svgIcon]="icons.DOCK_WINDOW" class="text-base! size-4! leading-4!" />
+                  </button>
+                  <button
+                    type="button"
+                    class="rounded p-1 text-foreground-muted transition-colors hover:bg-surface-hover hover:text-foreground"
+                    [attr.aria-label]="'followup.open_in_dialog' | translate"
+                    [uiTooltip]="'followup.open_in_dialog' | translate"
+                    (click)="openAttachmentInDialog(att)"
+                  >
+                    <mat-icon [svgIcon]="icons.OPEN_IN_NEW" class="text-base! size-4! leading-4!" />
+                  </button>
+                </div>
               </div>
               <div class="mt-2 flex flex-wrap items-center gap-1">
                 @if (att.isOfficial) {
@@ -396,6 +443,7 @@ export class FollowupOpenDialog implements OnInit {
   private readonly data = inject<FollowupOpenDialogData>(MAT_DIALOG_DATA)
   private readonly sanitizer = inject(DomSanitizer)
   private readonly followupService = inject(FollowupService)
+  private readonly dialogService = inject(DialogService)
 
   readonly icons = APP_ICONS
   readonly skeletonRows = Array.from({ length: 8 }, (_v, i) => i)
@@ -410,7 +458,16 @@ export class FollowupOpenDialog implements OnInit {
     this.sidebarOpen.update((open) => !open)
   }
 
+  private readonly overrideContent = signal<string | null>(null)
+  readonly viewingAttachment = signal<FollowupAttachment | null>(null)
+
   readonly documentUrl = computed<SafeResourceUrl | null>(() => {
+    const override = this.overrideContent()
+    if (override) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(
+        `data:application/pdf;base64,${override}`,
+      )
+    }
     const f = this.followup()
     if (!f || !f.content) return null
     return this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -422,10 +479,41 @@ export class FollowupOpenDialog implements OnInit {
   readonly linkedAttachments = computed(() => this.followup()?.linkedAttachments ?? [])
   readonly guidanceAttachments = computed(() => this.followup()?.guidanceAttachments ?? [])
 
-  // TODO: complete the attachment display (e.g. preview or download the blob)
-  onAttachmentClick(att: FollowupAttachment): void {
-    this.followupService.getAttachmentById(att.vsId).subscribe((blob) => {
-      console.log('attachment response', blob)
+  private readonly attachmentCache = new Map<string, string>()
+
+  private getAttachmentContent(vsId: string): Observable<string> {
+    const cached = this.attachmentCache.get(vsId)
+    if (cached) {
+      return of(cached)
+    }
+    return this.followupService.getAttachmentById(vsId).pipe(
+      tap((content) => this.attachmentCache.set(vsId, content)),
+    )
+  }
+
+  viewAttachmentInViewer(att: FollowupAttachment): void {
+    this.getAttachmentContent(att.vsId).subscribe((content) => {
+      this.overrideContent.set(content)
+      this.viewingAttachment.set(att)
+    })
+  }
+
+  backToMainDocument(): void {
+    this.overrideContent.set(null)
+    this.viewingAttachment.set(null)
+  }
+
+  openAttachmentInDialog(att: FollowupAttachment): void {
+    this.getAttachmentContent(att.vsId).subscribe((content) => {
+      this.dialogService.open(AttachmentViewerDialog, {
+        data: {
+          title: att.documentTitle || att.docSubject,
+          type: att.attachmentTypeInfo.getName(),
+          content,
+        },
+        width: '80rem',
+        maxWidth: '95vw',
+      })
     })
   }
 

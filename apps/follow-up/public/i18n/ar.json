@@ -105,7 +105,10 @@
     "log_new_assignee": "المكلف الجديد",
     "log_comments": "التعليقات",
     "from_date": "من تاريخ",
-    "to_date": "إلى تاريخ"
+    "to_date": "إلى تاريخ",
+    "view_in_viewer": "عرض في المستعرض",
+    "open_in_dialog": "فتح في نافذة",
+    "back_to_document": "العودة للمستند الرئيسي"
   },
   "application_user": {
     "title": "المستخدمين",
