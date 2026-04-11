@@ -6,6 +6,8 @@ import { CrudService, Pagination, RegisterServiceMixin } from '@follow-up/core'
 import { DialogService } from '@follow-up/ui'
 import { Followup } from '../models/followup'
 import { FollowupLog } from '../models/followup-log'
+import { FollowupAttachment } from '../models/followup-attachment'
+import { FollowupMetaData } from '../models/followup-meta-data'
 import { FollowupOpen } from '../models/followup-open'
 import { FollowupLogsDialog, FollowupLogsDialogData } from '../components/followup-logs-dialog'
 import { FollowupOpenDialog, FollowupOpenDialogData } from '../components/followup-open-dialog'
@@ -44,7 +46,15 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
     })
   }
 
-  @CastResponse(() => FollowupOpen, { unwrap: 'result' })
+  @CastResponse(() => FollowupOpen, {
+    unwrap: 'result.rs',
+    shape: {
+      'metaData': () => FollowupMetaData,
+      'linkedAttachments.*': () => FollowupAttachment,
+      'followupAttachments.*': () => FollowupAttachment,
+      'guidanceAttachments.*': () => FollowupAttachment,
+    },
+  })
   private _open(id: number): Observable<FollowupOpen> {
     return this.http.get<FollowupOpen>(`${this.urlService.URLS.CORRESPONDENCE}/${id}`)
   }
@@ -55,8 +65,11 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
       FollowupOpenDialog,
       {
         data: { docSubject: followup.docSubject, loadFollowup },
-        width: '80rem',
-        maxWidth: '95vw',
+        width: '100vw',
+        maxWidth: '100vw',
+        height: '100vh',
+        maxHeight: '100vh',
+        panelClass: 'fullscreen-dialog',
       },
     )
   }

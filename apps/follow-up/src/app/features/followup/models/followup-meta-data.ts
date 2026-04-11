@@ -1,8 +1,11 @@
 import type { FollowupMetaDataContract } from '@follow-up/contracts'
 import { Cloner } from '@follow-up/util'
+import { InterceptModel } from 'cast-response'
 import { Info } from '../../../shared/models/info'
 import { FollowupSiteInfo } from './followup-site-info'
+import { FollowupMetaDataModelInterceptor } from './followup-meta-data-model-interceptor'
 
+@InterceptModel(new FollowupMetaDataModelInterceptor())
 export class FollowupMetaData extends Cloner implements FollowupMetaDataContract {
   docSubject = ''
   documentTitle = ''

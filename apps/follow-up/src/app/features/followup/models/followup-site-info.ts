@@ -1,7 +1,10 @@
 import type { FollowupSiteInfoContract } from '@follow-up/contracts'
 import { Cloner } from '@follow-up/util'
+import { InterceptModel } from 'cast-response'
 import { Info } from '../../../shared/models/info'
+import { FollowupSiteInfoModelInterceptor } from './followup-site-info-model-interceptor'
 
+@InterceptModel(new FollowupSiteInfoModelInterceptor())
 export class FollowupSiteInfo extends Cloner implements FollowupSiteInfoContract {
   exportStatus = false
   exportWay = 0
