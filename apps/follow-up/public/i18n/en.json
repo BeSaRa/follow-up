@@ -103,7 +103,9 @@
     "log_new_status": "New Status",
     "log_old_assignee": "Old Assignee",
     "log_new_assignee": "New Assignee",
-    "log_comments": "Comments"
+    "log_comments": "Comments",
+    "from_date": "From Date",
+    "to_date": "To Date"
   },
   "application_user": {
     "title": "Application Users",

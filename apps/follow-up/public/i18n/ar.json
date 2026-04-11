@@ -103,7 +103,9 @@
     "log_new_status": "الحالة الجديدة",
     "log_old_assignee": "المكلف السابق",
     "log_new_assignee": "المكلف الجديد",
-    "log_comments": "التعليقات"
+    "log_comments": "التعليقات",
+    "from_date": "من تاريخ",
+    "to_date": "إلى تاريخ"
   },
   "application_user": {
     "title": "المستخدمين",

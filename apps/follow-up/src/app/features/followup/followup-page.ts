@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core'
 import { TranslatePipe } from '@ngx-translate/core'
 import { MatIcon } from '@angular/material/icon'
 import {
@@ -87,6 +87,24 @@ import { Followup } from './models/followup'
             (input)="onSearchInput($event)"
           />
         </div>
+        <div class="flex items-center gap-2">
+          <input
+            uiInput
+            type="date"
+            class="bg-surface-raised!"
+            [placeholder]="'followup.from_date' | translate"
+            [value]="fromDate()"
+            (change)="onFromDateChange($event)"
+          />
+          <input
+            uiInput
+            type="date"
+            class="bg-surface-raised!"
+            [placeholder]="'followup.to_date' | translate"
+            [value]="toDate()"
+            (change)="onToDateChange($event)"
+          />
+        </div>
       </div>
 
       <ui-card>
@@ -95,8 +113,8 @@ import { Followup } from './models/followup'
             <table uiTable>
               <thead uiTableHeader>
                 <tr uiTableRow>
-                  <th uiTableHead>{{ 'followup.reference' | translate }}</th>
                   <th uiTableHead resizable>{{ 'followup.doc_subject' | translate }}</th>
+                  <th uiTableHead>{{ 'followup.reference' | translate }}</th>
                   <th uiTableHead>{{ 'followup.priority_level' | translate }}</th>
                   <th uiTableHead>{{ 'followup.doc_class' | translate }}</th>
                   <th uiTableHead>{{ 'followup.external_entity' | translate }}</th>
@@ -110,8 +128,15 @@ import { Followup } from './models/followup'
               <tbody uiTableBody>
                 @for (item of models(); track item.id) {
                   <tr uiTableRow>
-                    <td uiTableCell class="font-medium">{{ item.followUpReference }}</td>
-                    <td uiTableCell>{{ item.docSubject }}</td>
+                    <td uiTableCell>
+                      <button
+                        class="cursor-pointer font-medium text-primary hover:underline"
+                        (click)="view(item)"
+                      >
+                        {{ item.docSubject }}
+                      </button>
+                    </td>
+                    <td uiTableCell>{{ item.followUpReference }}</td>
                     <td uiTableCell>
                       <ui-badge [variant]="getPriorityVariant(item.priorityLevelInfo.id)" size="sm">
                         {{ item.priorityLevelInfo.getName() }}
@@ -211,6 +236,8 @@ import { Followup } from './models/followup'
 export class FollowupPage extends CrudPageDirective<Followup, FollowupService> {
   readonly service = inject(FollowupService)
   readonly icons = APP_ICONS
+  readonly fromDate = signal('')
+  readonly toDate = signal('')
 
   private readonly priorityVariants: Record<number, BadgeVariant> = {
     1: 'outline-error',
@@ -219,8 +246,31 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> {
     4: 'outline-success',
   }
 
+  override buildLoadOptions(page: number, size: number, search: string): Record<string, unknown> {
+    const options = super.buildLoadOptions(page, size, search)
+    if (this.fromDate()) {
+      options['fromDate'] = this.fromDate() + 'T00:00:00.000Z'
+    }
+    if (this.toDate()) {
+      options['toDate'] = this.toDate() + 'T23:59:59.999Z'
+    }
+    return options
+  }
+
   getPriorityVariant(id: number): BadgeVariant {
     return this.priorityVariants[id] ?? 'outline'
+  }
+
+  onFromDateChange(event: Event): void {
+    this.fromDate.set((event.target as HTMLInputElement).value)
+    this.pageIndex.set(0)
+    this.refresh()
+  }
+
+  onToDateChange(event: Event): void {
+    this.toDate.set((event.target as HTMLInputElement).value)
+    this.pageIndex.set(0)
+    this.refresh()
   }
 
   view(item: Followup): void {
