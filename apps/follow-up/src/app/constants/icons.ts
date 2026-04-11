@@ -39,7 +39,6 @@ export const APP_ICONS = {
   EYE_OUTLINE: 'eye-outline',
   COMMENT_TEXT_OUTLINE: 'comment-text-outline',
   HISTORY: 'history',
-  DOCK_WINDOW: 'dock-window',
   OPEN_IN_NEW: 'open-in-new',
 
   // ── Theme ──

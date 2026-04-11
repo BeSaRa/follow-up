@@ -383,27 +383,24 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
                 <div>
                   <button
                     class="cursor-pointer text-sm font-medium text-primary hover:underline"
-                    (click)="openAttachmentInDialog(att)"
+                    [class.opacity-50]="loadingAttachment() === att.vsId"
+                    [disabled]="loadingAttachment() === att.vsId"
+                    (click)="viewAttachmentInViewer(att)"
                   >{{ att.documentTitle || att.docSubject }}</button>
                   <div class="mt-1 text-xs text-foreground-muted">
                     {{ att.attachmentTypeInfo.getName() }}
                   </div>
                 </div>
-                <div class="flex items-center gap-1">
-                  <button
-                    type="button"
-                    class="rounded p-1 text-foreground-muted transition-colors hover:bg-surface-hover hover:text-foreground"
-                    [attr.aria-label]="'followup.view_in_viewer' | translate"
-                    [uiTooltip]="'followup.view_in_viewer' | translate"
-                    (click)="viewAttachmentInViewer(att)"
-                  >
-                    <mat-icon [svgIcon]="icons.DOCK_WINDOW" class="text-base! size-4! leading-4!" />
-                  </button>
+                <div class="flex shrink-0 items-center gap-1">
+                  @if (loadingAttachment() === att.vsId) {
+                    <div class="size-4 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
+                  }
                   <button
                     type="button"
                     class="rounded p-1 text-foreground-muted transition-colors hover:bg-surface-hover hover:text-foreground"
                     [attr.aria-label]="'followup.open_in_dialog' | translate"
                     [uiTooltip]="'followup.open_in_dialog' | translate"
+                    [disabled]="loadingAttachment() === att.vsId"
                     (click)="openAttachmentInDialog(att)"
                   >
                     <mat-icon [svgIcon]="icons.OPEN_IN_NEW" class="text-base! size-4! leading-4!" />
@@ -460,6 +457,7 @@ export class FollowupOpenDialog implements OnInit {
 
   private readonly overrideContent = signal<string | null>(null)
   readonly viewingAttachment = signal<FollowupAttachment | null>(null)
+  readonly loadingAttachment = signal<string | null>(null)
 
   readonly documentUrl = computed<SafeResourceUrl | null>(() => {
     const override = this.overrideContent()
@@ -492,9 +490,11 @@ export class FollowupOpenDialog implements OnInit {
   }
 
   viewAttachmentInViewer(att: FollowupAttachment): void {
+    this.loadingAttachment.set(att.vsId)
     this.getAttachmentContent(att.vsId).subscribe((content) => {
       this.overrideContent.set(content)
       this.viewingAttachment.set(att)
+      this.loadingAttachment.set(null)
     })
   }
 
@@ -504,7 +504,9 @@ export class FollowupOpenDialog implements OnInit {
   }
 
   openAttachmentInDialog(att: FollowupAttachment): void {
+    this.loadingAttachment.set(att.vsId)
     this.getAttachmentContent(att.vsId).subscribe((content) => {
+      this.loadingAttachment.set(null)
       this.dialogService.open(AttachmentViewerDialog, {
         data: {
           title: att.documentTitle || att.docSubject,

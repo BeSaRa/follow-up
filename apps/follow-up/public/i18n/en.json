@@ -106,7 +106,6 @@
     "log_comments": "Comments",
     "from_date": "From Date",
     "to_date": "To Date",
-    "view_in_viewer": "View in Viewer",
     "open_in_dialog": "Open in Dialog",
     "back_to_document": "Back to Main Document"
   },
