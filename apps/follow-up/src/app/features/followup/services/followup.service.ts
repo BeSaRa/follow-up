@@ -91,6 +91,12 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
     )
   }
 
+  getAttachmentById(vsId: string): Observable<Blob> {
+    return this.http.get(`${this.urlService.URLS.ATTACHMENTS}/${vsId}`, {
+      responseType: 'blob',
+    })
+  }
+
   getComments(id: number): Observable<unknown[]> {
     return this.http.get<unknown[]>(`${this.getSegmentUrl()}/${id}/comments`)
   }

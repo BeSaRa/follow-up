@@ -7,7 +7,9 @@ import { TranslatePipe } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
 import { UiBadge, UiSkeleton } from '@follow-up/ui'
 import { APP_ICONS } from '../../../constants/icons'
+import { FollowupAttachment } from '../models/followup-attachment'
 import { FollowupOpen } from '../models/followup-open'
+import { FollowupService } from '../services/followup.service'
 
 export interface FollowupOpenDialogData {
   docSubject: string
@@ -353,7 +355,10 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
       @if (items.length) {
         <div class="space-y-3">
           @for (att of items; track att.vsId) {
-            <div class="rounded-md border border-border bg-surface-raised p-3">
+            <div
+              class="cursor-pointer rounded-md border border-border bg-surface-raised p-3 transition-colors hover:bg-surface-hover"
+              (click)="onAttachmentClick(att)"
+            >
               <div class="text-sm font-medium text-foreground">{{ att.documentTitle || att.docSubject }}</div>
               <div class="mt-1 text-xs text-foreground-muted">
                 {{ att.attachmentTypeInfo.getName() }}
@@ -390,6 +395,7 @@ export class FollowupOpenDialog implements OnInit {
   readonly dialogRef = inject<MatDialogRef<FollowupOpenDialog>>(MatDialogRef)
   private readonly data = inject<FollowupOpenDialogData>(MAT_DIALOG_DATA)
   private readonly sanitizer = inject(DomSanitizer)
+  private readonly followupService = inject(FollowupService)
 
   readonly icons = APP_ICONS
   readonly skeletonRows = Array.from({ length: 8 }, (_v, i) => i)
@@ -415,6 +421,13 @@ export class FollowupOpenDialog implements OnInit {
   readonly followupAttachments = computed(() => this.followup()?.followupAttachments ?? [])
   readonly linkedAttachments = computed(() => this.followup()?.linkedAttachments ?? [])
   readonly guidanceAttachments = computed(() => this.followup()?.guidanceAttachments ?? [])
+
+  // TODO: complete the attachment display (e.g. preview or download the blob)
+  onAttachmentClick(att: FollowupAttachment): void {
+    this.followupService.getAttachmentById(att.vsId).subscribe((blob) => {
+      console.log('attachment response', blob)
+    })
+  }
 
   ngOnInit(): void {
     this.loading.set(true)
