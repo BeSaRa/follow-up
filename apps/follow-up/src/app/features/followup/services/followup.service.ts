@@ -79,12 +79,28 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
     return this.http.get<FollowupLog[]>(`${this.urlService.URLS.LOGS}/${id}`)
   }
 
+  @CastResponse(() => FollowupLog, { unwrap: 'result' })
+  addComment(followupId: number, userComments: string): Observable<FollowupLog> {
+    return this.http.post<FollowupLog>(
+      `${this.urlService.URLS.USER_COMMENTS}/${followupId}`,
+      { userComments },
+    )
+  }
+
+  uploadCommentAttachment(followupId: number, followupLinkedId: number, file: File): Observable<unknown> {
+    const formData = new FormData()
+    formData.append('content', file, file.name)
+    return this.http.post<unknown>(this.urlService.URLS.USER_COMMENTS_ATTACHMENT, formData, {
+      params: new HttpParams({ fromObject: { followupId, followupLinkedId } }),
+    })
+  }
+
   viewLogs(followup: Followup): MatDialogRef<FollowupLogsDialog> {
     const loadLogs = () => this._getLogs(followup.id)
     return this.dialogService.open<FollowupLogsDialog, FollowupLogsDialogData>(
       FollowupLogsDialog,
       {
-        data: { docSubject: followup.docSubject, loadLogs },
+        data: { followupId: followup.id, docSubject: followup.docSubject, loadLogs },
         width: '75rem',
         maxWidth: '95vw',
       },

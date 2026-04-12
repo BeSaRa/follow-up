@@ -107,7 +107,12 @@
     "from_date": "من تاريخ",
     "to_date": "إلى تاريخ",
     "open_in_dialog": "فتح في نافذة",
-    "back_to_document": "العودة للمستند الرئيسي"
+    "back_to_document": "العودة للمستند الرئيسي",
+    "add_comment": "إضافة تعليق",
+    "add_comment_title": "إضافة تعليق",
+    "comment_label": "التعليق",
+    "comment_placeholder": "اكتب تعليقك...",
+    "attachment_label": "مرفق (اختياري)"
   },
   "application_user": {
     "title": "المستخدمين",

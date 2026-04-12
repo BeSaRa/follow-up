@@ -5,8 +5,10 @@ import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
 import {
+  DialogService,
   PageChangeEvent,
   UiBadge,
+  UiButton,
   UiPagination,
   UiSkeleton,
   UiTable,
@@ -18,8 +20,14 @@ import {
 } from '@follow-up/ui'
 import { APP_ICONS } from '../../../constants/icons'
 import { FollowupLog } from '../models/followup-log'
+import {
+  FollowupAddCommentDialog,
+  FollowupAddCommentDialogData,
+  FollowupAddCommentResult,
+} from './followup-add-comment-dialog'
 
 export interface FollowupLogsDialogData {
+  followupId: number
   docSubject: string
   loadLogs: () => Observable<FollowupLog[]>
 }
@@ -32,6 +40,7 @@ export interface FollowupLogsDialogData {
     TranslatePipe,
     MatIcon,
     UiBadge,
+    UiButton,
     UiPagination,
     UiSkeleton,
     UiTable,
@@ -48,13 +57,19 @@ export interface FollowupLogsDialogData {
         <h2 class="truncate text-lg font-semibold text-foreground">
           {{ 'followup.logs_title' | translate }}: {{ docSubject() }}
         </h2>
-        <button
-          type="button"
-          class="text-foreground-muted transition-colors hover:text-foreground"
-          (click)="dialogRef.close()"
-        >
-          <mat-icon [svgIcon]="icons.CLOSE" class="text-xl! size-5! leading-5!" />
-        </button>
+        <div class="flex items-center gap-2">
+          <button uiButton type="button" size="sm" (click)="openAddComment()">
+            <mat-icon [svgIcon]="icons.PLUS" class="text-base! size-4! leading-4!" />
+            {{ 'followup.add_comment' | translate }}
+          </button>
+          <button
+            type="button"
+            class="text-foreground-muted transition-colors hover:text-foreground"
+            (click)="dialogRef.close()"
+          >
+            <mat-icon [svgIcon]="icons.CLOSE" class="text-xl! size-5! leading-5!" />
+          </button>
+        </div>
       </div>
 
       <!-- Body -->
@@ -137,6 +152,7 @@ export interface FollowupLogsDialogData {
 export class FollowupLogsDialog implements OnInit {
   readonly dialogRef = inject<MatDialogRef<FollowupLogsDialog>>(MatDialogRef)
   private readonly data = inject<FollowupLogsDialogData>(MAT_DIALOG_DATA)
+  private readonly dialogService = inject(DialogService)
 
   readonly icons = APP_ICONS
   readonly skeletonRows = Array.from({ length: 5 })
@@ -154,6 +170,30 @@ export class FollowupLogsDialog implements OnInit {
   })
 
   ngOnInit(): void {
+    this.fetchLogs()
+  }
+
+  onPageChange(event: PageChangeEvent): void {
+    this.pageIndex.set(event.pageIndex)
+    this.pageSize.set(event.pageSize)
+  }
+
+  openAddComment(): void {
+    this.dialogService
+      .open<FollowupAddCommentDialog, FollowupAddCommentDialogData, FollowupAddCommentResult>(
+        FollowupAddCommentDialog,
+        {
+          data: { followupId: this.data.followupId },
+        },
+      )
+      .afterClosed()
+      .subscribe((result) => {
+        if (!result) return
+        this.fetchLogs()
+      })
+  }
+
+  private fetchLogs(): void {
     this.loading.set(true)
     this.data.loadLogs().subscribe({
       next: (logs) => {
@@ -162,10 +202,5 @@ export class FollowupLogsDialog implements OnInit {
       },
       error: () => this.loading.set(false),
     })
-  }
-
-  onPageChange(event: PageChangeEvent): void {
-    this.pageIndex.set(event.pageIndex)
-    this.pageSize.set(event.pageSize)
   }
 }

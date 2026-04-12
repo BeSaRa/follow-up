@@ -107,7 +107,12 @@
     "from_date": "From Date",
     "to_date": "To Date",
     "open_in_dialog": "Open in Dialog",
-    "back_to_document": "Back to Main Document"
+    "back_to_document": "Back to Main Document",
+    "add_comment": "Add Comment",
+    "add_comment_title": "Add Comment",
+    "comment_label": "Comment",
+    "comment_placeholder": "Write your comment...",
+    "attachment_label": "Attachment (optional)"
   },
   "application_user": {
     "title": "Application Users",

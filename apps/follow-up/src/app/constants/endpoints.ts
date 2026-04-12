@@ -19,6 +19,8 @@ export const ENDPOINTS = {
   USER_PERMISSION_BY_USER: 'admin/user/permission/user-id',
   FOLLOWUP: 'user/followup',
   LOGS: 'user/followup/logs/history/followup-id',
+  USER_COMMENTS: 'user/followup/logs/user-comments/followup-id',
+  USER_COMMENTS_ATTACHMENT: 'user/followup/logs/user-comments/attachment',
   CORRESPONDENCE: 'user/tawasol/cor',
   ATTACHMENTS: 'user/tawasol/attachment',
 } as const satisfies RequiredAuthEndpoints & Record<string, string>
