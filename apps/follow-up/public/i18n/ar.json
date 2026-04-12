@@ -112,6 +112,10 @@
     "add_comment_title": "إضافة تعليق",
     "comment_label": "التعليق",
     "comment_placeholder": "اكتب تعليقك...",
+    "add_statement": "إضافة إفادة",
+    "add_statement_title": "إضافة إفادة",
+    "statement_label": "الإفادة",
+    "statement_placeholder": "اكتب إفادتك...",
     "attachment_label": "مرفق (اختياري)"
   },
   "application_user": {
@@ -154,6 +158,7 @@
   "common": {
     "save": "حفظ",
     "cancel": "إلغاء",
+    "reload": "إعادة تحميل",
     "delete": "حذف",
     "confirm": "تأكيد",
     "save_success": "تم الحفظ بنجاح",

@@ -95,6 +95,22 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
     })
   }
 
+  @CastResponse(() => FollowupLog, { unwrap: 'result' })
+  addStatement(followupId: number, userStatement: string): Observable<FollowupLog> {
+    return this.http.post<FollowupLog>(
+      `${this.urlService.URLS.USER_STATEMENTS}/${followupId}`,
+      { userStatement },
+    )
+  }
+
+  uploadStatementAttachment(followupId: number, followupLinkedId: number, file: File): Observable<unknown> {
+    const formData = new FormData()
+    formData.append('content', file, file.name)
+    return this.http.post<unknown>(this.urlService.URLS.USER_STATEMENTS_ATTACHMENT, formData, {
+      params: new HttpParams({ fromObject: { followupId, followupLinkedId } }),
+    })
+  }
+
   viewLogs(followup: Followup): MatDialogRef<FollowupLogsDialog> {
     const loadLogs = () => this._getLogs(followup.id)
     return this.dialogService.open<FollowupLogsDialog, FollowupLogsDialogData>(

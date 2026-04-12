@@ -21,6 +21,8 @@ export const ENDPOINTS = {
   LOGS: 'user/followup/logs/history/followup-id',
   USER_COMMENTS: 'user/followup/logs/user-comments/followup-id',
   USER_COMMENTS_ATTACHMENT: 'user/followup/logs/user-comments/attachment',
+  USER_STATEMENTS: 'user/followup/logs/user-statements/followup-id',
+  USER_STATEMENTS_ATTACHMENT: 'user/followup/logs/user-statements/attachment',
   CORRESPONDENCE: 'user/tawasol/cor',
   ATTACHMENTS: 'user/tawasol/attachment',
 } as const satisfies RequiredAuthEndpoints & Record<string, string>

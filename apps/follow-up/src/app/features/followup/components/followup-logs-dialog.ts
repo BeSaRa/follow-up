@@ -25,6 +25,11 @@ import {
   FollowupAddCommentDialogData,
   FollowupAddCommentResult,
 } from './followup-add-comment-dialog'
+import {
+  FollowupAddStatementDialog,
+  FollowupAddStatementDialogData,
+  FollowupAddStatementResult,
+} from './followup-add-statement-dialog'
 
 export interface FollowupLogsDialogData {
   followupId: number
@@ -55,21 +60,40 @@ export interface FollowupLogsDialogData {
       <!-- Header -->
       <div class="flex items-center justify-between gap-4 border-b border-border px-6 py-4">
         <h2 class="truncate text-lg font-semibold text-foreground">
-          {{ 'followup.logs_title' | translate }}: {{ docSubject() }}
+          {{ 'followup.logs_title' | translate }}
         </h2>
-        <div class="flex items-center gap-2">
-          <button uiButton type="button" size="sm" (click)="openAddComment()">
-            <mat-icon [svgIcon]="icons.PLUS" class="text-base! size-4! leading-4!" />
-            {{ 'followup.add_comment' | translate }}
-          </button>
-          <button
-            type="button"
-            class="text-foreground-muted transition-colors hover:text-foreground"
-            (click)="dialogRef.close()"
-          >
-            <mat-icon [svgIcon]="icons.CLOSE" class="text-xl! size-5! leading-5!" />
-          </button>
-        </div>
+        <button
+          type="button"
+          class="text-foreground-muted transition-colors hover:text-foreground"
+          (click)="dialogRef.close()"
+        >
+          <mat-icon [svgIcon]="icons.CLOSE" class="text-xl! size-5! leading-5!" />
+        </button>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="flex items-center gap-3 border-b border-border px-6 py-3">
+        <span class="min-w-0 flex-1 truncate text-sm text-foreground-muted" [title]="docSubject()">
+          {{ docSubject() }}
+        </span>
+        <button
+          type="button"
+          class="inline-flex size-8 items-center justify-center rounded-md text-foreground-muted transition-colors hover:bg-border hover:text-foreground disabled:opacity-50"
+          [disabled]="loading()"
+          [attr.aria-label]="'common.reload' | translate"
+          [title]="'common.reload' | translate"
+          (click)="fetchLogs()"
+        >
+          <mat-icon [svgIcon]="icons.REFRESH" class="text-lg! size-5! leading-5!" />
+        </button>
+        <button uiButton type="button" size="sm" (click)="openAddComment()">
+          <mat-icon [svgIcon]="icons.PLUS" class="text-base! size-4! leading-4!" />
+          {{ 'followup.add_comment' | translate }}
+        </button>
+        <button uiButton type="button" size="sm" variant="secondary" (click)="openAddStatement()">
+          <mat-icon [svgIcon]="icons.PLUS" class="text-base! size-4! leading-4!" />
+          {{ 'followup.add_statement' | translate }}
+        </button>
       </div>
 
       <!-- Body -->
@@ -193,7 +217,22 @@ export class FollowupLogsDialog implements OnInit {
       })
   }
 
-  private fetchLogs(): void {
+  openAddStatement(): void {
+    this.dialogService
+      .open<FollowupAddStatementDialog, FollowupAddStatementDialogData, FollowupAddStatementResult>(
+        FollowupAddStatementDialog,
+        {
+          data: { followupId: this.data.followupId },
+        },
+      )
+      .afterClosed()
+      .subscribe((result) => {
+        if (!result) return
+        this.fetchLogs()
+      })
+  }
+
+  fetchLogs(): void {
     this.loading.set(true)
     this.data.loadLogs().subscribe({
       next: (logs) => {

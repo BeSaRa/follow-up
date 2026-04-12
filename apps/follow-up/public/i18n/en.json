@@ -112,6 +112,10 @@
     "add_comment_title": "Add Comment",
     "comment_label": "Comment",
     "comment_placeholder": "Write your comment...",
+    "add_statement": "Add Statement",
+    "add_statement_title": "Add Statement",
+    "statement_label": "Statement",
+    "statement_placeholder": "Write your statement...",
     "attachment_label": "Attachment (optional)"
   },
   "application_user": {
@@ -154,6 +158,7 @@
   "common": {
     "save": "Save",
     "cancel": "Cancel",
+    "reload": "Reload",
     "delete": "Delete",
     "confirm": "Confirm",
     "save_success": "Saved successfully",

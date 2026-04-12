@@ -11,6 +11,7 @@ export class FollowupLog extends Cloner implements FollowupLogContract {
   userInfo = new Info()
   externalEntityInfo = new Info()
   userComments = ''
+  userStatement = ''
   actionTime = ''
   actionTypeInfo = new Info()
   oldFollowupStatusInfo = new Info()
