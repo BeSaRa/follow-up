@@ -18,7 +18,6 @@ import {
 } from '@follow-up/ui'
 import { APP_ICONS } from '../../../constants/icons'
 import { FollowupLog } from '../models/followup-log'
-import { Info } from '../../../shared/models/info'
 
 export interface FollowupLogsDialogData {
   docSubject: string
@@ -156,91 +155,17 @@ export class FollowupLogsDialog implements OnInit {
 
   ngOnInit(): void {
     this.loading.set(true)
-    // TODO: remove mock data once backend is ready
-    setTimeout(() => {
-      this.logs.set(this._generateMockLogs(27))
-      this.loading.set(false)
-    }, 400)
-    // this.data.loadLogs().subscribe({
-    //   next: (logs) => {
-    //     this.logs.set(logs)
-    //     this.loading.set(false)
-    //   },
-    //   error: () => this.loading.set(false),
-    // })
+    this.data.loadLogs().subscribe({
+      next: (logs) => {
+        this.logs.set(logs)
+        this.loading.set(false)
+      },
+      error: () => this.loading.set(false),
+    })
   }
 
   onPageChange(event: PageChangeEvent): void {
     this.pageIndex.set(event.pageIndex)
     this.pageSize.set(event.pageSize)
-  }
-
-  // TODO: remove along with the setTimeout block above
-  private _generateMockLogs(count: number): FollowupLog[] {
-    const actionTypes = [
-      { ar: 'إنشاء', en: 'Created' },
-      { ar: 'تحديث الحالة', en: 'Status Update' },
-      { ar: 'إعادة تعيين', en: 'Reassigned' },
-      { ar: 'تعديل الموعد', en: 'Due Date Changed' },
-      { ar: 'إضافة مرفق', en: 'Attachment Added' },
-      { ar: 'تعليق', en: 'Comment Added' },
-    ]
-    const statuses = [
-      { ar: 'جديد', en: 'New' },
-      { ar: 'قيد المعالجة', en: 'In Progress' },
-      { ar: 'بانتظار الرد', en: 'Awaiting Reply' },
-      { ar: 'مكتمل', en: 'Completed' },
-      { ar: 'مؤجل', en: 'Deferred' },
-    ]
-    const users = [
-      { ar: 'أحمد علي', en: 'Ahmed Ali' },
-      { ar: 'سارة يوسف', en: 'Sara Youssef' },
-      { ar: 'محمد خالد', en: 'Mohamed Khaled' },
-      { ar: 'فاطمة حسن', en: 'Fatima Hassan' },
-      { ar: 'علي إبراهيم', en: 'Ali Ibrahim' },
-    ]
-    const comments = [
-      'Initial follow-up created and assigned.',
-      'Awaiting response from external entity.',
-      'Status updated after meeting with stakeholders.',
-      'Reassigned to a different officer for review.',
-      'Due date extended per managerial approval.',
-      'Comment added for internal tracking.',
-      '',
-    ]
-
-    const buildInfo = (id: number, data: { ar: string; en: string }): Info => {
-      const info = new Info()
-      info.id = id
-      info.arName = data.ar
-      info.enName = data.en
-      return info
-    }
-
-    const baseTime = Date.now()
-    return Array.from({ length: count }, (_, index) => {
-      const log = new FollowupLog()
-      const actionType = actionTypes[index % actionTypes.length]
-      const oldStatus = statuses[index % statuses.length]
-      const newStatus = statuses[(index + 1) % statuses.length]
-      const user = users[index % users.length]
-      const oldAssignee = users[(index + 2) % users.length]
-      const newAssignee = users[(index + 3) % users.length]
-
-      log.id = index + 1
-      log.followupId = 1
-      log.userInfo = buildInfo(index + 100, user)
-      log.actionTypeInfo = buildInfo((index % actionTypes.length) + 1, actionType)
-      log.oldFollowupStatusInfo = buildInfo((index % statuses.length) + 1, oldStatus)
-      log.newFollowupStatusInfo = buildInfo(((index + 1) % statuses.length) + 1, newStatus)
-      log.oldAssignedUserInfo = buildInfo(index + 200, oldAssignee)
-      log.newUserAssignedUserInfo = buildInfo(index + 300, newAssignee)
-      log.userComments = comments[index % comments.length]
-      log.actionTime = new Date(baseTime - index * 3_600_000).toISOString()
-      log.oldDueDate = new Date(baseTime + 86_400_000 * 3).toISOString().slice(0, 10)
-      log.newOldDueDate = new Date(baseTime + 86_400_000 * 7).toISOString().slice(0, 10)
-      log.updatedOn = new Date(baseTime - index * 3_600_000).toISOString()
-      return log
-    })
   }
 }
