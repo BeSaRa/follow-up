@@ -116,7 +116,9 @@
     "add_statement_title": "إضافة إفادة",
     "statement_label": "الإفادة",
     "statement_placeholder": "اكتب إفادتك...",
-    "attachment_label": "مرفق (اختياري)"
+    "attachment_label": "مرفق (اختياري)",
+    "attachment_type_label": "نوع المرفق",
+    "select_attachment_type": "اختر نوع المرفق"
   },
   "application_user": {
     "title": "المستخدمين",

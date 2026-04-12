@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core'
 import { HttpParams } from '@angular/common/http'
+import qs from 'qs'
 import { MatDialogRef } from '@angular/material/dialog'
-import { Observable } from 'rxjs'
+import { map, Observable } from 'rxjs'
 import { CrudService, Pagination, RegisterServiceMixin } from '@follow-up/core'
 import { DialogService } from '@follow-up/ui'
 import { Followup } from '../models/followup'
@@ -79,36 +80,72 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
     return this.http.get<FollowupLog[]>(`${this.urlService.URLS.LOGS}/${id}`)
   }
 
-  @CastResponse(() => FollowupLog, { unwrap: 'result' })
-  addComment(followupId: number, userComments: string): Observable<FollowupLog> {
-    return this.http.post<FollowupLog>(
-      `${this.urlService.URLS.USER_COMMENTS}/${followupId}`,
-      { userComments },
+  addComment(followupId: number, userComments: string): Observable<number> {
+    return this.http
+      .post<{ result: number }>(
+        `${this.urlService.URLS.USER_COMMENTS}/${followupId}`,
+        { userComments },
+      )
+      .pipe(map((response) => response.result))
+  }
+
+  uploadCommentAttachment(
+    followupId: number,
+    followupLinkedId: number,
+    attachmentTypeId: number,
+    docSubject: string,
+    file: File,
+  ): Observable<unknown> {
+    const formData = new FormData()
+    formData.append('content', file, file.name)
+    const query = qs.stringify(
+      {
+        followupId,
+        followupLinkedId,
+        docSubject,
+        attachmentTypeInfo: { id: attachmentTypeId },
+      },
+      { allowDots: true, encode: false },
+    )
+    console.log('[uploadCommentAttachment] query:', query)
+    return this.http.post<unknown>(
+      `${this.urlService.URLS.USER_COMMENTS_ATTACHMENT}?${query}`,
+      formData,
     )
   }
 
-  uploadCommentAttachment(followupId: number, followupLinkedId: number, file: File): Observable<unknown> {
-    const formData = new FormData()
-    formData.append('content', file, file.name)
-    return this.http.post<unknown>(this.urlService.URLS.USER_COMMENTS_ATTACHMENT, formData, {
-      params: new HttpParams({ fromObject: { followupId, followupLinkedId } }),
-    })
+  addStatement(followupId: number, userStatement: string): Observable<number> {
+    return this.http
+      .post<{ result: number }>(
+        `${this.urlService.URLS.USER_STATEMENTS}/${followupId}`,
+        { userStatement },
+      )
+      .pipe(map((response) => response.result))
   }
 
-  @CastResponse(() => FollowupLog, { unwrap: 'result' })
-  addStatement(followupId: number, userStatement: string): Observable<FollowupLog> {
-    return this.http.post<FollowupLog>(
-      `${this.urlService.URLS.USER_STATEMENTS}/${followupId}`,
-      { userStatement },
+  uploadStatementAttachment(
+    followupId: number,
+    followupLinkedId: number,
+    attachmentTypeId: number,
+    docSubject: string,
+    file: File,
+  ): Observable<unknown> {
+    const formData = new FormData()
+    formData.append('content', file, file.name)
+    const query = qs.stringify(
+      {
+        followupId,
+        followupLinkedId,
+        docSubject,
+        attachmentTypeInfo: { id: attachmentTypeId },
+      },
+      { allowDots: true, encode: false },
     )
-  }
-
-  uploadStatementAttachment(followupId: number, followupLinkedId: number, file: File): Observable<unknown> {
-    const formData = new FormData()
-    formData.append('content', file, file.name)
-    return this.http.post<unknown>(this.urlService.URLS.USER_STATEMENTS_ATTACHMENT, formData, {
-      params: new HttpParams({ fromObject: { followupId, followupLinkedId } }),
-    })
+    console.log('[uploadStatementAttachment] query:', query)
+    return this.http.post<unknown>(
+      `${this.urlService.URLS.USER_STATEMENTS_ATTACHMENT}?${query}`,
+      formData,
+    )
   }
 
   viewLogs(followup: Followup): MatDialogRef<FollowupLogsDialog> {

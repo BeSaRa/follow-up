@@ -116,7 +116,9 @@
     "add_statement_title": "Add Statement",
     "statement_label": "Statement",
     "statement_placeholder": "Write your statement...",
-    "attachment_label": "Attachment (optional)"
+    "attachment_label": "Attachment (optional)",
+    "attachment_type_label": "Attachment Type",
+    "select_attachment_type": "Select attachment type"
   },
   "application_user": {
     "title": "Application Users",

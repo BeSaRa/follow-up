@@ -1,27 +1,32 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core'
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { MatIcon } from '@angular/material/icon'
-import { TranslatePipe } from '@ngx-translate/core'
+import { TranslateService, TranslatePipe } from '@ngx-translate/core'
 import { of, switchMap } from 'rxjs'
 import {
   UiButton,
   UiFileItem,
   UiFileList,
   UiFileUpload,
+  UiFormField,
+  UiLabel,
+  UiSelect,
+  UiSelectOption,
   UiTextareaAutoResize,
 } from '@follow-up/ui'
 import { APP_ICONS } from '../../../constants/icons'
 import { FollowupService } from '../services/followup.service'
-import { FollowupLog } from '../models/followup-log'
+import { AppStore } from '../../../shared/stores/app-store'
 
 export interface FollowupAddStatementDialogData {
   followupId: number
 }
 
 export interface FollowupAddStatementResult {
-  log: FollowupLog
+  statementId: number
   attachment: File | null
+  attachmentTypeId: number | null
 }
 
 @Component({
@@ -35,6 +40,10 @@ export interface FollowupAddStatementResult {
     UiFileUpload,
     UiFileList,
     UiFileItem,
+    UiFormField,
+    UiLabel,
+    UiSelect,
+    UiSelectOption,
     UiTextareaAutoResize,
   ],
   template: `
@@ -82,6 +91,26 @@ export interface FollowupAddStatementResult {
             <ui-file-list>
               <ui-file-item [file]="file" (removed)="removeAttachment()" />
             </ui-file-list>
+
+            <ui-form-field class="mt-2">
+              <!-- eslint-disable-next-line @angular-eslint/template/label-has-associated-control -->
+              <label uiLabel>{{ 'followup.attachment_type_label' | translate }}</label>
+              <ui-select
+                ngProjectAs="[uiInput]"
+                class="w-full"
+                formControlName="attachmentTypeId"
+                [placeholder]="'followup.select_attachment_type' | translate"
+              >
+                @for (type of attachmentTypes(); track type.lookupKey) {
+                  <ui-select-option
+                    [value]="type.lookupKey"
+                    [label]="isArabic() ? type.arName : type.enName"
+                  >
+                    {{ isArabic() ? type.arName : type.enName }}
+                  </ui-select-option>
+                }
+              </ui-select>
+            </ui-form-field>
           } @else {
             <ui-file-upload
               [multiple]="false"
@@ -109,6 +138,8 @@ export class FollowupAddStatementDialog {
   private readonly data = inject<FollowupAddStatementDialogData>(MAT_DIALOG_DATA)
   private readonly fb = inject(FormBuilder)
   private readonly followupService = inject(FollowupService)
+  private readonly appStore = inject(AppStore)
+  private readonly translate = inject(TranslateService)
 
   readonly icons = APP_ICONS
   readonly followupId = this.data.followupId
@@ -116,37 +147,52 @@ export class FollowupAddStatementDialog {
   readonly attachment = signal<File | null>(null)
   readonly saving = signal(false)
 
+  readonly attachmentTypes = computed(() => this.appStore.lookupList()?.AttachmentType ?? [])
+  readonly isArabic = computed(() => (this.translate.currentLang || 'ar') === 'ar')
+
   readonly form = this.fb.nonNullable.group({
     statement: ['', [Validators.required, Validators.maxLength(2000)]],
+    attachmentTypeId: this.fb.control<number | null>(null),
   })
 
   onFileAdded(files: File[]): void {
-    if (files.length) this.attachment.set(files[0])
+    if (!files.length) return
+    this.attachment.set(files[0])
+    const typeCtrl = this.form.controls.attachmentTypeId
+    typeCtrl.setValidators([Validators.required])
+    typeCtrl.updateValueAndValidity()
   }
 
   removeAttachment(): void {
     this.attachment.set(null)
+    const typeCtrl = this.form.controls.attachmentTypeId
+    typeCtrl.clearValidators()
+    typeCtrl.setValue(null)
+    typeCtrl.updateValueAndValidity()
   }
 
   save(): void {
     if (this.form.invalid || this.saving()) return
     this.saving.set(true)
     const file = this.attachment()
+    const { statement, attachmentTypeId } = this.form.getRawValue()
+    const selectedType = this.attachmentTypes().find((t) => t.lookupKey === attachmentTypeId)
+    const docSubject = selectedType ? (this.isArabic() ? selectedType.arName : selectedType.enName) : ''
     this.followupService
-      .addStatement(this.followupId, this.form.getRawValue().statement)
+      .addStatement(this.followupId, statement)
       .pipe(
-        switchMap((log) =>
-          file
+        switchMap((statementId) =>
+          file && attachmentTypeId !== null
             ? this.followupService
-                .uploadStatementAttachment(this.followupId, log.id, file)
-                .pipe(switchMap(() => of(log)))
-            : of(log),
+                .uploadStatementAttachment(this.followupId, statementId, attachmentTypeId, docSubject, file)
+                .pipe(switchMap(() => of(statementId)))
+            : of(statementId),
         ),
       )
       .subscribe({
-        next: (log) => {
+        next: (statementId) => {
           this.saving.set(false)
-          this.dialogRef.close({ log, attachment: file })
+          this.dialogRef.close({ statementId, attachment: file, attachmentTypeId })
         },
         error: () => this.saving.set(false),
       })

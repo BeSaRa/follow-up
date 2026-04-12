@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
-import { Observable } from 'rxjs'
+import { forkJoin, Observable, timer } from 'rxjs'
 import {
   DialogService,
   PageChangeEvent,
@@ -234,8 +234,12 @@ export class FollowupLogsDialog implements OnInit {
 
   fetchLogs(): void {
     this.loading.set(true)
-    this.data.loadLogs().subscribe({
-      next: (logs) => {
+    this.logs.set([])
+    forkJoin({
+      logs: this.data.loadLogs(),
+      _: timer(1000),
+    }).subscribe({
+      next: ({ logs }) => {
         this.logs.set(logs)
         this.loading.set(false)
       },
