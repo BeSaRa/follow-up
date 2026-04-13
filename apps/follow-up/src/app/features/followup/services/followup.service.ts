@@ -7,11 +7,27 @@ import { CrudService, Pagination, RegisterServiceMixin } from '@follow-up/core'
 import { DialogService } from '@follow-up/ui'
 import { Followup } from '../models/followup'
 import { FollowupLog } from '../models/followup-log'
+import { FollowupComment } from '../models/followup-comment'
+import { FollowupStatement } from '../models/followup-statement'
 import { FollowupAttachment } from '../models/followup-attachment'
 import { FollowupMetaData } from '../models/followup-meta-data'
 import { FollowupOpen } from '../models/followup-open'
 import { FollowupLogsDialog, FollowupLogsDialogData } from '../components/followup-logs-dialog'
 import { FollowupOpenDialog, FollowupOpenDialogData } from '../components/followup-open-dialog'
+import {
+  FollowupAddCommentDialog,
+  FollowupAddCommentDialogData,
+  FollowupAddCommentResult,
+} from '../components/followup-add-comment-dialog'
+import {
+  FollowupAddStatementDialog,
+  FollowupAddStatementDialogData,
+  FollowupAddStatementResult,
+} from '../components/followup-add-statement-dialog'
+import {
+  FollowupEntriesDialog,
+  FollowupEntriesDialogData,
+} from '../components/followup-entries-dialog'
 import { Endpoints } from '../../../constants/endpoints'
 import { UserType } from '../../../shared/enums/user-type'
 import { AppStore } from '../../../shared/stores/app-store'
@@ -160,13 +176,86 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
     )
   }
 
+  openAddComment(
+    followup: Followup,
+  ): MatDialogRef<FollowupAddCommentDialog, FollowupAddCommentResult> {
+    return this.dialogService.open<
+      FollowupAddCommentDialog,
+      FollowupAddCommentDialogData,
+      FollowupAddCommentResult
+    >(FollowupAddCommentDialog, {
+      data: { followupId: followup.id },
+    })
+  }
+
+  openAddStatement(
+    followup: Followup,
+  ): MatDialogRef<FollowupAddStatementDialog, FollowupAddStatementResult> {
+    return this.dialogService.open<
+      FollowupAddStatementDialog,
+      FollowupAddStatementDialogData,
+      FollowupAddStatementResult
+    >(FollowupAddStatementDialog, {
+      data: { followupId: followup.id },
+    })
+  }
+
   @CastResponse(undefined, { unwrap: 'result.content' })
   getAttachmentById(vsId: string): Observable<string> {
     return this.http.get<string>(`${this.urlService.URLS.ATTACHMENTS}/${vsId}`)
   }
 
-  getComments(id: number): Observable<unknown[]> {
-    return this.http.get<unknown[]>(`${this.getSegmentUrl()}/${id}/comments`)
+  @CastResponse(undefined, { unwrap: 'result.content' })
+  getAttachmentContent(vsId: string): Observable<string> {
+    return this.http.get<string>(`${this.urlService.URLS.LOG_ATTACHMENT_CONTENT}/${vsId}`)
+  }
+
+  @CastResponse(() => FollowupComment, { unwrap: 'result' })
+  getComments(followupId: number): Observable<FollowupComment[]> {
+    return this.http.get<FollowupComment[]>(`${this.urlService.URLS.USER_COMMENTS}/${followupId}`)
+  }
+
+  @CastResponse(() => FollowupStatement, { unwrap: 'result' })
+  getStatements(followupId: number): Observable<FollowupStatement[]> {
+    return this.http.get<FollowupStatement[]>(`${this.urlService.URLS.USER_STATEMENTS}/${followupId}`)
+  }
+
+  viewComments(followup: Followup): MatDialogRef<FollowupEntriesDialog<FollowupComment>> {
+    return this.dialogService.open<
+      FollowupEntriesDialog<FollowupComment>,
+      FollowupEntriesDialogData<FollowupComment>
+    >(FollowupEntriesDialog, {
+      data: {
+        titleKey: 'followup.comments_title',
+        emptyKey: 'followup.comments_no_data',
+        addLabelKey: 'followup.add_comment',
+        docSubject: followup.docSubject,
+        loadEntries: () => this.getComments(followup.id),
+        getText: (entry) => entry.userComments,
+        openAdd: () => this.openAddComment(followup),
+      },
+      width: '48rem',
+      maxWidth: '95vw',
+    })
+  }
+
+  viewStatements(followup: Followup): MatDialogRef<FollowupEntriesDialog<FollowupStatement>> {
+    return this.dialogService.open<
+      FollowupEntriesDialog<FollowupStatement>,
+      FollowupEntriesDialogData<FollowupStatement>
+    >(FollowupEntriesDialog, {
+      data: {
+        titleKey: 'followup.statements_title',
+        emptyKey: 'followup.statements_no_data',
+        addLabelKey: 'followup.add_statement',
+        docSubject: followup.docSubject,
+        loadEntries: () => this.getStatements(followup.id),
+        getText: (entry) => entry.userStatement,
+        openAdd: () => this.openAddStatement(followup),
+      },
+      width: '48rem',
+      maxWidth: '95vw',
+    })
   }
 
   private _getRightSegmentURL(userType: UserType): string {

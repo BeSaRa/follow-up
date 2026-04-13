@@ -1,6 +1,7 @@
 export * from './lib/auth'
 export * from './lib/crud'
 export * from './lib/followup'
+export * from './lib/followup-entry'
 export * from './lib/followup-log'
 export * from './lib/followup-open'
 export * from './lib/model'

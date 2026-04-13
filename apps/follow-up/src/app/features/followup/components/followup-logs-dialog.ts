@@ -5,10 +5,8 @@ import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
 import { forkJoin, Observable, timer } from 'rxjs'
 import {
-  DialogService,
   PageChangeEvent,
   UiBadge,
-  UiButton,
   UiPagination,
   UiSkeleton,
   UiTable,
@@ -20,16 +18,6 @@ import {
 } from '@follow-up/ui'
 import { APP_ICONS } from '../../../constants/icons'
 import { FollowupLog } from '../models/followup-log'
-import {
-  FollowupAddCommentDialog,
-  FollowupAddCommentDialogData,
-  FollowupAddCommentResult,
-} from './followup-add-comment-dialog'
-import {
-  FollowupAddStatementDialog,
-  FollowupAddStatementDialogData,
-  FollowupAddStatementResult,
-} from './followup-add-statement-dialog'
 
 export interface FollowupLogsDialogData {
   followupId: number
@@ -45,7 +33,6 @@ export interface FollowupLogsDialogData {
     TranslatePipe,
     MatIcon,
     UiBadge,
-    UiButton,
     UiPagination,
     UiSkeleton,
     UiTable,
@@ -85,14 +72,6 @@ export interface FollowupLogsDialogData {
           (click)="fetchLogs()"
         >
           <mat-icon [svgIcon]="icons.REFRESH" class="text-lg! size-5! leading-5!" />
-        </button>
-        <button uiButton type="button" size="sm" (click)="openAddComment()">
-          <mat-icon [svgIcon]="icons.PLUS" class="text-base! size-4! leading-4!" />
-          {{ 'followup.add_comment' | translate }}
-        </button>
-        <button uiButton type="button" size="sm" variant="secondary" (click)="openAddStatement()">
-          <mat-icon [svgIcon]="icons.PLUS" class="text-base! size-4! leading-4!" />
-          {{ 'followup.add_statement' | translate }}
         </button>
       </div>
 
@@ -176,7 +155,6 @@ export interface FollowupLogsDialogData {
 export class FollowupLogsDialog implements OnInit {
   readonly dialogRef = inject<MatDialogRef<FollowupLogsDialog>>(MatDialogRef)
   private readonly data = inject<FollowupLogsDialogData>(MAT_DIALOG_DATA)
-  private readonly dialogService = inject(DialogService)
 
   readonly icons = APP_ICONS
   readonly skeletonRows = Array.from({ length: 5 })
@@ -200,36 +178,6 @@ export class FollowupLogsDialog implements OnInit {
   onPageChange(event: PageChangeEvent): void {
     this.pageIndex.set(event.pageIndex)
     this.pageSize.set(event.pageSize)
-  }
-
-  openAddComment(): void {
-    this.dialogService
-      .open<FollowupAddCommentDialog, FollowupAddCommentDialogData, FollowupAddCommentResult>(
-        FollowupAddCommentDialog,
-        {
-          data: { followupId: this.data.followupId },
-        },
-      )
-      .afterClosed()
-      .subscribe((result) => {
-        if (!result) return
-        this.fetchLogs()
-      })
-  }
-
-  openAddStatement(): void {
-    this.dialogService
-      .open<FollowupAddStatementDialog, FollowupAddStatementDialogData, FollowupAddStatementResult>(
-        FollowupAddStatementDialog,
-        {
-          data: { followupId: this.data.followupId },
-        },
-      )
-      .afterClosed()
-      .subscribe((result) => {
-        if (!result) return
-        this.fetchLogs()
-      })
   }
 
   fetchLogs(): void {

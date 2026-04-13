@@ -1,5 +1,12 @@
 import { DatePipe, NgTemplateOutlet } from '@angular/common'
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { MatIcon } from '@angular/material/icon'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
@@ -22,7 +29,15 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
 @Component({
   selector: 'app-followup-open-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DatePipe, NgTemplateOutlet, TranslatePipe, MatIcon, UiBadge, UiSkeleton, UiTooltip],
+  imports: [
+    DatePipe,
+    NgTemplateOutlet,
+    TranslatePipe,
+    MatIcon,
+    UiBadge,
+    UiSkeleton,
+    UiTooltip,
+  ],
   styles: [
     `
       @keyframes sidebar-slide-in-ltr {
@@ -473,9 +488,15 @@ export class FollowupOpenDialog implements OnInit {
     )
   })
 
-  readonly followupAttachments = computed(() => this.followup()?.followupAttachments ?? [])
-  readonly linkedAttachments = computed(() => this.followup()?.linkedAttachments ?? [])
-  readonly guidanceAttachments = computed(() => this.followup()?.guidanceAttachments ?? [])
+  readonly followupAttachments = computed(
+    () => this.followup()?.followupAttachments ?? [],
+  )
+  readonly linkedAttachments = computed(
+    () => this.followup()?.linkedAttachments ?? [],
+  )
+  readonly guidanceAttachments = computed(
+    () => this.followup()?.guidanceAttachments ?? [],
+  )
 
   private readonly attachmentCache = new Map<string, string>()
 
@@ -484,9 +505,9 @@ export class FollowupOpenDialog implements OnInit {
     if (cached) {
       return of(cached)
     }
-    return this.followupService.getAttachmentById(vsId).pipe(
-      tap((content) => this.attachmentCache.set(vsId, content)),
-    )
+    return this.followupService
+      .getAttachmentById(vsId)
+      .pipe(tap((content) => this.attachmentCache.set(vsId, content)))
   }
 
   viewAttachmentInViewer(att: FollowupAttachment): void {

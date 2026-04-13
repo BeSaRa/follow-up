@@ -38,6 +38,8 @@ export const APP_ICONS = {
   PRIORITY_HIGH: 'priority-high',
   EYE_OUTLINE: 'eye-outline',
   COMMENT_TEXT_OUTLINE: 'comment-text-outline',
+  COMMENT_MULTIPLE_OUTLINE: 'comment-multiple-outline',
+  MESSAGE_TEXT_OUTLINE: 'message-text-outline',
   HISTORY: 'history',
   OPEN_IN_NEW: 'open-in-new',
 

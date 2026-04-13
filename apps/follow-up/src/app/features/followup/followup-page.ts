@@ -177,15 +177,45 @@ import { Followup } from './models/followup'
                         >
                           <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.HISTORY" />
                         </button>
+                        <!-- <button
+                          uiButton
+                          variant="ghost"
+                          size="sm"
+                          [attr.aria-label]="'followup.add_comment' | translate"
+                          [uiTooltip]="'followup.add_comment' | translate"
+                          (click)="addComment(item)"
+                        >
+                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.COMMENT_TEXT_OUTLINE" />
+                        </button>
                         <button
                           uiButton
                           variant="ghost"
                           size="sm"
-                          [attr.aria-label]="'followup.comments' | translate"
-                          [uiTooltip]="'followup.comments' | translate"
+                          [attr.aria-label]="'followup.add_statement' | translate"
+                          [uiTooltip]="'followup.add_statement' | translate"
+                          (click)="addStatement(item)"
+                        >
+                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.PLUS" />
+                        </button> -->
+                        <button
+                          uiButton
+                          variant="ghost"
+                          size="sm"
+                          [attr.aria-label]="'followup.show_comments' | translate"
+                          [uiTooltip]="'followup.show_comments' | translate"
                           (click)="showComments(item)"
                         >
-                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.COMMENT_TEXT_OUTLINE" />
+                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.COMMENT_MULTIPLE_OUTLINE" />
+                        </button>
+                        <button
+                          uiButton
+                          variant="ghost"
+                          size="sm"
+                          [attr.aria-label]="'followup.show_statements' | translate"
+                          [uiTooltip]="'followup.show_statements' | translate"
+                          (click)="showStatements(item)"
+                        >
+                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.MESSAGE_TEXT_OUTLINE" />
                         </button>
                       </div>
                     </td>
@@ -281,7 +311,19 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> {
     this.service.viewLogs(item)
   }
 
+  addComment(item: Followup): void {
+    this.service.openAddComment(item)
+  }
+
+  addStatement(item: Followup): void {
+    this.service.openAddStatement(item)
+  }
+
   showComments(item: Followup): void {
-    this.service.getComments(item.id).subscribe((comments) => console.log('followup comments', comments))
+    this.service.viewComments(item)
+  }
+
+  showStatements(item: Followup): void {
+    this.service.viewStatements(item)
   }
 }
