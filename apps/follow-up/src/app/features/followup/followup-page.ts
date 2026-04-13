@@ -167,6 +167,29 @@ import { Followup } from './models/followup'
                         >
                           <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.EYE_OUTLINE" />
                         </button>
+                        @if (item.assignedUserInfo.id > 0) {
+                          <button
+                            uiButton
+                            variant="ghost"
+                            size="sm"
+                            [attr.aria-label]="'followup.reassign_user' | translate"
+                            [uiTooltip]="'followup.reassign_user' | translate"
+                            (click)="assignUser(item)"
+                          >
+                            <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.ACCOUNT_SWITCH" />
+                          </button>
+                        } @else {
+                          <button
+                            uiButton
+                            variant="ghost"
+                            size="sm"
+                            [attr.aria-label]="'followup.assign_user' | translate"
+                            [uiTooltip]="'followup.assign_user' | translate"
+                            (click)="assignUser(item)"
+                          >
+                            <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.ACCOUNT_ARROW_RIGHT" />
+                          </button>
+                        }
                         <button
                           uiButton
                           variant="ghost"
@@ -325,5 +348,15 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> {
 
   showStatements(item: Followup): void {
     this.service.viewStatements(item)
+  }
+
+  assignUser(item: Followup): void {
+    this.service
+      .openAssignUser(item)
+      .afterClosed()
+      .subscribe((result) => {
+        if (!result) return
+        this.refresh()
+      })
   }
 }

@@ -30,6 +30,8 @@ export const APP_ICONS = {
   // ── Users ──
   ACCOUNT_GROUP: 'account-group',
   ACCOUNT_OFF: 'account-off',
+  ACCOUNT_ARROW_RIGHT: 'account-arrow-right',
+  ACCOUNT_SWITCH: 'account-switch',
 
   // ── Content ──
   PAPERCLIP: 'paperclip',

@@ -10,6 +10,7 @@ import { FollowupLog } from '../models/followup-log'
 import { FollowupComment } from '../models/followup-comment'
 import { FollowupStatement } from '../models/followup-statement'
 import { FollowupAttachment } from '../models/followup-attachment'
+import { InternalUser } from '../models/internal-user'
 import { FollowupMetaData } from '../models/followup-meta-data'
 import { FollowupOpen } from '../models/followup-open'
 import { FollowupLogsDialog, FollowupLogsDialogData } from '../components/followup-logs-dialog'
@@ -28,6 +29,11 @@ import {
   FollowupEntriesDialog,
   FollowupEntriesDialogData,
 } from '../components/followup-entries-dialog'
+import {
+  FollowupAssignUserDialog,
+  FollowupAssignUserDialogData,
+  FollowupAssignUserResult,
+} from '../components/followup-assign-user-dialog'
 import { Endpoints } from '../../../constants/endpoints'
 import { UserType } from '../../../shared/enums/user-type'
 import { AppStore } from '../../../shared/stores/app-store'
@@ -208,6 +214,43 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
   @CastResponse(undefined, { unwrap: 'result.content' })
   getAttachmentContent(vsId: string): Observable<string> {
     return this.http.get<string>(`${this.urlService.URLS.LOG_ATTACHMENT_CONTENT}/${vsId}`)
+  }
+
+  @CastResponse(() => InternalUser, { unwrap: 'result' })
+  loadAssignableUsers(): Observable<InternalUser[]> {
+    return this.http.get<InternalUser[]>(this.urlService.URLS.INTERNAL_USERS_LOOKUP)
+  }
+
+  updateAssignee(payload: {
+    followupId: number
+    userId: number
+    dueDate: string
+    userComments: string
+    followupStatus?: number
+  }): Observable<unknown> {
+    return this.http.put<unknown>(this.urlService.URLS.UPDATE_ASSIGNEE, {
+      followupId: payload.followupId,
+      followupStatus: payload.followupStatus ?? 0,
+      userComments: payload.userComments,
+      dueDate: payload.dueDate,
+      userId: payload.userId,
+    })
+  }
+
+  openAssignUser(
+    followup: Followup,
+  ): MatDialogRef<FollowupAssignUserDialog, FollowupAssignUserResult> {
+    return this.dialogService.open<
+      FollowupAssignUserDialog,
+      FollowupAssignUserDialogData,
+      FollowupAssignUserResult
+    >(FollowupAssignUserDialog, {
+      data: {
+        followupId: followup.id,
+        currentAssigneeId: followup.assignedUserInfo.id > 0 ? followup.assignedUserInfo.id : undefined,
+        currentDueDate: followup.dueDate,
+      },
+    })
   }
 
   @CastResponse(() => FollowupComment, { unwrap: 'result' })
