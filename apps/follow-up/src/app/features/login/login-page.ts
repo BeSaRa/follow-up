@@ -54,7 +54,7 @@ import { UserType } from '../../shared/enums/user-type'
       <ui-card class="w-full max-w-md">
         <ui-card-header class="text-center">
           <img
-            src="logo.png"
+            [src]="darkMode() ? 'logo-pmo-white.png' : 'logo.png'"
             alt="Logo"
             width="150"
             height="124"
@@ -151,6 +151,7 @@ export class LoginPage {
   private readonly appStore = inject(AppStore)
   protected readonly icons = APP_ICONS
   protected readonly showPassword = signal(false)
+  protected readonly darkMode = signal(document.documentElement.classList.contains('dark'))
 
   protected readonly form = this.fb.nonNullable.group({
     userName: ['', [Validators.required]],

@@ -164,7 +164,7 @@ import { UserType } from '../shared/enums/user-type'
           <ui-drawer-content>
             <div class="flex items-center justify-center border-b border-border py-4">
               <img
-                src="logo.png"
+                [src]="darkMode() ? 'logo-pmo-white.png' : 'logo.png'"
                 alt="Logo"
                 width="150"
                 height="124"
