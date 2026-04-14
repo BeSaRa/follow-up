@@ -9,6 +9,9 @@ import {
   UiButton,
   UiCard,
   UiCardContent,
+  UiDatePicker,
+  UiDatePickerInput,
+  UiDatePickerToggle,
   UiInput,
   UiPagination,
   UiSkeleton,
@@ -39,6 +42,9 @@ import { DocumentClass } from '../../shared/enums/document-class'
     UiButton,
     UiCard,
     UiCardContent,
+    UiDatePicker,
+    UiDatePickerInput,
+    UiDatePickerToggle,
     UiInput,
     UiPagination,
     UiSkeleton,
@@ -116,22 +122,30 @@ import { DocumentClass } from '../../shared/enums/document-class'
           />
         </div>
         <div class="flex items-center gap-2">
-          <input
-            uiInput
-            type="date"
-            class="bg-surface-raised!"
-            [placeholder]="'followup.from_date' | translate"
+          <ui-date-picker
             [value]="fromDate()"
-            (change)="onFromDateChange($event)"
-          />
-          <input
-            uiInput
-            type="date"
-            class="bg-surface-raised!"
-            [placeholder]="'followup.to_date' | translate"
+            [max]="toDate()"
+            (valueChange)="onFromDateChange($event)"
+          >
+            <input
+              uiDatePickerInput
+              class="bg-surface-raised!"
+              [placeholder]="'followup.from_date' | translate"
+            />
+            <ui-date-picker-toggle />
+          </ui-date-picker>
+          <ui-date-picker
             [value]="toDate()"
-            (change)="onToDateChange($event)"
-          />
+            [min]="fromDate()"
+            (valueChange)="onToDateChange($event)"
+          >
+            <input
+              uiDatePickerInput
+              class="bg-surface-raised!"
+              [placeholder]="'followup.to_date' | translate"
+            />
+            <ui-date-picker-toggle />
+          </ui-date-picker>
         </div>
       </div>
 
@@ -332,8 +346,8 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
   readonly service = inject(FollowupService)
   readonly icons = APP_ICONS
   readonly DocumentClass = DocumentClass
-  readonly fromDate = signal('')
-  readonly toDate = signal('')
+  readonly fromDate = signal<Date | null>(null)
+  readonly toDate = signal<Date | null>(null)
   readonly counters = signal<FollowupDashboardCounters>(new FollowupDashboardCounters())
   readonly countersLoading = signal(false)
 
@@ -412,27 +426,36 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
 
   override buildLoadOptions(page: number, size: number, search: string): Record<string, unknown> {
     const options = super.buildLoadOptions(page, size, search)
-    if (this.fromDate()) {
-      options['fromDate'] = this.fromDate() + 'T00:00:00.000Z'
+    const from = this.fromDate()
+    const to = this.toDate()
+    if (from) {
+      options['fromDate'] = this.toLocalDate(from)
     }
-    if (this.toDate()) {
-      options['toDate'] = this.toDate() + 'T23:59:59.999Z'
+    if (to) {
+      options['toDate'] = this.toLocalDate(to)
     }
     return options
+  }
+
+  private toLocalDate(date: Date): string {
+    const y = date.getFullYear()
+    const m = String(date.getMonth() + 1).padStart(2, '0')
+    const d = String(date.getDate()).padStart(2, '0')
+    return `${y}-${m}-${d}`
   }
 
   getPriorityVariant(id: number): BadgeVariant {
     return this.priorityVariants[id] ?? 'outline'
   }
 
-  onFromDateChange(event: Event): void {
-    this.fromDate.set((event.target as HTMLInputElement).value)
+  onFromDateChange(value: Date | null): void {
+    this.fromDate.set(value)
     this.pageIndex.set(0)
     this.refresh()
   }
 
-  onToDateChange(event: Event): void {
-    this.toDate.set((event.target as HTMLInputElement).value)
+  onToDateChange(value: Date | null): void {
+    this.toDate.set(value)
     this.pageIndex.set(0)
     this.refresh()
   }
