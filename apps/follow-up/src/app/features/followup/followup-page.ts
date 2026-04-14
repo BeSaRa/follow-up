@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core'
-import { TranslatePipe } from '@ngx-translate/core'
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { MatIcon } from '@angular/material/icon'
 import {
   BadgeVariant,
@@ -14,6 +14,8 @@ import {
   UiDatePickerToggle,
   UiInput,
   UiPagination,
+  UiSelect,
+  UiSelectOption,
   UiSkeleton,
   UiTable,
   UiTableBody,
@@ -29,6 +31,7 @@ import { FollowupService } from './services/followup.service'
 import { Followup } from './models/followup'
 import { FollowupDashboardCounters } from './models/followup-dashboard-counters'
 import { DocumentClass } from '../../shared/enums/document-class'
+import { AppStore } from '../../shared/stores/app-store'
 
 @Component({
   selector: 'app-followup-page',
@@ -47,6 +50,8 @@ import { DocumentClass } from '../../shared/enums/document-class'
     UiDatePickerToggle,
     UiInput,
     UiPagination,
+    UiSelect,
+    UiSelectOption,
     UiSkeleton,
     UiTable,
     UiTableBody,
@@ -106,7 +111,7 @@ import { DocumentClass } from '../../shared/enums/document-class'
         }
       </div>
 
-      <div class="flex items-center gap-3">
+      <div class="flex flex-wrap items-center gap-3">
         <div class="relative max-w-sm flex-1">
           <mat-icon
             class="absolute start-3 top-1/2 -translate-y-1/2 text-lg! size-5! leading-5! text-foreground-subtle"
@@ -146,6 +151,73 @@ import { DocumentClass } from '../../shared/enums/document-class'
             />
             <ui-date-picker-toggle />
           </ui-date-picker>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <ui-select
+            class="w-48 [&>button]:bg-surface-raised!"
+            [value]="securityLevel()"
+            [placeholder]="'followup.filter_security_level' | translate"
+            (valueChange)="onSecurityLevelChange($event)"
+          >
+            <ui-select-option [value]="null" [label]="'followup.filter_all' | translate">
+              {{ 'followup.filter_all' | translate }}
+            </ui-select-option>
+            @for (item of securityLevels(); track item.lookupKey) {
+              <ui-select-option
+                [value]="item.lookupKey"
+                [label]="isArabic() ? item.arName : item.enName"
+              >
+                {{ isArabic() ? item.arName : item.enName }}
+              </ui-select-option>
+            }
+          </ui-select>
+          <ui-select
+            class="w-48 [&>button]:bg-surface-raised!"
+            [value]="priorityLevel()"
+            [placeholder]="'followup.filter_priority_level' | translate"
+            (valueChange)="onPriorityLevelChange($event)"
+          >
+            <ui-select-option [value]="null" [label]="'followup.filter_all' | translate">
+              {{ 'followup.filter_all' | translate }}
+            </ui-select-option>
+            @for (item of priorityLevels(); track item.lookupKey) {
+              <ui-select-option
+                [value]="item.lookupKey"
+                [label]="isArabic() ? item.arName : item.enName"
+              >
+                {{ isArabic() ? item.arName : item.enName }}
+              </ui-select-option>
+            }
+          </ui-select>
+          <ui-select
+            class="w-48 [&>button]:bg-surface-raised!"
+            [value]="followUpStatus()"
+            [placeholder]="'followup.filter_followup_status' | translate"
+            (valueChange)="onFollowUpStatusChange($event)"
+          >
+            <ui-select-option [value]="null" [label]="'followup.filter_all' | translate">
+              {{ 'followup.filter_all' | translate }}
+            </ui-select-option>
+            @for (item of followupStatuses(); track item.lookupKey) {
+              <ui-select-option
+                [value]="item.lookupKey"
+                [label]="isArabic() ? item.arName : item.enName"
+              >
+                {{ isArabic() ? item.arName : item.enName }}
+              </ui-select-option>
+            }
+          </ui-select>
+          @if (hasActiveFilters()) {
+            <button
+              uiButton
+              variant="outline"
+              size="sm"
+              (click)="clearFilters()"
+            >
+              <mat-icon class="text-lg! size-5! leading-5! me-1" [svgIcon]="icons.CLOSE" />
+              {{ 'followup.clear_filters' | translate }}
+            </button>
+          }
         </div>
       </div>
 
@@ -348,6 +420,25 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
   readonly DocumentClass = DocumentClass
   readonly fromDate = signal<Date | null>(null)
   readonly toDate = signal<Date | null>(null)
+  readonly securityLevel = signal<number | null>(null)
+  readonly priorityLevel = signal<number | null>(null)
+  readonly followUpStatus = signal<number | null>(null)
+
+  private readonly appStore = inject(AppStore)
+  private readonly translate = inject(TranslateService)
+  readonly isArabic = computed(() => (this.translate.currentLang || 'ar') === 'ar')
+  readonly securityLevels = computed(() => this.appStore.lookupList()?.SecurityLevel ?? [])
+  readonly priorityLevels = computed(() => this.appStore.lookupList()?.PriorityLevel ?? [])
+  readonly followupStatuses = computed(() => this.appStore.lookupList()?.FollowupStatus ?? [])
+  readonly hasActiveFilters = computed(
+    () =>
+      !!this.searchQuery() ||
+      this.fromDate() != null ||
+      this.toDate() != null ||
+      this.securityLevel() != null ||
+      this.priorityLevel() != null ||
+      this.followUpStatus() != null,
+  )
   readonly counters = signal<FollowupDashboardCounters>(new FollowupDashboardCounters())
   readonly countersLoading = signal(false)
 
@@ -434,6 +525,18 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
     if (to) {
       options['toDate'] = this.toLocalDate(to)
     }
+    const security = this.securityLevel()
+    if (security != null) {
+      options['securityLevel'] = security
+    }
+    const priority = this.priorityLevel()
+    if (priority != null) {
+      options['priorityLevel'] = priority
+    }
+    const status = this.followUpStatus()
+    if (status != null) {
+      options['followUpStatus'] = status
+    }
     return options
   }
 
@@ -456,6 +559,35 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
 
   onToDateChange(value: Date | null): void {
     this.toDate.set(value)
+    this.pageIndex.set(0)
+    this.refresh()
+  }
+
+  onSecurityLevelChange(value: unknown): void {
+    this.securityLevel.set(value as number | null)
+    this.pageIndex.set(0)
+    this.refresh()
+  }
+
+  onPriorityLevelChange(value: unknown): void {
+    this.priorityLevel.set(value as number | null)
+    this.pageIndex.set(0)
+    this.refresh()
+  }
+
+  onFollowUpStatusChange(value: unknown): void {
+    this.followUpStatus.set(value as number | null)
+    this.pageIndex.set(0)
+    this.refresh()
+  }
+
+  clearFilters(): void {
+    this.searchQuery.set('')
+    this.fromDate.set(null)
+    this.toDate.set(null)
+    this.securityLevel.set(null)
+    this.priorityLevel.set(null)
+    this.followUpStatus.set(null)
     this.pageIndex.set(0)
     this.refresh()
   }

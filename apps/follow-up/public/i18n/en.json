@@ -133,6 +133,11 @@
     "attachment_label": "Attachment (optional)",
     "attachment_type_label": "Attachment Type",
     "select_attachment_type": "Select attachment type",
+    "filter_all": "All",
+    "clear_filters": "Clear filters",
+    "filter_security_level": "Security Level",
+    "filter_priority_level": "Priority Level",
+    "filter_followup_status": "Follow-up Status",
     "counters": {
       "outgoing": "Outgoing",
       "incoming": "Incoming",

@@ -133,6 +133,11 @@
     "attachment_label": "مرفق (اختياري)",
     "attachment_type_label": "نوع المرفق",
     "select_attachment_type": "اختر نوع المرفق",
+    "filter_all": "الكل",
+    "clear_filters": "مسح الفلاتر",
+    "filter_security_level": "مستوى السرية",
+    "filter_priority_level": "مستوى الأولوية",
+    "filter_followup_status": "حالة المتابعة",
     "counters": {
       "outgoing": "الصادر",
       "incoming": "الوارد",
