@@ -11,6 +11,7 @@ import { FollowupComment } from '../models/followup-comment'
 import { FollowupStatement } from '../models/followup-statement'
 import { FollowupAttachment } from '../models/followup-attachment'
 import { InternalUser } from '../models/internal-user'
+import { FollowupDashboardCounters } from '../models/followup-dashboard-counters'
 import { FollowupMetaData } from '../models/followup-meta-data'
 import { FollowupOpen } from '../models/followup-open'
 import { FollowupLogsDialog, FollowupLogsDialogData } from '../components/followup-logs-dialog'
@@ -214,6 +215,13 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
   @CastResponse(undefined, { unwrap: 'result.content' })
   getAttachmentContent(vsId: string): Observable<string> {
     return this.http.get<string>(`${this.urlService.URLS.LOG_ATTACHMENT_CONTENT}/${vsId}`)
+  }
+
+  @CastResponse(() => FollowupDashboardCounters, { unwrap: 'result' })
+  getDashboardCounters(): Observable<FollowupDashboardCounters> {
+    return this.http.get<FollowupDashboardCounters>(
+      this.urlService.URLS.FOLLOWUP_DASHBOARD_COUNTERS,
+    )
   }
 
   @CastResponse(() => InternalUser, { unwrap: 'result' })

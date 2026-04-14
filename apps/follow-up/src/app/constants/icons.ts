@@ -44,6 +44,8 @@ export const APP_ICONS = {
   MESSAGE_TEXT_OUTLINE: 'message-text-outline',
   HISTORY: 'history',
   OPEN_IN_NEW: 'open-in-new',
+  ARROW_UP: 'arrow-up',
+  ARROW_DOWN: 'arrow-down',
 
   // ── Theme ──
   WEATHER_NIGHT: 'weather-night',

@@ -18,6 +18,7 @@ export const ENDPOINTS = {
   USER_PERMISSION_BULK: 'admin/user/permission/bulk',
   USER_PERMISSION_BY_USER: 'admin/user/permission/user-id',
   FOLLOWUP: 'user/followup',
+  FOLLOWUP_DASHBOARD_COUNTERS: 'user/followup/dashboard-counters',
   LOGS: 'user/followup/logs/history/followup-id',
   USER_COMMENTS: 'user/followup/logs/user-comments/followup-id',
   USER_COMMENTS_ATTACHMENT: 'user/followup/logs/user-comments/attachment',

@@ -132,7 +132,14 @@
     "statement_placeholder": "اكتب إفادتك...",
     "attachment_label": "مرفق (اختياري)",
     "attachment_type_label": "نوع المرفق",
-    "select_attachment_type": "اختر نوع المرفق"
+    "select_attachment_type": "اختر نوع المرفق",
+    "counters": {
+      "outgoing": "الصادر",
+      "incoming": "الوارد",
+      "overdue": "متأخر",
+      "overdue_within_7_days": "يستحق خلال 7 أيام",
+      "completed": "مكتمل"
+    }
   },
   "application_user": {
     "title": "المستخدمين",

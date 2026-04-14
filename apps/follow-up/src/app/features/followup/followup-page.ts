@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core'
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core'
 import { TranslatePipe } from '@ngx-translate/core'
 import { MatIcon } from '@angular/material/icon'
 import {
@@ -24,6 +24,8 @@ import { CrudPageDirective } from '@follow-up/core'
 import { APP_ICONS } from '../../constants/icons'
 import { FollowupService } from './services/followup.service'
 import { Followup } from './models/followup'
+import { FollowupDashboardCounters } from './models/followup-dashboard-counters'
+import { DocumentClass } from '../../shared/enums/document-class'
 
 @Component({
   selector: 'app-followup-page',
@@ -70,6 +72,32 @@ import { Followup } from './models/followup'
             <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.REFRESH" />
           </button>
         </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        @for (counter of counterCards; track counter.key) {
+          <ui-card>
+            <ui-card-content class="flex items-center gap-3 p-4!">
+              <div
+                class="flex size-10 items-center justify-center rounded-full"
+                [style.background-color]="counter.bg"
+                [style.color]="counter.color"
+              >
+                <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="counter.icon" />
+              </div>
+              <div class="min-w-0">
+                <p class="truncate text-xs text-foreground-muted">
+                  {{ 'followup.counters.' + counter.key | translate }}
+                </p>
+                @if (countersLoading()) {
+                  <ui-skeleton width="3rem" height="1.5rem" />
+                } @else {
+                  <p class="text-xl font-bold text-foreground">{{ counter.value(counters()) }}</p>
+                }
+              </div>
+            </ui-card-content>
+          </ui-card>
+        }
       </div>
 
       <div class="flex items-center gap-3">
@@ -142,7 +170,21 @@ import { Followup } from './models/followup'
                         {{ item.priorityLevelInfo.getName() }}
                       </ui-badge>
                     </td>
-                    <td uiTableCell>{{ item.docClassInfo.getName() }}</td>
+                    <td uiTableCell>
+                      <div class="flex items-center gap-2">
+                        <div
+                          class="inline-flex size-6 items-center justify-center rounded-full"
+                          [style.background-color]="item.docClassInfo.id === DocumentClass.OUTGOING ? 'rgba(59, 130, 246, 0.15)' : 'rgba(139, 92, 246, 0.15)'"
+                          [style.color]="item.docClassInfo.id === DocumentClass.OUTGOING ? 'rgb(59, 130, 246)' : 'rgb(139, 92, 246)'"
+                        >
+                          <mat-icon
+                            class="text-xs! size-3! leading-3!"
+                            [svgIcon]="item.docClassInfo.id === DocumentClass.OUTGOING ? icons.ARROW_UP : icons.ARROW_DOWN"
+                          />
+                        </div>
+                        <span>{{ item.docClassInfo.getName() }}</span>
+                      </div>
+                    </td>
                     <td uiTableCell>{{ item.externalEntityInfo.getName() }}</td>
                     <td uiTableCell>{{ item.followUpStatusInfo.getName() }}</td>
                     <td uiTableCell>{{ item.assignedUserInfo.getName() }}</td>
@@ -286,17 +328,86 @@ import { Followup } from './models/followup'
     </div>
   `,
 })
-export class FollowupPage extends CrudPageDirective<Followup, FollowupService> {
+export class FollowupPage extends CrudPageDirective<Followup, FollowupService> implements OnInit {
   readonly service = inject(FollowupService)
   readonly icons = APP_ICONS
+  readonly DocumentClass = DocumentClass
   readonly fromDate = signal('')
   readonly toDate = signal('')
+  readonly counters = signal<FollowupDashboardCounters>(new FollowupDashboardCounters())
+  readonly countersLoading = signal(false)
+
+  readonly counterCards: ReadonlyArray<{
+    key: string
+    icon: string
+    bg: string
+    color: string
+    value: (c: FollowupDashboardCounters) => number
+  }> = [
+    {
+      key: 'outgoing',
+      icon: APP_ICONS.ARROW_UP,
+      bg: 'rgba(59, 130, 246, 0.15)',
+      color: 'rgb(59, 130, 246)',
+      value: (c) => c.outgoingCount,
+    },
+    {
+      key: 'incoming',
+      icon: APP_ICONS.ARROW_DOWN,
+      bg: 'rgba(139, 92, 246, 0.15)',
+      color: 'rgb(139, 92, 246)',
+      value: (c) => c.incomingCount,
+    },
+    {
+      key: 'overdue',
+      icon: APP_ICONS.PRIORITY_HIGH,
+      bg: 'rgba(239, 68, 68, 0.15)',
+      color: 'rgb(239, 68, 68)',
+      value: (c) => c.overdueCount,
+    },
+    {
+      key: 'overdue_within_7_days',
+      icon: APP_ICONS.CLIPBOARD_TEXT_CLOCK,
+      bg: 'rgba(245, 158, 11, 0.15)',
+      color: 'rgb(245, 158, 11)',
+      value: (c) => c.overDueWithin7DaysCount,
+    },
+    {
+      key: 'completed',
+      icon: APP_ICONS.LIST_STATUS,
+      bg: 'rgba(34, 197, 94, 0.15)',
+      color: 'rgb(34, 197, 94)',
+      value: (c) => c.completedCount,
+    },
+  ]
 
   private readonly priorityVariants: Record<number, BadgeVariant> = {
     1: 'outline-error',
     2: 'outline-warning',
     3: 'outline-info',
     4: 'outline-success',
+  }
+
+  ngOnInit(): void {
+    this.loadCounters()
+  }
+
+  override refresh(): void {
+    super.refresh()
+    this.loadCounters()
+  }
+
+  private loadCounters(): void {
+    this.countersLoading.set(true)
+    this.service.getDashboardCounters().subscribe({
+      next: (result) => {
+        this.counters.set(result)
+        this.countersLoading.set(false)
+      },
+      error: () => {
+        this.countersLoading.set(false)
+      },
+    })
   }
 
   override buildLoadOptions(page: number, size: number, search: string): Record<string, unknown> {

@@ -132,7 +132,14 @@
     "statement_placeholder": "Write your statement...",
     "attachment_label": "Attachment (optional)",
     "attachment_type_label": "Attachment Type",
-    "select_attachment_type": "Select attachment type"
+    "select_attachment_type": "Select attachment type",
+    "counters": {
+      "outgoing": "Outgoing",
+      "incoming": "Incoming",
+      "overdue": "Overdue",
+      "overdue_within_7_days": "Overdue within 7 Days",
+      "completed": "Completed"
+    }
   },
   "application_user": {
     "title": "Application Users",
