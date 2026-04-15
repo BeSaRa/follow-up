@@ -32,6 +32,7 @@ import { Followup } from './models/followup'
 import { FollowupDashboardCounters } from './models/followup-dashboard-counters'
 import { DocumentClass } from '../../shared/enums/document-class'
 import { AppStore } from '../../shared/stores/app-store'
+import { UserType } from '../../shared/enums/user-type'
 
 @Component({
   selector: 'app-followup-page',
@@ -295,28 +296,30 @@ import { AppStore } from '../../shared/stores/app-store'
                         >
                           <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.EYE_OUTLINE" />
                         </button>
-                        @if (item.assignedUserInfo.id > 0) {
-                          <button
-                            uiButton
-                            variant="ghost"
-                            size="sm"
-                            [attr.aria-label]="'followup.reassign_user' | translate"
-                            [uiTooltip]="'followup.reassign_user' | translate"
-                            (click)="assignUser(item)"
-                          >
-                            <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.ACCOUNT_SWITCH" />
-                          </button>
-                        } @else {
-                          <button
-                            uiButton
-                            variant="ghost"
-                            size="sm"
-                            [attr.aria-label]="'followup.assign_user' | translate"
-                            [uiTooltip]="'followup.assign_user' | translate"
-                            (click)="assignUser(item)"
-                          >
-                            <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.ACCOUNT_ARROW_RIGHT" />
-                          </button>
+                        @if (isPmoHead()) {
+                          @if (item.assignedUserInfo.id > 0) {
+                            <button
+                              uiButton
+                              variant="ghost"
+                              size="sm"
+                              [attr.aria-label]="'followup.reassign_user' | translate"
+                              [uiTooltip]="'followup.reassign_user' | translate"
+                              (click)="assignUser(item)"
+                            >
+                              <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.ACCOUNT_SWITCH" />
+                            </button>
+                          } @else {
+                            <button
+                              uiButton
+                              variant="ghost"
+                              size="sm"
+                              [attr.aria-label]="'followup.assign_user' | translate"
+                              [uiTooltip]="'followup.assign_user' | translate"
+                              (click)="assignUser(item)"
+                            >
+                              <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.ACCOUNT_ARROW_RIGHT" />
+                            </button>
+                          }
                         }
                         <button
                           uiButton
@@ -427,6 +430,7 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
   private readonly appStore = inject(AppStore)
   private readonly translate = inject(TranslateService)
   readonly isArabic = computed(() => (this.translate.currentLang || 'ar') === 'ar')
+  readonly isPmoHead = computed(() => this.appStore.userType() === UserType.PMO_HEAD)
   readonly securityLevels = computed(() => this.appStore.lookupList()?.SecurityLevel ?? [])
   readonly priorityLevels = computed(() => this.appStore.lookupList()?.PriorityLevel ?? [])
   readonly followupStatuses = computed(() => this.appStore.lookupList()?.FollowupStatus ?? [])
