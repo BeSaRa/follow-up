@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { MatIcon } from '@angular/material/icon'
 import {
@@ -81,7 +88,10 @@ import { UserType } from '../../shared/enums/user-type'
         </div>
         <div class="flex items-center gap-2">
           <button uiButton variant="outline" size="sm" (click)="refresh()">
-            <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.REFRESH" />
+            <mat-icon
+              class="text-lg! size-5! leading-5!"
+              [svgIcon]="icons.REFRESH"
+            />
           </button>
         </div>
       </div>
@@ -95,7 +105,10 @@ import { UserType } from '../../shared/enums/user-type'
                 [style.background-color]="counter.bg"
                 [style.color]="counter.color"
               >
-                <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="counter.icon" />
+                <mat-icon
+                  class="text-lg! size-5! leading-5!"
+                  [svgIcon]="counter.icon"
+                />
               </div>
               <div class="min-w-0">
                 <p class="truncate text-xs text-foreground-muted">
@@ -104,7 +117,9 @@ import { UserType } from '../../shared/enums/user-type'
                 @if (countersLoading()) {
                   <ui-skeleton width="3rem" height="1.5rem" />
                 } @else {
-                  <p class="text-xl font-bold text-foreground">{{ counter.value(counters()) }}</p>
+                  <p class="text-xl font-bold text-foreground">
+                    {{ counter.value(counters()) }}
+                  </p>
                 }
               </div>
             </ui-card-content>
@@ -134,7 +149,10 @@ import { UserType } from '../../shared/enums/user-type'
             [placeholder]="'followup.filter_security_level' | translate"
             (valueChange)="onSecurityLevelChange($event)"
           >
-            <ui-select-option [value]="null" [label]="'followup.filter_all' | translate">
+            <ui-select-option
+              [value]="null"
+              [label]="'followup.filter_all' | translate"
+            >
               {{ 'followup.filter_all' | translate }}
             </ui-select-option>
             @for (item of securityLevels(); track item.lookupKey) {
@@ -152,7 +170,10 @@ import { UserType } from '../../shared/enums/user-type'
             [placeholder]="'followup.filter_priority_level' | translate"
             (valueChange)="onPriorityLevelChange($event)"
           >
-            <ui-select-option [value]="null" [label]="'followup.filter_all' | translate">
+            <ui-select-option
+              [value]="null"
+              [label]="'followup.filter_all' | translate"
+            >
               {{ 'followup.filter_all' | translate }}
             </ui-select-option>
             @for (item of priorityLevels(); track item.lookupKey) {
@@ -170,7 +191,10 @@ import { UserType } from '../../shared/enums/user-type'
             [placeholder]="'followup.filter_followup_status' | translate"
             (valueChange)="onFollowUpStatusChange($event)"
           >
-            <ui-select-option [value]="null" [label]="'followup.filter_all' | translate">
+            <ui-select-option
+              [value]="null"
+              [label]="'followup.filter_all' | translate"
+            >
               {{ 'followup.filter_all' | translate }}
             </ui-select-option>
             @for (item of followupStatuses(); track item.lookupKey) {
@@ -188,13 +212,22 @@ import { UserType } from '../../shared/enums/user-type'
             [placeholder]="'followup.filter_assigned' | translate"
             (valueChange)="onIsAssignedChange($event)"
           >
-            <ui-select-option [value]="1" [label]="'followup.filter_all' | translate">
+            <ui-select-option
+              [value]="1"
+              [label]="'followup.filter_all' | translate"
+            >
               {{ 'followup.filter_all' | translate }}
             </ui-select-option>
-            <ui-select-option [value]="2" [label]="'followup.filter_assigned_yes' | translate">
+            <ui-select-option
+              [value]="2"
+              [label]="'followup.filter_assigned_yes' | translate"
+            >
               {{ 'followup.filter_assigned_yes' | translate }}
             </ui-select-option>
-            <ui-select-option [value]="3" [label]="'followup.filter_assigned_no' | translate">
+            <ui-select-option
+              [value]="3"
+              [label]="'followup.filter_assigned_no' | translate"
+            >
               {{ 'followup.filter_assigned_no' | translate }}
             </ui-select-option>
           </ui-select>
@@ -204,7 +237,10 @@ import { UserType } from '../../shared/enums/user-type'
             [placeholder]="'followup.filter_assigned_user' | translate"
             (valueChange)="onAssignedUserChange($event)"
           >
-            <ui-select-option [value]="null" [label]="'followup.filter_all' | translate">
+            <ui-select-option
+              [value]="null"
+              [label]="'followup.filter_all' | translate"
+            >
               {{ 'followup.filter_all' | translate }}
             </ui-select-option>
             @for (user of internalUsers(); track user.id) {
@@ -249,7 +285,10 @@ import { UserType } from '../../shared/enums/user-type'
               size="sm"
               (click)="clearFilters()"
             >
-              <mat-icon class="text-lg! size-5! leading-5! me-1" [svgIcon]="icons.CLOSE" />
+              <mat-icon
+                class="text-lg! size-5! leading-5! me-1"
+                [svgIcon]="icons.CLOSE"
+              />
               {{ 'followup.clear_filters' | translate }}
             </button>
           }
@@ -262,16 +301,28 @@ import { UserType } from '../../shared/enums/user-type'
             <table uiTable>
               <thead uiTableHeader>
                 <tr uiTableRow>
-                  <th uiTableHead resizable>{{ 'followup.doc_subject' | translate }}</th>
+                  <th uiTableHead resizable>
+                    {{ 'followup.doc_subject' | translate }}
+                  </th>
                   <th uiTableHead>{{ 'followup.reference' | translate }}</th>
-                  <th uiTableHead>{{ 'followup.priority_level' | translate }}</th>
+                  <th uiTableHead>
+                    {{ 'followup.priority_level' | translate }}
+                  </th>
                   <th uiTableHead>{{ 'followup.doc_class' | translate }}</th>
-                  <th uiTableHead>{{ 'followup.external_entity' | translate }}</th>
-                  <th uiTableHead>{{ 'followup.followup_status' | translate }}</th>
-                  <th uiTableHead>{{ 'followup.assigned_user' | translate }}</th>
+                  <th uiTableHead>
+                    {{ 'followup.external_entity' | translate }}
+                  </th>
+                  <th uiTableHead>
+                    {{ 'followup.followup_status' | translate }}
+                  </th>
+                  <th uiTableHead>
+                    {{ 'followup.assigned_user' | translate }}
+                  </th>
                   <th uiTableHead>{{ 'followup.due_date' | translate }}</th>
                   <th uiTableHead>{{ 'followup.status' | translate }}</th>
-                  <th uiTableHead class="w-[160px] [&>div]:justify-center">{{ 'followup.actions' | translate }}</th>
+                  <th uiTableHead class="w-[160px] [&>div]:justify-center">
+                    {{ 'followup.actions' | translate }}
+                  </th>
                 </tr>
               </thead>
               <tbody uiTableBody>
@@ -287,7 +338,12 @@ import { UserType } from '../../shared/enums/user-type'
                     </td>
                     <td uiTableCell>{{ item.followUpReference }}</td>
                     <td uiTableCell>
-                      <ui-badge [variant]="getPriorityVariant(item.priorityLevelInfo.id)" size="sm">
+                      <ui-badge
+                        [variant]="
+                          getPriorityVariant(item.priorityLevelInfo.id)
+                        "
+                        size="sm"
+                      >
                         {{ item.priorityLevelInfo.getName() }}
                       </ui-badge>
                     </td>
@@ -295,12 +351,24 @@ import { UserType } from '../../shared/enums/user-type'
                       <div class="flex items-center gap-2">
                         <div
                           class="inline-flex size-6 items-center justify-center rounded-full"
-                          [style.background-color]="item.docClassInfo.id === DocumentClass.OUTGOING ? 'rgba(59, 130, 246, 0.15)' : 'rgba(139, 92, 246, 0.15)'"
-                          [style.color]="item.docClassInfo.id === DocumentClass.OUTGOING ? 'rgb(59, 130, 246)' : 'rgb(139, 92, 246)'"
+                          [style.background-color]="
+                            item.docClassInfo.id === DocumentClass.OUTGOING
+                              ? 'rgba(59, 130, 246, 0.15)'
+                              : 'rgba(139, 92, 246, 0.15)'
+                          "
+                          [style.color]="
+                            item.docClassInfo.id === DocumentClass.OUTGOING
+                              ? 'rgb(59, 130, 246)'
+                              : 'rgb(139, 92, 246)'
+                          "
                         >
                           <mat-icon
                             class="text-xs! size-3! leading-3!"
-                            [svgIcon]="item.docClassInfo.id === DocumentClass.OUTGOING ? icons.ARROW_UP : icons.ARROW_DOWN"
+                            [svgIcon]="
+                              item.docClassInfo.id === DocumentClass.OUTGOING
+                                ? icons.ARROW_UP
+                                : icons.ARROW_DOWN
+                            "
                           />
                         </div>
                         <span>{{ item.docClassInfo.getName() }}</span>
@@ -315,11 +383,18 @@ import { UserType } from '../../shared/enums/user-type'
                         [variant]="item.status ? 'success' : 'error'"
                         size="sm"
                       >
-                        {{ (item.status ? 'followup.active' : 'followup.inactive') | translate }}
+                        {{
+                          (item.status
+                            ? 'followup.active'
+                            : 'followup.inactive'
+                          ) | translate
+                        }}
                       </ui-badge>
                     </td>
                     <td uiTableCell class="w-[160px]">
-                      <div class="flex w-full items-center justify-center gap-1">
+                      <div
+                        class="flex w-full items-center justify-center gap-1"
+                      >
                         <button
                           uiButton
                           variant="ghost"
@@ -328,7 +403,10 @@ import { UserType } from '../../shared/enums/user-type'
                           [uiTooltip]="'followup.view' | translate"
                           (click)="view(item)"
                         >
-                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.EYE_OUTLINE" />
+                          <mat-icon
+                            class="text-lg! size-5! leading-5!"
+                            [svgIcon]="icons.EYE_OUTLINE"
+                          />
                         </button>
                         @if (isPmoHead()) {
                           @if (item.assignedUserInfo.id > 0) {
@@ -336,22 +414,32 @@ import { UserType } from '../../shared/enums/user-type'
                               uiButton
                               variant="ghost"
                               size="sm"
-                              [attr.aria-label]="'followup.reassign_user' | translate"
+                              [attr.aria-label]="
+                                'followup.reassign_user' | translate
+                              "
                               [uiTooltip]="'followup.reassign_user' | translate"
                               (click)="assignUser(item)"
                             >
-                              <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.ACCOUNT_SWITCH" />
+                              <mat-icon
+                                class="text-lg! size-5! leading-5!"
+                                [svgIcon]="icons.ACCOUNT_SWITCH"
+                              />
                             </button>
                           } @else {
                             <button
                               uiButton
                               variant="ghost"
                               size="sm"
-                              [attr.aria-label]="'followup.assign_user' | translate"
+                              [attr.aria-label]="
+                                'followup.assign_user' | translate
+                              "
                               [uiTooltip]="'followup.assign_user' | translate"
                               (click)="assignUser(item)"
                             >
-                              <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.ACCOUNT_ARROW_RIGHT" />
+                              <mat-icon
+                                class="text-lg! size-5! leading-5!"
+                                [svgIcon]="icons.ACCOUNT_ARROW_RIGHT"
+                              />
                             </button>
                           }
                         }
@@ -363,7 +451,10 @@ import { UserType } from '../../shared/enums/user-type'
                           [uiTooltip]="'followup.show_logs' | translate"
                           (click)="showLogs(item)"
                         >
-                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.HISTORY" />
+                          <mat-icon
+                            class="text-lg! size-5! leading-5!"
+                            [svgIcon]="icons.HISTORY"
+                          />
                         </button>
                         <!-- <button
                           uiButton
@@ -389,21 +480,31 @@ import { UserType } from '../../shared/enums/user-type'
                           uiButton
                           variant="ghost"
                           size="sm"
-                          [attr.aria-label]="'followup.show_comments' | translate"
+                          [attr.aria-label]="
+                            'followup.show_comments' | translate
+                          "
                           [uiTooltip]="'followup.show_comments' | translate"
                           (click)="showComments(item)"
                         >
-                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.COMMENT_MULTIPLE_OUTLINE" />
+                          <mat-icon
+                            class="text-lg! size-5! leading-5!"
+                            [svgIcon]="icons.COMMENT_MULTIPLE_OUTLINE"
+                          />
                         </button>
                         <button
                           uiButton
                           variant="ghost"
                           size="sm"
-                          [attr.aria-label]="'followup.show_statements' | translate"
+                          [attr.aria-label]="
+                            'followup.show_statements' | translate
+                          "
                           [uiTooltip]="'followup.show_statements' | translate"
                           (click)="showStatements(item)"
                         >
-                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.MESSAGE_TEXT_OUTLINE" />
+                          <mat-icon
+                            class="text-lg! size-5! leading-5!"
+                            [svgIcon]="icons.MESSAGE_TEXT_OUTLINE"
+                          />
                         </button>
                       </div>
                     </td>
@@ -418,9 +519,16 @@ import { UserType } from '../../shared/enums/user-type'
                           }
                         </div>
                       } @else {
-                        <div class="flex flex-col items-center justify-center py-12 text-foreground-muted">
-                          <mat-icon class="text-4xl! size-10! leading-10! mb-3" [svgIcon]="icons.VIEW_DASHBOARD" />
-                          <p class="text-sm">{{ 'followup.no_data' | translate }}</p>
+                        <div
+                          class="flex flex-col items-center justify-center py-12 text-foreground-muted"
+                        >
+                          <mat-icon
+                            class="text-4xl! size-10! leading-10! mb-3"
+                            [svgIcon]="icons.VIEW_DASHBOARD"
+                          />
+                          <p class="text-sm">
+                            {{ 'followup.no_data' | translate }}
+                          </p>
                         </div>
                       }
                     </td>
@@ -451,7 +559,10 @@ import { UserType } from '../../shared/enums/user-type'
     </div>
   `,
 })
-export class FollowupPage extends CrudPageDirective<Followup, FollowupService> implements OnInit {
+export class FollowupPage
+  extends CrudPageDirective<Followup, FollowupService>
+  implements OnInit
+{
   readonly service = inject(FollowupService)
   readonly icons = APP_ICONS
   readonly DocumentClass = DocumentClass
@@ -466,11 +577,21 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
 
   private readonly appStore = inject(AppStore)
   private readonly translate = inject(TranslateService)
-  readonly isArabic = computed(() => (this.translate.currentLang || 'ar') === 'ar')
-  readonly isPmoHead = computed(() => this.appStore.userType() === UserType.PMO_HEAD)
-  readonly securityLevels = computed(() => this.appStore.lookupList()?.SecurityLevel ?? [])
-  readonly priorityLevels = computed(() => this.appStore.lookupList()?.PriorityLevel ?? [])
-  readonly followupStatuses = computed(() => this.appStore.lookupList()?.FollowupStatus ?? [])
+  readonly isArabic = computed(
+    () => (this.translate.currentLang || 'ar') === 'ar',
+  )
+  readonly isPmoHead = computed(
+    () => this.appStore.userType() === UserType.PMO_HEAD,
+  )
+  readonly securityLevels = computed(
+    () => this.appStore.lookupList()?.SecurityLevel ?? [],
+  )
+  readonly priorityLevels = computed(
+    () => this.appStore.lookupList()?.PriorityLevel ?? [],
+  )
+  readonly followupStatuses = computed(
+    () => this.appStore.lookupList()?.FollowupStatus ?? [],
+  )
   readonly hasActiveFilters = computed(
     () =>
       !!this.searchQuery() ||
@@ -482,7 +603,9 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
       (this.isAssigned() !== 1 && this.isAssigned() !== null) ||
       this.assignedUserId() != null,
   )
-  readonly counters = signal<FollowupDashboardCounters>(new FollowupDashboardCounters())
+  readonly counters = signal<FollowupDashboardCounters>(
+    new FollowupDashboardCounters(),
+  )
   readonly countersLoading = signal(false)
 
   readonly counterCards: ReadonlyArray<{
@@ -561,7 +684,11 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
     })
   }
 
-  override buildLoadOptions(page: number, size: number, search: string): Record<string, unknown> {
+  override buildLoadOptions(
+    page: number,
+    size: number,
+    search: string,
+  ): Record<string, unknown> {
     const options = super.buildLoadOptions(page, size, search)
     const from = this.fromDate()
     const to = this.toDate()
@@ -585,7 +712,7 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
     }
     const assigned = this.isAssigned()
     if (assigned != null) {
-      options['isAssigned'] = assigned === 1 ? null : assigned === 2
+      options['assignmentStatus'] = assigned
     }
     const assignedUser = this.assignedUserId()
     if (assignedUser != null) {
