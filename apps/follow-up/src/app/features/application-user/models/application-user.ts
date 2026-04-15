@@ -1,11 +1,8 @@
 import { Validators } from '@angular/forms'
 import { CrudModel, HasForm } from '@follow-up/core'
-import { InterceptModel } from 'cast-response'
+import type { InfoContract } from '@follow-up/contracts'
 import { ApplicationUserService } from '../services/application-user.service'
-import { ApplicationUserModelInterceptor } from './application-user-model-interceptor'
-import { Info } from '../../../shared/models/info'
 
-@InterceptModel(new ApplicationUserModelInterceptor())
 export class ApplicationUser extends CrudModel<ApplicationUser, ApplicationUserService> implements HasForm {
   $$primaryKey = 'id' as const
   $$service = 'ApplicationUserService'
@@ -20,8 +17,8 @@ export class ApplicationUser extends CrudModel<ApplicationUser, ApplicationUserS
   mobile = ''
   domainName = ''
   enableEmailNotification = false
-  userTypeInfo = new Info()
-  externalEntityInfo = new Info()
+  userTypeInfo: InfoContract = { id: 0, arName: '', enName: '' }
+  externalEntityInfo?: InfoContract
 
   buildForm() {
     return {
