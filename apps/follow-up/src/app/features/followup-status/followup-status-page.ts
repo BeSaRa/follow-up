@@ -87,7 +87,7 @@ import { FollowupStatus } from './models/followup-status'
 
       <!-- Search Bar -->
       <div class="flex items-center gap-3">
-        <div class="relative max-w-sm flex-1">
+        <div class="relative w-64">
           <mat-icon
             class="absolute start-3 top-1/2 -translate-y-1/2 text-lg! size-5! leading-5! text-foreground-subtle"
             [svgIcon]="icons.MAGNIFY"

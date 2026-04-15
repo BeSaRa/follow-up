@@ -1,8 +1,8 @@
-import { inject, Injectable } from '@angular/core'
+import { inject, Injectable, signal } from '@angular/core'
 import { HttpParams } from '@angular/common/http'
 import qs from 'qs'
 import { MatDialogRef } from '@angular/material/dialog'
-import { map, Observable } from 'rxjs'
+import { map, Observable, of, shareReplay, tap } from 'rxjs'
 import { CrudService, Pagination, RegisterServiceMixin } from '@follow-up/core'
 import { DialogService } from '@follow-up/ui'
 import { Followup } from '../models/followup'
@@ -258,9 +258,31 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
     )
   }
 
+  private readonly _internalUsers = signal<InternalUser[]>([])
+  readonly internalUsers = this._internalUsers.asReadonly()
+  private internalUsers$?: Observable<InternalUser[]>
+
   @CastResponse(() => InternalUser, { unwrap: 'result' })
-  loadAssignableUsers(): Observable<InternalUser[]> {
+  private fetchAssignableUsers(): Observable<InternalUser[]> {
     return this.http.get<InternalUser[]>(this.urlService.URLS.INTERNAL_USERS_LOOKUP)
+  }
+
+  loadAssignableUsers(): Observable<InternalUser[]> {
+    if (this._internalUsers().length) {
+      return of(this._internalUsers())
+    }
+    if (!this.internalUsers$) {
+      this.internalUsers$ = this.fetchAssignableUsers().pipe(
+        tap((users) => this._internalUsers.set(users)),
+        shareReplay({ bufferSize: 1, refCount: false }),
+      )
+    }
+    return this.internalUsers$
+  }
+
+  clearInternalUsersCache(): void {
+    this._internalUsers.set([])
+    this.internalUsers$ = undefined
   }
 
   updateAssignee(payload: {

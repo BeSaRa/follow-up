@@ -171,7 +171,13 @@ export class UiSelect implements ControlValueAccessor {
     effect(() => {
       const val = this.value()
       const opts = this.options()
-      if (val == null || !opts.length) return
+      if (val == null) {
+        this.displayLabel.set('')
+        this.clearActive()
+        opts.forEach(o => o.isSelected.set(false))
+        return
+      }
+      if (!opts.length) return
       const match = opts.find(o => {
         try { return o.value() === val } catch { return false }
       })

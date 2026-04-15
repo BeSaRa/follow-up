@@ -16,7 +16,6 @@ import {
 } from '@follow-up/ui'
 import { APP_ICONS } from '../../../constants/icons'
 import { FollowupService } from '../services/followup.service'
-import { InternalUser } from '../models/internal-user'
 
 export interface FollowupAssignUserDialogData {
   followupId: number
@@ -141,7 +140,7 @@ export class FollowupAssignUserDialog implements OnInit {
   readonly icons = APP_ICONS
   readonly followupId = this.data.followupId
 
-  readonly users = signal<InternalUser[]>([])
+  readonly users = this.followupService.internalUsers
   readonly loadingUsers = signal(false)
   readonly saving = signal(false)
 
@@ -162,18 +161,13 @@ export class FollowupAssignUserDialog implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadUsers()
-  }
-
-  private loadUsers(): void {
-    this.loadingUsers.set(true)
-    this.followupService.loadAssignableUsers().subscribe({
-      next: (users) => {
-        this.users.set(users)
-        this.loadingUsers.set(false)
-      },
-      error: () => this.loadingUsers.set(false),
-    })
+    if (!this.users().length) {
+      this.loadingUsers.set(true)
+      this.followupService.loadAssignableUsers().subscribe({
+        next: () => this.loadingUsers.set(false),
+        error: () => this.loadingUsers.set(false),
+      })
+    }
   }
 
   save(): void {

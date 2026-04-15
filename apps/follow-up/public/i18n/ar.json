@@ -149,6 +149,10 @@
     "filter_security_level": "مستوى السرية",
     "filter_priority_level": "مستوى الأولوية",
     "filter_followup_status": "حالة المتابعة",
+    "filter_assigned": "التعيين",
+    "filter_assigned_yes": "معين",
+    "filter_assigned_no": "غير معين",
+    "filter_assigned_user": "المستخدم المكلف",
     "counters": {
       "outgoing": "الصادر",
       "incoming": "الوارد",

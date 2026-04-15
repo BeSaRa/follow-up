@@ -112,48 +112,22 @@ import { UserType } from '../../shared/enums/user-type'
         }
       </div>
 
-      <div class="flex flex-wrap items-center gap-3">
-        <div class="relative max-w-sm flex-1">
-          <mat-icon
-            class="absolute start-3 top-1/2 -translate-y-1/2 text-lg! size-5! leading-5! text-foreground-subtle"
-            [svgIcon]="icons.MAGNIFY"
-          />
-          <input
-            uiInput
-            type="text"
-            class="bg-surface-raised! ps-10"
-            [placeholder]="'followup.search_placeholder' | translate"
-            [value]="searchQuery()"
-            (input)="onSearchInput($event)"
-          />
-        </div>
-        <div class="flex items-center gap-2">
-          <ui-date-picker
-            [value]="fromDate()"
-            [max]="toDate()"
-            (valueChange)="onFromDateChange($event)"
-          >
-            <input
-              uiDatePickerInput
-              class="bg-surface-raised!"
-              [placeholder]="'followup.from_date' | translate"
+      <div class="flex flex-col gap-3">
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="relative w-64">
+            <mat-icon
+              class="absolute start-3 top-1/2 -translate-y-1/2 text-lg! size-5! leading-5! text-foreground-subtle"
+              [svgIcon]="icons.MAGNIFY"
             />
-            <ui-date-picker-toggle />
-          </ui-date-picker>
-          <ui-date-picker
-            [value]="toDate()"
-            [min]="fromDate()"
-            (valueChange)="onToDateChange($event)"
-          >
             <input
-              uiDatePickerInput
-              class="bg-surface-raised!"
-              [placeholder]="'followup.to_date' | translate"
+              uiInput
+              type="text"
+              class="bg-surface-raised! ps-10"
+              [placeholder]="'followup.search_placeholder' | translate"
+              [value]="searchQuery()"
+              (input)="onSearchInput($event)"
             />
-            <ui-date-picker-toggle />
-          </ui-date-picker>
-        </div>
-        <div class="flex flex-wrap items-center gap-2">
+          </div>
           <ui-select
             class="w-48 [&>button]:bg-surface-raised!"
             [value]="securityLevel()"
@@ -208,6 +182,66 @@ import { UserType } from '../../shared/enums/user-type'
               </ui-select-option>
             }
           </ui-select>
+          <ui-select
+            class="w-48 [&>button]:bg-surface-raised!"
+            [value]="isAssigned()"
+            [placeholder]="'followup.filter_assigned' | translate"
+            (valueChange)="onIsAssignedChange($event)"
+          >
+            <ui-select-option [value]="1" [label]="'followup.filter_all' | translate">
+              {{ 'followup.filter_all' | translate }}
+            </ui-select-option>
+            <ui-select-option [value]="2" [label]="'followup.filter_assigned_yes' | translate">
+              {{ 'followup.filter_assigned_yes' | translate }}
+            </ui-select-option>
+            <ui-select-option [value]="3" [label]="'followup.filter_assigned_no' | translate">
+              {{ 'followup.filter_assigned_no' | translate }}
+            </ui-select-option>
+          </ui-select>
+          <ui-select
+            class="w-56 [&>button]:bg-surface-raised!"
+            [value]="assignedUserId()"
+            [placeholder]="'followup.filter_assigned_user' | translate"
+            (valueChange)="onAssignedUserChange($event)"
+          >
+            <ui-select-option [value]="null" [label]="'followup.filter_all' | translate">
+              {{ 'followup.filter_all' | translate }}
+            </ui-select-option>
+            @for (user of internalUsers(); track user.id) {
+              <ui-select-option
+                [value]="user.id"
+                [label]="isArabic() ? user.arName : user.enName"
+              >
+                {{ isArabic() ? user.arName : user.enName }}
+              </ui-select-option>
+            }
+          </ui-select>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <ui-date-picker
+            [value]="fromDate()"
+            [max]="toDate()"
+            (valueChange)="onFromDateChange($event)"
+          >
+            <input
+              uiDatePickerInput
+              class="bg-surface-raised!"
+              [placeholder]="'followup.from_date' | translate"
+            />
+            <ui-date-picker-toggle />
+          </ui-date-picker>
+          <ui-date-picker
+            [value]="toDate()"
+            [min]="fromDate()"
+            (valueChange)="onToDateChange($event)"
+          >
+            <input
+              uiDatePickerInput
+              class="bg-surface-raised!"
+              [placeholder]="'followup.to_date' | translate"
+            />
+            <ui-date-picker-toggle />
+          </ui-date-picker>
           @if (hasActiveFilters()) {
             <button
               uiButton
@@ -426,6 +460,9 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
   readonly securityLevel = signal<number | null>(null)
   readonly priorityLevel = signal<number | null>(null)
   readonly followUpStatus = signal<number | null>(null)
+  readonly isAssigned = signal<1 | 2 | 3 | null>(null)
+  readonly assignedUserId = signal<number | null>(null)
+  readonly internalUsers = this.service.internalUsers
 
   private readonly appStore = inject(AppStore)
   private readonly translate = inject(TranslateService)
@@ -441,7 +478,9 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
       this.toDate() != null ||
       this.securityLevel() != null ||
       this.priorityLevel() != null ||
-      this.followUpStatus() != null,
+      this.followUpStatus() != null ||
+      (this.isAssigned() !== 1 && this.isAssigned() !== null) ||
+      this.assignedUserId() != null,
   )
   readonly counters = signal<FollowupDashboardCounters>(new FollowupDashboardCounters())
   readonly countersLoading = signal(false)
@@ -499,6 +538,9 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
 
   ngOnInit(): void {
     this.loadCounters()
+    if (!this.internalUsers().length) {
+      this.service.loadAssignableUsers().subscribe({ error: () => undefined })
+    }
   }
 
   override refresh(): void {
@@ -540,6 +582,14 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
     const status = this.followUpStatus()
     if (status != null) {
       options['followUpStatus'] = status
+    }
+    const assigned = this.isAssigned()
+    if (assigned != null) {
+      options['isAssigned'] = assigned === 1 ? null : assigned === 2
+    }
+    const assignedUser = this.assignedUserId()
+    if (assignedUser != null) {
+      options['userId'] = assignedUser
     }
     return options
   }
@@ -585,6 +635,18 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
     this.refresh()
   }
 
+  onIsAssignedChange(value: unknown): void {
+    this.isAssigned.set(value as 1 | 2 | 3 | null)
+    this.pageIndex.set(0)
+    this.refresh()
+  }
+
+  onAssignedUserChange(value: unknown): void {
+    this.assignedUserId.set(value as number | null)
+    this.pageIndex.set(0)
+    this.refresh()
+  }
+
   clearFilters(): void {
     this.searchQuery.set('')
     this.fromDate.set(null)
@@ -592,6 +654,8 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
     this.securityLevel.set(null)
     this.priorityLevel.set(null)
     this.followUpStatus.set(null)
+    this.isAssigned.set(null)
+    this.assignedUserId.set(null)
     this.pageIndex.set(0)
     this.refresh()
   }

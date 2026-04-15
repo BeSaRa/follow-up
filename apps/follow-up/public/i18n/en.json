@@ -149,6 +149,10 @@
     "filter_security_level": "Security Level",
     "filter_priority_level": "Priority Level",
     "filter_followup_status": "Follow-up Status",
+    "filter_assigned": "Assigned",
+    "filter_assigned_yes": "Assigned",
+    "filter_assigned_no": "Unassigned",
+    "filter_assigned_user": "Assigned User",
     "counters": {
       "outgoing": "Outgoing",
       "incoming": "Incoming",
