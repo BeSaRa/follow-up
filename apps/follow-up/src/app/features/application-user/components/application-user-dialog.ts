@@ -19,6 +19,7 @@ import {
 } from '@follow-up/ui'
 import { CrudDialogDirective, CrudDialogTitleKeys } from '@follow-up/core'
 import { ApplicationUser } from '../models/application-user'
+import { Info } from '../../../shared/models/info'
 import { ExternalSite } from '../../external-site/models/external-site'
 import { ExternalSiteService } from '../../external-site/services/external-site.service'
 import { UserPermissionService } from '../services/user-permission.service'
@@ -264,13 +265,14 @@ export class ApplicationUserDialog extends CrudDialogDirective<ApplicationUser> 
   override prepareModel() {
     const model = super.prepareModel()
     const selectedUserType = this.form.get('userType')?.value
-    model.userTypeInfo = { id: selectedUserType, arName: '', enName: '' }
+    const userTypeInfo = new Info()
+    userTypeInfo.id = selectedUserType
+    model.userTypeInfo = userTypeInfo
+    const externalEntityInfo = new Info()
     if (this.isExternalUser()) {
-      const selectedEntity = this.form.get('externalEntity')?.value
-      model.externalEntityInfo = { id: selectedEntity, arName: '', enName: '' }
-    } else {
-      model.externalEntityInfo = undefined
+      externalEntityInfo.id = this.form.get('externalEntity')?.value ?? 0
     }
+    model.externalEntityInfo = externalEntityInfo
     return model
   }
 

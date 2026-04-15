@@ -114,13 +114,16 @@ import { ApplicationUser } from './models/application-user'
                     {{ 'application_user.domain_name' | translate }}
                   </th>
                   <th uiTableHead>
-                    {{ 'application_user.employee_no' | translate }}
+                    {{ 'application_user.user_role' | translate }}
                   </th>
                   <th uiTableHead>
                     {{ 'application_user.ar_name' | translate }}
                   </th>
                   <th uiTableHead>
                     {{ 'application_user.en_name' | translate }}
+                  </th>
+                  <th uiTableHead>
+                    {{ 'application_user.external_entity' | translate }}
                   </th>
                   <th uiTableHead>
                     {{ 'application_user.email' | translate }}
@@ -144,10 +147,11 @@ import { ApplicationUser } from './models/application-user'
                         {{ user.domainName }}
                       </td>
                       <td uiTableCell>
-                        {{ user.employeeNo }}
+                        {{ user.userTypeInfo.getName() }}
                       </td>
                       <td uiTableCell>{{ user.arName }}</td>
                       <td uiTableCell>{{ user.enName }}</td>
+                      <td uiTableCell>{{ user.externalEntityInfo.getName() }}</td>
                       <td uiTableCell>{{ user.email }}</td>
                       <td uiTableCell>{{ user.mobile }}</td>
                       <td uiTableCell>{{ user.qid }}</td>
@@ -195,7 +199,7 @@ import { ApplicationUser } from './models/application-user'
                   </tr>
                 } @empty {
                   <tr>
-                    <td [attr.colspan]="9">
+                    <td [attr.colspan]="10">
                       @if (loading()) {
                         <div class="space-y-4 px-4 py-4">
                           @for (i of skeletonRows; track i) {

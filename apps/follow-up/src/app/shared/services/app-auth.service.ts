@@ -6,6 +6,7 @@ import type { AppAuthResponse } from '../models/app-auth'
 import { LookupService } from './lookup.service'
 import { AppStore } from '../stores/app-store'
 import { FollowupService } from '../../features/followup/services/followup.service'
+import { UserType } from '../enums/user-type'
 
 @Injectable({ providedIn: 'root' })
 export class AppAuthService extends AuthService {
@@ -18,7 +19,7 @@ export class AppAuthService extends AuthService {
       tap((response) => {
         this.appStore.setSession(response.result.applicationUser, response.result.lookupList, response.result.permissionSet, response.result.userType)
         this.lookupService.setLookupList(response.result.lookupList)
-        this.preloadCaches()
+        this.preloadCaches(response.result.userType)
       }),
     )
   }
@@ -30,13 +31,15 @@ export class AppAuthService extends AuthService {
       tap((response) => {
         this.appStore.setSession(response.result.applicationUser, response.result.lookupList, response.result.permissionSet, response.result.userType)
         this.lookupService.setLookupList(response.result.lookupList)
-        this.preloadCaches()
+        this.preloadCaches(response.result.userType)
       }),
     )
   }
 
-  private preloadCaches(): void {
+  private preloadCaches(userType: number): void {
     this.followupService.clearInternalUsersCache()
-    this.followupService.loadAssignableUsers().subscribe({ error: () => undefined })
+    if (userType === UserType.PMO_HEAD || userType === UserType.INTERNAL_USER) {
+      this.followupService.loadAssignableUsers().subscribe({ error: () => undefined })
+    }
   }
 }

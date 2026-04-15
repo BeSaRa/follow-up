@@ -127,23 +127,22 @@ import { UserType } from '../../shared/enums/user-type'
         }
       </div>
 
-      <div class="flex flex-col gap-3">
-        <div class="flex flex-wrap items-center gap-3">
-          <div class="relative w-64">
-            <mat-icon
-              class="absolute start-3 top-1/2 -translate-y-1/2 text-lg! size-5! leading-5! text-foreground-subtle"
-              [svgIcon]="icons.MAGNIFY"
-            />
-            <input
-              uiInput
-              type="text"
-              class="bg-surface-raised! ps-10"
-              [placeholder]="'followup.search_placeholder' | translate"
-              [value]="searchQuery()"
-              (input)="onSearchInput($event)"
-            />
-          </div>
-          <ui-select
+      <div class="flex flex-wrap items-center gap-3">
+        <div class="relative w-64">
+          <mat-icon
+            class="absolute start-3 top-1/2 -translate-y-1/2 text-lg! size-5! leading-5! text-foreground-subtle"
+            [svgIcon]="icons.MAGNIFY"
+          />
+          <input
+            uiInput
+            type="text"
+            class="bg-surface-raised! ps-10"
+            [placeholder]="'followup.search_placeholder' | translate"
+            [value]="searchQuery()"
+            (input)="onSearchInput($event)"
+          />
+        </div>
+        <ui-select
             class="w-48 [&>button]:bg-surface-raised!"
             [value]="securityLevel()"
             [placeholder]="'followup.filter_security_level' | translate"
@@ -231,6 +230,7 @@ import { UserType } from '../../shared/enums/user-type'
               {{ 'followup.filter_assigned_no' | translate }}
             </ui-select-option>
           </ui-select>
+          <!-- TODO: re-enable once backend supports userId filter
           <ui-select
             class="w-56 [&>button]:bg-surface-raised!"
             [value]="assignedUserId()"
@@ -252,47 +252,45 @@ import { UserType } from '../../shared/enums/user-type'
               </ui-select-option>
             }
           </ui-select>
-        </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <ui-date-picker
-            [value]="fromDate()"
-            [max]="toDate()"
-            (valueChange)="onFromDateChange($event)"
+          -->
+        <ui-date-picker
+          [value]="fromDate()"
+          [max]="toDate()"
+          (valueChange)="onFromDateChange($event)"
+        >
+          <input
+            uiDatePickerInput
+            class="bg-surface-raised!"
+            [placeholder]="'followup.from_date' | translate"
+          />
+          <ui-date-picker-toggle />
+        </ui-date-picker>
+        <ui-date-picker
+          [value]="toDate()"
+          [min]="fromDate()"
+          (valueChange)="onToDateChange($event)"
+        >
+          <input
+            uiDatePickerInput
+            class="bg-surface-raised!"
+            [placeholder]="'followup.to_date' | translate"
+          />
+          <ui-date-picker-toggle />
+        </ui-date-picker>
+        @if (hasActiveFilters()) {
+          <button
+            uiButton
+            variant="outline"
+            size="sm"
+            (click)="clearFilters()"
           >
-            <input
-              uiDatePickerInput
-              class="bg-surface-raised!"
-              [placeholder]="'followup.from_date' | translate"
+            <mat-icon
+              class="text-lg! size-5! leading-5! me-1"
+              [svgIcon]="icons.CLOSE"
             />
-            <ui-date-picker-toggle />
-          </ui-date-picker>
-          <ui-date-picker
-            [value]="toDate()"
-            [min]="fromDate()"
-            (valueChange)="onToDateChange($event)"
-          >
-            <input
-              uiDatePickerInput
-              class="bg-surface-raised!"
-              [placeholder]="'followup.to_date' | translate"
-            />
-            <ui-date-picker-toggle />
-          </ui-date-picker>
-          @if (hasActiveFilters()) {
-            <button
-              uiButton
-              variant="outline"
-              size="sm"
-              (click)="clearFilters()"
-            >
-              <mat-icon
-                class="text-lg! size-5! leading-5! me-1"
-                [svgIcon]="icons.CLOSE"
-              />
-              {{ 'followup.clear_filters' | translate }}
-            </button>
-          }
-        </div>
+            {{ 'followup.clear_filters' | translate }}
+          </button>
+        }
       </div>
 
       <ui-card>
@@ -600,8 +598,7 @@ export class FollowupPage
       this.securityLevel() != null ||
       this.priorityLevel() != null ||
       this.followUpStatus() != null ||
-      (this.assignmentStatus() !== 1 && this.assignmentStatus() !== null) ||
-      this.assignedUserId() != null,
+      (this.assignmentStatus() !== 1 && this.assignmentStatus() !== null),
   )
   readonly counters = signal<FollowupDashboardCounters>(
     new FollowupDashboardCounters(),
@@ -714,10 +711,11 @@ export class FollowupPage
     if (assigned != null) {
       options['assignmentStatus'] = assigned
     }
-    const assignedUser = this.assignedUserId()
-    if (assignedUser != null) {
-      options['userId'] = assignedUser
-    }
+    // TODO: re-enable once backend supports userId filter
+    // const assignedUser = this.assignedUserId()
+    // if (assignedUser != null) {
+    //   options['userId'] = assignedUser
+    // }
     return options
   }
 
