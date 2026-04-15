@@ -208,9 +208,9 @@ import { UserType } from '../../shared/enums/user-type'
           </ui-select>
           <ui-select
             class="w-48 [&>button]:bg-surface-raised!"
-            [value]="isAssigned()"
+            [value]="assignmentStatus()"
             [placeholder]="'followup.filter_assigned' | translate"
-            (valueChange)="onIsAssignedChange($event)"
+            (valueChange)="onAssignmentStatusChange($event)"
           >
             <ui-select-option
               [value]="1"
@@ -571,7 +571,7 @@ export class FollowupPage
   readonly securityLevel = signal<number | null>(null)
   readonly priorityLevel = signal<number | null>(null)
   readonly followUpStatus = signal<number | null>(null)
-  readonly isAssigned = signal<1 | 2 | 3 | null>(null)
+  readonly assignmentStatus = signal<1 | 2 | 3 | null>(null)
   readonly assignedUserId = signal<number | null>(null)
   readonly internalUsers = this.service.internalUsers
 
@@ -600,7 +600,7 @@ export class FollowupPage
       this.securityLevel() != null ||
       this.priorityLevel() != null ||
       this.followUpStatus() != null ||
-      (this.isAssigned() !== 1 && this.isAssigned() !== null) ||
+      (this.assignmentStatus() !== 1 && this.assignmentStatus() !== null) ||
       this.assignedUserId() != null,
   )
   readonly counters = signal<FollowupDashboardCounters>(
@@ -710,7 +710,7 @@ export class FollowupPage
     if (status != null) {
       options['followUpStatus'] = status
     }
-    const assigned = this.isAssigned()
+    const assigned = this.assignmentStatus()
     if (assigned != null) {
       options['assignmentStatus'] = assigned
     }
@@ -762,8 +762,8 @@ export class FollowupPage
     this.refresh()
   }
 
-  onIsAssignedChange(value: unknown): void {
-    this.isAssigned.set(value as 1 | 2 | 3 | null)
+  onAssignmentStatusChange(value: unknown): void {
+    this.assignmentStatus.set(value as 1 | 2 | 3 | null)
     this.pageIndex.set(0)
     this.refresh()
   }
@@ -781,7 +781,7 @@ export class FollowupPage
     this.securityLevel.set(null)
     this.priorityLevel.set(null)
     this.followUpStatus.set(null)
-    this.isAssigned.set(null)
+    this.assignmentStatus.set(null)
     this.assignedUserId.set(null)
     this.pageIndex.set(0)
     this.refresh()
