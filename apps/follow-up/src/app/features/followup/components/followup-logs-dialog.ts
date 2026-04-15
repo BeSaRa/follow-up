@@ -5,8 +5,10 @@ import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
 import { forkJoin, Observable, timer } from 'rxjs'
 import {
+  DialogService,
   PageChangeEvent,
   UiBadge,
+  UiTooltip,
   UiPagination,
   UiSkeleton,
   UiTable,
@@ -18,6 +20,10 @@ import {
 } from '@follow-up/ui'
 import { APP_ICONS } from '../../../constants/icons'
 import { FollowupLog } from '../models/followup-log'
+import {
+  FollowupCommentViewerDialog,
+  FollowupCommentViewerDialogData,
+} from './followup-comment-viewer-dialog'
 
 export interface FollowupLogsDialogData {
   followupId: number
@@ -34,6 +40,7 @@ export interface FollowupLogsDialogData {
     MatIcon,
     UiBadge,
     UiPagination,
+    UiTooltip,
     UiSkeleton,
     UiTable,
     UiTableBody,
@@ -87,7 +94,9 @@ export interface FollowupLogsDialogData {
               <th uiTableHead>{{ 'followup.log_new_status' | translate }}</th>
               <th uiTableHead>{{ 'followup.log_old_assignee' | translate }}</th>
               <th uiTableHead>{{ 'followup.log_new_assignee' | translate }}</th>
-              <th uiTableHead>{{ 'followup.log_comments' | translate }}</th>
+              <th uiTableHead resizable style="width: 150px;">
+                {{ 'followup.log_comments' | translate }}
+              </th>
             </tr>
           </thead>
           <tbody uiTableBody>
@@ -108,7 +117,21 @@ export interface FollowupLogsDialogData {
                 </td>
                 <td uiTableCell>{{ log.oldAssignedUserInfo.getName() }}</td>
                 <td uiTableCell>{{ log.newUserAssignedUserInfo.getName() }}</td>
-                <td uiTableCell>{{ log.userComments }}</td>
+                <td uiTableCell style="max-width: 150px;">
+                  @if (log.userComments) {
+                    <button
+                      type="button"
+                      class="inline-flex size-7 items-center justify-center rounded-md text-foreground-muted transition-colors hover:bg-border hover:text-foreground"
+                      [attr.aria-label]="'followup.view_comment' | translate"
+                      [uiTooltip]="log.userComments"
+                      (click)="viewComment(log.userComments)"
+                    >
+                      <mat-icon [svgIcon]="icons.COMMENT_TEXT_OUTLINE" class="text-base! size-4! leading-4!" />
+                    </button>
+                  } @else {
+                    <span class="text-foreground-subtle">—</span>
+                  }
+                </td>
               </tr>
             } @empty {
               <tr>
@@ -155,6 +178,14 @@ export interface FollowupLogsDialogData {
 export class FollowupLogsDialog implements OnInit {
   readonly dialogRef = inject<MatDialogRef<FollowupLogsDialog>>(MatDialogRef)
   private readonly data = inject<FollowupLogsDialogData>(MAT_DIALOG_DATA)
+  private readonly dialogService = inject(DialogService)
+
+  viewComment(comment: string): void {
+    this.dialogService.open<FollowupCommentViewerDialog, FollowupCommentViewerDialogData>(
+      FollowupCommentViewerDialog,
+      { data: { comment } },
+    )
+  }
 
   readonly icons = APP_ICONS
   readonly skeletonRows = Array.from({ length: 5 })

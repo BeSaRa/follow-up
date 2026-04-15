@@ -104,6 +104,7 @@
     "log_old_assignee": "Old Assignee",
     "log_new_assignee": "New Assignee",
     "log_comments": "Comments",
+    "view_comment": "View comment",
     "from_date": "From Date",
     "to_date": "To Date",
     "open_in_dialog": "Open in Dialog",
