@@ -24,10 +24,12 @@ export interface FollowupOpenDialogData {
   loadFollowup: () => Observable<FollowupOpen>
   followupId: number
   canTerminate: boolean
+  currentStatusId?: number
 }
 
 export interface FollowupOpenDialogResult {
   terminated?: boolean
+  statusChanged?: boolean
 }
 
 type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
@@ -392,6 +394,9 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
       <!-- Footer -->
       @if (canTerminate) {
         <div class="flex items-center justify-end gap-3 border-t border-border px-6 py-3">
+          <button uiButton type="button" variant="secondary" (click)="changeStatus()">
+            {{ 'followup.change_status' | translate }}
+          </button>
           <button uiButton type="button" variant="destructive" (click)="terminate()">
             {{ 'followup.terminate' | translate }}
           </button>
@@ -478,6 +483,7 @@ export class FollowupOpenDialog implements OnInit {
 
   readonly canTerminate = this.data.canTerminate
   readonly followupId = this.data.followupId
+  readonly currentStatusId = this.data.currentStatusId
 
   readonly docSubject = signal(this.data.docSubject)
   readonly followup = signal<FollowupOpen | null>(null)
@@ -557,6 +563,17 @@ export class FollowupOpenDialog implements OnInit {
         maxWidth: '95vw',
       })
     })
+  }
+
+  changeStatus(): void {
+    this.followupService
+      .openChangeStatus(this.followupId, this.currentStatusId)
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.dialogRef.close({ statusChanged: true })
+        }
+      })
   }
 
   terminate(): void {

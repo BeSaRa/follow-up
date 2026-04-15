@@ -44,6 +44,11 @@ import {
   FollowupTerminateDialogData,
   FollowupTerminateResult,
 } from '../components/followup-terminate-dialog'
+import {
+  FollowupChangeStatusDialog,
+  FollowupChangeStatusDialogData,
+  FollowupChangeStatusResult,
+} from '../components/followup-change-status-dialog'
 import { Endpoints } from '../../../constants/endpoints'
 import { UserType } from '../../../shared/enums/user-type'
 import { AppStore } from '../../../shared/stores/app-store'
@@ -116,6 +121,7 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
           loadFollowup,
           followupId: followup.id,
           canTerminate: this.canTerminate(followup),
+          currentStatusId: followup.followUpStatusInfo.id,
         },
         width: '100vw',
         maxWidth: '100vw',
@@ -270,6 +276,29 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
       userComments: payload.userComments,
       dueDate: payload.dueDate,
       userId: payload.userId,
+    })
+  }
+
+  changeStatus(
+    followupId: number,
+    followupStatus: number,
+    userComments?: string,
+  ): Observable<unknown> {
+    const body: Record<string, unknown> = { followupId, followupStatus }
+    if (userComments) body['userComments'] = userComments
+    return this.http.put<unknown>(this.urlService.URLS.CHANGE_FOLLOWUP_STATUS, body)
+  }
+
+  openChangeStatus(
+    followupId: number,
+    currentStatusId?: number,
+  ): MatDialogRef<FollowupChangeStatusDialog, FollowupChangeStatusResult> {
+    return this.dialogService.open<
+      FollowupChangeStatusDialog,
+      FollowupChangeStatusDialogData,
+      FollowupChangeStatusResult
+    >(FollowupChangeStatusDialog, {
+      data: { followupId, currentStatusId },
     })
   }
 

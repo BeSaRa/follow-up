@@ -601,7 +601,7 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
       .view(item)
       .afterClosed()
       .subscribe((result) => {
-        if (result?.terminated) {
+        if (result?.terminated || result?.statusChanged) {
           this.refresh()
         }
       })
