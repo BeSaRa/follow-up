@@ -12,7 +12,7 @@ import { MatIcon } from '@angular/material/icon'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { TranslatePipe } from '@ngx-translate/core'
 import { Observable, of, tap } from 'rxjs'
-import { DialogService, UiBadge, UiSkeleton, UiTooltip } from '@follow-up/ui'
+import { DialogService, UiBadge, UiButton, UiSkeleton, UiTooltip } from '@follow-up/ui'
 import { APP_ICONS } from '../../../constants/icons'
 import { AttachmentViewerDialog } from './attachment-viewer-dialog'
 import { FollowupAttachment } from '../models/followup-attachment'
@@ -22,6 +22,12 @@ import { FollowupService } from '../services/followup.service'
 export interface FollowupOpenDialogData {
   docSubject: string
   loadFollowup: () => Observable<FollowupOpen>
+  followupId: number
+  canTerminate: boolean
+}
+
+export interface FollowupOpenDialogResult {
+  terminated?: boolean
 }
 
 type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
@@ -35,6 +41,7 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
     TranslatePipe,
     MatIcon,
     UiBadge,
+    UiButton,
     UiSkeleton,
     UiTooltip,
   ],
@@ -381,6 +388,15 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
           }
         </div>
       </div>
+
+      <!-- Footer -->
+      @if (canTerminate) {
+        <div class="flex items-center justify-end gap-3 border-t border-border px-6 py-3">
+          <button uiButton type="button" variant="destructive" (click)="terminate()">
+            {{ 'followup.terminate' | translate }}
+          </button>
+        </div>
+      }
     </div>
 
     <ng-template #attachmentList let-items="items">
@@ -451,7 +467,7 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
   `,
 })
 export class FollowupOpenDialog implements OnInit {
-  readonly dialogRef = inject<MatDialogRef<FollowupOpenDialog>>(MatDialogRef)
+  readonly dialogRef = inject<MatDialogRef<FollowupOpenDialog, FollowupOpenDialogResult>>(MatDialogRef)
   private readonly data = inject<FollowupOpenDialogData>(MAT_DIALOG_DATA)
   private readonly sanitizer = inject(DomSanitizer)
   private readonly followupService = inject(FollowupService)
@@ -459,6 +475,9 @@ export class FollowupOpenDialog implements OnInit {
 
   readonly icons = APP_ICONS
   readonly skeletonRows = Array.from({ length: 8 }, (_v, i) => i)
+
+  readonly canTerminate = this.data.canTerminate
+  readonly followupId = this.data.followupId
 
   readonly docSubject = signal(this.data.docSubject)
   readonly followup = signal<FollowupOpen | null>(null)
@@ -538,6 +557,17 @@ export class FollowupOpenDialog implements OnInit {
         maxWidth: '95vw',
       })
     })
+  }
+
+  terminate(): void {
+    this.followupService
+      .openTerminate(this.followupId)
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.dialogRef.close({ terminated: true })
+        }
+      })
   }
 
   ngOnInit(): void {

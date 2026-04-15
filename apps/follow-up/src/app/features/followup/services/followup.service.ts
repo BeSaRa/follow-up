@@ -15,7 +15,11 @@ import { FollowupDashboardCounters } from '../models/followup-dashboard-counters
 import { FollowupMetaData } from '../models/followup-meta-data'
 import { FollowupOpen } from '../models/followup-open'
 import { FollowupLogsDialog, FollowupLogsDialogData } from '../components/followup-logs-dialog'
-import { FollowupOpenDialog, FollowupOpenDialogData } from '../components/followup-open-dialog'
+import {
+  FollowupOpenDialog,
+  FollowupOpenDialogData,
+  FollowupOpenDialogResult,
+} from '../components/followup-open-dialog'
 import {
   FollowupAddCommentDialog,
   FollowupAddCommentDialogData,
@@ -35,6 +39,11 @@ import {
   FollowupAssignUserDialogData,
   FollowupAssignUserResult,
 } from '../components/followup-assign-user-dialog'
+import {
+  FollowupTerminateDialog,
+  FollowupTerminateDialogData,
+  FollowupTerminateResult,
+} from '../components/followup-terminate-dialog'
 import { Endpoints } from '../../../constants/endpoints'
 import { UserType } from '../../../shared/enums/user-type'
 import { AppStore } from '../../../shared/stores/app-store'
@@ -83,12 +92,31 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
     return this.http.get<FollowupOpen>(`${this.urlService.URLS.CORRESPONDENCE}/${id}`)
   }
 
-  view(followup: Followup): MatDialogRef<FollowupOpenDialog> {
+  canTerminate(followup: Followup): boolean {
+    const userType = this.appStore.userType()
+    if (userType === UserType.PMO_HEAD) return true
+    if (userType === UserType.INTERNAL_USER) {
+      const currentUserId = this.appStore.applicationUser()?.id
+      return !!currentUserId && currentUserId === followup.assignedUserInfo.id
+    }
+    return false
+  }
+
+  view(followup: Followup): MatDialogRef<FollowupOpenDialog, FollowupOpenDialogResult> {
     const loadFollowup = () => this._open(followup.id)
-    return this.dialogService.open<FollowupOpenDialog, FollowupOpenDialogData>(
+    return this.dialogService.open<
+      FollowupOpenDialog,
+      FollowupOpenDialogData,
+      FollowupOpenDialogResult
+    >(
       FollowupOpenDialog,
       {
-        data: { docSubject: followup.docSubject, loadFollowup },
+        data: {
+          docSubject: followup.docSubject,
+          loadFollowup,
+          followupId: followup.id,
+          canTerminate: this.canTerminate(followup),
+        },
         width: '100vw',
         maxWidth: '100vw',
         height: '100vh',
@@ -242,6 +270,24 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
       userComments: payload.userComments,
       dueDate: payload.dueDate,
       userId: payload.userId,
+    })
+  }
+
+  terminate(followupId: number, userComments?: string): Observable<unknown> {
+    const body: Record<string, unknown> = { followupId }
+    if (userComments) body['userComments'] = userComments
+    return this.http.put<unknown>(this.urlService.URLS.TERMINATE_FOLLOWUP, body)
+  }
+
+  openTerminate(
+    followupId: number,
+  ): MatDialogRef<FollowupTerminateDialog, FollowupTerminateResult> {
+    return this.dialogService.open<
+      FollowupTerminateDialog,
+      FollowupTerminateDialogData,
+      FollowupTerminateResult
+    >(FollowupTerminateDialog, {
+      data: { followupId },
     })
   }
 

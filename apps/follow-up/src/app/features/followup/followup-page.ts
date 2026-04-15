@@ -593,7 +593,14 @@ export class FollowupPage extends CrudPageDirective<Followup, FollowupService> i
   }
 
   view(item: Followup): void {
-    this.service.view(item)
+    this.service
+      .view(item)
+      .afterClosed()
+      .subscribe((result) => {
+        if (result?.terminated) {
+          this.refresh()
+        }
+      })
   }
 
   showLogs(item: Followup): void {
