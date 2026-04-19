@@ -34,6 +34,7 @@ import { APP_ICONS } from '../constants/icons'
 import { NAV_GROUPS } from '../constants/nav-groups'
 import { AppStore } from '../shared/stores/app-store'
 import { UserType } from '../shared/enums/user-type'
+import { NotificationBell } from '../features/notification/components/notification-bell'
 
 @Component({
   selector: 'app-layout',
@@ -55,6 +56,7 @@ import { UserType } from '../shared/enums/user-type'
     UiDropdownItem,
     UiAvatar,
     MatIcon,
+    NotificationBell,
   ],
   template: `
     <div class="flex h-screen flex-col">
@@ -120,6 +122,8 @@ import { UserType } from '../shared/enums/user-type'
               }
             </span>
           </button>
+
+          <app-notification-bell />
 
           <div class="relative">
             <button

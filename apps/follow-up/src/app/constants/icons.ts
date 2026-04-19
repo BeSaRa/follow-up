@@ -47,6 +47,9 @@ export const APP_ICONS = {
   ARROW_UP: 'arrow-up',
   ARROW_DOWN: 'arrow-down',
 
+  // ── Notifications ──
+  BELL_OUTLINE: 'bell-outline',
+
   // ── Theme ──
   WEATHER_NIGHT: 'weather-night',
   WHITE_BALANCE_SUNNY: 'white-balance-sunny',

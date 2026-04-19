@@ -31,6 +31,9 @@ export const ENDPOINTS = {
   CHANGE_FOLLOWUP_STATUS: 'user/followup/change-status',
   CORRESPONDENCE: 'user/tawasol/cor',
   ATTACHMENTS: 'user/tawasol/attachment',
+  NOTIFICATION_ACTIVE: 'user/followup/subscription/active',
+  NOTIFICATION_SET_READ: 'user/followup/subscription/set-read',
+  NOTIFICATION_OPEN: 'user/followup/subscription',
 } as const satisfies RequiredAuthEndpoints & Record<string, string>
 
 export type Endpoints = typeof ENDPOINTS

@@ -270,6 +270,13 @@
     "no_connection": "No internet connection",
     "session_expired": "Your session has expired, please log in again"
   },
+  "notification": {
+    "title": "Notifications",
+    "unread": "unread",
+    "loading": "Loading notifications...",
+    "no_data": "No notifications",
+    "mark_as_read": "Mark as read"
+  },
   "priority_level": {
     "title": "Priority Levels",
     "description": "Manage priority levels in the system",
