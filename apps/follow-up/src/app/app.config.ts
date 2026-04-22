@@ -18,6 +18,7 @@ import { appRoutes } from './app.routes'
 import { firstValueFrom, filter, of, switchMap } from 'rxjs'
 import { AuthService, AuthStore, injectUrlService, tokenInterceptor } from '@follow-up/core'
 import { AppAuthService } from './shared/services/app-auth.service'
+import { SessionBootstrapService } from './shared/services/session-bootstrap.service'
 import { AppStore } from './shared/stores/app-store'
 import { appInit } from './constants/app-init'
 import { errorInterceptor } from './interceptors/error-interceptor'
@@ -68,6 +69,9 @@ export const appConfig: ApplicationConfig = {
       iconRegistry.addSvgIconSet(
         sanitizer.bypassSecurityTrustResourceUrl('./mdi.svg'),
       )
+    }),
+    provideEnvironmentInitializer(() => {
+      inject(SessionBootstrapService)
     }),
     {
       provide: Directionality,

@@ -5,21 +5,17 @@ import type { AuthCredentials, AuthResponse } from '@follow-up/contracts'
 import type { AppAuthResponse } from '../models/app-auth'
 import { LookupService } from './lookup.service'
 import { AppStore } from '../stores/app-store'
-import { FollowupService } from '../../features/followup/services/followup.service'
-import { UserType } from '../enums/user-type'
 
 @Injectable({ providedIn: 'root' })
 export class AppAuthService extends AuthService {
   private readonly lookupService = inject(LookupService)
   private readonly appStore = inject(AppStore)
-  private readonly followupService = inject(FollowupService)
 
   override login(credentials: AuthCredentials): Observable<AuthResponse> {
     return this.http.post<AppAuthResponse>(this.urlService.URLS.AUTH, credentials).pipe(
       tap((response) => {
         this.appStore.setSession(response.result.applicationUser, response.result.lookupList, response.result.permissionSet, response.result.userType)
         this.lookupService.setLookupList(response.result.lookupList)
-        this.preloadCaches(response.result.userType)
       }),
     )
   }
@@ -31,15 +27,7 @@ export class AppAuthService extends AuthService {
       tap((response) => {
         this.appStore.setSession(response.result.applicationUser, response.result.lookupList, response.result.permissionSet, response.result.userType)
         this.lookupService.setLookupList(response.result.lookupList)
-        this.preloadCaches(response.result.userType)
       }),
     )
-  }
-
-  private preloadCaches(userType: number): void {
-    this.followupService.clearInternalUsersCache()
-    if (userType === UserType.PMO_HEAD || userType === UserType.INTERNAL_USER) {
-      this.followupService.loadAssignableUsers().subscribe({ error: () => undefined })
-    }
   }
 }
