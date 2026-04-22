@@ -132,7 +132,14 @@ import { NotificationBell } from '../features/notification/components/notificati
               [uiDropdownTrigger]="userMenu"
             >
               <ui-avatar size="sm" [initials]="displayName() || '?'" />
-              <span class="hidden sm:inline">{{ displayName() }}</span>
+              <span class="hidden sm:flex flex-col items-start leading-tight">
+                <span>{{ displayName() }}</span>
+                @if (externalEntityName()) {
+                  <span class="text-xs text-foreground-muted">
+                    {{ externalEntityName() }}
+                  </span>
+                }
+              </span>
               <mat-icon
                 class="text-base! size-4! leading-4! text-foreground-muted"
                 [svgIcon]="icons.CHEVRON_DOWN"
@@ -221,7 +228,10 @@ export class Layout {
   protected readonly appStore = inject(AppStore)
   protected readonly icons = APP_ICONS
 
-  protected readonly displayName = signal(this.appStore.applicationUser()?.domainName ?? '')
+  protected readonly displayName = computed(() => this.appStore.applicationUser()?.arName ?? '')
+  protected readonly externalEntityName = computed(
+    () => this.appStore.applicationUser()?.externalEntityInfo?.arName ?? '',
+  )
   protected readonly sidebarOpen = signal(true)
   protected readonly currentLang = signal(
     this.translate.getCurrentLang() || 'ar',
