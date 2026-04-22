@@ -6,7 +6,6 @@ export interface FollowupLogContract {
   userInfo: InfoContract
   externalEntityInfo: InfoContract
   userComments: string
-  userStatement: string
   actionTime: string
   actionTypeInfo: InfoContract
   oldFollowupStatusInfo: InfoContract

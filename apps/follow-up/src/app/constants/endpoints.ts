@@ -22,8 +22,6 @@ export const ENDPOINTS = {
   LOGS: 'user/followup/logs/history/followup-id',
   USER_COMMENTS: 'user/followup/logs/user-comments/followup-id',
   USER_COMMENTS_ATTACHMENT: 'user/followup/logs/user-comments/attachment',
-  USER_STATEMENTS: 'user/followup/logs/user-statements/followup-id',
-  USER_STATEMENTS_ATTACHMENT: 'user/followup/logs/user-statements/attachment',
   LOG_ATTACHMENT_CONTENT: 'user/followup/logs/attachment/content',
   INTERNAL_USERS_LOOKUP: 'user/lookup/users/internal',
   UPDATE_ASSIGNEE: 'user/followup/update-assignee',

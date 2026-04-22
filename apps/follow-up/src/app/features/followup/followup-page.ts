@@ -465,16 +465,6 @@ import { UserType } from '../../shared/enums/user-type'
                           (click)="addComment(item)"
                         >
                           <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.COMMENT_TEXT_OUTLINE" />
-                        </button>
-                        <button
-                          uiButton
-                          variant="ghost"
-                          size="sm"
-                          [attr.aria-label]="'followup.add_statement' | translate"
-                          [uiTooltip]="'followup.add_statement' | translate"
-                          (click)="addStatement(item)"
-                        >
-                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.PLUS" />
                         </button> -->
                         <button
                           uiButton
@@ -489,21 +479,6 @@ import { UserType } from '../../shared/enums/user-type'
                           <mat-icon
                             class="text-lg! size-5! leading-5!"
                             [svgIcon]="icons.COMMENT_MULTIPLE_OUTLINE"
-                          />
-                        </button>
-                        <button
-                          uiButton
-                          variant="ghost"
-                          size="sm"
-                          [attr.aria-label]="
-                            'followup.show_statements' | translate
-                          "
-                          [uiTooltip]="'followup.show_statements' | translate"
-                          (click)="showStatements(item)"
-                        >
-                          <mat-icon
-                            class="text-lg! size-5! leading-5!"
-                            [svgIcon]="icons.MESSAGE_TEXT_OUTLINE"
                           />
                         </button>
                       </div>
@@ -806,16 +781,8 @@ export class FollowupPage
     this.service.openAddComment(item)
   }
 
-  addStatement(item: Followup): void {
-    this.service.openAddStatement(item)
-  }
-
   showComments(item: Followup): void {
     this.service.viewComments(item)
-  }
-
-  showStatements(item: Followup): void {
-    this.service.viewStatements(item)
   }
 
   assignUser(item: Followup): void {

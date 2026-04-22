@@ -13,7 +13,3 @@ export interface FollowupEntryContract {
 export interface FollowupCommentContract extends FollowupEntryContract {
   userComments: string
 }
-
-export interface FollowupStatementContract extends FollowupEntryContract {
-  userStatement: string
-}

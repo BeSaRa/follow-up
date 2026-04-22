@@ -8,7 +8,6 @@ import { DialogService } from '@follow-up/ui'
 import { Followup } from '../models/followup'
 import { FollowupLog } from '../models/followup-log'
 import { FollowupComment } from '../models/followup-comment'
-import { FollowupStatement } from '../models/followup-statement'
 import { FollowupAttachment } from '../models/followup-attachment'
 import { InternalUser } from '../models/internal-user'
 import { FollowupDashboardCounters } from '../models/followup-dashboard-counters'
@@ -25,11 +24,6 @@ import {
   FollowupAddCommentDialogData,
   FollowupAddCommentResult,
 } from '../components/followup-add-comment-dialog'
-import {
-  FollowupAddStatementDialog,
-  FollowupAddStatementDialogData,
-  FollowupAddStatementResult,
-} from '../components/followup-add-statement-dialog'
 import {
   FollowupEntriesDialog,
   FollowupEntriesDialogData,
@@ -171,40 +165,6 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
     )
   }
 
-  addStatement(followupId: number, userStatement: string): Observable<number> {
-    return this.http
-      .post<{ result: number }>(
-        `${this.urlService.URLS.USER_STATEMENTS}/${followupId}`,
-        { userStatement },
-      )
-      .pipe(map((response) => response.result))
-  }
-
-  uploadStatementAttachment(
-    followupId: number,
-    followupLinkedId: number,
-    attachmentTypeId: number,
-    docSubject: string,
-    file: File,
-  ): Observable<unknown> {
-    const formData = new FormData()
-    formData.append('content', file, file.name)
-    const query = qs.stringify(
-      {
-        followupId,
-        followupLinkedId,
-        docSubject,
-        attachmentTypeInfo: { id: attachmentTypeId },
-      },
-      { allowDots: true, encode: false },
-    )
-    console.log('[uploadStatementAttachment] query:', query)
-    return this.http.post<unknown>(
-      `${this.urlService.URLS.USER_STATEMENTS_ATTACHMENT}?${query}`,
-      formData,
-    )
-  }
-
   viewLogs(followup: Followup): MatDialogRef<FollowupLogsDialog> {
     const loadLogs = () => this._getLogs(followup.id)
     return this.dialogService.open<FollowupLogsDialog, FollowupLogsDialogData>(
@@ -225,18 +185,6 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
       FollowupAddCommentDialogData,
       FollowupAddCommentResult
     >(FollowupAddCommentDialog, {
-      data: { followupId: followup.id },
-    })
-  }
-
-  openAddStatement(
-    followup: Followup,
-  ): MatDialogRef<FollowupAddStatementDialog, FollowupAddStatementResult> {
-    return this.dialogService.open<
-      FollowupAddStatementDialog,
-      FollowupAddStatementDialogData,
-      FollowupAddStatementResult
-    >(FollowupAddStatementDialog, {
       data: { followupId: followup.id },
     })
   }
@@ -363,11 +311,6 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
     return this.http.get<FollowupComment[]>(`${this.urlService.URLS.USER_COMMENTS}/${followupId}`)
   }
 
-  @CastResponse(() => FollowupStatement, { unwrap: 'result' })
-  getStatements(followupId: number): Observable<FollowupStatement[]> {
-    return this.http.get<FollowupStatement[]>(`${this.urlService.URLS.USER_STATEMENTS}/${followupId}`)
-  }
-
   viewComments(followup: Followup): MatDialogRef<FollowupEntriesDialog<FollowupComment>> {
     return this.dialogService.open<
       FollowupEntriesDialog<FollowupComment>,
@@ -381,25 +324,6 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
         loadEntries: () => this.getComments(followup.id),
         getText: (entry) => entry.userComments,
         openAdd: () => this.openAddComment(followup),
-      },
-      width: '48rem',
-      maxWidth: '95vw',
-    })
-  }
-
-  viewStatements(followup: Followup): MatDialogRef<FollowupEntriesDialog<FollowupStatement>> {
-    return this.dialogService.open<
-      FollowupEntriesDialog<FollowupStatement>,
-      FollowupEntriesDialogData<FollowupStatement>
-    >(FollowupEntriesDialog, {
-      data: {
-        titleKey: 'followup.statements_title',
-        emptyKey: 'followup.statements_no_data',
-        addLabelKey: 'followup.add_statement',
-        docSubject: followup.docSubject,
-        loadEntries: () => this.getStatements(followup.id),
-        getText: (entry) => entry.userStatement,
-        openAdd: () => this.openAddStatement(followup),
       },
       width: '48rem',
       maxWidth: '95vw',
