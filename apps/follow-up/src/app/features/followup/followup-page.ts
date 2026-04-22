@@ -205,31 +205,33 @@ import { UserType } from '../../shared/enums/user-type'
               </ui-select-option>
             }
           </ui-select>
-          <ui-select
-            class="w-48 [&>button]:bg-surface-raised!"
-            [value]="assignmentStatus()"
-            [placeholder]="'followup.filter_assigned' | translate"
-            (valueChange)="onAssignmentStatusChange($event)"
-          >
-            <ui-select-option
-              [value]="1"
-              [label]="'followup.filter_all' | translate"
+          @if (isPmoHead()) {
+            <ui-select
+              class="w-48 [&>button]:bg-surface-raised!"
+              [value]="assignmentStatus()"
+              [placeholder]="'followup.filter_assigned' | translate"
+              (valueChange)="onAssignmentStatusChange($event)"
             >
-              {{ 'followup.filter_all' | translate }}
-            </ui-select-option>
-            <ui-select-option
-              [value]="2"
-              [label]="'followup.filter_assigned_yes' | translate"
-            >
-              {{ 'followup.filter_assigned_yes' | translate }}
-            </ui-select-option>
-            <ui-select-option
-              [value]="3"
-              [label]="'followup.filter_assigned_no' | translate"
-            >
-              {{ 'followup.filter_assigned_no' | translate }}
-            </ui-select-option>
-          </ui-select>
+              <ui-select-option
+                [value]="1"
+                [label]="'followup.filter_all' | translate"
+              >
+                {{ 'followup.filter_all' | translate }}
+              </ui-select-option>
+              <ui-select-option
+                [value]="2"
+                [label]="'followup.filter_assigned_yes' | translate"
+              >
+                {{ 'followup.filter_assigned_yes' | translate }}
+              </ui-select-option>
+              <ui-select-option
+                [value]="3"
+                [label]="'followup.filter_assigned_no' | translate"
+              >
+                {{ 'followup.filter_assigned_no' | translate }}
+              </ui-select-option>
+            </ui-select>
+          }
           <!-- TODO: re-enable once backend supports userId filter
           <ui-select
             class="w-56 [&>button]:bg-surface-raised!"
@@ -658,7 +660,7 @@ export class FollowupPage
 
   ngOnInit(): void {
     this.loadCounters()
-    if (!this.internalUsers().length) {
+    if (this.isPmoHead() && !this.internalUsers().length) {
       this.service.loadAssignableUsers().subscribe({ error: () => undefined })
     }
   }

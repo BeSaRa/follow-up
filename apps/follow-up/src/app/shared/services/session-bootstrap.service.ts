@@ -19,7 +19,7 @@ export class SessionBootstrapService {
         this.followupService.clearInternalUsersCache()
         if (!token) return
         const userType = this.appStore.userType()
-        if (userType === UserType.PMO_HEAD || userType === UserType.INTERNAL_USER) {
+        if (userType === UserType.PMO_HEAD) {
           this.followupService.loadAssignableUsers().subscribe({ error: () => undefined })
         }
       })
