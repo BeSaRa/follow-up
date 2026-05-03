@@ -7,6 +7,7 @@ import {
   signal,
 } from '@angular/core'
 import { DatePipe } from '@angular/common'
+import { RouterLink } from '@angular/router'
 import { TranslatePipe } from '@ngx-translate/core'
 import { MatIcon } from '@angular/material/icon'
 import {
@@ -24,6 +25,7 @@ import { Notification } from '../models/notification'
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,
+    RouterLink,
     TranslatePipe,
     MatIcon,
     UiDropdownMenu,
@@ -110,6 +112,16 @@ import { Notification } from '../models/notification'
               </button>
             }
           }
+        </div>
+
+        <div class="border-t border-border px-4 py-2">
+          <a
+            routerLink="/notifications"
+            class="flex items-center justify-center gap-1 text-xs font-medium text-primary hover:underline"
+            (click)="notificationMenu.close()"
+          >
+            {{ 'notification.view_all' | translate }}
+          </a>
         </div>
       </div>
     </ui-dropdown-menu>

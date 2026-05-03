@@ -24,3 +24,18 @@ export const nonAdminGuard: CanActivateFn = () => {
   toast.error(translate.instant('errors.no_page_access'))
   return router.parseUrl('/admin')
 }
+
+export const notificationsGuard: CanActivateFn = () => {
+  const appStore = inject(AppStore)
+  const router = inject(Router)
+  const toast = inject(ToastService)
+  const translate = inject(TranslateService)
+  const allowed = [
+    UserType.INTERNAL_USER,
+    UserType.EXTERNAL_USER,
+    UserType.PMO_HEAD,
+  ]
+  if (allowed.includes(appStore.userType())) return true
+  toast.error(translate.instant('errors.no_page_access'))
+  return router.parseUrl('/')
+}

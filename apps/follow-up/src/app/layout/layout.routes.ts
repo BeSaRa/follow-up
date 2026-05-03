@@ -2,7 +2,7 @@ import { Route } from '@angular/router'
 import { authGuard } from '@follow-up/core'
 import { Layout } from './layout'
 import { defaultRedirectGuard } from './default-redirect.guard'
-import { adminGuard, nonAdminGuard } from './admin.guard'
+import { adminGuard, nonAdminGuard, notificationsGuard } from './admin.guard'
 
 export const layoutRoutes: Route[] = [
   {
@@ -15,6 +15,14 @@ export const layoutRoutes: Route[] = [
         canActivate: [nonAdminGuard],
         loadComponent: () =>
           import('../features/followup/followup-page').then(m => m.FollowupPage),
+      },
+      {
+        path: 'notifications',
+        canActivate: [notificationsGuard],
+        loadComponent: () =>
+          import('../features/notification/notifications-page').then(
+            m => m.NotificationsPage,
+          ),
       },
       {
         path: 'admin',

@@ -265,10 +265,18 @@
   },
   "notification": {
     "title": "الإشعارات",
+    "description": "عرض وإدارة جميع إشعاراتك",
     "unread": "غير مقروءة",
     "loading": "جارٍ تحميل الإشعارات...",
     "no_data": "لا توجد إشعارات",
-    "mark_as_read": "تعيين كمقروء"
+    "mark_as_read": "تعيين كمقروء",
+    "view_all": "عرض الكل",
+    "filter_status": "الحالة",
+    "filter_all": "الكل",
+    "filter_unread": "غير مقروءة",
+    "filter_read": "مقروءة",
+    "total": "الإجمالي",
+    "new": "جديد"
   },
   "priority_level": {
     "title": "مستويات الأولوية",

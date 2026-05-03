@@ -265,10 +265,18 @@
   },
   "notification": {
     "title": "Notifications",
+    "description": "View and manage all your notifications",
     "unread": "unread",
     "loading": "Loading notifications...",
     "no_data": "No notifications",
-    "mark_as_read": "Mark as read"
+    "mark_as_read": "Mark as read",
+    "view_all": "View all",
+    "filter_status": "Status",
+    "filter_all": "All",
+    "filter_unread": "Unread",
+    "filter_read": "Read",
+    "total": "Total",
+    "new": "New"
   },
   "priority_level": {
     "title": "Priority Levels",
