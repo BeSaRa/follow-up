@@ -24,12 +24,15 @@ export interface FollowupOpenDialogData {
   loadFollowup: () => Observable<FollowupOpen>
   followupId: number
   canTerminate: boolean
+  canUpdatePriority: boolean
   currentStatusId?: number
+  currentPriorityId?: number
 }
 
 export interface FollowupOpenDialogResult {
   terminated?: boolean
   statusChanged?: boolean
+  priorityChanged?: boolean
 }
 
 type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
@@ -392,14 +395,21 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
       </div>
 
       <!-- Footer -->
-      @if (canTerminate) {
+      @if (canTerminate || canUpdatePriority) {
         <div class="flex items-center justify-end gap-3 border-t border-border px-6 py-3">
-          <button uiButton type="button" variant="secondary" (click)="changeStatus()">
-            {{ 'followup.change_status' | translate }}
-          </button>
-          <button uiButton type="button" variant="destructive" (click)="terminate()">
-            {{ 'followup.terminate' | translate }}
-          </button>
+          @if (canUpdatePriority) {
+            <button uiButton type="button" variant="secondary" (click)="changePriority()">
+              {{ 'followup.change_priority' | translate }}
+            </button>
+          }
+          @if (canTerminate) {
+            <button uiButton type="button" variant="secondary" (click)="changeStatus()">
+              {{ 'followup.change_status' | translate }}
+            </button>
+            <button uiButton type="button" variant="destructive" (click)="terminate()">
+              {{ 'followup.terminate' | translate }}
+            </button>
+          }
         </div>
       }
     </div>
@@ -482,8 +492,10 @@ export class FollowupOpenDialog implements OnInit {
   readonly skeletonRows = Array.from({ length: 8 }, (_v, i) => i)
 
   readonly canTerminate = this.data.canTerminate
+  readonly canUpdatePriority = this.data.canUpdatePriority
   readonly followupId = this.data.followupId
   readonly currentStatusId = this.data.currentStatusId
+  readonly currentPriorityId = this.data.currentPriorityId
 
   readonly docSubject = signal(this.data.docSubject)
   readonly followup = signal<FollowupOpen | null>(null)
@@ -572,6 +584,17 @@ export class FollowupOpenDialog implements OnInit {
       .subscribe((result) => {
         if (result) {
           this.dialogRef.close({ statusChanged: true })
+        }
+      })
+  }
+
+  changePriority(): void {
+    this.followupService
+      .openChangePriority(this.followupId, this.currentPriorityId)
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.dialogRef.close({ priorityChanged: true })
         }
       })
   }

@@ -443,6 +443,23 @@ import { UserType } from '../../shared/enums/user-type'
                             </button>
                           }
                         }
+                        @if (canUpdatePriority()) {
+                          <button
+                            uiButton
+                            variant="ghost"
+                            size="sm"
+                            [attr.aria-label]="
+                              'followup.change_priority' | translate
+                            "
+                            [uiTooltip]="'followup.change_priority' | translate"
+                            (click)="changePriority(item)"
+                          >
+                            <mat-icon
+                              class="text-lg! size-5! leading-5!"
+                              [svgIcon]="icons.FLAG_OUTLINE"
+                            />
+                          </button>
+                        }
                         <button
                           uiButton
                           variant="ghost"
@@ -558,6 +575,10 @@ export class FollowupPage
   readonly isPmoHead = computed(
     () => this.appStore.userType() === UserType.PMO_HEAD,
   )
+  readonly canUpdatePriority = computed(() => {
+    const userType = this.appStore.userType()
+    return userType === UserType.PMO_HEAD || userType === UserType.INTERNAL_USER
+  })
   readonly securityLevels = computed(
     () => this.appStore.lookupList()?.SecurityLevel ?? [],
   )
@@ -767,7 +788,7 @@ export class FollowupPage
       .view(item)
       .afterClosed()
       .subscribe((result) => {
-        if (result?.terminated || result?.statusChanged) {
+        if (result?.terminated || result?.statusChanged || result?.priorityChanged) {
           this.refresh()
         }
       })
@@ -788,6 +809,16 @@ export class FollowupPage
   assignUser(item: Followup): void {
     this.service
       .openAssignUser(item)
+      .afterClosed()
+      .subscribe((result) => {
+        if (!result) return
+        this.refresh()
+      })
+  }
+
+  changePriority(item: Followup): void {
+    this.service
+      .openChangePriority(item.id, item.priorityLevelInfo.id)
       .afterClosed()
       .subscribe((result) => {
         if (!result) return

@@ -27,6 +27,7 @@ export const ENDPOINTS = {
   UPDATE_ASSIGNEE: 'user/followup/update-assignee',
   TERMINATE_FOLLOWUP: 'user/followup/terminate',
   CHANGE_FOLLOWUP_STATUS: 'user/followup/change-status',
+  CHANGE_FOLLOWUP_PRIORITY: 'user/followup/change-priority',
   CORRESPONDENCE: 'user/tawasol/cor',
   ATTACHMENTS: 'user/tawasol/attachment',
   NOTIFICATION_ACTIVE: 'user/followup/subscription/active',

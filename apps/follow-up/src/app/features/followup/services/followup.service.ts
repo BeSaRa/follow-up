@@ -43,6 +43,11 @@ import {
   FollowupChangeStatusDialogData,
   FollowupChangeStatusResult,
 } from '../components/followup-change-status-dialog'
+import {
+  FollowupChangePriorityDialog,
+  FollowupChangePriorityDialogData,
+  FollowupChangePriorityResult,
+} from '../components/followup-change-priority-dialog'
 import { Endpoints } from '../../../constants/endpoints'
 import { UserType } from '../../../shared/enums/user-type'
 import { AppStore } from '../../../shared/stores/app-store'
@@ -101,6 +106,11 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
     return false
   }
 
+  canUpdatePriority(): boolean {
+    const userType = this.appStore.userType()
+    return userType === UserType.PMO_HEAD || userType === UserType.INTERNAL_USER
+  }
+
   view(followup: Followup): MatDialogRef<FollowupOpenDialog, FollowupOpenDialogResult> {
     const loadFollowup = () => this._open(followup.id)
     return this.dialogService.open<
@@ -115,7 +125,9 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
           loadFollowup,
           followupId: followup.id,
           canTerminate: this.canTerminate(followup),
+          canUpdatePriority: this.canUpdatePriority(),
           currentStatusId: followup.followUpStatusInfo.id,
+          currentPriorityId: followup.priorityLevelInfo.id,
         },
         width: '100vw',
         maxWidth: '100vw',
@@ -269,6 +281,29 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
       FollowupChangeStatusResult
     >(FollowupChangeStatusDialog, {
       data: { followupId, currentStatusId },
+    })
+  }
+
+  changePriority(
+    followupId: number,
+    followupPriority: number,
+    userComments?: string,
+  ): Observable<unknown> {
+    const body: Record<string, unknown> = { followupId, followupPriority }
+    if (userComments) body['userComments'] = userComments
+    return this.http.put<unknown>(this.urlService.URLS.CHANGE_FOLLOWUP_PRIORITY, body)
+  }
+
+  openChangePriority(
+    followupId: number,
+    currentPriorityId?: number,
+  ): MatDialogRef<FollowupChangePriorityDialog, FollowupChangePriorityResult> {
+    return this.dialogService.open<
+      FollowupChangePriorityDialog,
+      FollowupChangePriorityDialogData,
+      FollowupChangePriorityResult
+    >(FollowupChangePriorityDialog, {
+      data: { followupId, currentPriorityId },
     })
   }
 
