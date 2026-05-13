@@ -86,7 +86,7 @@ interface OrbitParticle {
         "
       ></div>
 
-      <ui-card class="relative z-10 w-full max-w-md bg-surface-raised/30! backdrop-blur-md">
+      <ui-card class="relative z-10 w-full max-w-md animate-fade-up bg-surface-raised/30! backdrop-blur-md">
         <ui-card-header class="text-center">
           <img
             [src]="darkMode() ? 'logo-pmo-white.png' : 'logo.png'"

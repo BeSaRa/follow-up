@@ -11,7 +11,7 @@
   },
   "login": {
     "title": "تسجيل الدخول",
-    "description": "أدخل بياناتك للدخول إلى حسابك",
+    "description": "أدخل بياناتك للوصول إلى حسابك",
     "username_label": "اسم المستخدم",
     "username_placeholder": "أدخل اسم المستخدم",
     "username_required": "اسم المستخدم مطلوب",
