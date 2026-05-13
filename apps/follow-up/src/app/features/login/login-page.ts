@@ -70,7 +70,7 @@ interface OrbitParticle {
   ],
   template: `
     <div
-      class="relative flex min-h-screen items-center justify-center overflow-hidden bg-surface p-4"
+      class="relative flex min-h-screen items-center justify-center overflow-hidden bg-surface bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat p-4"
     >
       <canvas
         #orbitCanvas
