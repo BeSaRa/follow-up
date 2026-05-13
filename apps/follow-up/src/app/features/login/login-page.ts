@@ -25,9 +25,11 @@ import {
   UiButton,
   UiAlert,
   UiAlertDescription,
+  UiTooltip,
   ToastService,
 } from '@follow-up/ui'
 import { AuthStore } from '@follow-up/core'
+import { LangTracker } from '@follow-up/util'
 import { APP_ICONS } from '../../constants/icons'
 import { AppStore } from '../../shared/stores/app-store'
 import { UserType } from '../../shared/enums/user-type'
@@ -64,6 +66,7 @@ interface OrbitParticle {
     UiButton,
     UiAlert,
     UiAlertDescription,
+    UiTooltip,
   ],
   template: `
     <div
@@ -87,6 +90,16 @@ interface OrbitParticle {
       ></div>
 
       <ui-card class="relative z-10 w-full max-w-md animate-fade-up bg-surface-raised/30! backdrop-blur-md">
+        <button
+          type="button"
+          class="absolute end-3 top-3 z-10 inline-flex items-center justify-center rounded-md px-2 py-1 text-sm font-medium text-foreground-muted hover:bg-surface-hover hover:text-foreground transition-colors"
+          [uiTooltip]="'layout.switch_language' | translate"
+          uiTooltipPosition="below"
+          (click)="toggleLanguage()"
+        >
+          {{ currentLang() === 'ar' ? 'EN' : 'عربي' }}
+        </button>
+
         <ui-card-header class="text-center">
           <img
             [src]="darkMode() ? 'logo-pmo-white.png' : 'logo.png'"
@@ -95,7 +108,7 @@ interface OrbitParticle {
             height="124"
             class="mx-auto mb-4"
           />
-          <ui-card-title>{{ 'login.title' | translate }}</ui-card-title>
+          <ui-card-title>{{ 'layout.app_title' | translate }}</ui-card-title>
           <ui-card-description>{{
             'login.description' | translate
           }}</ui-card-description>
@@ -201,6 +214,7 @@ export class LoginPage {
   protected readonly icons = APP_ICONS
   protected readonly showPassword = signal(false)
   protected readonly darkMode = signal(document.documentElement.classList.contains('dark'))
+  protected readonly currentLang = signal(this.translate.getCurrentLang() || 'ar')
 
   private readonly orbitCanvas = viewChild.required<ElementRef<HTMLCanvasElement>>('orbitCanvas')
   private readonly cursorBlob = viewChild.required<ElementRef<HTMLDivElement>>('cursorBlob')
@@ -242,6 +256,13 @@ export class LoginPage {
 
     const { userName, password } = this.form.getRawValue()
     this.store.login({ userName, password })
+  }
+
+  protected toggleLanguage() {
+    const next = this.currentLang() === 'ar' ? 'en' : 'ar'
+    this.translate.use(next)
+    this.currentLang.set(next)
+    LangTracker.setLang(next, 'LoginPage')
   }
 
   private startOrbitParticles(canvas: HTMLCanvasElement): () => void {
