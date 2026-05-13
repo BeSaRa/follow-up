@@ -1,9 +1,13 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
+  ElementRef,
   effect,
   inject,
   signal,
+  viewChild,
 } from '@angular/core'
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -28,6 +32,20 @@ import { APP_ICONS } from '../../constants/icons'
 import { AppStore } from '../../shared/stores/app-store'
 import { UserType } from '../../shared/enums/user-type'
 
+type OrbitAxis = 'xy' | 'xz' | 'yz'
+
+interface OrbitParticle {
+  radius: number
+  angle: number
+  speed: number
+  orbitRadius: number
+  tilt: number
+  axis: OrbitAxis
+  color: string
+  pulsePhase: number
+  pulseSpeed: number
+}
+
 @Component({
   selector: 'app-login-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -49,9 +67,26 @@ import { UserType } from '../../shared/enums/user-type'
   ],
   template: `
     <div
-      class="flex min-h-screen items-center justify-center bg-surface p-4"
+      class="relative flex min-h-screen items-center justify-center overflow-hidden bg-surface p-4"
     >
-      <ui-card class="w-full max-w-md">
+      <canvas
+        #orbitCanvas
+        aria-hidden="true"
+        class="pointer-events-none fixed inset-0 z-0"
+      ></canvas>
+      <div
+        #cursorBlob
+        aria-hidden="true"
+        class="pointer-events-none fixed left-0 top-0 z-0 hidden h-[20vw] max-h-[400px] min-h-[300px] w-[20vw] max-w-[400px] min-w-[300px] rounded-full opacity-40 blur-[100px] md:block"
+        [style.mix-blend-mode]="darkMode() ? 'screen' : 'multiply'"
+        [style.background]="
+          darkMode()
+            ? 'radial-gradient(circle, hsl(342, 80%, 70%) 0%, hsl(342, 60%, 50%) 100%)'
+            : 'radial-gradient(circle, hsl(342, 74%, 45%) 0%, hsl(342, 60%, 75%) 100%)'
+        "
+      ></div>
+
+      <ui-card class="relative z-10 w-full max-w-md bg-surface-raised/30! backdrop-blur-md">
         <ui-card-header class="text-center">
           <img
             [src]="darkMode() ? 'logo-pmo-white.png' : 'logo.png'"
@@ -84,14 +119,22 @@ import { UserType } from '../../shared/enums/user-type'
               <label uiLabel for="userName">{{
                 'login.username_label' | translate
               }}</label>
-              <input
-                uiInput
-                id="userName"
-                type="text"
-                formControlName="userName"
-                [placeholder]="'login.username_placeholder' | translate"
-                autocomplete="username"
-              />
+              <div class="relative" ngProjectAs="[uiInput]">
+                <span
+                  class="pointer-events-none absolute inset-y-0 start-0 z-10 flex items-center ps-3 text-foreground-muted"
+                >
+                  <mat-icon class="text-xl! size-5! leading-5!" [svgIcon]="icons.EMAIL_OUTLINE" />
+                </span>
+                <input
+                  uiInput
+                  id="userName"
+                  type="text"
+                  formControlName="userName"
+                  [placeholder]="'login.username_placeholder' | translate"
+                  autocomplete="username"
+                  class="ps-10 bg-surface-raised/60! backdrop-blur-sm"
+                />
+              </div>
             </ui-form-field>
 
             <ui-form-field>
@@ -99,6 +142,11 @@ import { UserType } from '../../shared/enums/user-type'
                 'login.password_label' | translate
               }}</label>
               <div class="relative" ngProjectAs="[uiInput]">
+                <span
+                  class="pointer-events-none absolute inset-y-0 start-0 z-10 flex items-center ps-3 text-foreground-muted"
+                >
+                  <mat-icon class="text-xl! size-5! leading-5!" [svgIcon]="icons.LOCK_OUTLINE" />
+                </span>
                 <input
                   uiInput
                   id="password"
@@ -106,18 +154,18 @@ import { UserType } from '../../shared/enums/user-type'
                   formControlName="password"
                   [placeholder]="'login.password_placeholder' | translate"
                   autocomplete="current-password"
-                  class="pe-10"
+                  class="ps-10 pe-10 bg-surface-raised/60! backdrop-blur-sm"
                 />
                 <button
                   type="button"
-                  class="absolute inset-y-0 end-0 flex items-center pe-3 text-muted-foreground hover:text-foreground"
+                  class="absolute inset-y-0 end-0 z-10 flex items-center pe-3 text-foreground-muted hover:text-foreground"
                   (click)="showPassword.set(!showPassword())"
                   [attr.aria-label]="(showPassword() ? 'login.hide_password' : 'login.show_password') | translate"
                 >
                   @if (showPassword()) {
-                    <mat-icon class="text-xl! size-5! leading-5!" [svgIcon]="icons.EYE_OFF" />
+                    <mat-icon class="text-xl! size-5! leading-5!" [svgIcon]="icons.EYE_OFF_OUTLINE" />
                   } @else {
-                    <mat-icon class="text-xl! size-5! leading-5!" [svgIcon]="icons.EYE" />
+                    <mat-icon class="text-xl! size-5! leading-5!" [svgIcon]="icons.EYE_OUTLINE" />
                   }
                 </button>
               </div>
@@ -146,12 +194,16 @@ export class LoginPage {
   private readonly route = inject(ActivatedRoute)
   private readonly toast = inject(ToastService)
   private readonly translate = inject(TranslateService)
+  private readonly destroyRef = inject(DestroyRef)
 
   protected readonly store = inject(AuthStore)
   private readonly appStore = inject(AppStore)
   protected readonly icons = APP_ICONS
   protected readonly showPassword = signal(false)
   protected readonly darkMode = signal(document.documentElement.classList.contains('dark'))
+
+  private readonly orbitCanvas = viewChild.required<ElementRef<HTMLCanvasElement>>('orbitCanvas')
+  private readonly cursorBlob = viewChild.required<ElementRef<HTMLDivElement>>('cursorBlob')
 
   protected readonly form = this.fb.nonNullable.group({
     userName: ['', [Validators.required]],
@@ -164,6 +216,15 @@ export class LoginPage {
         const route = this.appStore.userType() === UserType.SYSTEM_ADMIN ? '/admin' : '/followup'
         this.router.navigate([route])
       }
+    })
+
+    afterNextRender(() => {
+      const stopParticles = this.startOrbitParticles(this.orbitCanvas().nativeElement)
+      const stopBlob = this.startCursorBlob(this.cursorBlob().nativeElement)
+      this.destroyRef.onDestroy(() => {
+        stopParticles()
+        stopBlob()
+      })
     })
 
     const reason = this.route.snapshot.queryParamMap.get('reason')
@@ -181,5 +242,225 @@ export class LoginPage {
 
     const { userName, password } = this.form.getRawValue()
     this.store.login({ userName, password })
+  }
+
+  private startOrbitParticles(canvas: HTMLCanvasElement): () => void {
+    const noop = () => undefined
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return noop
+
+    const COLORS = this.darkMode()
+      ? ['#D4506E', '#E8789A', '#F2A0BC', '#FFC1D4', '#888888', '#D4506E']
+      : ['#8A1538', '#b91c4c', '#d4426a', '#e8829c', '#333333', '#8A1538']
+    const dpr = window.devicePixelRatio || 1
+    const axes: OrbitAxis[] = ['xy', 'xz', 'yz']
+
+    let particles: OrbitParticle[] = []
+    let rafId = 0
+    const rotation = { x: 0, y: 0 }
+    const target = { x: 0, y: 0 }
+
+    const init = () => {
+      const w = window.innerWidth
+      const h = window.innerHeight
+      canvas.width = w * dpr
+      canvas.height = h * dpr
+      canvas.style.width = w + 'px'
+      canvas.style.height = h + 'px'
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+
+      const num = w < 768 ? 72 : 144
+      const maxOrbit = Math.min(w, h) * 0.55
+      particles = []
+      for (let i = 0; i < num; i++) {
+        particles.push({
+          radius: 0.6 + Math.random() * 2.2,
+          angle: Math.random() * Math.PI * 2,
+          speed:
+            (0.0008 + Math.random() * 0.004) * (Math.random() > 0.5 ? 1 : -1),
+          orbitRadius: 80 + Math.random() * maxOrbit,
+          tilt: (Math.random() - 0.5) * 0.9,
+          axis: axes[Math.floor(Math.random() * axes.length)],
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          pulsePhase: Math.random() * Math.PI * 2,
+          pulseSpeed: 0.0015 + Math.random() * 0.002,
+        })
+      }
+    }
+
+    const onMouseMove = (e: MouseEvent) => {
+      const w = window.innerWidth
+      const h = window.innerHeight
+      const nx = (e.clientX / w) * 2 - 1
+      const ny = (e.clientY / h) * 2 - 1
+      target.y = nx * 0.9
+      target.x = -ny * 0.6
+    }
+
+    const draw = () => {
+      const w = window.innerWidth
+      const h = window.innerHeight
+      ctx.clearRect(0, 0, w, h)
+      const cx = w / 2
+      const cy = h / 2
+      const focal = Math.max(w, h) * 0.9
+
+      rotation.x += (target.x - rotation.x) * 0.04
+      rotation.y += (target.y - rotation.y) * 0.04
+      const cosX = Math.cos(rotation.x)
+      const sinX = Math.sin(rotation.x)
+      const cosY = Math.cos(rotation.y)
+      const sinY = Math.sin(rotation.y)
+
+      const now = performance.now()
+      const projected: Array<{
+        sx: number
+        sy: number
+        scale: number
+        alpha: number
+        color: string
+        r: number
+      }> = []
+
+      for (const p of particles) {
+        p.angle += p.speed
+        const pulse = 0.65 + 0.45 * Math.sin(now * p.pulseSpeed + p.pulsePhase)
+        let lx = 0
+        let ly = 0
+        let lz = 0
+        const r = p.orbitRadius
+        const ca = Math.cos(p.angle)
+        const sa = Math.sin(p.angle)
+        const ct = Math.cos(p.tilt)
+        const st = Math.sin(p.tilt)
+
+        if (p.axis === 'xy') {
+          lx = ca * r
+          ly = sa * r * ct
+          lz = sa * r * st
+        } else if (p.axis === 'xz') {
+          lx = ca * r
+          ly = sa * r * st
+          lz = sa * r * ct
+        } else {
+          lx = sa * r * st
+          ly = ca * r
+          lz = sa * r * ct
+        }
+
+        const x1 = lx * cosY + lz * sinY
+        const y1 = ly
+        const z1 = -lx * sinY + lz * cosY
+        const x2 = x1
+        const y2 = y1 * cosX - z1 * sinX
+        const z2 = y1 * sinX + z1 * cosX
+
+        const depth = focal + z2
+        if (depth <= 1) continue
+        const scale = focal / depth
+        const sx = cx + x2 * scale
+        const sy = cy + y2 * scale
+        const alpha = Math.max(
+          0.08,
+          Math.min(0.85, (0.15 + scale * 0.45) * (0.6 + pulse * 0.6)),
+        )
+        projected.push({
+          sx,
+          sy,
+          scale,
+          alpha,
+          color: p.color,
+          r: p.radius * scale * pulse,
+        })
+      }
+
+      projected.sort((a, b) => a.scale - b.scale)
+
+      const linkDist = Math.min(w, h) * 0.18
+      const linkDistSq = linkDist * linkDist
+      ctx.save()
+      ctx.setLineDash([2, 4])
+      ctx.lineWidth = 1
+      for (let i = 0; i < projected.length; i++) {
+        const a = projected[i]
+        for (let j = i + 1; j < projected.length; j++) {
+          const b = projected[j]
+          const dx = a.sx - b.sx
+          const dy = a.sy - b.sy
+          const d2 = dx * dx + dy * dy
+          if (d2 > linkDistSq) continue
+          const dist = Math.sqrt(d2)
+          const proximity = 1 - dist / linkDist
+          const lineAlpha = proximity * Math.min(a.alpha, b.alpha) * 0.55
+          if (lineAlpha < 0.03) continue
+          ctx.globalAlpha = lineAlpha
+          ctx.strokeStyle = a.color
+          ctx.beginPath()
+          ctx.moveTo(a.sx, a.sy)
+          ctx.lineTo(b.sx, b.sy)
+          ctx.stroke()
+        }
+      }
+      ctx.restore()
+
+      for (const q of projected) {
+        ctx.globalAlpha = q.alpha
+        const glow = ctx.createRadialGradient(q.sx, q.sy, 0, q.sx, q.sy, q.r * 4)
+        glow.addColorStop(0, q.color)
+        glow.addColorStop(1, 'rgba(255,255,255,0)')
+        ctx.fillStyle = glow
+        ctx.beginPath()
+        ctx.arc(q.sx, q.sy, q.r * 4, 0, Math.PI * 2)
+        ctx.fill()
+
+        ctx.globalAlpha = Math.min(1, q.alpha + 0.25)
+        ctx.fillStyle = q.color
+        ctx.beginPath()
+        ctx.arc(q.sx, q.sy, q.r, 0, Math.PI * 2)
+        ctx.fill()
+      }
+      ctx.globalAlpha = 1
+
+      rafId = requestAnimationFrame(draw)
+    }
+
+    window.addEventListener('resize', init)
+    window.addEventListener('mousemove', onMouseMove)
+    init()
+    draw()
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      window.removeEventListener('resize', init)
+      window.removeEventListener('mousemove', onMouseMove)
+    }
+  }
+
+  private startCursorBlob(blob: HTMLDivElement): () => void {
+    let mx = window.innerWidth / 2
+    let my = window.innerHeight / 2
+    let bx = mx
+    let by = my
+    let rafId = 0
+
+    const onMouseMove = (e: MouseEvent) => {
+      mx = e.clientX
+      my = e.clientY
+    }
+
+    const tick = () => {
+      bx += (mx - bx) * 0.55
+      by += (my - by) * 0.55
+      blob.style.transform = `translate(${bx}px, ${by}px) translate(-50%, -50%)`
+      rafId = requestAnimationFrame(tick)
+    }
+
+    window.addEventListener('mousemove', onMouseMove)
+    tick()
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      window.removeEventListener('mousemove', onMouseMove)
+    }
   }
 }
