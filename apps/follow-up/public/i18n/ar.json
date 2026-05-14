@@ -40,7 +40,8 @@
     "attachment_type": "أنواع المرفقات",
     "external_site": "الجهات الخارجية",
     "followup_status": "حالات المتابعة",
-    "priority_level": "مستويات الأولوية"
+    "priority_level": "مستويات الأولوية",
+    "prime_ministers_office": "مكتب رئيس مجلس الوزراء"
   },
   "admin": {
     "title": "الإدارة",

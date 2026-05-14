@@ -40,7 +40,8 @@
     "attachment_type": "Attachment Types",
     "external_site": "External Sites",
     "followup_status": "Followup Statuses",
-    "priority_level": "Priority Levels"
+    "priority_level": "Priority Levels",
+    "prime_ministers_office": "Prime Minister's Office"
   },
   "admin": {
     "title": "Administration",

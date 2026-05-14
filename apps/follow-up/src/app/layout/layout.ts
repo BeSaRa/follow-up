@@ -146,11 +146,6 @@ import { NotificationBell } from '../features/notification/components/notificati
               <ui-avatar size="sm" [initials]="displayName() || '?'" />
               <span class="hidden sm:flex flex-col items-start leading-tight">
                 <span>{{ displayName() }}</span>
-                @if (externalEntityName()) {
-                  <span class="text-xs text-foreground-muted">
-                    {{ externalEntityName() }}
-                  </span>
-                }
               </span>
               <mat-icon
                 class="text-base! size-4! leading-4! text-foreground-muted"
@@ -185,6 +180,20 @@ import { NotificationBell } from '../features/notification/components/notificati
           [closeOnEscape]="false"
         >
           <ui-drawer-content>
+            <div
+              class="mb-3 flex flex-col gap-0.5 rounded-lg border border-border bg-surface px-4 py-3 text-center"
+            >
+              <span class="text-base font-medium text-foreground">
+                @if (entityName(); as name) {
+                  {{ name }}
+                } @else {
+                  {{ 'layout.prime_ministers_office' | translate }}
+                }
+              </span>
+              <span class="text-xs font-medium text-foreground-muted">
+                {{ 'layout.app_title' | translate }}
+              </span>
+            </div>
             <nav class="flex flex-col gap-2 py-2">
               @for (group of sortedNavGroups(); track group.label) {
                 <div>
@@ -244,9 +253,12 @@ export class Layout {
   protected readonly icons = APP_ICONS
 
   protected readonly displayName = computed(() => this.appStore.applicationUser()?.arName ?? '')
-  protected readonly externalEntityName = computed(
-    () => this.appStore.applicationUser()?.externalEntityInfo?.arName ?? '',
-  )
+  /** External entity name (localized) for external users; empty otherwise. */
+  protected readonly entityName = computed(() => {
+    const entity = this.appStore.applicationUser()?.externalEntityInfo
+    if (!entity) return ''
+    return this.currentLang() === 'ar' ? entity.arName : entity.enName
+  })
   protected readonly sidebarOpen = signal(true)
   protected readonly currentLang = signal(
     this.translate.getCurrentLang() || 'ar',
