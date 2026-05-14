@@ -100,7 +100,7 @@ export class UiNavbarNav {
     const desktop = 'md:flex md:flex-row md:items-center md:gap-1 md:static md:border-0 md:shadow-none md:bg-transparent md:py-0 md:px-0'
 
     if (this.mobileOpen()) {
-      return `flex flex-col absolute start-0 end-0 top-16 border-b border-border bg-surface-raised shadow-md py-2 px-4 z-30 ${desktop}`
+      return `flex flex-col absolute start-0 end-0 top-20 border-b border-border bg-surface-raised shadow-md py-2 px-4 z-30 ${desktop}`
     }
 
     return `hidden ${desktop}`
@@ -144,7 +144,7 @@ export class UiNavbarNav {
     '[class]': 'hostClasses()',
   },
   template: `
-    <div class="mx-auto flex h-16 w-full items-center gap-4 px-4">
+    <div class="mx-auto flex h-20 w-full items-center gap-4 px-4">
       <ng-content select="ui-navbar-brand" />
 
       <div class="flex-1">

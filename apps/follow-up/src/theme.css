@@ -89,7 +89,7 @@
    *   Example: <div class="bg-surface-raised shadow-md">Card</div>
    * ──────────────────────────────────────────────────────────────────── */
   --clr-background: #ffffff;
-  --clr-surface: #f8fafc;
+  --clr-surface: #f0f0f0;
   --clr-surface-hover: #f1f5f9;
   --clr-surface-raised: #ffffff;
 
@@ -107,6 +107,7 @@
    * ──────────────────────────────────────────────────────────────────── */
   --clr-border: #e2e8f0;
   --clr-border-hover: #cbd5e1;
+  --clr-navbar-border: #d9dfe2;
   --clr-ring: #8A1538;
 
   /* ── Text ──────────────────────────────────────────────────────────────
@@ -186,6 +187,7 @@
   /* Borders — slightly lighter lines for visibility on dark surfaces */
   --clr-border: #334155;
   --clr-border-hover: #475569;
+  --clr-navbar-border: #334155;
   --clr-ring: #D4506E;
 
   /* Text — inverted from light mode */
@@ -261,6 +263,7 @@
    * ──────────────────────────────────────────────────────────────── */
   --color-border: var(--clr-border);
   --color-border-hover: var(--clr-border-hover);
+  --color-navbar-border: var(--clr-navbar-border);
   --color-ring: var(--clr-ring);
 
   /* ── Text utilities ────────────────────────────────────────────────

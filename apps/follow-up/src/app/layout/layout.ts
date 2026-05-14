@@ -6,7 +6,7 @@ import {
   inject,
   signal,
 } from '@angular/core'
-import { DOCUMENT } from '@angular/common'
+import { DOCUMENT, NgOptimizedImage } from '@angular/common'
 import {
   Router,
   RouterLink,
@@ -44,6 +44,7 @@ import { NotificationBell } from '../features/notification/components/notificati
     RouterLink,
     RouterLinkActive,
     TranslatePipe,
+    NgOptimizedImage,
     UiNavbar,
     UiNavbarBrand,
     UiNavbarActions,
@@ -60,8 +61,13 @@ import { NotificationBell } from '../features/notification/components/notificati
   ],
   template: `
     <div class="flex h-screen flex-col">
-      <ui-navbar [fixed]="false" [elevated]="true">
+      <ui-navbar
+        class="bg-surface! border-navbar-border!"
+        [fixed]="false"
+        [elevated]="true"
+      >
         <ui-navbar-brand>
+<!-- toggle sidebar button — temporarily disabled
           <button
             type="button"
             class="inline-flex items-center justify-center rounded-md p-2 text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
@@ -73,9 +79,15 @@ import { NotificationBell } from '../features/notification/components/notificati
               [svgIcon]="icons.MENU"
             />
           </button>
-          <span class="text-lg font-bold text-foreground">{{
-            'layout.app_title' | translate
-          }}</span>
+          -->
+          <img
+            ngSrc="main-logo.png"
+            [alt]="'layout.app_title' | translate"
+            width="192"
+            height="60"
+            class="h-14 w-auto"
+            priority
+          />
         </ui-navbar-brand>
 
         <ui-navbar-actions>
@@ -162,7 +174,7 @@ import { NotificationBell } from '../features/notification/components/notificati
 
       <ui-drawer-container
         class="flex-1 overflow-hidden bg-surface"
-        style="--ui-drawer-width: 250px"
+        style="--ui-drawer-width: calc(250px + 2rem)"
       >
         <ui-drawer
           (openChange)="sidebarOpen.set($event)"
@@ -173,14 +185,6 @@ import { NotificationBell } from '../features/notification/components/notificati
           [closeOnEscape]="false"
         >
           <ui-drawer-content>
-            <div class="flex items-center justify-center border-b border-border py-4">
-              <img
-                [src]="darkMode() ? 'logo-pmo-white.png' : 'logo.png'"
-                alt="Logo"
-                width="150"
-                height="124"
-              />
-            </div>
             <nav class="flex flex-col gap-2 py-2">
               @for (group of sortedNavGroups(); track group.label) {
                 <div>
@@ -218,6 +222,17 @@ import { NotificationBell } from '../features/notification/components/notificati
         </main>
       </ui-drawer-container>
     </div>
+  `,
+  styles: `
+    :host ::ng-deep ui-drawer .ui-drawer-panel.position-start {
+      top: 1rem;
+      bottom: 1rem;
+      inset-inline-start: 1rem;
+      width: calc(var(--ui-drawer-width, 20rem) - 2rem);
+      border-radius: 0.75rem;
+      border-inline-end: 0;
+      overflow: hidden;
+    }
   `,
 })
 export class Layout {
