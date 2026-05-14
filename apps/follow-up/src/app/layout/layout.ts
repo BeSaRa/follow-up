@@ -208,7 +208,7 @@ import { NotificationBell } from '../features/notification/components/notificati
                     @for (item of group.items; track item.path) {
                       <a
                         [routerLink]="item.path"
-                        routerLinkActive="bg-primary/10 text-primary font-medium"
+                        routerLinkActive="bg-primary text-white font-medium hover:bg-primary! hover:text-white!"
                         [routerLinkActiveOptions]="{ exact: item.exact }"
                         class="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
                       >
