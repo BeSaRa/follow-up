@@ -93,7 +93,7 @@ import { NotificationBell } from '../features/notification/components/notificati
         <ui-navbar-actions>
           <button
             type="button"
-            class="inline-flex items-center justify-center rounded-md px-2 py-1 text-sm font-medium text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+            class="inline-flex items-center justify-center rounded-md bg-white p-2 text-sm font-medium text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
             [uiTooltip]="'layout.switch_language' | translate"
             uiTooltipPosition="below"
             (click)="toggleLanguage()"
@@ -101,6 +101,7 @@ import { NotificationBell } from '../features/notification/components/notificati
             {{ currentLang() === 'ar' ? 'EN' : 'عربي' }}
           </button>
 
+<!-- dark mode toggle — temporarily disabled, will be enabled later
           <button
             type="button"
             class="relative inline-flex h-7 w-14 items-center rounded-full transition-colors duration-300"
@@ -134,13 +135,14 @@ import { NotificationBell } from '../features/notification/components/notificati
               }
             </span>
           </button>
+          -->
 
           <app-notification-bell />
 
           <div class="relative">
             <button
               type="button"
-              class="inline-flex items-center gap-2 rounded-md px-2 py-1 text-sm text-foreground hover:bg-surface-hover transition-colors"
+              class="inline-flex items-center gap-2 rounded-md bg-white px-2 py-1 text-sm text-foreground hover:bg-surface-hover transition-colors"
               [uiDropdownTrigger]="userMenu"
             >
               <ui-avatar size="sm" [initials]="displayName() || '?'" />

@@ -35,7 +35,7 @@ import { Notification } from '../models/notification'
   template: `
     <button
       type="button"
-      class="relative inline-flex items-center justify-center rounded-md p-2 text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+      class="relative inline-flex items-center justify-center rounded-md bg-white p-2 text-foreground-muted hover:text-foreground hover:bg-surface-hover transition-colors"
       [uiTooltip]="'notification.title' | translate"
       uiTooltipPosition="below"
       [uiDropdownTrigger]="notificationMenu"
