@@ -34,6 +34,13 @@ const API_PROPERTIES: ApiProperty[] = [
     kind: 'input',
   },
   {
+    name: 'roundedHeader',
+    type: 'boolean',
+    default: 'false',
+    description: 'Rounds the top-start/top-end corners of the header row (its first and last cells). Direction-aware for LTR and RTL.',
+    kind: 'input',
+  },
+  {
     name: 'sortable',
     type: 'boolean',
     default: 'false',
@@ -119,6 +126,23 @@ const EXAMPLES = {
     <tr uiTableRow>
       <th uiTableHead sortable [sortDirection]="nameSortDir()" (sortChange)="nameSortDir.set($event)">Name</th>
       <th uiTableHead sortable [sortDirection]="emailSortDir()" (sortChange)="emailSortDir.set($event)">Email</th>
+      <th uiTableHead>Role</th>
+    </tr>
+  </thead>
+  <tbody uiTableBody>
+    <tr uiTableRow>
+      <td uiTableCell>Alice Johnson</td>
+      <td uiTableCell>alice&#64;example.com</td>
+      <td uiTableCell>Admin</td>
+    </tr>
+    <!-- more rows... -->
+  </tbody>
+</table>`,
+  roundedHeader: `<table uiTable roundedHeader>
+  <thead uiTableHeader>
+    <tr uiTableRow>
+      <th uiTableHead>Name</th>
+      <th uiTableHead>Email</th>
       <th uiTableHead>Role</th>
     </tr>
   </thead>
@@ -239,6 +263,33 @@ const EXAMPLES = {
                 </table>
               </div>
             </showcase-example-viewer>
+
+            <showcase-example-viewer
+              title="Rounded Header"
+              description="Opt in via the roundedHeader input to round the header's outer corners. The rounding is direction-aware (LTR/RTL)."
+              [htmlCode]="roundedHeaderHtml"
+            >
+              <div class="overflow-x-auto border border-border rounded-lg">
+                <table uiTable roundedHeader>
+                  <thead uiTableHeader>
+                    <tr uiTableRow>
+                      <th uiTableHead>Name</th>
+                      <th uiTableHead>Email</th>
+                      <th uiTableHead>Role</th>
+                    </tr>
+                  </thead>
+                  <tbody uiTableBody>
+                    @for (user of users; track user.email) {
+                      <tr uiTableRow>
+                        <td uiTableCell>{{ user.name }}</td>
+                        <td uiTableCell>{{ user.email }}</td>
+                        <td uiTableCell>{{ user.role }}</td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </showcase-example-viewer>
           </div>
         </ui-tab-panel>
 
@@ -259,6 +310,7 @@ export class TableShowcase {
   protected readonly basicHtml = EXAMPLES.basic
   protected readonly stripedHtml = EXAMPLES.striped
   protected readonly sortableHtml = EXAMPLES.sortable
+  protected readonly roundedHeaderHtml = EXAMPLES.roundedHeader
 
   protected readonly users = SAMPLE_USERS
   protected readonly nameSortDir = signal<SortDirection>(null)

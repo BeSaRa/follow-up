@@ -298,7 +298,7 @@ import { UserType } from '../../shared/enums/user-type'
       <ui-card>
         <ui-card-content class="p-0!">
           <div class="overflow-x-auto">
-            <table uiTable>
+            <table uiTable roundedHeader>
               <thead uiTableHeader>
                 <tr uiTableRow>
                   <th uiTableHead resizable>

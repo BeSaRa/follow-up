@@ -92,6 +92,7 @@
   --clr-surface: #f0f0f0;
   --clr-surface-hover: #f1f5f9;
   --clr-surface-raised: #ffffff;
+  --clr-table-header: #f5f7f9;
 
   /* ── Borders ───────────────────────────────────────────────────────────
    * border — Default border color for dividers, input outlines, and cards.
@@ -183,6 +184,7 @@
   --clr-surface: #1e293b;
   --clr-surface-hover: #334155;
   --clr-surface-raised: #1e293b;
+  --clr-table-header: #1e293b;
 
   /* Borders — slightly lighter lines for visibility on dark surfaces */
   --clr-border: #334155;
@@ -255,6 +257,7 @@
   --color-surface: var(--clr-surface);
   --color-surface-hover: var(--clr-surface-hover);
   --color-surface-raised: var(--clr-surface-raised);
+  --color-table-header: var(--clr-table-header);
 
   /* ── Border utilities ──────────────────────────────────────────────
    * border-border                     → default borders & dividers

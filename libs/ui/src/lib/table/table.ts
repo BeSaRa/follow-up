@@ -17,12 +17,24 @@ export type SortDirection = 'asc' | 'desc' | null
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'table[uiTable]',
   host: {
-    class: 'w-full caption-bottom text-sm',
+    '[class]': 'hostClasses()',
   },
 })
 export class UiTable {
   readonly striped = input(false, { transform: booleanAttribute })
   readonly stickyHeader = input(false, { transform: booleanAttribute })
+  /** Rounds the top-start/top-end corners of the header's first/last cells. */
+  readonly roundedHeader = input(false, { transform: booleanAttribute })
+
+  protected readonly hostClasses = computed(() => {
+    const base = 'w-full caption-bottom text-sm'
+    // border-radius is ignored on cells under border-collapse: collapse, so a
+    // rounded header switches the table to the separate borders model. Dividers
+    // then move from the row groups onto the cells (see UiTableHead/UiTableCell).
+    return this.roundedHeader()
+      ? `${base} border-separate border-spacing-0`
+      : base
+  })
 }
 
 @Directive({
@@ -36,10 +48,21 @@ export class UiTableHeader {
   private readonly table = inject(UiTable)
 
   protected readonly hostClasses = computed(() => {
-    const base = 'border-b border-border'
-    return this.table.stickyHeader()
-      ? `${base} sticky top-0 z-10 bg-surface-raised`
-      : base
+    const classes: string[] = []
+    if (this.table.stickyHeader()) {
+      classes.push('sticky top-0 z-10')
+    }
+    if (this.table.roundedHeader()) {
+      // Separate borders model: the header divider lives on the cells
+      // (UiTableHead). Logical radius utilities so rounding follows LTR/RTL.
+      classes.push(
+        '[&_th:first-child]:rounded-ss-lg',
+        '[&_th:last-child]:rounded-se-lg',
+      )
+    } else {
+      classes.push('border-b border-border')
+    }
+    return classes.join(' ')
   })
 }
 
@@ -47,10 +70,20 @@ export class UiTableHeader {
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'tbody[uiTableBody]',
   host: {
-    class: '[&_tr:last-child]:border-0',
+    '[class]': 'hostClasses()',
   },
 })
-export class UiTableBody {}
+export class UiTableBody {
+  private readonly table = inject(UiTable)
+
+  protected readonly hostClasses = computed(() =>
+    // In the separate model the divider is on the cells, so drop it from the
+    // last row's cells; otherwise drop the border from the last row itself.
+    this.table.roundedHeader()
+      ? '[&>tr:last-child>td]:border-b-0'
+      : '[&_tr:last-child]:border-0',
+  )
+}
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
@@ -138,12 +171,15 @@ export class UiTableHead {
   readonly sortChange = output<SortDirection>()
 
   private readonly el = inject(ElementRef)
+  private readonly table = inject(UiTable)
   private readonly isResizing = signal(false)
 
   protected readonly hostClasses = computed(() => {
-    const base = 'relative px-4 py-3 text-start text-sm font-medium text-foreground-muted overflow-hidden'
+    const base = 'relative px-4 py-3 text-start text-sm font-medium text-foreground-muted overflow-hidden bg-table-header'
+    // Separate borders model: the header divider sits on the cells.
+    const border = this.table.roundedHeader() ? ' border-b border-border' : ''
     const sortableClass = this.sortable() ? ' cursor-pointer select-none' : ''
-    return `${base}${sortableClass}`
+    return `${base}${border}${sortableClass}`
   })
 
   protected onHeaderClick() {
@@ -185,7 +221,17 @@ export class UiTableHead {
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'td[uiTableCell]',
   host: {
-    class: 'px-4 py-3 text-sm text-foreground overflow-hidden text-ellipsis whitespace-nowrap',
+    '[class]': 'hostClasses()',
   },
 })
-export class UiTableCell {}
+export class UiTableCell {
+  private readonly table = inject(UiTable)
+
+  protected readonly hostClasses = computed(() => {
+    const base = 'px-4 py-3 text-sm text-foreground overflow-hidden text-ellipsis whitespace-nowrap'
+    // Separate borders model: row dividers live on the cells, not the row.
+    return this.table.roundedHeader()
+      ? `${base} border-b border-border`
+      : base
+  })
+}
