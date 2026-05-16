@@ -137,7 +137,9 @@ import { NotificationBell } from '../features/notification/components/notificati
           </button>
           -->
 
-          <app-notification-bell />
+          @if (!isAdmin()) {
+            <app-notification-bell />
+          }
 
           <div class="relative">
             <button
