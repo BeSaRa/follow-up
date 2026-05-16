@@ -327,11 +327,15 @@ import { UserType } from '../../shared/enums/user-type'
               </thead>
               <tbody uiTableBody>
                 @for (item of models(); track item.id) {
-                  <tr uiTableRow>
+                  <tr
+                    uiTableRow
+                    class="cursor-pointer"
+                    (click)="showComments(item)"
+                  >
                     <td uiTableCell>
                       <button
                         class="cursor-pointer font-medium text-primary hover:underline"
-                        (click)="view(item)"
+                        (click)="$event.stopPropagation(); view(item)"
                       >
                         {{ item.docSubject }}
                       </button>
@@ -394,6 +398,7 @@ import { UserType } from '../../shared/enums/user-type'
                     <td uiTableCell class="w-[160px]">
                       <div
                         class="flex w-full items-center justify-center gap-1"
+                        (click)="$event.stopPropagation()"
                       >
                         <button
                           uiButton
