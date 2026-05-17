@@ -60,7 +60,10 @@
     "loading": "جارٍ التحميل…",
     "no_data": "لا توجد عناصر متابعة لعرضها.",
     "distribution_title": "توزيع المتابعات",
-    "total": "الإجمالي"
+    "total": "الإجمالي",
+    "security_distribution_title": "توزيع مستوى السرية",
+    "priority_distribution_title": "توزيع مستوى الأولوية",
+    "priority_attention_count": "{{count}} مراسلات تحتاج إلى انتباهك"
   },
   "admin": {
     "title": "الإدارة",

@@ -83,7 +83,13 @@ import { AppStore } from '../../shared/stores/app-store'
             {{ 'dashboard.description' | translate }}
           </p>
         </div>
-        <button uiButton variant="outline" size="sm" (click)="refresh()">
+        <button
+          uiButton
+          variant="outline"
+          size="sm"
+          [disabled]="countersLoading() || latestLoading()"
+          (click)="refresh()"
+        >
           <mat-icon
             class="text-lg! size-5! leading-5!"
             [svgIcon]="icons.REFRESH"
@@ -240,7 +246,7 @@ import { AppStore } from '../../shared/stores/app-store'
             <table uiTable>
               <thead uiTableHeader>
                 <tr uiTableRow>
-                  <th uiTableHead>
+                  <th uiTableHead resizable class="w-[300px]">
                     {{ 'followup.doc_subject' | translate }}
                   </th>
                   <th uiTableHead>
@@ -457,14 +463,25 @@ import { AppStore } from '../../shared/stores/app-store'
                   </tr>
                 } @empty {
                   <tr>
-                    <td
-                      [attr.colspan]="10"
-                      class="px-4 py-8 text-center text-sm text-foreground-muted"
-                    >
+                    <td [attr.colspan]="10">
                       @if (latestLoading()) {
-                        <span>{{ 'dashboard.loading' | translate }}</span>
+                        <div class="space-y-4 px-4 py-4">
+                          @for (i of skeletonRows; track i) {
+                            <ui-skeleton width="100%" height="2rem" />
+                          }
+                        </div>
                       } @else {
-                        <span>{{ 'dashboard.no_data' | translate }}</span>
+                        <div
+                          class="flex flex-col items-center justify-center py-12 text-foreground-muted"
+                        >
+                          <mat-icon
+                            class="text-4xl! size-10! leading-10! mb-3"
+                            [svgIcon]="icons.VIEW_DASHBOARD"
+                          />
+                          <p class="text-sm">
+                            {{ 'dashboard.no_data' | translate }}
+                          </p>
+                        </div>
                       }
                     </td>
                   </tr>
@@ -484,10 +501,70 @@ import { AppStore } from '../../shared/stores/app-store'
             <div
               echarts
               [options]="chartOptions()"
+              [loading]="countersLoading()"
               class="h-80 w-full"
             ></div>
           </ui-card-content>
         </ui-card>
+
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <ui-card>
+            <ui-card-content class="p-4!">
+              <h2 class="mb-2 text-lg font-semibold text-foreground">
+                {{ 'dashboard.security_distribution_title' | translate }}
+              </h2>
+              <div
+                echarts
+                [options]="securityChartOptions()"
+                [loading]="securityLoading()"
+                class="h-40 w-full"
+              ></div>
+            </ui-card-content>
+          </ui-card>
+
+          <ui-card>
+            <ui-card-content class="p-4!">
+              <h2 class="mb-3 text-lg font-semibold text-foreground">
+                {{ 'dashboard.priority_distribution_title' | translate }}
+              </h2>
+              @if (priorityCountsLoading()) {
+                <div class="space-y-2">
+                  @for (i of [1, 2, 3, 4]; track i) {
+                    <ui-skeleton width="100%" height="3rem" />
+                  }
+                </div>
+              } @else {
+                <div class="space-y-2">
+                  @for (item of priorityListFull(); track item.key) {
+                    <div class="flex items-center gap-3">
+                      <div
+                        class="flex size-10 shrink-0 items-center justify-center rounded-full"
+                        [style.background-color]="item.bg"
+                        [style.color]="item.color"
+                      >
+                        <mat-icon
+                          class="text-lg! size-5! leading-5!"
+                          [svgIcon]="item.icon"
+                        />
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <p class="font-semibold text-foreground">
+                          {{ item.name }}
+                        </p>
+                        <p class="text-xs text-foreground-muted">
+                          {{
+                            'dashboard.priority_attention_count'
+                              | translate: { count: item.count }
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
+            </ui-card-content>
+          </ui-card>
+        </div>
       </div>
     </div>
   `,
@@ -518,6 +595,42 @@ export class DashboardPage implements OnInit {
   protected readonly dueIn7Breakdown = signal<FollowupLevelCount[]>([])
   protected readonly latest = signal<Followup[]>([])
   protected readonly latestLoading = signal(false)
+  protected readonly skeletonRows = [1, 2, 3, 4, 5] as const
+  protected readonly securityCounts = signal<FollowupLevelCount[]>([])
+  protected readonly securityLoading = signal(false)
+  protected readonly priorityCounts = signal<FollowupLevelCount[]>([])
+  protected readonly priorityCountsLoading = signal(false)
+
+  /**
+   * Mocked icon + color per priority level. The backend doesn't expose icon
+   * metadata yet — once it does, this map can be removed and the response
+   * fields used directly.
+   */
+  private readonly priorityMeta: Record<
+    number,
+    { icon: string; color: string; bg: string }
+  > = {
+    1: {
+      icon: APP_ICONS.PRIORITY_HIGH,
+      color: 'rgb(239, 68, 68)',
+      bg: 'rgba(239, 68, 68, 0.15)',
+    },
+    2: {
+      icon: APP_ICONS.FLAG_OUTLINE,
+      color: 'rgb(245, 158, 11)',
+      bg: 'rgba(245, 158, 11, 0.15)',
+    },
+    3: {
+      icon: APP_ICONS.FLAG_OUTLINE,
+      color: 'rgb(59, 130, 246)',
+      bg: 'rgba(59, 130, 246, 0.15)',
+    },
+    4: {
+      icon: APP_ICONS.FLAG_OUTLINE,
+      color: 'rgb(34, 197, 94)',
+      bg: 'rgba(34, 197, 94, 0.15)',
+    },
+  }
 
   protected readonly isArabic = computed(() => this.currentLang() === 'ar')
   protected readonly isPmoHead = computed(
@@ -616,6 +729,67 @@ export class DashboardPage implements OnInit {
     }
   })
 
+  /** Vertical bar chart for the security level distribution. */
+  protected readonly securityChartOptions = computed<EChartsOption>(() => {
+    const useArabic = this.isArabic()
+    const data = this.securityCounts()
+      .slice()
+      .sort((a, b) => b.followupCount - a.followupCount)
+    return {
+      tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+      grid: { left: 8, right: 8, top: 8, bottom: 8, containLabel: true },
+      xAxis: {
+        type: 'category',
+        data: data.map((s) => (useArabic ? s.arName : s.enName)),
+        axisLabel: { fontSize: 11, interval: 0, hideOverlap: true },
+      },
+      yAxis: {
+        type: 'value',
+        axisLabel: { fontSize: 11 },
+        splitLine: { lineStyle: { color: '#e2e8f0' } },
+      },
+      series: [
+        {
+          type: 'bar',
+          data: data.map((s) => s.followupCount),
+          itemStyle: { color: 'rgb(59, 130, 246)', borderRadius: [4, 4, 0, 0] },
+          barWidth: '50%',
+        },
+      ],
+    }
+  })
+
+  /**
+   * Priority level list with all 4 priorities (zero-filled), each annotated
+   * with the mocked icon/color metadata until the backend exposes it.
+   */
+  protected readonly priorityListFull = computed(() => {
+    const priorities = this.appStore.lookupList()?.PriorityLevel ?? []
+    const counts = new Map(
+      this.priorityCounts().map((b) => [b.priorityLevel, b.followupCount]),
+    )
+    const useArabic = this.isArabic()
+    const fallback = {
+      icon: APP_ICONS.FLAG_OUTLINE,
+      color: 'rgb(100, 116, 139)',
+      bg: 'rgba(100, 116, 139, 0.15)',
+    }
+    return priorities
+      .slice()
+      .sort((a, b) => a.itemOrder - b.itemOrder)
+      .map((p) => {
+        const meta = this.priorityMeta[p.lookupKey] ?? fallback
+        return {
+          key: p.lookupKey,
+          name: useArabic ? p.arName : p.enName,
+          count: counts.get(p.lookupKey) ?? 0,
+          icon: meta.icon,
+          color: meta.color,
+          bg: meta.bg,
+        }
+      })
+  })
+
   /**
    * All 4 priority levels with their due-in-7-days counts (0 when missing
    * from the response), so the breakdown row is always fully populated.
@@ -651,6 +825,8 @@ export class DashboardPage implements OnInit {
     this.loadCounters()
     this.loadDueIn7Breakdown()
     this.loadLatest()
+    this.loadSecurityBreakdown()
+    this.loadPriorityBreakdown()
   }
 
   protected getPriorityVariant(id: number): BadgeVariant {
@@ -722,8 +898,35 @@ export class DashboardPage implements OnInit {
     })
   }
 
+  private loadSecurityBreakdown(): void {
+    this.securityLoading.set(true)
+    this.securityCounts.set([])
+    this.service.getCountBySecurityLevel().subscribe({
+      next: (result) => {
+        this.securityCounts.set(result)
+        this.securityLoading.set(false)
+      },
+      error: () => this.securityLoading.set(false),
+    })
+  }
+
+  private loadPriorityBreakdown(): void {
+    this.priorityCountsLoading.set(true)
+    this.priorityCounts.set([])
+    this.service.getCountByPriorityLevel().subscribe({
+      next: (result) => {
+        this.priorityCounts.set(result)
+        this.priorityCountsLoading.set(false)
+      },
+      error: () => this.priorityCountsLoading.set(false),
+    })
+  }
+
   private loadLatest(): void {
     this.latestLoading.set(true)
+    // Clear current rows so the @empty branch renders skeletons on every
+    // refresh, matching CrudPageDirective's loadData() behaviour.
+    this.latest.set([])
     this.service.getAll({ page: 0, size: 5, criteria: '' }).subscribe({
       next: (page) => {
         this.latest.set(page.result ?? [])

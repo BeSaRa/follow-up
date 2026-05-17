@@ -60,7 +60,10 @@
     "loading": "Loading…",
     "no_data": "No follow-up items to display.",
     "distribution_title": "Follow-up Distribution",
-    "total": "Total"
+    "total": "Total",
+    "security_distribution_title": "Security Level Distribution",
+    "priority_distribution_title": "Priority Level Distribution",
+    "priority_attention_count": "{{count}} correspondences need your attention"
   },
   "admin": {
     "title": "Administration",
