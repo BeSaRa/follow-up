@@ -63,8 +63,7 @@
     "total": "الإجمالي",
     "security_distribution_title": "توزيع مستوى السرية",
     "priority_distribution_title": "توزيع مستوى الأولوية",
-    "priority_attention_count": "{{count}} مراسلات تحتاج إلى انتباهك",
-    "percent_from_total": "{{percent}}% من الإجمالي"
+    "priority_attention_count": "{{count}} مراسلات تحتاج إلى انتباهك"
   },
   "admin": {
     "title": "الإدارة",

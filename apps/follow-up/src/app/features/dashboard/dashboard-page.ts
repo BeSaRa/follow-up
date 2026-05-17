@@ -544,10 +544,7 @@ import { AppStore } from '../../shared/stores/app-store'
                       <p
                         class="shrink-0 text-xs font-medium text-foreground-muted"
                       >
-                        {{
-                          'dashboard.percent_from_total'
-                            | translate: { percent: item.percent }
-                        }}
+                        {{ item.percent }}%
                       </p>
                     </div>
                   }
@@ -831,7 +828,20 @@ export class DashboardPage implements OnInit {
         {
           type: 'bar',
           data: data.map((s) => s.followupCount),
-          itemStyle: { color: 'rgb(59, 130, 246)', borderRadius: [4, 4, 0, 0] },
+          itemStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                { offset: 0, color: '#4194b3' },
+                { offset: 1, color: '#0d4262' },
+              ],
+            },
+            borderRadius: [4, 4, 0, 0],
+          },
           barWidth: '50%',
         },
       ],
