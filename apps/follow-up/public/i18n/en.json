@@ -58,7 +58,9 @@
     "status": "Status",
     "due_date": "Due Date",
     "loading": "Loading…",
-    "no_data": "No follow-up items to display."
+    "no_data": "No follow-up items to display.",
+    "distribution_title": "Follow-up Distribution",
+    "total": "Total"
   },
   "admin": {
     "title": "Administration",

@@ -1,11 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   computed,
   inject,
   OnInit,
   signal,
 } from '@angular/core'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { RouterLink } from '@angular/router'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { MatIcon } from '@angular/material/icon'
@@ -26,6 +28,9 @@ import {
   UiTableRow,
   UiTooltip,
 } from '@follow-up/ui'
+import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts'
+import * as echarts from 'echarts'
+import type { EChartsOption } from 'echarts'
 import { APP_ICONS } from '../../constants/icons'
 import { FollowupService } from '../followup/services/followup.service'
 import { Followup } from '../followup/models/followup'
@@ -38,6 +43,9 @@ import { AppStore } from '../../shared/stores/app-store'
 @Component({
   selector: 'app-dashboard-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // Component-level provider keeps echarts inside the dashboard's lazy chunk
+  // instead of inflating the initial bundle.
+  providers: [provideEchartsCore({ echarts })],
   imports: [
     RouterLink,
     TranslatePipe,
@@ -56,6 +64,7 @@ import { AppStore } from '../../shared/stores/app-store'
     UiTableHeader,
     UiTableRow,
     UiTooltip,
+    NgxEchartsDirective,
   ],
   template: `
     <div class="space-y-6">
@@ -228,7 +237,7 @@ import { AppStore } from '../../shared/stores/app-store'
             </a>
           </div>
           <div class="overflow-x-auto">
-            <table uiTable roundedHeader>
+            <table uiTable>
               <thead uiTableHeader>
                 <tr uiTableRow>
                   <th uiTableHead>
@@ -465,6 +474,21 @@ import { AppStore } from '../../shared/stores/app-store'
           </div>
         </ui-card-content>
       </ui-card>
+
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <ui-card>
+          <ui-card-content class="p-4!">
+            <h2 class="mb-2 text-lg font-semibold text-foreground">
+              {{ 'dashboard.distribution_title' | translate }}
+            </h2>
+            <div
+              echarts
+              [options]="chartOptions()"
+              class="h-80 w-full"
+            ></div>
+          </ui-card-content>
+        </ui-card>
+      </div>
     </div>
   `,
 })
@@ -472,8 +496,20 @@ export class DashboardPage implements OnInit {
   private readonly service = inject(FollowupService)
   private readonly translate = inject(TranslateService)
   private readonly appStore = inject(AppStore)
+  private readonly destroyRef = inject(DestroyRef)
   protected readonly icons = APP_ICONS
   protected readonly DocumentClass = DocumentClass
+
+  // Drives reactivity for anything that needs to recompute on language switch
+  // (priorityBreakdown, chartOptions). ngx-translate's currentLang isn't a
+  // signal, so we mirror it through onLangChange.
+  private readonly currentLang = signal(this.translate.currentLang || 'ar')
+
+  constructor() {
+    this.translate.onLangChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((e) => this.currentLang.set(e.lang))
+  }
 
   protected readonly counters = signal<FollowupDashboardCounters>(
     new FollowupDashboardCounters(),
@@ -483,9 +519,7 @@ export class DashboardPage implements OnInit {
   protected readonly latest = signal<Followup[]>([])
   protected readonly latestLoading = signal(false)
 
-  protected readonly isArabic = computed(
-    () => (this.translate.currentLang || 'ar') === 'ar',
-  )
+  protected readonly isArabic = computed(() => this.currentLang() === 'ar')
   protected readonly isPmoHead = computed(
     () => this.appStore.userType() === UserType.PMO_HEAD,
   )
@@ -494,6 +528,92 @@ export class DashboardPage implements OnInit {
     return (
       userType === UserType.PMO_HEAD || userType === UserType.INTERNAL_USER
     )
+  })
+
+  /** Pie chart options for the follow-up distribution donut. */
+  protected readonly chartOptions = computed<EChartsOption>(() => {
+    const isRtl = this.currentLang() === 'ar'
+    const c = this.counters()
+    const t = (key: string) => this.translate.instant(key)
+    // Slices mirror the 4 stat cards (same counters, labels, and colors).
+    const slices = [
+      {
+        value: c.incomingCount,
+        name: t('dashboard.incoming'),
+        color: 'rgb(139, 92, 246)',
+      },
+      {
+        value: c.completedCount,
+        name: t('dashboard.completed'),
+        color: 'rgb(34, 197, 94)',
+      },
+      {
+        value: c.overDueWithin7DaysCount,
+        name: t('dashboard.due_in_7_days'),
+        color: 'rgb(245, 158, 11)',
+      },
+      {
+        value: c.overdueCount,
+        name: t('dashboard.overdue'),
+        color: 'rgb(239, 68, 68)',
+      },
+    ]
+    const total = slices.reduce((sum, s) => sum + s.value, 0)
+    // Labels on the right in RTL, on the left in LTR; the pie sits on the
+    // opposite side to leave room for them.
+    const pieCenterX = isRtl ? '30%' : '70%'
+    const legendPos = isRtl ? { right: '2%' } : { left: '2%' }
+    return {
+      tooltip: { trigger: 'item' },
+      legend: {
+        orient: 'vertical',
+        top: 'middle',
+        ...legendPos,
+        itemGap: 12,
+        textStyle: { fontSize: 12 },
+      },
+      graphic: [
+        {
+          type: 'text',
+          left: pieCenterX,
+          top: '42%',
+          style: {
+            text: String(total),
+            textAlign: 'center',
+            fontSize: 28,
+            fontWeight: 'bold',
+            fill: '#0f172a',
+          },
+        },
+        {
+          type: 'text',
+          left: pieCenterX,
+          top: '56%',
+          style: {
+            text: t('dashboard.total'),
+            textAlign: 'center',
+            fontSize: 12,
+            fill: '#64748b',
+          },
+        },
+      ],
+      series: [
+        {
+          type: 'pie',
+          radius: ['55%', '75%'],
+          center: [pieCenterX, '50%'],
+          avoidLabelOverlap: false,
+          label: { show: false },
+          labelLine: { show: false },
+          itemStyle: { borderColor: '#fff', borderWidth: 2 },
+          data: slices.map((s) => ({
+            value: s.value,
+            name: s.name,
+            itemStyle: { color: s.color },
+          })),
+        },
+      ],
+    }
   })
 
   /**
