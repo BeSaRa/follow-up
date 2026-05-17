@@ -33,7 +33,7 @@ export class UiInput {
       'w-full rounded-md border bg-surface-raised px-3 py-2 text-sm text-foreground transition-colors ' +
       'placeholder:text-foreground-subtle ' +
       'focus:outline-none focus:ring-2 focus:ring-ring ' +
-      'disabled:cursor-not-allowed disabled:opacity-50'
+      'disabled:cursor-not-allowed disabled:bg-surface disabled:text-foreground-muted disabled:border-border'
 
     return this.error() || this._autoError()
       ? `${base} border-error focus:ring-error/40`
