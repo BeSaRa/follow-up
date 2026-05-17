@@ -50,7 +50,7 @@ export class UiDatePickerInput {
   pickerRef: InstanceType<typeof UiDatePicker> | null = null
 
   protected readonly hostClasses =
-    'flex h-10 w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm ' +
+    'flex h-10 w-full rounded-md border border-border bg-transparent ps-3 pe-10 py-2 text-sm ' +
     'text-foreground placeholder:text-foreground-muted ' +
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ' +
     'disabled:cursor-not-allowed disabled:opacity-50'
@@ -91,7 +91,9 @@ export class UiDatePickerInput {
   selector: 'ui-date-picker-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'inline-flex items-center',
+    // Positioned inside the input's end edge (parent wrapper is relative).
+    class:
+      'absolute end-1 top-1/2 -translate-y-1/2 inline-flex items-center',
   },
   template: `
     <button
