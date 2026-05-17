@@ -29,6 +29,7 @@
   "layout": {
     "app_title": "Follow Up",
     "nav_system": "System Administration",
+    "dashboard": "Dashboard",
     "followup": "Follow Up",
     "logout": "Logout",
     "toggle_sidebar": "Toggle sidebar",
@@ -42,6 +43,22 @@
     "followup_status": "Followup Statuses",
     "priority_level": "Priority Levels",
     "prime_ministers_office": "Prime Minister's Office"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "Overview of your follow-up activity and the latest items.",
+    "incoming": "Incoming",
+    "completed": "Completed",
+    "due_in_7_days": "Due in 7 Days",
+    "overdue": "Overdue",
+    "latest_followups": "Latest Follow-ups",
+    "view_all": "View all",
+    "doc_subject": "Document Subject",
+    "priority": "Priority",
+    "status": "Status",
+    "due_date": "Due Date",
+    "loading": "Loading…",
+    "no_data": "No follow-up items to display."
   },
   "admin": {
     "title": "Administration",

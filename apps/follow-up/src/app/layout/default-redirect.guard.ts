@@ -6,6 +6,6 @@ import { UserType } from '../shared/enums/user-type'
 export const defaultRedirectGuard: CanActivateFn = () => {
   const appStore = inject(AppStore)
   const router = inject(Router)
-  const route = appStore.userType() === UserType.SYSTEM_ADMIN ? '/admin' : '/followup'
+  const route = appStore.userType() === UserType.SYSTEM_ADMIN ? '/admin' : '/dashboard'
   return router.parseUrl(route)
 }

@@ -6,11 +6,18 @@ export const NAV_GROUPS = [
     adminOnly: false,
     items: [
       {
+        path: '/dashboard',
+        label: 'layout.dashboard',
+        icon: APP_ICONS.VIEW_DASHBOARD,
+        exact: true,
+        sortOrder: 1,
+      },
+      {
         path: '/followup',
         label: 'layout.followup',
         icon: APP_ICONS.CLIPBOARD_TEXT_CLOCK,
         exact: true,
-        sortOrder: 1,
+        sortOrder: 2,
       },
     ],
   },

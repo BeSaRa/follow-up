@@ -11,6 +11,12 @@ export const layoutRoutes: Route[] = [
     canActivate: [authGuard],
     children: [
       {
+        path: 'dashboard',
+        canActivate: [nonAdminGuard],
+        loadComponent: () =>
+          import('../features/dashboard/dashboard-page').then(m => m.DashboardPage),
+      },
+      {
         path: 'followup',
         canActivate: [nonAdminGuard],
         loadComponent: () =>

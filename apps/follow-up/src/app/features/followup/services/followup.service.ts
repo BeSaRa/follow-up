@@ -11,6 +11,7 @@ import { FollowupComment } from '../models/followup-comment'
 import { FollowupAttachment } from '../models/followup-attachment'
 import { InternalUser } from '../models/internal-user'
 import { FollowupDashboardCounters } from '../models/followup-dashboard-counters'
+import { FollowupLevelCount } from '../../dashboard/models/followup-level-count'
 import { FollowupMetaData } from '../models/followup-meta-data'
 import { FollowupOpen } from '../models/followup-open'
 import { FollowupLogsDialog, FollowupLogsDialogData } from '../components/followup-logs-dialog'
@@ -215,6 +216,27 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
   getDashboardCounters(): Observable<FollowupDashboardCounters> {
     return this.http.get<FollowupDashboardCounters>(
       this.urlService.URLS.FOLLOWUP_DASHBOARD_COUNTERS,
+    )
+  }
+
+  @CastResponse(() => FollowupLevelCount, { unwrap: 'result' })
+  getOverdueByPriorityLevel(): Observable<FollowupLevelCount[]> {
+    return this.http.get<FollowupLevelCount[]>(
+      this.urlService.URLS.FOLLOWUP_DASHBOARD_OVERDUE_PRIORITY_LEVEL,
+    )
+  }
+
+  @CastResponse(() => FollowupLevelCount, { unwrap: 'result' })
+  getCountByPriorityLevel(): Observable<FollowupLevelCount[]> {
+    return this.http.get<FollowupLevelCount[]>(
+      this.urlService.URLS.FOLLOWUP_DASHBOARD_PRIORITY_LEVEL,
+    )
+  }
+
+  @CastResponse(() => FollowupLevelCount, { unwrap: 'result' })
+  getCountBySecurityLevel(): Observable<FollowupLevelCount[]> {
+    return this.http.get<FollowupLevelCount[]>(
+      this.urlService.URLS.FOLLOWUP_DASHBOARD_SECURITY_LEVEL,
     )
   }
 

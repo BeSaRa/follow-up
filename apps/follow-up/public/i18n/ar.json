@@ -29,6 +29,7 @@
   "layout": {
     "app_title": "نظام المتابعة",
     "nav_system": "إدارة النظام",
+    "dashboard": "لوحة التحكم",
     "followup": "المتابعة",
     "logout": "تسجيل الخروج",
     "toggle_sidebar": "تبديل الشريط الجانبي",
@@ -42,6 +43,22 @@
     "followup_status": "حالات المتابعة",
     "priority_level": "مستويات الأولوية",
     "prime_ministers_office": "مكتب رئيس مجلس الوزراء"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "description": "نظرة عامة على نشاط المتابعة وأحدث العناصر.",
+    "incoming": "الواردة",
+    "completed": "المكتملة",
+    "due_in_7_days": "مستحقة خلال 7 أيام",
+    "overdue": "متأخرة",
+    "latest_followups": "أحدث المتابعات",
+    "view_all": "عرض الكل",
+    "doc_subject": "موضوع المستند",
+    "priority": "الأولوية",
+    "status": "الحالة",
+    "due_date": "تاريخ الاستحقاق",
+    "loading": "جارٍ التحميل…",
+    "no_data": "لا توجد عناصر متابعة لعرضها."
   },
   "admin": {
     "title": "الإدارة",
