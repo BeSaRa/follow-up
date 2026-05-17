@@ -516,21 +516,51 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
       </ui-card>
 
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <ui-card shadow="none">
-          <ui-card-content class="p-4!">
-            <h2 class="mb-2 text-lg font-semibold text-foreground">
-              {{ 'dashboard.distribution_title' | translate }}
-            </h2>
-            <div
-              echarts
-              [options]="chartOptions()"
-              [loading]="countersLoading()"
-              class="h-80 w-full"
-            ></div>
-          </ui-card-content>
-        </ui-card>
-
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <ui-card shadow="none">
+            <ui-card-content class="p-4!">
+              <h2 class="mb-3 text-lg font-semibold text-foreground">
+                {{ 'dashboard.priority_distribution_title' | translate }}
+              </h2>
+              @if (priorityCountsLoading()) {
+                <div class="space-y-2">
+                  @for (i of [1, 2, 3, 4]; track i) {
+                    <ui-skeleton width="100%" height="3rem" />
+                  }
+                </div>
+              } @else {
+                <div class="space-y-2">
+                  @for (item of priorityListFull(); track item.key) {
+                    <div class="flex items-center gap-3">
+                      <div
+                        [class]="
+                          'flex size-10 shrink-0 items-center justify-center rounded-full ' +
+                          item.colorClass
+                        "
+                      >
+                        <mat-icon
+                          class="text-lg! size-5! leading-5!"
+                          [svgIcon]="item.icon"
+                        />
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <p class="font-semibold text-foreground">
+                          {{ item.name }}
+                        </p>
+                        <p class="text-xs text-foreground-muted">
+                          {{
+                            'dashboard.priority_attention_count'
+                              | translate: { count: item.count }
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
+            </ui-card-content>
+          </ui-card>
+
           <ui-card shadow="none">
             <ui-card-content class="p-4!">
               <h2 class="mb-3 text-lg font-semibold text-foreground">
@@ -581,51 +611,21 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
               ></div>
             </ui-card-content>
           </ui-card>
-
-          <ui-card shadow="none">
-            <ui-card-content class="p-4!">
-              <h2 class="mb-3 text-lg font-semibold text-foreground">
-                {{ 'dashboard.priority_distribution_title' | translate }}
-              </h2>
-              @if (priorityCountsLoading()) {
-                <div class="space-y-2">
-                  @for (i of [1, 2, 3, 4]; track i) {
-                    <ui-skeleton width="100%" height="3rem" />
-                  }
-                </div>
-              } @else {
-                <div class="space-y-2">
-                  @for (item of priorityListFull(); track item.key) {
-                    <div class="flex items-center gap-3">
-                      <div
-                        [class]="
-                          'flex size-10 shrink-0 items-center justify-center rounded-full ' +
-                          item.colorClass
-                        "
-                      >
-                        <mat-icon
-                          class="text-lg! size-5! leading-5!"
-                          [svgIcon]="item.icon"
-                        />
-                      </div>
-                      <div class="min-w-0 flex-1">
-                        <p class="font-semibold text-foreground">
-                          {{ item.name }}
-                        </p>
-                        <p class="text-xs text-foreground-muted">
-                          {{
-                            'dashboard.priority_attention_count'
-                              | translate: { count: item.count }
-                          }}
-                        </p>
-                      </div>
-                    </div>
-                  }
-                </div>
-              }
-            </ui-card-content>
-          </ui-card>
         </div>
+
+        <ui-card shadow="none">
+          <ui-card-content class="p-4!">
+            <h2 class="mb-2 text-lg font-semibold text-foreground">
+              {{ 'dashboard.distribution_title' | translate }}
+            </h2>
+            <div
+              echarts
+              [options]="chartOptions()"
+              [loading]="countersLoading()"
+              class="h-80 w-full"
+            ></div>
+          </ui-card-content>
+        </ui-card>
       </div>
     </div>
   `,
