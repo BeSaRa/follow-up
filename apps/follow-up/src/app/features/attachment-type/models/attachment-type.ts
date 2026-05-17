@@ -19,9 +19,6 @@ export class AttachmentType extends CrudModel<AttachmentType, AttachmentTypeServ
     return {
       arName: ['', Validators.required],
       enName: ['', Validators.required],
-      lookupKey: [0, Validators.required],
-      lookupStrKey: [''],
-      category: [0],
       status: [true],
     }
   }

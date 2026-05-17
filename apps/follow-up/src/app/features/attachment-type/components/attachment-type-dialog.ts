@@ -49,23 +49,6 @@ import { AttachmentType } from '../models/attachment-type'
           </ui-form-field>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
-          <ui-form-field>
-            <label uiLabel for="lookupKey">{{ 'attachment_type.lookup_key' | translate }}</label>
-            <input uiInput id="lookupKey" type="number" formControlName="lookupKey" />
-          </ui-form-field>
-
-          <ui-form-field>
-            <label uiLabel for="category">{{ 'attachment_type.category' | translate }}</label>
-            <input uiInput id="category" type="number" formControlName="category" />
-          </ui-form-field>
-        </div>
-
-        <ui-form-field>
-          <label uiLabel for="lookupStrKey">{{ 'attachment_type.lookup_str_key' | translate }}</label>
-          <input uiInput id="lookupStrKey" formControlName="lookupStrKey" />
-        </ui-form-field>
-
         <div class="flex items-center gap-6">
           <label class="flex items-center gap-2 text-sm text-foreground">
             <ui-slide-toggle formControlName="status" />
