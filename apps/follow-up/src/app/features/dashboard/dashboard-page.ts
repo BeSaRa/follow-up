@@ -243,7 +243,7 @@ import { AppStore } from '../../shared/stores/app-store'
             </a>
           </div>
           <div class="overflow-x-auto">
-            <table uiTable>
+            <table uiTable striped>
               <thead uiTableHeader>
                 <tr uiTableRow>
                   <th uiTableHead resizable class="w-[300px]">
