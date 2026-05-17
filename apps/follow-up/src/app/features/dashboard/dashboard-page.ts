@@ -24,12 +24,16 @@ import {
   UiTableHead,
   UiTableHeader,
   UiTableRow,
+  UiTooltip,
 } from '@follow-up/ui'
 import { APP_ICONS } from '../../constants/icons'
 import { FollowupService } from '../followup/services/followup.service'
 import { Followup } from '../followup/models/followup'
 import { FollowupDashboardCounters } from '../followup/models/followup-dashboard-counters'
 import { FollowupLevelCount } from './models/followup-level-count'
+import { DocumentClass } from '../../shared/enums/document-class'
+import { UserType } from '../../shared/enums/user-type'
+import { AppStore } from '../../shared/stores/app-store'
 
 @Component({
   selector: 'app-dashboard-page',
@@ -51,6 +55,7 @@ import { FollowupLevelCount } from './models/followup-level-count'
     UiTableHead,
     UiTableHeader,
     UiTableRow,
+    UiTooltip,
   ],
   template: `
     <div class="space-y-6">
@@ -237,30 +242,53 @@ import { FollowupLevelCount } from './models/followup-level-count'
               <thead uiTableHeader>
                 <tr uiTableRow>
                   <th uiTableHead>
-                    {{ 'dashboard.doc_subject' | translate }}
+                    {{ 'followup.doc_subject' | translate }}
                   </th>
                   <th uiTableHead>
-                    {{ 'dashboard.priority' | translate }}
+                    {{ 'followup.reference' | translate }}
                   </th>
                   <th uiTableHead>
-                    {{ 'dashboard.status' | translate }}
+                    {{ 'followup.priority_level' | translate }}
                   </th>
                   <th uiTableHead>
-                    {{ 'dashboard.due_date' | translate }}
+                    {{ 'followup.doc_class' | translate }}
+                  </th>
+                  <th uiTableHead>
+                    {{ 'followup.external_entity' | translate }}
+                  </th>
+                  <th uiTableHead>
+                    {{ 'followup.followup_status' | translate }}
+                  </th>
+                  <th uiTableHead>
+                    {{ 'followup.assigned_user' | translate }}
+                  </th>
+                  <th uiTableHead>
+                    {{ 'followup.due_date' | translate }}
+                  </th>
+                  <th uiTableHead>
+                    {{ 'followup.status' | translate }}
+                  </th>
+                  <th uiTableHead class="w-[160px] [&>div]:justify-center">
+                    {{ 'followup.actions' | translate }}
                   </th>
                 </tr>
               </thead>
               <tbody uiTableBody>
                 @for (item of latest(); track item.id) {
-                  <tr uiTableRow>
+                  <tr
+                    uiTableRow
+                    class="cursor-pointer"
+                    (click)="showComments(item)"
+                  >
                     <td uiTableCell>
                       <button
                         class="cursor-pointer text-start font-medium text-primary hover:underline"
-                        (click)="view(item)"
+                        (click)="$event.stopPropagation(); view(item)"
                       >
                         {{ item.docSubject }}
                       </button>
                     </td>
+                    <td uiTableCell>{{ item.followUpReference }}</td>
                     <td uiTableCell>
                       <ui-badge
                         [variant]="
@@ -272,14 +300,166 @@ import { FollowupLevelCount } from './models/followup-level-count'
                       </ui-badge>
                     </td>
                     <td uiTableCell>
+                      <div class="flex items-center gap-2">
+                        <div
+                          class="inline-flex size-6 items-center justify-center rounded-full"
+                          [style.background-color]="
+                            item.docClassInfo.id === DocumentClass.OUTGOING
+                              ? 'rgba(59, 130, 246, 0.15)'
+                              : 'rgba(139, 92, 246, 0.15)'
+                          "
+                          [style.color]="
+                            item.docClassInfo.id === DocumentClass.OUTGOING
+                              ? 'rgb(59, 130, 246)'
+                              : 'rgb(139, 92, 246)'
+                          "
+                        >
+                          <mat-icon
+                            class="text-xs! size-3! leading-3!"
+                            [svgIcon]="
+                              item.docClassInfo.id === DocumentClass.OUTGOING
+                                ? icons.ARROW_UP
+                                : icons.ARROW_DOWN
+                            "
+                          />
+                        </div>
+                        <span>{{ item.docClassInfo.getName() }}</span>
+                      </div>
+                    </td>
+                    <td uiTableCell>
+                      {{ item.externalEntityInfo.getName() }}
+                    </td>
+                    <td uiTableCell>
                       {{ item.followUpStatusInfo.getName() }}
                     </td>
+                    <td uiTableCell>
+                      {{ item.assignedUserInfo.getName() }}
+                    </td>
                     <td uiTableCell>{{ item.dueDate }}</td>
+                    <td uiTableCell>
+                      <ui-badge
+                        [variant]="item.status ? 'success' : 'error'"
+                        size="sm"
+                      >
+                        {{
+                          (item.status
+                            ? 'followup.active'
+                            : 'followup.inactive'
+                          ) | translate
+                        }}
+                      </ui-badge>
+                    </td>
+                    <td uiTableCell class="w-[160px]">
+                      <div
+                        class="flex w-full items-center justify-center gap-1"
+                        (click)="$event.stopPropagation()"
+                      >
+                        <button
+                          uiButton
+                          variant="ghost"
+                          size="sm"
+                          [attr.aria-label]="'followup.view' | translate"
+                          [uiTooltip]="'followup.view' | translate"
+                          (click)="view(item)"
+                        >
+                          <mat-icon
+                            class="text-lg! size-5! leading-5!"
+                            [svgIcon]="icons.EYE_OUTLINE"
+                          />
+                        </button>
+                        @if (isPmoHead()) {
+                          @if (item.assignedUserInfo.id > 0) {
+                            <button
+                              uiButton
+                              variant="ghost"
+                              size="sm"
+                              [attr.aria-label]="
+                                'followup.reassign_user' | translate
+                              "
+                              [uiTooltip]="
+                                'followup.reassign_user' | translate
+                              "
+                              (click)="assignUser(item)"
+                            >
+                              <mat-icon
+                                class="text-lg! size-5! leading-5!"
+                                [svgIcon]="icons.ACCOUNT_SWITCH"
+                              />
+                            </button>
+                          } @else {
+                            <button
+                              uiButton
+                              variant="ghost"
+                              size="sm"
+                              [attr.aria-label]="
+                                'followup.assign_user' | translate
+                              "
+                              [uiTooltip]="'followup.assign_user' | translate"
+                              (click)="assignUser(item)"
+                            >
+                              <mat-icon
+                                class="text-lg! size-5! leading-5!"
+                                [svgIcon]="icons.ACCOUNT_ARROW_RIGHT"
+                              />
+                            </button>
+                          }
+                        }
+                        @if (canUpdatePriority()) {
+                          <button
+                            uiButton
+                            variant="ghost"
+                            size="sm"
+                            [attr.aria-label]="
+                              'followup.change_priority' | translate
+                            "
+                            [uiTooltip]="
+                              'followup.change_priority' | translate
+                            "
+                            (click)="changePriority(item)"
+                          >
+                            <mat-icon
+                              class="text-lg! size-5! leading-5!"
+                              [svgIcon]="icons.FLAG_OUTLINE"
+                            />
+                          </button>
+                        }
+                        <button
+                          uiButton
+                          variant="ghost"
+                          size="sm"
+                          [attr.aria-label]="'followup.show_logs' | translate"
+                          [uiTooltip]="'followup.show_logs' | translate"
+                          (click)="showLogs(item)"
+                        >
+                          <mat-icon
+                            class="text-lg! size-5! leading-5!"
+                            [svgIcon]="icons.HISTORY"
+                          />
+                        </button>
+                        <button
+                          uiButton
+                          variant="ghost"
+                          size="sm"
+                          [attr.aria-label]="
+                            'followup.show_comments' | translate
+                          "
+                          [uiTooltip]="
+                            'followup.show_comments' | translate
+                          "
+                          (click)="showComments(item)"
+                        >
+                          <mat-icon
+                            class="text-lg! size-5! leading-5!"
+                            [svgIcon]="icons.COMMENT_MULTIPLE_OUTLINE"
+                          />
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 } @empty {
                   <tr>
                     <td
-                      [attr.colspan]="4"
+                      [attr.colspan]="10"
                       class="px-4 py-8 text-center text-sm text-foreground-muted"
                     >
                       @if (latestLoading()) {
@@ -301,7 +481,9 @@ import { FollowupLevelCount } from './models/followup-level-count'
 export class DashboardPage implements OnInit {
   private readonly service = inject(FollowupService)
   private readonly translate = inject(TranslateService)
+  private readonly appStore = inject(AppStore)
   protected readonly icons = APP_ICONS
+  protected readonly DocumentClass = DocumentClass
 
   protected readonly counters = signal<FollowupDashboardCounters>(
     new FollowupDashboardCounters(),
@@ -314,6 +496,15 @@ export class DashboardPage implements OnInit {
   protected readonly isArabic = computed(
     () => (this.translate.currentLang || 'ar') === 'ar',
   )
+  protected readonly isPmoHead = computed(
+    () => this.appStore.userType() === UserType.PMO_HEAD,
+  )
+  protected readonly canUpdatePriority = computed(() => {
+    const userType = this.appStore.userType()
+    return (
+      userType === UserType.PMO_HEAD || userType === UserType.INTERNAL_USER
+    )
+  })
 
   private readonly priorityVariants: Record<number, BadgeVariant> = {
     1: 'outline-error',
@@ -332,12 +523,55 @@ export class DashboardPage implements OnInit {
     this.loadLatest()
   }
 
-  protected view(item: Followup): void {
-    this.service.view(item)
-  }
-
   protected getPriorityVariant(id: number): BadgeVariant {
     return this.priorityVariants[id] ?? 'outline'
+  }
+
+  protected view(item: Followup): void {
+    this.service
+      .view(item)
+      .afterClosed()
+      .subscribe((result) => {
+        if (
+          result?.terminated ||
+          result?.statusChanged ||
+          result?.priorityChanged
+        ) {
+          this.loadLatest()
+          this.loadCounters()
+        }
+      })
+  }
+
+  protected showLogs(item: Followup): void {
+    this.service.viewLogs(item)
+  }
+
+  protected showComments(item: Followup): void {
+    this.service.viewComments(item)
+  }
+
+  protected assignUser(item: Followup): void {
+    this.service
+      .openAssignUser(item)
+      .afterClosed()
+      .subscribe((result) => {
+        if (!result) return
+        this.loadLatest()
+        this.loadCounters()
+      })
+  }
+
+  protected changePriority(item: Followup): void {
+    this.service
+      .openChangePriority(item.id, item.priorityLevelInfo.id)
+      .afterClosed()
+      .subscribe((result) => {
+        if (!result) return
+        this.loadLatest()
+        this.loadCounters()
+        this.loadDueIn7Breakdown()
+      })
   }
 
   private loadCounters(): void {
