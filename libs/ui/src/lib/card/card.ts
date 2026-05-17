@@ -1,4 +1,18 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+} from '@angular/core'
+
+export type UiCardShadow = 'none' | 'sm' | 'md' | 'lg'
+
+const SHADOW_CLASSES: Record<UiCardShadow, string> = {
+  none: '',
+  sm: 'shadow-sm',
+  md: 'shadow-md',
+  lg: 'shadow-lg',
+}
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -6,11 +20,19 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content />`,
   host: {
-    class:
-      'block rounded-lg border border-border bg-surface-raised shadow-sm transition-colors',
+    '[class]': 'hostClasses()',
   },
 })
-export class UiCard {}
+export class UiCard {
+  readonly shadow = input<UiCardShadow>('sm')
+
+  protected readonly hostClasses = computed(() => {
+    const base =
+      'block rounded-lg border border-border bg-surface-raised transition-colors'
+    const shadow = SHADOW_CLASSES[this.shadow()]
+    return shadow ? `${base} ${shadow}` : base
+  })
+}
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector

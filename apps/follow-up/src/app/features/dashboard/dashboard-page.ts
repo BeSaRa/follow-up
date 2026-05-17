@@ -99,7 +99,7 @@ import { AppStore } from '../../shared/stores/app-store'
 
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <!-- Incoming -->
-        <ui-card>
+        <ui-card shadow="none">
           <ui-card-content class="relative flex min-h-32 flex-col justify-start p-4!">
             <div
               class="absolute top-4 end-4 flex size-14 items-center justify-center rounded-full"
@@ -125,7 +125,7 @@ import { AppStore } from '../../shared/stores/app-store'
         </ui-card>
 
         <!-- Completed -->
-        <ui-card>
+        <ui-card shadow="none">
           <ui-card-content class="relative flex min-h-32 flex-col justify-start p-4!">
             <div
               class="absolute top-4 end-4 flex size-14 items-center justify-center rounded-full"
@@ -151,7 +151,7 @@ import { AppStore } from '../../shared/stores/app-store'
         </ui-card>
 
         <!-- Due in 7 Days (with priority breakdown) -->
-        <ui-card>
+        <ui-card shadow="none">
           <ui-card-content class="relative flex min-h-32 flex-col gap-3 p-4!">
             <div
               class="absolute top-4 end-4 flex size-14 items-center justify-center rounded-full"
@@ -201,7 +201,7 @@ import { AppStore } from '../../shared/stores/app-store'
         </ui-card>
 
         <!-- Overdue -->
-        <ui-card>
+        <ui-card shadow="none">
           <ui-card-content class="relative flex min-h-32 flex-col justify-start p-4!">
             <div
               class="absolute top-4 end-4 flex size-14 items-center justify-center rounded-full"
@@ -227,7 +227,7 @@ import { AppStore } from '../../shared/stores/app-store'
         </ui-card>
       </div>
 
-      <ui-card class="overflow-hidden">
+      <ui-card shadow="none" class="overflow-hidden">
         <ui-card-content class="p-0!">
           <div
             class="flex items-center justify-between border-b border-border px-4 py-3"
@@ -493,7 +493,7 @@ import { AppStore } from '../../shared/stores/app-store'
       </ui-card>
 
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <ui-card>
+        <ui-card shadow="none">
           <ui-card-content class="p-4!">
             <h2 class="mb-2 text-lg font-semibold text-foreground">
               {{ 'dashboard.distribution_title' | translate }}
@@ -508,7 +508,7 @@ import { AppStore } from '../../shared/stores/app-store'
         </ui-card>
 
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <ui-card>
+          <ui-card shadow="none">
             <ui-card-content class="p-4!">
               <h2 class="mb-3 text-lg font-semibold text-foreground">
                 {{ 'dashboard.security_distribution_title' | translate }}
@@ -559,7 +559,7 @@ import { AppStore } from '../../shared/stores/app-store'
             </ui-card-content>
           </ui-card>
 
-          <ui-card>
+          <ui-card shadow="none">
             <ui-card-content class="p-4!">
               <h2 class="mb-3 text-lg font-semibold text-foreground">
                 {{ 'dashboard.priority_distribution_title' | translate }}

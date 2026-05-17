@@ -24,6 +24,13 @@ const API_PROPERTIES: ApiProperty[] = [
     kind: 'input',
   },
   {
+    name: 'shadow',
+    type: "'none' | 'sm' | 'md' | 'lg'",
+    default: "'sm'",
+    description: 'Drop shadow size applied to the card. Set to "none" for a flat look.',
+    kind: 'input',
+  },
+  {
     name: 'UiCardHeader',
     type: 'component',
     default: '-',
