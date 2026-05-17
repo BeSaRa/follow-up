@@ -2,7 +2,17 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
-import { UiButton, UiFormField, UiInput, UiLabel, UiSlideToggle } from '@follow-up/ui'
+import {
+  type BadgeVariant,
+  UiBadge,
+  UiButton,
+  UiFormField,
+  UiInput,
+  UiLabel,
+  UiSelect,
+  UiSelectOption,
+  UiSlideToggle,
+} from '@follow-up/ui'
 import { CrudDialogDirective, CrudDialogTitleKeys } from '@follow-up/core'
 import { PriorityLevel } from '../models/priority-level'
 
@@ -13,10 +23,13 @@ import { PriorityLevel } from '../models/priority-level'
     ReactiveFormsModule,
     TranslatePipe,
     MatIcon,
+    UiBadge,
     UiButton,
     UiFormField,
     UiInput,
     UiLabel,
+    UiSelect,
+    UiSelectOption,
     UiSlideToggle,
   ],
   template: `
@@ -49,6 +62,29 @@ import { PriorityLevel } from '../models/priority-level'
           </ui-form-field>
         </div>
 
+        <ui-form-field>
+          <label uiLabel for="lookupStrKey">
+            {{ 'priority_level.color' | translate }}
+          </label>
+          <ui-select
+            ngProjectAs="[uiInput]"
+            class="block w-full"
+            formControlName="lookupStrKey"
+            [placeholder]="'priority_level.color_placeholder' | translate"
+          >
+            @for (option of colorOptions; track option.value) {
+              <ui-select-option
+                [value]="option.value"
+                [label]="option.label | translate"
+              >
+                <ui-badge [variant]="option.value" size="sm">
+                  {{ option.label | translate }}
+                </ui-badge>
+              </ui-select-option>
+            }
+          </ui-select>
+        </ui-form-field>
+
         <div class="flex items-center gap-6">
           <label class="flex items-center gap-2 text-sm text-foreground">
             <ui-slide-toggle formControlName="status" />
@@ -77,4 +113,19 @@ export class PriorityLevelDialog extends CrudDialogDirective<PriorityLevel> {
     update: 'priority_level.edit',
     view: 'priority_level.view',
   }
+
+  /** Available outline badge variants exposed as a color picker for priority levels. */
+  protected readonly colorOptions: ReadonlyArray<{
+    value: BadgeVariant
+    label: string
+  }> = [
+    { value: 'outline', label: 'priority_level.color_default' },
+    { value: 'outline-primary', label: 'priority_level.color_primary' },
+    { value: 'outline-secondary', label: 'priority_level.color_secondary' },
+    { value: 'outline-accent', label: 'priority_level.color_accent' },
+    { value: 'outline-success', label: 'priority_level.color_success' },
+    { value: 'outline-warning', label: 'priority_level.color_warning' },
+    { value: 'outline-error', label: 'priority_level.color_error' },
+    { value: 'outline-info', label: 'priority_level.color_info' },
+  ]
 }

@@ -104,7 +104,7 @@ const SEARCH_DEBOUNCE_MS = 500
                     <span class="font-medium text-foreground">
                       {{ isArabic() ? site.arName : site.enName }}
                     </span>
-                    @if (site.siteTypeInfo?.id) {
+                    @if (site.siteTypeInfo.id) {
                       <span class="text-xs text-foreground-muted">
                         /
                         {{

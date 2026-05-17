@@ -571,12 +571,20 @@ export class FollowupPage
       this.followUpStatus() != null ||
       (this.assignmentStatus() !== 1 && this.assignmentStatus() !== null),
   )
-  private readonly priorityVariants: Record<number, BadgeVariant> = {
-    1: 'outline-error',
-    2: 'outline-warning',
-    3: 'outline-info',
-    4: 'outline-success',
-  }
+  /**
+   * Priority badge variants resolved from the PriorityLevel lookup's
+   * lookupStrKey (an outline-* variant chosen in the admin form). Priorities
+   * without a configured color fall back to a plain outline badge.
+   */
+  private readonly priorityVariantMap = computed(() => {
+    const map = new Map<number, BadgeVariant>()
+    for (const p of this.priorityLevels()) {
+      if (p.lookupStrKey) {
+        map.set(p.lookupKey, p.lookupStrKey as BadgeVariant)
+      }
+    }
+    return map
+  })
 
   ngOnInit(): void {
     if (this.isPmoHead() && !this.internalUsers().length) {
@@ -630,7 +638,7 @@ export class FollowupPage
   }
 
   getPriorityVariant(id: number): BadgeVariant {
-    return this.priorityVariants[id] ?? 'outline'
+    return this.priorityVariantMap().get(id) ?? 'outline'
   }
 
   onFromDateChange(value: Date | null): void {

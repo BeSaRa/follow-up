@@ -326,6 +326,16 @@
     "add": "إضافة مستوى أولوية",
     "view": "عرض",
     "edit": "تعديل",
-    "delete": "حذف"
+    "delete": "حذف",
+    "color": "اللون",
+    "color_placeholder": "اختر لونًا",
+    "color_default": "افتراضي",
+    "color_primary": "أساسي",
+    "color_secondary": "ثانوي",
+    "color_accent": "تمييز",
+    "color_success": "نجاح",
+    "color_warning": "تحذير",
+    "color_error": "خطأ",
+    "color_info": "معلومة"
   }
 }

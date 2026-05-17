@@ -19,6 +19,9 @@ export class PriorityLevel extends CrudModel<PriorityLevel, PriorityLevelService
     return {
       arName: ['', Validators.required],
       enName: ['', Validators.required],
+      // Stores a UiBadge outline variant (e.g. 'outline-error') used to
+      // color the priority badge across grids and the dashboard.
+      lookupStrKey: [''],
       status: [true],
     }
   }

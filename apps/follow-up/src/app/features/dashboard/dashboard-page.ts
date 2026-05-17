@@ -40,6 +40,29 @@ import { DocumentClass } from '../../shared/enums/document-class'
 import { UserType } from '../../shared/enums/user-type'
 import { AppStore } from '../../shared/stores/app-store'
 
+/**
+ * Tailwind classes (tinted bg + matching text/icon color) per UiBadge variant.
+ * Used to color the priority list's icon circles from the lookupStrKey value.
+ * Class names are spelled out so Tailwind picks them up at build time.
+ */
+const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
+  primary: 'bg-primary/15 text-primary',
+  secondary: 'bg-secondary/15 text-secondary',
+  accent: 'bg-accent/15 text-accent',
+  success: 'bg-success/15 text-success',
+  warning: 'bg-warning/15 text-warning',
+  error: 'bg-error/15 text-error',
+  info: 'bg-info/15 text-info',
+  outline: 'bg-surface text-foreground-muted',
+  'outline-primary': 'bg-primary/15 text-primary',
+  'outline-secondary': 'bg-secondary/15 text-secondary',
+  'outline-accent': 'bg-accent/15 text-accent',
+  'outline-success': 'bg-success/15 text-success',
+  'outline-warning': 'bg-warning/15 text-warning',
+  'outline-error': 'bg-error/15 text-error',
+  'outline-info': 'bg-info/15 text-info',
+}
+
 @Component({
   selector: 'app-dashboard-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -575,9 +598,10 @@ import { AppStore } from '../../shared/stores/app-store'
                   @for (item of priorityListFull(); track item.key) {
                     <div class="flex items-center gap-3">
                       <div
-                        class="flex size-10 shrink-0 items-center justify-center rounded-full"
-                        [style.background-color]="item.bg"
-                        [style.color]="item.color"
+                        [class]="
+                          'flex size-10 shrink-0 items-center justify-center rounded-full ' +
+                          item.colorClass
+                        "
                       >
                         <mat-icon
                           class="text-lg! size-5! leading-5!"
@@ -639,34 +663,15 @@ export class DashboardPage implements OnInit {
   protected readonly priorityCountsLoading = signal(false)
 
   /**
-   * Mocked icon + color per priority level. The backend doesn't expose icon
-   * metadata yet — once it does, this map can be removed and the response
-   * fields used directly.
+   * Mocked icon per priority level. The backend doesn't expose icon metadata
+   * yet — once it does, this map can be removed and the response field used
+   * directly. Color comes from each priority lookup's `lookupStrKey`.
    */
-  private readonly priorityMeta: Record<
-    number,
-    { icon: string; color: string; bg: string }
-  > = {
-    1: {
-      icon: APP_ICONS.PRIORITY_HIGH,
-      color: 'rgb(239, 68, 68)',
-      bg: 'rgba(239, 68, 68, 0.15)',
-    },
-    2: {
-      icon: APP_ICONS.FLAG_OUTLINE,
-      color: 'rgb(245, 158, 11)',
-      bg: 'rgba(245, 158, 11, 0.15)',
-    },
-    3: {
-      icon: APP_ICONS.FLAG_OUTLINE,
-      color: 'rgb(59, 130, 246)',
-      bg: 'rgba(59, 130, 246, 0.15)',
-    },
-    4: {
-      icon: APP_ICONS.FLAG_OUTLINE,
-      color: 'rgb(34, 197, 94)',
-      bg: 'rgba(34, 197, 94, 0.15)',
-    },
+  private readonly priorityMeta: Record<number, { icon: string }> = {
+    1: { icon: APP_ICONS.PRIORITY_HIGH },
+    2: { icon: APP_ICONS.FLAG_OUTLINE },
+    3: { icon: APP_ICONS.FLAG_OUTLINE },
+    4: { icon: APP_ICONS.FLAG_OUTLINE },
   }
 
   /** Mocked colors per security level until backend exposes metadata. */
@@ -854,27 +859,24 @@ export class DashboardPage implements OnInit {
    */
   protected readonly priorityListFull = computed(() => {
     const priorities = this.appStore.lookupList()?.PriorityLevel ?? []
+    const variantMap = this.priorityVariantMap()
     const counts = new Map(
       this.priorityCounts().map((b) => [b.priorityLevel, b.followupCount]),
     )
     const useArabic = this.isArabic()
-    const fallback = {
-      icon: APP_ICONS.FLAG_OUTLINE,
-      color: 'rgb(100, 116, 139)',
-      bg: 'rgba(100, 116, 139, 0.15)',
-    }
     return priorities
       .slice()
       .sort((a, b) => a.itemOrder - b.itemOrder)
       .map((p) => {
-        const meta = this.priorityMeta[p.lookupKey] ?? fallback
+        const variant = variantMap.get(p.lookupKey) ?? 'outline'
         return {
           key: p.lookupKey,
           name: useArabic ? p.arName : p.enName,
           count: counts.get(p.lookupKey) ?? 0,
-          icon: meta.icon,
-          color: meta.color,
-          bg: meta.bg,
+          icon:
+            this.priorityMeta[p.lookupKey]?.icon ?? APP_ICONS.FLAG_OUTLINE,
+          colorClass:
+            VARIANT_COLOR_CLASSES[variant] ?? VARIANT_COLOR_CLASSES.outline,
         }
       })
   })
@@ -899,12 +901,21 @@ export class DashboardPage implements OnInit {
       }))
   })
 
-  private readonly priorityVariants: Record<number, BadgeVariant> = {
-    1: 'outline-error',
-    2: 'outline-warning',
-    3: 'outline-info',
-    4: 'outline-success',
-  }
+  /**
+   * Priority badge variants resolved from the PriorityLevel lookup's
+   * lookupStrKey (configured via the admin priority-level form). Falls
+   * back to a plain outline badge when no color is configured.
+   */
+  private readonly priorityVariantMap = computed(() => {
+    const lookups = this.appStore.lookupList()?.PriorityLevel ?? []
+    const map = new Map<number, BadgeVariant>()
+    for (const p of lookups) {
+      if (p.lookupStrKey) {
+        map.set(p.lookupKey, p.lookupStrKey as BadgeVariant)
+      }
+    }
+    return map
+  })
 
   ngOnInit(): void {
     this.refresh()
@@ -919,7 +930,7 @@ export class DashboardPage implements OnInit {
   }
 
   protected getPriorityVariant(id: number): BadgeVariant {
-    return this.priorityVariants[id] ?? 'outline'
+    return this.priorityVariantMap().get(id) ?? 'outline'
   }
 
   protected view(item: Followup): void {
