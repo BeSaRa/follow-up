@@ -54,6 +54,26 @@ import { UserType } from '../../../shared/enums/user-type'
 import { AppStore } from '../../../shared/stores/app-store'
 import { CastResponse, CastResponseContainer } from 'cast-response'
 
+export interface FollowupSearchParams {
+  stringCriteria?: string
+  externalEntityId?: number
+  subExternalEntityId?: number
+  securityLevel?: number
+  priorityLevel?: number
+  followUpStatus?: number
+  /** ISO date `YYYY-MM-DD`. */
+  fromDate?: string
+  /** ISO date `YYYY-MM-DD`. */
+  toDate?: string
+  userId?: number
+  status?: boolean
+  docClassId?: number
+  state?: number
+  assignmentStatus?: number
+  pageNumber?: number
+  pageSize?: number
+}
+
 @CastResponseContainer({
   $default: {
     model: () => Followup,
@@ -82,6 +102,27 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
     return this.http.get<Pagination<Followup[]>>(url, {
       params: new HttpParams({ fromObject: options as never }),
     })
+  }
+
+  /**
+   * Advanced search against /user/followup/search. All filter fields are
+   * optional; omitted/empty values are dropped from the query string.
+   */
+  @CastResponse(undefined, { fallback: '$pagination' })
+  search(
+    params: FollowupSearchParams = {},
+  ): Observable<Pagination<Followup[]>> {
+    const fromObject: Record<string, string | number | boolean> = {}
+    for (const [key, value] of Object.entries(params)) {
+      if (value === undefined || value === null || value === '') continue
+      fromObject[key] = value as string | number | boolean
+    }
+    if (fromObject['pageNumber'] === undefined) fromObject['pageNumber'] = 0
+    if (fromObject['pageSize'] === undefined) fromObject['pageSize'] = 10
+    return this.http.get<Pagination<Followup[]>>(
+      this.urlService.URLS.FOLLOWUP_SEARCH,
+      { params: new HttpParams({ fromObject }) },
+    )
   }
 
   @CastResponse(() => FollowupOpen, {

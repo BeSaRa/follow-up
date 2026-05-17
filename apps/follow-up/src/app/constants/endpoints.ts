@@ -19,6 +19,7 @@ export const ENDPOINTS = {
   USER_PERMISSION_BULK: 'admin/user/permission/bulk',
   USER_PERMISSION_BY_USER: 'admin/user/permission/user-id',
   FOLLOWUP: 'user/followup',
+  FOLLOWUP_SEARCH: 'user/followup/search',
   FOLLOWUP_DASHBOARD_COUNTERS: 'user/followup/dashboard-counters',
   FOLLOWUP_DASHBOARD_OVERDUE_PRIORITY_LEVEL: 'user/followup/dashboard/due/priority-level',
   FOLLOWUP_DASHBOARD_PRIORITY_LEVEL: 'user/followup/dashboard/priority-level',
