@@ -117,9 +117,6 @@ import { PriorityLevel } from './models/priority-level'
                     {{ 'priority_level.en_name' | translate }}
                   </th>
                   <th uiTableHead>
-                    {{ 'priority_level.lookup_key' | translate }}
-                  </th>
-                  <th uiTableHead>
                     {{ 'priority_level.status' | translate }}
                   </th>
                   <th uiTableHead class="w-28"></th>
@@ -132,7 +129,6 @@ import { PriorityLevel } from './models/priority-level'
                         {{ item.arName }}
                       </td>
                       <td uiTableCell>{{ item.enName }}</td>
-                      <td uiTableCell>{{ item.lookupKey }}</td>
                       <td uiTableCell>
                         <ui-badge
                           [variant]="item.status ? 'success' : 'error'"
@@ -177,7 +173,7 @@ import { PriorityLevel } from './models/priority-level'
                   </tr>
                 } @empty {
                   <tr>
-                    <td [attr.colspan]="5">
+                    <td [attr.colspan]="4">
                       @if (loading()) {
                         <div class="space-y-4 px-4 py-4">
                           @for (i of skeletonRows; track i) {
