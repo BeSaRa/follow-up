@@ -14,8 +14,6 @@ import { MatIcon } from '@angular/material/icon'
 import {
   BadgeVariant,
   UiBadge,
-  UiBreadcrumb,
-  UiBreadcrumbItem,
   UiButton,
   UiCard,
   UiCardContent,
@@ -74,8 +72,6 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
     TranslatePipe,
     MatIcon,
     UiBadge,
-    UiBreadcrumb,
-    UiBreadcrumbItem,
     UiButton,
     UiCard,
     UiCardContent,
@@ -91,12 +87,6 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
   ],
   template: `
     <div class="space-y-6">
-      <ui-breadcrumb>
-        <ui-breadcrumb-item active>
-          {{ 'dashboard.title' | translate }}
-        </ui-breadcrumb-item>
-      </ui-breadcrumb>
-
       <div class="flex items-start justify-between gap-4">
         <div>
           <h1 class="text-2xl font-bold text-foreground">

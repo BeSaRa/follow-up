@@ -11,8 +11,6 @@ import { TranslatePipe } from '@ngx-translate/core'
 import { MatIcon } from '@angular/material/icon'
 import {
   UiBadge,
-  UiBreadcrumb,
-  UiBreadcrumbItem,
   UiButton,
   UiCard,
   UiCardContent,
@@ -35,8 +33,6 @@ type NotificationFilter = 'all' | 'unread' | 'read'
     TranslatePipe,
     MatIcon,
     UiBadge,
-    UiBreadcrumb,
-    UiBreadcrumbItem,
     UiButton,
     UiCard,
     UiCardContent,
@@ -47,12 +43,6 @@ type NotificationFilter = 'all' | 'unread' | 'read'
   ],
   template: `
     <div class="space-y-6">
-      <ui-breadcrumb>
-        <ui-breadcrumb-item active>
-          {{ 'notification.title' | translate }}
-        </ui-breadcrumb-item>
-      </ui-breadcrumb>
-
       <div class="flex items-start justify-between gap-4">
         <div>
           <h1 class="text-2xl font-bold text-foreground">

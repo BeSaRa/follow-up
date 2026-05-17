@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { TranslatePipe } from '@ngx-translate/core'
 import { MatIcon } from '@angular/material/icon'
-import { UiBreadcrumb, UiBreadcrumbItem } from '@follow-up/ui'
 import { APP_ICONS } from '../../constants/icons'
 
 const ADMIN_PAGES = [
@@ -41,15 +40,9 @@ const ADMIN_PAGES = [
 @Component({
   selector: 'app-admin-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, TranslatePipe, MatIcon, UiBreadcrumb, UiBreadcrumbItem],
+  imports: [RouterLink, TranslatePipe, MatIcon],
   template: `
     <div class="space-y-6">
-      <ui-breadcrumb>
-        <ui-breadcrumb-item active>
-          {{ 'admin.title' | translate }}
-        </ui-breadcrumb-item>
-      </ui-breadcrumb>
-
       <div>
         <h1 class="text-2xl font-bold text-foreground">
           {{ 'admin.title' | translate }}

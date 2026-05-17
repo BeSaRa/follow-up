@@ -11,8 +11,6 @@ import { MatIcon } from '@angular/material/icon'
 import {
   BadgeVariant,
   UiBadge,
-  UiBreadcrumb,
-  UiBreadcrumbItem,
   UiButton,
   UiCard,
   UiCardContent,
@@ -46,8 +44,6 @@ import { UserType } from '../../shared/enums/user-type'
   imports: [
     TranslatePipe,
     MatIcon,
-    UiBreadcrumb,
-    UiBreadcrumbItem,
     UiBadge,
     UiButton,
     UiCard,
@@ -70,12 +66,6 @@ import { UserType } from '../../shared/enums/user-type'
   ],
   template: `
     <div class="space-y-6">
-      <ui-breadcrumb>
-        <ui-breadcrumb-item active>
-          {{ 'followup.title' | translate }}
-        </ui-breadcrumb-item>
-      </ui-breadcrumb>
-
       <div class="flex items-start justify-between gap-4">
         <div>
           <h1 class="text-2xl font-bold text-foreground">
