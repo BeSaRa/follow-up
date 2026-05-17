@@ -107,7 +107,7 @@ import { FollowupStatus } from './models/followup-status'
       <ui-card>
         <ui-card-content class="p-0!">
           <div class="overflow-x-auto">
-            <table uiTable>
+            <table uiTable roundedHeader>
               <thead uiTableHeader>
                 <tr uiTableRow>
                   <th uiTableHead>

@@ -107,7 +107,7 @@ import { PriorityLevel } from './models/priority-level'
       <ui-card>
         <ui-card-content class="p-0!">
           <div class="overflow-x-auto">
-            <table uiTable>
+            <table uiTable roundedHeader>
               <thead uiTableHeader>
                 <tr uiTableRow>
                   <th uiTableHead>
