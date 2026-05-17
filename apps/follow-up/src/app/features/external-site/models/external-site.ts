@@ -20,7 +20,11 @@ export class ExternalSite extends CrudModel<ExternalSite, ExternalSiteService> i
       arName: ['', Validators.required],
       enName: ['', Validators.required],
       description: [''],
-      ldapPrefix: [''],
+      // ldapPrefix is always disabled — value seeded from the selected
+      // Tawasol site and never edited by hand. Disabled controls aren't
+      // included in form.value, but prepareModel() clones from data.model
+      // so the original value is preserved on submit.
+      ldapPrefix: [{ value: '', disabled: true }],
       status: [true],
     }
   }

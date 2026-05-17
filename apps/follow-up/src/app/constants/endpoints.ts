@@ -8,6 +8,7 @@ export const ENDPOINTS = {
   ATTACHMENT_TYPE: 'admin/attachment-type',
   ATTACHMENT_TYPE_LOOKUPS: 'admin/attachment-type/lookup',
   EXTERNAL_SITE: 'admin/external-site',
+  EXTERNAL_SITE_TAWASOL: 'admin/external-site/fetch-tawasol-sites',
   FOLLOWUP_STATUS: 'admin/followup-status',
   FOLLOWUP_STATUS_LOOKUPS: 'admin/followup-status/lookup',
   PRIORITY_LEVEL: 'admin/priority-Level',

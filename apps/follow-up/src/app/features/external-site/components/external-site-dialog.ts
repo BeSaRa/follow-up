@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatIcon } from '@angular/material/icon'
 import { TranslatePipe } from '@ngx-translate/core'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { UiButton, UiFormField, UiInput, UiLabel, UiSlideToggle } from '@follow-up/ui'
 import { CrudDialogDirective, CrudDialogTitleKeys } from '@follow-up/core'
 import { ExternalSite } from '../models/external-site'
@@ -86,5 +87,33 @@ export class ExternalSiteDialog extends CrudDialogDirective<ExternalSite> {
     create: 'external_site.add',
     update: 'external_site.edit',
     view: 'external_site.view',
+  }
+
+  /**
+   * Always populate the form from data.model (default skips CREATE) — in this
+   * feature CREATE is always seeded from a selected Tawasol site, so the
+   * pre-filled values must show up.
+   */
+  override populateForm(): void {
+    if (this.data.model) {
+      this.form.patchValue(this.data.model)
+    }
+  }
+
+  /**
+   * POST in CREATE mode regardless of id. The selected Tawasol site carries
+   * a non-zero id that must be sent to the backend, but CrudModel.save()
+   * would route to PUT when id is truthy, so we call create() explicitly.
+   */
+  override onSubmit(): void {
+    if (this.isViewMode()) return
+    if (this.form.invalid) return
+    this.saving.set(true)
+    const model = this.prepareModel()
+    const op = this.isCreateMode() ? model.create() : model.update()
+    op.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (saved) => this.afterSaveSuccess(saved),
+      error: (err) => this.afterSaveFail(err),
+    })
   }
 }

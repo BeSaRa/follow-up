@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
+import { MatDialogRef } from '@angular/material/dialog'
 import { RouterLink } from '@angular/router'
 import { TranslatePipe } from '@ngx-translate/core'
 import { MatIcon } from '@angular/material/icon'
 import {
+  DialogService,
   UiBadge,
   UiBreadcrumb,
   UiBreadcrumbItem,
@@ -25,6 +27,7 @@ import { CrudPageWithDialogDirective } from '@follow-up/core'
 import { APP_ICONS } from '../../constants/icons'
 import { ExternalSiteService } from './services/external-site.service'
 import { ExternalSite } from './models/external-site'
+import { ExternalSiteTawasolSelectorDialog } from './components/external-site-tawasol-selector-dialog'
 
 @Component({
   selector: 'app-external-site-page',
@@ -230,4 +233,31 @@ export class ExternalSitePage extends CrudPageWithDialogDirective<
 > {
   readonly service = inject(ExternalSiteService)
   readonly icons = APP_ICONS
+  // Own injection — CrudPageWithDialogDirective's dialogService is private.
+  private readonly _dialogService = inject(DialogService)
+
+  /**
+   * "Add" first opens a Tawasol-site selector; the chosen site (with its
+   * id, ldapPrefix, siteTypeInfo, etc.) is then passed as the seed model
+   * to the regular create dialog.
+   */
+  override openCreateDialog(): MatDialogRef<unknown> {
+    const selectorRef = this._dialogService.open<
+      ExternalSiteTawasolSelectorDialog,
+      void,
+      ExternalSite | undefined
+    >(ExternalSiteTawasolSelectorDialog, {})
+
+    selectorRef.afterClosed().subscribe((selected) => {
+      if (!selected) return
+      super
+        .openCreateDialog(selected)
+        .afterClosed()
+        .subscribe((saved) => {
+          if (saved) this.refresh()
+        })
+    })
+
+    return selectorRef as unknown as MatDialogRef<unknown>
+  }
 }

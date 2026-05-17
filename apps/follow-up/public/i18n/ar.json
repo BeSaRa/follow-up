@@ -264,7 +264,11 @@
     "add": "إضافة جهة خارجية",
     "view": "عرض",
     "edit": "تعديل",
-    "delete": "حذف"
+    "delete": "حذف",
+    "tawasol_select_title": "اختر جهة للإضافة",
+    "tawasol_search_placeholder": "بحث عن جهة...",
+    "tawasol_top_results_hint": "يتم عرض أعلى {{count}} نتائج. حسّن بحثك للمزيد.",
+    "no_tawasol_sites": "لا توجد جهات تطابق بحثك."
   },
   "followup_status": {
     "title": "حالات المتابعة",

@@ -264,7 +264,11 @@
     "add": "Add External Site",
     "view": "View",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "tawasol_select_title": "Select a Site to Add",
+    "tawasol_search_placeholder": "Search sites...",
+    "tawasol_top_results_hint": "Showing the top {{count}} results. Refine your search for more.",
+    "no_tawasol_sites": "No sites match your search."
   },
   "followup_status": {
     "title": "Followup Statuses",
