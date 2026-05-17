@@ -19,6 +19,13 @@ export const NAV_GROUPS = [
         exact: true,
         sortOrder: 2,
       },
+      {
+        path: '/search',
+        label: 'layout.search',
+        icon: APP_ICONS.MAGNIFY,
+        exact: true,
+        sortOrder: 3,
+      },
     ],
   },
   {

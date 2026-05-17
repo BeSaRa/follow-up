@@ -23,6 +23,12 @@ export const layoutRoutes: Route[] = [
           import('../features/followup/followup-page').then(m => m.FollowupPage),
       },
       {
+        path: 'search',
+        canActivate: [nonAdminGuard],
+        loadComponent: () =>
+          import('../features/search/search-page').then(m => m.SearchPage),
+      },
+      {
         path: 'notifications',
         canActivate: [notificationsGuard],
         loadComponent: () =>
