@@ -242,7 +242,7 @@ import { AppStore } from '../../shared/stores/app-store'
                   </label>
                   <ui-date-picker
                     ngProjectAs="[uiInput]"
-                    class="block w-full"
+                    class="block w-full [&>div]:flex"
                     formControlName="fromDate"
                   >
                     <input uiDatePickerInput class="bg-surface-raised!" />
@@ -256,7 +256,7 @@ import { AppStore } from '../../shared/stores/app-store'
                   </label>
                   <ui-date-picker
                     ngProjectAs="[uiInput]"
-                    class="block w-full"
+                    class="block w-full [&>div]:flex"
                     formControlName="toDate"
                   >
                     <input uiDatePickerInput class="bg-surface-raised!" />
