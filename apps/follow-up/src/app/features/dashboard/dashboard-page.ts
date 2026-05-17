@@ -510,14 +510,54 @@ import { AppStore } from '../../shared/stores/app-store'
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <ui-card>
             <ui-card-content class="p-4!">
-              <h2 class="mb-2 text-lg font-semibold text-foreground">
+              <h2 class="mb-3 text-lg font-semibold text-foreground">
                 {{ 'dashboard.security_distribution_title' | translate }}
               </h2>
+              @if (securityLoading()) {
+                <div class="space-y-2">
+                  @for (i of [1, 2, 3, 4]; track i) {
+                    <ui-skeleton width="100%" height="2.5rem" />
+                  }
+                </div>
+              } @else {
+                <div class="space-y-2">
+                  @for (item of securityListFull(); track item.key) {
+                    <div class="flex items-center gap-3">
+                      <div
+                        class="flex size-8 shrink-0 items-center justify-center rounded-full"
+                        [style.background-color]="item.bg"
+                        [style.color]="item.color"
+                      >
+                        <mat-icon
+                          class="text-base! size-4! leading-4!"
+                          [svgIcon]="icons.LOCK_OUTLINE"
+                        />
+                      </div>
+                      <p class="min-w-0 flex-1 truncate text-sm">
+                        <span class="font-bold text-foreground">
+                          {{ item.count }}
+                        </span>
+                        <span class="ms-1 font-semibold text-foreground">
+                          {{ item.name }}
+                        </span>
+                      </p>
+                      <p
+                        class="shrink-0 text-xs font-medium text-foreground-muted"
+                      >
+                        {{
+                          'dashboard.percent_from_total'
+                            | translate: { percent: item.percent }
+                        }}
+                      </p>
+                    </div>
+                  }
+                </div>
+              }
               <div
                 echarts
                 [options]="securityChartOptions()"
                 [loading]="securityLoading()"
-                class="h-40 w-full"
+                class="mt-4 h-28 w-full"
               ></div>
             </ui-card-content>
           </ui-card>
@@ -632,6 +672,17 @@ export class DashboardPage implements OnInit {
     },
   }
 
+  /** Mocked colors per security level until backend exposes metadata. */
+  private readonly securityMeta: Record<
+    number,
+    { color: string; bg: string }
+  > = {
+    1: { color: 'rgb(34, 197, 94)', bg: 'rgba(34, 197, 94, 0.15)' },
+    2: { color: 'rgb(59, 130, 246)', bg: 'rgba(59, 130, 246, 0.15)' },
+    3: { color: 'rgb(245, 158, 11)', bg: 'rgba(245, 158, 11, 0.15)' },
+    4: { color: 'rgb(239, 68, 68)', bg: 'rgba(239, 68, 68, 0.15)' },
+  }
+
   protected readonly isArabic = computed(() => this.currentLang() === 'ar')
   protected readonly isPmoHead = computed(
     () => this.appStore.userType() === UserType.PMO_HEAD,
@@ -729,12 +780,40 @@ export class DashboardPage implements OnInit {
     }
   })
 
+  /**
+   * Security level list with each row's count, name, percentage of total,
+   * and (mocked) color metadata.
+   */
+  protected readonly securityListFull = computed(() => {
+    const items = this.securityCounts()
+    const total = items.reduce((sum, i) => sum + i.followupCount, 0)
+    const useArabic = this.isArabic()
+    const fallback = {
+      color: 'rgb(100, 116, 139)',
+      bg: 'rgba(100, 116, 139, 0.15)',
+    }
+    return items
+      .slice()
+      .sort((a, b) => a.securityLevel - b.securityLevel)
+      .map((s) => {
+        const meta = this.securityMeta[s.securityLevel] ?? fallback
+        return {
+          key: s.securityLevel,
+          name: useArabic ? s.arName : s.enName,
+          count: s.followupCount,
+          percent: total > 0 ? Math.round((s.followupCount / total) * 100) : 0,
+          color: meta.color,
+          bg: meta.bg,
+        }
+      })
+  })
+
   /** Vertical bar chart for the security level distribution. */
   protected readonly securityChartOptions = computed<EChartsOption>(() => {
     const useArabic = this.isArabic()
     const data = this.securityCounts()
       .slice()
-      .sort((a, b) => b.followupCount - a.followupCount)
+      .sort((a, b) => a.securityLevel - b.securityLevel)
     return {
       tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
       grid: { left: 8, right: 8, top: 8, bottom: 8, containLabel: true },

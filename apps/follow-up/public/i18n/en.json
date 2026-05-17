@@ -63,7 +63,8 @@
     "total": "Total",
     "security_distribution_title": "Security Level Distribution",
     "priority_distribution_title": "Priority Level Distribution",
-    "priority_attention_count": "{{count}} correspondences need your attention"
+    "priority_attention_count": "{{count}} correspondences need your attention",
+    "percent_from_total": "{{percent}}% from total"
   },
   "admin": {
     "title": "Administration",
