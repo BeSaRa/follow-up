@@ -19,9 +19,6 @@ export class FollowupStatus extends CrudModel<FollowupStatus, FollowupStatusServ
     return {
       arName: ['', Validators.required],
       enName: ['', Validators.required],
-      lookupKey: [0, Validators.required],
-      lookupStrKey: [''],
-      category: [0],
       status: [true],
     }
   }

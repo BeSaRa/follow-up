@@ -117,9 +117,6 @@ import { FollowupStatus } from './models/followup-status'
                     {{ 'followup_status.en_name' | translate }}
                   </th>
                   <th uiTableHead>
-                    {{ 'followup_status.lookup_key' | translate }}
-                  </th>
-                  <th uiTableHead>
                     {{ 'followup_status.status' | translate }}
                   </th>
                   <th uiTableHead class="w-28"></th>
@@ -132,7 +129,6 @@ import { FollowupStatus } from './models/followup-status'
                         {{ item.arName }}
                       </td>
                       <td uiTableCell>{{ item.enName }}</td>
-                      <td uiTableCell>{{ item.lookupKey }}</td>
                       <td uiTableCell>
                         <ui-badge
                           [variant]="item.status ? 'success' : 'error'"
@@ -177,7 +173,7 @@ import { FollowupStatus } from './models/followup-status'
                   </tr>
                 } @empty {
                   <tr>
-                    <td [attr.colspan]="5">
+                    <td [attr.colspan]="4">
                       @if (loading()) {
                         <div class="space-y-4 px-4 py-4">
                           @for (i of skeletonRows; track i) {
