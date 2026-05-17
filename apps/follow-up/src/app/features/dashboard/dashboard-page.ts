@@ -85,9 +85,9 @@ import { AppStore } from '../../shared/stores/app-store'
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <!-- Incoming -->
         <ui-card>
-          <ui-card-content class="flex items-center gap-4 p-5!">
+          <ui-card-content class="relative flex min-h-32 flex-col justify-start p-4!">
             <div
-              class="flex size-14 items-center justify-center rounded-full"
+              class="absolute top-4 end-4 flex size-14 items-center justify-center rounded-full"
               [style.background-color]="'rgba(139, 92, 246, 0.15)'"
               [style.color]="'rgb(139, 92, 246)'"
             >
@@ -96,26 +96,24 @@ import { AppStore } from '../../shared/stores/app-store'
                 [svgIcon]="icons.ARROW_DOWN"
               />
             </div>
-            <div class="min-w-0 flex-1">
-              <p class="text-sm text-foreground-muted">
-                {{ 'dashboard.incoming' | translate }}
+            <p class="text-sm text-foreground-muted">
+              {{ 'dashboard.incoming' | translate }}
+            </p>
+            @if (countersLoading()) {
+              <ui-skeleton width="4rem" height="2rem" />
+            } @else {
+              <p class="text-3xl font-bold text-foreground">
+                {{ counters().incomingCount }}
               </p>
-              @if (countersLoading()) {
-                <ui-skeleton width="4rem" height="2rem" />
-              } @else {
-                <p class="text-3xl font-bold text-foreground">
-                  {{ counters().incomingCount }}
-                </p>
-              }
-            </div>
+            }
           </ui-card-content>
         </ui-card>
 
         <!-- Completed -->
         <ui-card>
-          <ui-card-content class="flex items-center gap-4 p-5!">
+          <ui-card-content class="relative flex min-h-32 flex-col justify-start p-4!">
             <div
-              class="flex size-14 items-center justify-center rounded-full"
+              class="absolute top-4 end-4 flex size-14 items-center justify-center rounded-full"
               [style.background-color]="'rgba(34, 197, 94, 0.15)'"
               [style.color]="'rgb(34, 197, 94)'"
             >
@@ -124,80 +122,74 @@ import { AppStore } from '../../shared/stores/app-store'
                 [svgIcon]="icons.LIST_STATUS"
               />
             </div>
-            <div class="min-w-0 flex-1">
-              <p class="text-sm text-foreground-muted">
-                {{ 'dashboard.completed' | translate }}
+            <p class="text-sm text-foreground-muted">
+              {{ 'dashboard.completed' | translate }}
+            </p>
+            @if (countersLoading()) {
+              <ui-skeleton width="4rem" height="2rem" />
+            } @else {
+              <p class="text-3xl font-bold text-foreground">
+                {{ counters().completedCount }}
               </p>
-              @if (countersLoading()) {
-                <ui-skeleton width="4rem" height="2rem" />
-              } @else {
-                <p class="text-3xl font-bold text-foreground">
-                  {{ counters().completedCount }}
-                </p>
-              }
-            </div>
+            }
           </ui-card-content>
         </ui-card>
 
         <!-- Due in 7 Days (with priority breakdown) -->
         <ui-card>
-          <ui-card-content class="flex flex-col gap-3 p-5!">
-            <div class="flex items-center gap-4">
-              <div
-                class="flex size-14 items-center justify-center rounded-full"
-                [style.background-color]="'rgba(245, 158, 11, 0.15)'"
-                [style.color]="'rgb(245, 158, 11)'"
-              >
-                <mat-icon
-                  class="text-2xl! size-7! leading-7!"
-                  [svgIcon]="icons.CLIPBOARD_TEXT_CLOCK"
-                />
-              </div>
-              <div class="min-w-0 flex-1">
-                <p class="text-sm text-foreground-muted">
-                  {{ 'dashboard.due_in_7_days' | translate }}
-                </p>
-                @if (countersLoading()) {
-                  <ui-skeleton width="4rem" height="2rem" />
-                } @else {
-                  <p class="text-3xl font-bold text-foreground">
-                    {{ counters().overDueWithin7DaysCount }}
-                  </p>
-                }
-              </div>
+          <ui-card-content class="relative flex min-h-32 flex-col gap-3 p-4!">
+            <div
+              class="absolute top-4 end-4 flex size-14 items-center justify-center rounded-full"
+              [style.background-color]="'rgba(245, 158, 11, 0.15)'"
+              [style.color]="'rgb(245, 158, 11)'"
+            >
+              <mat-icon
+                class="text-2xl! size-7! leading-7!"
+                [svgIcon]="icons.CLIPBOARD_TEXT_CLOCK"
+              />
             </div>
-            @if (dueIn7Breakdown().length) {
-              <div class="flex items-stretch border-t border-border pt-3">
-                @for (
-                  item of dueIn7Breakdown();
-                  track item.priorityLevel;
-                  let last = $last
-                ) {
-                  <div class="flex-1 px-2 text-center">
-                    <div class="truncate text-xs text-foreground-muted">
-                      {{ item.getName() }}
-                    </div>
-                    <div class="mt-1 text-base font-bold text-foreground">
-                      {{ item.followupCount }}
-                    </div>
+            <div class="flex flex-1 flex-col justify-start">
+              <p class="text-sm text-foreground-muted">
+                {{ 'dashboard.due_in_7_days' | translate }}
+              </p>
+              @if (countersLoading()) {
+                <ui-skeleton width="4rem" height="2rem" />
+              } @else {
+                <p class="text-3xl font-bold text-foreground">
+                  {{ counters().overDueWithin7DaysCount }}
+                </p>
+              }
+            </div>
+            <div class="flex items-stretch border-t border-border pt-3">
+              @for (
+                item of priorityBreakdown();
+                track item.key;
+                let last = $last
+              ) {
+                <div class="flex-1 px-2 text-center">
+                  <div class="truncate text-xs text-foreground-muted">
+                    {{ item.name }}
                   </div>
-                  @if (!last) {
-                    <span
-                      class="w-px self-stretch bg-border"
-                      aria-hidden="true"
-                    ></span>
-                  }
+                  <div class="mt-1 text-base font-bold text-foreground">
+                    {{ item.count }}
+                  </div>
+                </div>
+                @if (!last) {
+                  <span
+                    class="w-px self-stretch bg-border"
+                    aria-hidden="true"
+                  ></span>
                 }
-              </div>
-            }
+              }
+            </div>
           </ui-card-content>
         </ui-card>
 
         <!-- Overdue -->
         <ui-card>
-          <ui-card-content class="flex items-center gap-4 p-5!">
+          <ui-card-content class="relative flex min-h-32 flex-col justify-start p-4!">
             <div
-              class="flex size-14 items-center justify-center rounded-full"
+              class="absolute top-4 end-4 flex size-14 items-center justify-center rounded-full"
               [style.background-color]="'rgba(239, 68, 68, 0.15)'"
               [style.color]="'rgb(239, 68, 68)'"
             >
@@ -206,18 +198,16 @@ import { AppStore } from '../../shared/stores/app-store'
                 [svgIcon]="icons.PRIORITY_HIGH"
               />
             </div>
-            <div class="min-w-0 flex-1">
-              <p class="text-sm text-foreground-muted">
-                {{ 'dashboard.overdue' | translate }}
+            <p class="text-sm text-foreground-muted">
+              {{ 'dashboard.overdue' | translate }}
+            </p>
+            @if (countersLoading()) {
+              <ui-skeleton width="4rem" height="2rem" />
+            } @else {
+              <p class="text-3xl font-bold text-foreground">
+                {{ counters().overdueCount }}
               </p>
-              @if (countersLoading()) {
-                <ui-skeleton width="4rem" height="2rem" />
-              } @else {
-                <p class="text-3xl font-bold text-foreground">
-                  {{ counters().overdueCount }}
-                </p>
-              }
-            </div>
+            }
           </ui-card-content>
         </ui-card>
       </div>
@@ -504,6 +494,26 @@ export class DashboardPage implements OnInit {
     return (
       userType === UserType.PMO_HEAD || userType === UserType.INTERNAL_USER
     )
+  })
+
+  /**
+   * All 4 priority levels with their due-in-7-days counts (0 when missing
+   * from the response), so the breakdown row is always fully populated.
+   */
+  protected readonly priorityBreakdown = computed(() => {
+    const priorities = this.appStore.lookupList()?.PriorityLevel ?? []
+    const counts = new Map(
+      this.dueIn7Breakdown().map((b) => [b.priorityLevel, b.followupCount]),
+    )
+    const useArabic = this.isArabic()
+    return priorities
+      .slice()
+      .sort((a, b) => a.itemOrder - b.itemOrder)
+      .map((p) => ({
+        key: p.lookupKey,
+        name: useArabic ? p.arName : p.enName,
+        count: counts.get(p.lookupKey) ?? 0,
+      }))
   })
 
   private readonly priorityVariants: Record<number, BadgeVariant> = {
