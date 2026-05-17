@@ -227,7 +227,7 @@ export class LoginPage {
   constructor() {
     effect(() => {
       if (this.store.isAuthenticated()) {
-        const route = this.appStore.userType() === UserType.SYSTEM_ADMIN ? '/admin' : '/followup'
+        const route = this.appStore.userType() === UserType.SYSTEM_ADMIN ? '/admin' : '/dashboard'
         this.router.navigate([route])
       }
     })
