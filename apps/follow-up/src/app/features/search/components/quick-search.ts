@@ -24,6 +24,7 @@ import { UiInput, UiTooltip } from '@follow-up/ui'
 import { APP_ICONS } from '../../../constants/icons'
 import { FollowupService } from '../../followup/services/followup.service'
 import { Followup } from '../../followup/models/followup'
+import { DocumentClass } from '../../../shared/enums/document-class'
 
 const MIN_SEARCH_CHARS = 2
 const DEBOUNCE_MS = 300
@@ -78,17 +79,42 @@ const MAX_RESULTS = 8
             @for (item of results(); track item.id) {
               <button
                 type="button"
-                class="block w-full px-3 py-2 text-start transition-colors hover:bg-surface-hover"
+                class="flex w-full items-center gap-2 px-3 py-2 text-start transition-colors hover:bg-surface-hover"
                 (click)="select(item)"
               >
-                <p class="truncate text-sm font-medium text-foreground">
-                  {{ item.docSubject }}
-                </p>
-                @if (item.followUpReference) {
-                  <p class="truncate text-xs text-foreground-muted">
-                    {{ item.followUpReference }}
+                <div
+                  class="inline-flex size-6 shrink-0 items-center justify-center rounded-full"
+                  [style.background-color]="
+                    item.docClassInfo.id === DocumentClass.OUTGOING
+                      ? 'rgba(59, 130, 246, 0.15)'
+                      : 'rgba(139, 92, 246, 0.15)'
+                  "
+                  [style.color]="
+                    item.docClassInfo.id === DocumentClass.OUTGOING
+                      ? 'rgb(59, 130, 246)'
+                      : 'rgb(139, 92, 246)'
+                  "
+                  [uiTooltip]="item.docClassInfo.getName()"
+                >
+                  <mat-icon
+                    class="text-xs! size-3! leading-3!"
+                    [svgIcon]="
+                      item.docClassInfo.id === DocumentClass.OUTGOING
+                        ? icons.ARROW_UP
+                        : icons.ARROW_DOWN
+                    "
+                  />
+                </div>
+                <div class="min-w-0 flex-1">
+                  <p class="truncate text-sm font-medium text-foreground">
+                    {{ item.docSubject }}
                   </p>
-                }
+                  @if (item.followUpReference) {
+                    <p class="truncate text-xs text-foreground-muted">
+                      {{ item.followUpReference }}
+                    </p>
+                  }
+                </div>
               </button>
             }
           }
@@ -103,6 +129,7 @@ export class QuickSearch {
   private readonly router = inject(Router)
   private readonly destroyRef = inject(DestroyRef)
   protected readonly icons = APP_ICONS
+  protected readonly DocumentClass = DocumentClass
 
   protected readonly searchControl = new FormControl('', { nonNullable: true })
   protected readonly results = signal<Followup[]>([])
