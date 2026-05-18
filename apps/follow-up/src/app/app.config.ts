@@ -9,14 +9,19 @@ import {
 import { DOCUMENT } from '@angular/common'
 import { provideHttpClient, withInterceptors } from '@angular/common/http'
 import { Direction, Directionality } from '@angular/cdk/bidi'
-import { provideRouter } from '@angular/router'
+import { provideRouter, withHashLocation } from '@angular/router'
 import { provideTranslateService } from '@ngx-translate/core'
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader'
 import { MatIconRegistry } from '@angular/material/icon'
 import { DomSanitizer } from '@angular/platform-browser'
 import { appRoutes } from './app.routes'
 import { firstValueFrom, filter, of, switchMap } from 'rxjs'
-import { AuthService, AuthStore, injectUrlService, tokenInterceptor } from '@follow-up/core'
+import {
+  AuthService,
+  AuthStore,
+  injectUrlService,
+  tokenInterceptor,
+} from '@follow-up/core'
 import { AppAuthService } from './shared/services/app-auth.service'
 import { SessionBootstrapService } from './shared/services/session-bootstrap.service'
 import { AppStore } from './shared/stores/app-store'
@@ -41,20 +46,22 @@ export const appConfig: ApplicationConfig = {
           filter(Boolean),
           switchMap(() => authService.refreshToken(refreshToken)),
         ),
-      ).then((response) => {
-        authStore.setTokens({
-          accessToken: response.result.accessToken,
-          refreshToken: response.result.refreshToken,
+      )
+        .then((response) => {
+          authStore.setTokens({
+            accessToken: response.result.accessToken,
+            refreshToken: response.result.refreshToken,
+          })
         })
-      }).catch(() => {
-        appStore.clearSession()
-        authStore.logout()
-      })
+        .catch(() => {
+          appStore.clearSession()
+          authStore.logout()
+        })
     }),
     provideModelInterceptors([GlobalModelInterceptor]),
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptors([errorInterceptor, tokenInterceptor])),
-    provideRouter(appRoutes),
+    provideRouter(appRoutes, withHashLocation()),
     provideTranslateService({
       fallbackLang: 'ar',
     }),
