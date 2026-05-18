@@ -35,6 +35,7 @@ import { NAV_GROUPS } from '../constants/nav-groups'
 import { AppStore } from '../shared/stores/app-store'
 import { UserType } from '../shared/enums/user-type'
 import { NotificationBell } from '../features/notification/components/notification-bell'
+import { QuickSearch } from '../features/search/components/quick-search'
 
 @Component({
   selector: 'app-layout',
@@ -58,6 +59,7 @@ import { NotificationBell } from '../features/notification/components/notificati
     UiAvatar,
     MatIcon,
     NotificationBell,
+    QuickSearch,
   ],
   template: `
     <div class="flex h-screen flex-col">
@@ -88,6 +90,9 @@ import { NotificationBell } from '../features/notification/components/notificati
             class="h-14 w-auto"
             priority
           />
+          @if (!isAdmin()) {
+            <app-quick-search class="ms-23 w-72 md:w-96" />
+          }
         </ui-navbar-brand>
 
         <ui-navbar-actions>

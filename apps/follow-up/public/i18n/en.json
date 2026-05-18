@@ -260,7 +260,10 @@
     "assignment_assigned": "Assigned",
     "assignment_unassigned": "Unassigned",
     "no_results": "No follow-up items match your search.",
-    "hint_run_search": "Set your criteria and run the search to see results."
+    "hint_run_search": "Set your criteria and run the search to see results.",
+    "quick_placeholder": "Search follow-ups…",
+    "advanced": "Advanced search",
+    "loading": "Searching…"
   },
   "attachment_type": {
     "title": "Attachment Types",

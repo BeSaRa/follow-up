@@ -260,7 +260,10 @@
     "assignment_assigned": "معين",
     "assignment_unassigned": "غير معين",
     "no_results": "لا توجد عناصر متابعة تطابق بحثك.",
-    "hint_run_search": "حدد المعايير ثم نفّذ البحث لعرض النتائج."
+    "hint_run_search": "حدد المعايير ثم نفّذ البحث لعرض النتائج.",
+    "quick_placeholder": "ابحث في المتابعات…",
+    "advanced": "بحث متقدم",
+    "loading": "جارٍ البحث…"
   },
   "attachment_type": {
     "title": "أنواع المرفقات",

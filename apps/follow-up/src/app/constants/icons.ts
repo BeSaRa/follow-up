@@ -61,6 +61,7 @@ export const APP_ICONS = {
   EYE_OFF_OUTLINE: 'eye-off-outline',
   EMAIL_OUTLINE: 'email-outline',
   LOCK_OUTLINE: 'lock-outline',
+  TUNE: 'tune',
 } as const
 
 export type AppIcon = (typeof APP_ICONS)[keyof typeof APP_ICONS]
