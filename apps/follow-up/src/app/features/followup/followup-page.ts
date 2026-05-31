@@ -2,10 +2,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   OnInit,
   signal,
+  untracked,
 } from '@angular/core'
+import { toSignal } from '@angular/core/rxjs-interop'
+import { ActivatedRoute, Router } from '@angular/router'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { MatIcon } from '@angular/material/icon'
 import {
@@ -556,6 +560,40 @@ export class FollowupPage
     return map
   })
 
+  private readonly router = inject(Router)
+  private readonly route = inject(ActivatedRoute)
+  private readonly queryParams = toSignal(this.route.queryParamMap, {
+    initialValue: this.route.snapshot.queryParamMap,
+  })
+  /**
+   * Item id to open from the URL (?action=open&item={id}). Returns null when
+   * the URL doesn't request an open or the id isn't a positive integer.
+   */
+  private readonly openItemId = computed<number | null>(() => {
+    const params = this.queryParams()
+    if (params.get('action') !== 'open') return null
+    const id = Number(params.get('item'))
+    return Number.isFinite(id) && id > 0 ? id : null
+  })
+  /** Ref to the open view dialog, so we don't reopen it on every signal tick. */
+  private openDialogRef: ReturnType<FollowupService['view']> | null = null
+
+  constructor() {
+    super()
+    // Deep-link bridge: whenever the URL asks to open an item and the row is
+    // present in the current page of results, open the view dialog for it.
+    effect(() => {
+      const targetId = this.openItemId()
+      const rows = this.models()
+      if (targetId === null) return
+      if (this.openDialogRef !== null) return
+      if (rows.length === 0) return
+      const row = rows.find((r) => r.id === targetId)
+      if (!row) return
+      untracked(() => this.openViewDialog(row))
+    })
+  }
+
   ngOnInit(): void {
     if (this.isPmoHead() && !this.internalUsers().length) {
       this.service.loadAssignableUsers().subscribe({ error: () => undefined })
@@ -667,14 +705,36 @@ export class FollowupPage
   }
 
   view(item: Followup): void {
-    this.service
-      .view(item)
-      .afterClosed()
-      .subscribe((result) => {
-        if (result?.terminated || result?.statusChanged || result?.priorityChanged) {
-          this.refresh()
-        }
+    // Push ?action=open&item={id} onto the URL — the effect in the
+    // constructor watches that and opens the dialog for us, so refreshing
+    // the page re-opens the same item.
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { action: 'open', item: item.id },
+      queryParamsHandling: 'merge',
+    })
+  }
+
+  private openViewDialog(item: Followup): void {
+    const ref = this.service.view(item)
+    this.openDialogRef = ref
+    ref.afterClosed().subscribe((result) => {
+      this.openDialogRef = null
+      // Clear the open-dialog params before refresh() so the effect doesn't
+      // race and reopen the dialog against the freshly reloaded rows.
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { action: null, item: null },
+        queryParamsHandling: 'merge',
       })
+      if (
+        result?.terminated ||
+        result?.statusChanged ||
+        result?.priorityChanged
+      ) {
+        this.refresh()
+      }
+    })
   }
 
   showLogs(item: Followup): void {
