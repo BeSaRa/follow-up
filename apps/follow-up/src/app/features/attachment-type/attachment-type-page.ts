@@ -19,7 +19,6 @@ import {
   UiTableHead,
   UiTableHeader,
   UiTableRow,
-  UiTooltip,
 } from '@follow-up/ui'
 import { CrudPageWithDialogDirective } from '@follow-up/core'
 import { APP_ICONS } from '../../constants/icons'
@@ -49,7 +48,6 @@ import { AttachmentType } from './models/attachment-type'
     UiInput,
     UiPagination,
     UiSkeleton,
-    UiTooltip,
   ],
   template: `
     <div class="space-y-6">
@@ -119,7 +117,7 @@ import { AttachmentType } from './models/attachment-type'
                   <th uiTableHead>
                     {{ 'attachment_type.status' | translate }}
                   </th>
-                  <th uiTableHead class="w-28"></th>
+                  <th uiTableHead class="w-48"></th>
                 </tr>
               </thead>
               <tbody uiTableBody>
@@ -143,30 +141,36 @@ import { AttachmentType } from './models/attachment-type'
                         </ui-badge>
                       </td>
                       <td uiTableCell>
-                        <div class="flex items-center gap-1">
+                        <div class="flex items-start justify-center gap-1">
                           <button
                             type="button"
-                            class="inline-flex items-center justify-center rounded-md p-1.5 text-foreground-muted hover:text-primary hover:bg-surface-hover transition-colors"
-                            [uiTooltip]="'attachment_type.view' | translate"
+                            class="inline-flex flex-col items-center justify-center gap-0.5 rounded-md px-2 py-1.5 text-foreground-muted transition-colors hover:bg-surface-hover hover:text-primary"
                             (click)="openViewDialog(item)"
                           >
-                            <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.EYE" />
+                            <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.EYE_OUTLINE" />
+                            <span class="text-[10px] font-light leading-none">
+                              {{ 'attachment_type.view' | translate }}
+                            </span>
                           </button>
                           <button
                             type="button"
-                            class="inline-flex items-center justify-center rounded-md p-1.5 text-foreground-muted hover:text-primary hover:bg-surface-hover transition-colors"
-                            [uiTooltip]="'attachment_type.edit' | translate"
+                            class="inline-flex flex-col items-center justify-center gap-0.5 rounded-md px-2 py-1.5 text-foreground-muted transition-colors hover:bg-surface-hover hover:text-primary"
                             (click)="openUpdateDialog(item)"
                           >
-                            <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.PENCIL" />
+                            <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.PENCIL_OUTLINE" />
+                            <span class="text-[10px] font-light leading-none">
+                              {{ 'attachment_type.edit' | translate }}
+                            </span>
                           </button>
                           <button
                             type="button"
-                            class="inline-flex items-center justify-center rounded-md p-1.5 text-foreground-muted hover:text-error hover:bg-surface-hover transition-colors"
-                            [uiTooltip]="'attachment_type.delete' | translate"
+                            class="inline-flex flex-col items-center justify-center gap-0.5 rounded-md px-2 py-1.5 text-foreground-muted transition-colors hover:bg-surface-hover hover:text-error"
                             (click)="confirmDelete(item)"
                           >
-                            <mat-icon class="text-base! size-4! leading-4!" [svgIcon]="icons.DELETE" />
+                            <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.DELETE_OUTLINE" />
+                            <span class="text-[10px] font-light leading-none">
+                              {{ 'attachment_type.delete' | translate }}
+                            </span>
                           </button>
                         </div>
                       </td>

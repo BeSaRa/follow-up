@@ -28,7 +28,6 @@ import {
   UiTableHead,
   UiTableHeader,
   UiTableRow,
-  UiTooltip,
 } from '@follow-up/ui'
 import { CrudPageDirective } from '@follow-up/core'
 import { APP_ICONS } from '../../constants/icons'
@@ -62,7 +61,6 @@ import { UserType } from '../../shared/enums/user-type'
     UiTableHead,
     UiTableHeader,
     UiTableRow,
-    UiTooltip,
   ],
   template: `
     <div class="space-y-6">
@@ -256,7 +254,7 @@ import { UserType } from '../../shared/enums/user-type'
       <ui-card>
         <ui-card-content class="p-0!">
           <div class="overflow-x-auto">
-            <table uiTable roundedHeader>
+            <table uiTable roundedHeader striped>
               <thead uiTableHeader>
                 <tr uiTableRow>
                   <th uiTableHead resizable>
@@ -278,7 +276,7 @@ import { UserType } from '../../shared/enums/user-type'
                   </th>
                   <th uiTableHead>{{ 'followup.due_date' | translate }}</th>
                   <th uiTableHead>{{ 'followup.status' | translate }}</th>
-                  <th uiTableHead class="w-[160px] [&>div]:justify-center">
+                  <th uiTableHead class="w-[320px] [&>div]:justify-center">
                     {{ 'followup.actions' | translate }}
                   </th>
                 </tr>
@@ -353,113 +351,95 @@ import { UserType } from '../../shared/enums/user-type'
                         }}
                       </ui-badge>
                     </td>
-                    <td uiTableCell class="w-[160px]">
+                    <td uiTableCell class="w-[320px]">
                       <div
-                        class="flex w-full items-center justify-center gap-1"
+                        class="flex w-full items-start justify-center gap-1"
                         (click)="$event.stopPropagation()"
                       >
                         <button
-                          uiButton
-                          variant="ghost"
-                          size="sm"
-                          [attr.aria-label]="'followup.view' | translate"
-                          [uiTooltip]="'followup.view' | translate"
+                          type="button"
+                          class="inline-flex flex-col items-center justify-center gap-0.5 rounded-md px-2 py-1.5 text-foreground-muted transition-colors hover:bg-surface-hover hover:text-foreground"
                           (click)="view(item)"
                         >
                           <mat-icon
                             class="text-lg! size-5! leading-5!"
                             [svgIcon]="icons.EYE_OUTLINE"
                           />
+                          <span class="text-[10px] font-light leading-none">
+                            {{ 'followup.view' | translate }}
+                          </span>
                         </button>
                         @if (isPmoHead()) {
                           @if (item.assignedUserInfo.id > 0) {
                             <button
-                              uiButton
-                              variant="ghost"
-                              size="sm"
-                              [attr.aria-label]="
-                                'followup.reassign_user' | translate
-                              "
-                              [uiTooltip]="'followup.reassign_user' | translate"
+                              type="button"
+                              class="inline-flex flex-col items-center justify-center gap-0.5 rounded-md px-2 py-1.5 text-foreground-muted transition-colors hover:bg-surface-hover hover:text-foreground"
                               (click)="assignUser(item)"
                             >
                               <mat-icon
                                 class="text-lg! size-5! leading-5!"
                                 [svgIcon]="icons.ACCOUNT_SWITCH"
                               />
+                              <span class="text-[10px] font-light leading-none">
+                                {{ 'followup.reassign_user' | translate }}
+                              </span>
                             </button>
                           } @else {
                             <button
-                              uiButton
-                              variant="ghost"
-                              size="sm"
-                              [attr.aria-label]="
-                                'followup.assign_user' | translate
-                              "
-                              [uiTooltip]="'followup.assign_user' | translate"
+                              type="button"
+                              class="inline-flex flex-col items-center justify-center gap-0.5 rounded-md px-2 py-1.5 text-foreground-muted transition-colors hover:bg-surface-hover hover:text-foreground"
                               (click)="assignUser(item)"
                             >
                               <mat-icon
                                 class="text-lg! size-5! leading-5!"
                                 [svgIcon]="icons.ACCOUNT_ARROW_RIGHT"
                               />
+                              <span class="text-[10px] font-light leading-none">
+                                {{ 'followup.assign_user' | translate }}
+                              </span>
                             </button>
                           }
                         }
                         @if (canUpdatePriority()) {
                           <button
-                            uiButton
-                            variant="ghost"
-                            size="sm"
-                            [attr.aria-label]="
-                              'followup.change_priority' | translate
-                            "
-                            [uiTooltip]="'followup.change_priority' | translate"
+                            type="button"
+                            class="inline-flex flex-col items-center justify-center gap-0.5 rounded-md px-2 py-1.5 text-foreground-muted transition-colors hover:bg-surface-hover hover:text-foreground"
                             (click)="changePriority(item)"
                           >
                             <mat-icon
                               class="text-lg! size-5! leading-5!"
                               [svgIcon]="icons.FLAG_OUTLINE"
                             />
+                            <span class="text-[10px] font-light leading-none">
+                              {{ 'followup.change_priority' | translate }}
+                            </span>
                           </button>
                         }
                         <button
-                          uiButton
-                          variant="ghost"
-                          size="sm"
-                          [attr.aria-label]="'followup.show_logs' | translate"
-                          [uiTooltip]="'followup.show_logs' | translate"
+                          type="button"
+                          class="inline-flex flex-col items-center justify-center gap-0.5 rounded-md px-2 py-1.5 text-foreground-muted transition-colors hover:bg-surface-hover hover:text-foreground"
                           (click)="showLogs(item)"
                         >
                           <mat-icon
                             class="text-lg! size-5! leading-5!"
                             [svgIcon]="icons.HISTORY"
                           />
+                          <span class="text-[10px] font-light leading-none">
+                            {{ 'followup.show_logs' | translate }}
+                          </span>
                         </button>
-                        <!-- <button
-                          uiButton
-                          variant="ghost"
-                          size="sm"
-                          [attr.aria-label]="'followup.add_comment' | translate"
-                          [uiTooltip]="'followup.add_comment' | translate"
-                          (click)="addComment(item)"
-                        >
-                          <mat-icon class="text-lg! size-5! leading-5!" [svgIcon]="icons.COMMENT_TEXT_OUTLINE" />
-                        </button> -->
                         <button
-                          uiButton
-                          variant="ghost"
-                          size="sm"
-                          [attr.aria-label]="
-                            'followup.show_comments' | translate
-                          "
-                          [uiTooltip]="'followup.show_comments' | translate"
+                          type="button"
+                          class="inline-flex flex-col items-center justify-center gap-0.5 rounded-md px-2 py-1.5 text-foreground-muted transition-colors hover:bg-surface-hover hover:text-foreground"
                           (click)="showComments(item)"
                         >
                           <mat-icon
                             class="text-lg! size-5! leading-5!"
                             [svgIcon]="icons.COMMENT_MULTIPLE_OUTLINE"
                           />
+                          <span class="text-[10px] font-light leading-none">
+                            {{ 'followup.show_comments' | translate }}
+                          </span>
                         </button>
                       </div>
                     </td>

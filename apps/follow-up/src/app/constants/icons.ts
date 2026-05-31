@@ -20,7 +20,9 @@ export const APP_ICONS = {
   // ── Actions ──
   PLUS: 'plus',
   PENCIL: 'pencil',
+  PENCIL_OUTLINE: 'pencil-outline',
   DELETE: 'delete',
+  DELETE_OUTLINE: 'delete-outline',
   REFRESH: 'refresh',
   MAGNIFY: 'magnify',
   DOTS_VERTICAL: 'dots-vertical',
