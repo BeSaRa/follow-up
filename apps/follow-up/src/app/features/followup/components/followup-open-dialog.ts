@@ -12,8 +12,10 @@ import { MatIcon } from '@angular/material/icon'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { TranslatePipe } from '@ngx-translate/core'
 import { Observable, of, tap } from 'rxjs'
-import { DialogService, UiBadge, UiButton, UiSkeleton, UiTooltip } from '@follow-up/ui'
+import { BadgeVariant, DialogService, UiBadge, UiButton, UiSkeleton, UiTooltip } from '@follow-up/ui'
 import { APP_ICONS } from '../../../constants/icons'
+import { SecurityLevel } from '../../../shared/enums/security-level'
+import { AppStore } from '../../../shared/stores/app-store'
 import { AttachmentViewerDialog } from './attachment-viewer-dialog'
 import { FollowupAttachment } from '../models/followup-attachment'
 import { FollowupOpen } from '../models/followup-open'
@@ -35,7 +37,7 @@ export interface FollowupOpenDialogResult {
   priorityChanged?: boolean
 }
 
-type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
+type ActiveTab = 'details' | 'followup'
 
 @Component({
   selector: 'app-followup-open-dialog',
@@ -166,38 +168,6 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
                 {{ followupAttachments().length }}
               </span>
             </button>
-            <button
-              type="button"
-              class="relative min-w-0 flex-1 border-b-2 px-3 py-3 text-xs font-medium transition-colors"
-              [class.border-primary]="activeTab() === 'linked'"
-              [class.text-primary]="activeTab() === 'linked'"
-              [class.border-transparent]="activeTab() !== 'linked'"
-              [class.text-foreground-muted]="activeTab() !== 'linked'"
-              (click)="activeTab.set('linked')"
-            >
-              <span class="block truncate">{{ 'followup.tab_linked_attachments' | translate }}</span>
-              <span
-                class="absolute -top-1 end-1 inline-flex min-w-[1.25rem] items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground"
-              >
-                {{ linkedAttachments().length }}
-              </span>
-            </button>
-            <button
-              type="button"
-              class="relative min-w-0 flex-1 border-b-2 px-3 py-3 text-xs font-medium transition-colors"
-              [class.border-primary]="activeTab() === 'guidance'"
-              [class.text-primary]="activeTab() === 'guidance'"
-              [class.border-transparent]="activeTab() !== 'guidance'"
-              [class.text-foreground-muted]="activeTab() !== 'guidance'"
-              (click)="activeTab.set('guidance')"
-            >
-              <span class="block truncate">{{ 'followup.tab_guidance_attachments' | translate }}</span>
-              <span
-                class="absolute -top-1 end-1 inline-flex min-w-[1.25rem] items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground"
-              >
-                {{ guidanceAttachments().length }}
-              </span>
-            </button>
           </div>
 
           <!-- Tab content -->
@@ -263,7 +233,10 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
                         {{ 'followup.field_priority' | translate }}
                       </div>
                       <div class="text-sm">
-                        <ui-badge variant="outline-warning" size="sm">
+                        <ui-badge
+                          [variant]="getPriorityVariant(f.metaData.priorityLevelInfo.id)"
+                          size="sm"
+                        >
                           {{ f.metaData.priorityLevelInfo.getName() || '—' }}
                         </ui-badge>
                       </div>
@@ -284,9 +257,17 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
                         {{ 'followup.field_security_level' | translate }}
                       </div>
                       <div class="text-sm">
-                        <ui-badge variant="outline-error" size="sm">
+                        <span
+                          class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium"
+                          [style.background-color]="
+                            securityMeta[f.metaData.securityLevelInfo.id]?.bg
+                          "
+                          [style.color]="
+                            securityMeta[f.metaData.securityLevelInfo.id]?.color
+                          "
+                        >
                           {{ f.metaData.securityLevelInfo.getName() || '—' }}
-                        </ui-badge>
+                        </span>
                       </div>
                     </div>
                     <div>
@@ -342,12 +323,6 @@ type ActiveTab = 'details' | 'followup' | 'linked' | 'guidance'
 
                 @case ('followup') {
                   <ng-container *ngTemplateOutlet="attachmentList; context: { items: f.followupAttachments }" />
-                }
-                @case ('linked') {
-                  <ng-container *ngTemplateOutlet="attachmentList; context: { items: f.linkedAttachments }" />
-                }
-                @case ('guidance') {
-                  <ng-container *ngTemplateOutlet="attachmentList; context: { items: f.guidanceAttachments }" />
                 }
               }
             }
@@ -487,6 +462,57 @@ export class FollowupOpenDialog implements OnInit {
   private readonly sanitizer = inject(DomSanitizer)
   private readonly followupService = inject(FollowupService)
   private readonly dialogService = inject(DialogService)
+  private readonly appStore = inject(AppStore)
+
+  /**
+   * Same color palette used by the dashboard's security distribution card —
+   * keyed by the {@link SecurityLevel} lookup value (1, 2, 4, 8, 16).
+   */
+  protected readonly securityMeta: Record<
+    number,
+    { color: string; bg: string }
+  > = {
+    [SecurityLevel.NORMAL]: {
+      color: 'rgb(34, 197, 94)',
+      bg: 'rgba(34, 197, 94, 0.15)',
+    },
+    [SecurityLevel.SECRET]: {
+      color: 'rgb(59, 130, 246)',
+      bg: 'rgba(59, 130, 246, 0.15)',
+    },
+    [SecurityLevel.PRIVATE_PERSONAL]: {
+      color: 'rgb(168, 85, 247)',
+      bg: 'rgba(168, 85, 247, 0.15)',
+    },
+    [SecurityLevel.CONFIDENTIAL]: {
+      color: 'rgb(245, 158, 11)',
+      bg: 'rgba(245, 158, 11, 0.15)',
+    },
+    [SecurityLevel.TOP_SECRET]: {
+      color: 'rgb(239, 68, 68)',
+      bg: 'rgba(239, 68, 68, 0.15)',
+    },
+  }
+
+  /**
+   * Priority badge variants resolved from the PriorityLevel lookup's
+   * `lookupStrKey` (configured via the admin priority-level form). Falls
+   * back to a plain outline badge when no color is configured.
+   */
+  private readonly priorityVariantMap = computed(() => {
+    const lookups = this.appStore.lookupList()?.PriorityLevel ?? []
+    const map = new Map<number, BadgeVariant>()
+    for (const p of lookups) {
+      if (p.lookupStrKey) {
+        map.set(p.lookupKey, p.lookupStrKey as BadgeVariant)
+      }
+    }
+    return map
+  })
+
+  protected getPriorityVariant(id: number): BadgeVariant {
+    return this.priorityVariantMap().get(id) ?? 'outline'
+  }
 
   readonly icons = APP_ICONS
   readonly skeletonRows = Array.from({ length: 8 }, (_v, i) => i)
@@ -527,12 +553,6 @@ export class FollowupOpenDialog implements OnInit {
 
   readonly followupAttachments = computed(
     () => this.followup()?.followupAttachments ?? [],
-  )
-  readonly linkedAttachments = computed(
-    () => this.followup()?.linkedAttachments ?? [],
-  )
-  readonly guidanceAttachments = computed(
-    () => this.followup()?.guidanceAttachments ?? [],
   )
 
   private readonly attachmentCache = new Map<string, string>()
