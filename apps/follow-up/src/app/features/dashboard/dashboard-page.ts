@@ -29,6 +29,7 @@ import {
 import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts'
 import * as echarts from 'echarts'
 import type { EChartsOption } from 'echarts'
+import type { ECharts } from 'echarts/core'
 import { APP_ICONS } from '../../constants/icons'
 import { FollowupService } from '../followup/services/followup.service'
 import { Followup } from '../followup/models/followup'
@@ -606,12 +607,45 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
             <h2 class="mb-2 text-lg font-semibold text-foreground">
               {{ 'dashboard.distribution_title' | translate }}
             </h2>
-            <div
-              echarts
-              [options]="chartOptions()"
-              [loading]="countersLoading()"
-              class="h-80 w-full"
-            ></div>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <div class="flex flex-col gap-2 sm:col-span-1">
+                @for (slice of pieSlices(); track slice.name) {
+                  <button
+                    type="button"
+                    class="cursor-pointer rounded-lg bg-[#F3F5F7] p-3 text-start transition hover:bg-[#E7ECEF] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    [class.opacity-50]="hiddenSlices().has(slice.name)"
+                    (mouseenter)="onLegendItemEnter(slice.name)"
+                    (mouseleave)="onLegendItemLeave(slice.name)"
+                    (click)="onLegendItemToggle(slice.name)"
+                  >
+                    <div class="flex items-center gap-2">
+                      <span
+                        class="inline-block size-2.5 shrink-0 rounded-full"
+                        [style.background-color]="slice.color"
+                      ></span>
+                      <span class="text-sm font-medium text-foreground">
+                        {{ slice.name }}
+                      </span>
+                    </div>
+                    <div class="mt-1 flex items-baseline gap-2">
+                      <span class="text-xl font-bold text-foreground">
+                        {{ slice.value }}
+                      </span>
+                      <span class="text-xs text-foreground-muted">
+                        {{ 'dashboard.correspondences' | translate }}
+                      </span>
+                    </div>
+                  </button>
+                }
+              </div>
+              <div
+                echarts
+                [options]="chartOptions()"
+                [loading]="countersLoading()"
+                (chartInit)="onPieChartInit($event)"
+                class="h-72 w-full sm:col-span-2"
+              ></div>
+            </div>
           </ui-card-content>
         </ui-card>
       </div>
@@ -636,6 +670,11 @@ export class DashboardPage implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((e) => this.currentLang.set(e.lang))
   }
+
+  /** Echarts instance for the distribution donut — captured via (chartInit). */
+  private pieChart: ECharts | null = null
+  /** Slice names toggled off via the custom legend list. */
+  protected readonly hiddenSlices = signal<Set<string>>(new Set())
 
   protected readonly counters = signal<FollowupDashboardCounters>(
     new FollowupDashboardCounters(),
@@ -684,13 +723,17 @@ export class DashboardPage implements OnInit {
     )
   })
 
-  /** Pie chart options for the follow-up distribution donut. */
-  protected readonly chartOptions = computed<EChartsOption>(() => {
-    const isRtl = this.currentLang() === 'ar'
+  /**
+   * Slices for the distribution donut. Shared between the echarts options
+   * and the custom legend list rendered next to the chart, so colors and
+   * counts stay in lockstep.
+   */
+  protected readonly pieSlices = computed(() => {
+    // Read currentLang so labels recompute on language switch.
+    this.currentLang()
     const c = this.counters()
     const t = (key: string) => this.translate.instant(key)
-    // Slices mirror the 4 stat cards (same counters, labels, and colors).
-    const slices = [
+    return [
       {
         value: c.incomingCount,
         name: t('dashboard.incoming'),
@@ -712,27 +755,52 @@ export class DashboardPage implements OnInit {
         color: '#8A1538',
       },
     ]
-    const total = slices.reduce((sum, s) => sum + s.value, 0)
-    // Labels on the right in RTL, on the left in LTR; the pie sits on the
-    // opposite side to leave room for them.
-    const pieCenterX = isRtl ? '30%' : '70%'
-    const legendPos = isRtl ? { right: '2%' } : { left: '2%' }
+  })
+
+  /** Pie chart options for the follow-up distribution donut. */
+  protected readonly chartOptions = computed<EChartsOption>(() => {
+    const slices = this.pieSlices()
+    const hidden = this.hiddenSlices()
+    const selected = Object.fromEntries(
+      slices.map((s) => [s.name, !hidden.has(s.name)]),
+    )
+    const visibleTotal = slices.reduce(
+      (sum, s) => (hidden.has(s.name) ? sum : sum + s.value),
+      0,
+    )
     return {
-      tooltip: { trigger: 'item' },
+      tooltip: {
+        trigger: 'item',
+        // Default tooltip uses float-based layout that breaks in RTL; render
+        // our own row so the marker, name, and value stay aligned in Arabic.
+        extraCssText: this.isArabic() ? 'direction: rtl;' : '',
+        formatter: (params) => {
+          const p = params as {
+            name: string
+            value: number
+            percent: number
+            color: string
+          }
+          const marker = `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${p.color};flex-shrink:0;"></span>`
+          const label = `<span>${p.name}</span>`
+          const value = `<strong style="margin-inline-start:12px;">${p.value} (${p.percent}%)</strong>`
+          return `<div style="display:flex;align-items:center;gap:6px;">${marker}${label}${value}</div>`
+        },
+      },
+      // Hidden legend keeps echarts' selection state so dispatchAction
+      // ('legendToggleSelect') works from our custom legend list.
       legend: {
-        orient: 'vertical',
-        top: 'middle',
-        ...legendPos,
-        itemGap: 12,
-        textStyle: { fontSize: 12 },
+        show: false,
+        data: slices.map((s) => s.name),
+        selected,
       },
       graphic: [
         {
           type: 'text',
-          left: pieCenterX,
+          left: 'center',
           top: '42%',
           style: {
-            text: String(total),
+            text: String(visibleTotal),
             textAlign: 'center',
             fontSize: 28,
             fontWeight: 'bold',
@@ -741,10 +809,10 @@ export class DashboardPage implements OnInit {
         },
         {
           type: 'text',
-          left: pieCenterX,
+          left: 'center',
           top: '56%',
           style: {
-            text: t('dashboard.total'),
+            text: this.translate.instant('dashboard.total'),
             textAlign: 'center',
             fontSize: 12,
             fill: '#64748b',
@@ -755,7 +823,7 @@ export class DashboardPage implements OnInit {
         {
           type: 'pie',
           radius: ['55%', '75%'],
-          center: [pieCenterX, '50%'],
+          center: ['50%', '50%'],
           avoidLabelOverlap: false,
           label: { show: false },
           labelLine: { show: false },
@@ -907,6 +975,29 @@ export class DashboardPage implements OnInit {
 
   ngOnInit(): void {
     this.refresh()
+  }
+
+  protected onPieChartInit(chart: ECharts): void {
+    this.pieChart = chart
+  }
+
+  protected onLegendItemEnter(name: string): void {
+    if (this.hiddenSlices().has(name)) return
+    this.pieChart?.dispatchAction({ type: 'highlight', seriesIndex: 0, name })
+  }
+
+  protected onLegendItemLeave(name: string): void {
+    this.pieChart?.dispatchAction({ type: 'downplay', seriesIndex: 0, name })
+  }
+
+  protected onLegendItemToggle(name: string): void {
+    this.hiddenSlices.update((prev) => {
+      const next = new Set(prev)
+      if (next.has(name)) next.delete(name)
+      else next.add(name)
+      return next
+    })
+    this.pieChart?.dispatchAction({ type: 'legendToggleSelect', name })
   }
 
   protected refresh(): void {
