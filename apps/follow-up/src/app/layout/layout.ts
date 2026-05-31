@@ -250,6 +250,7 @@ import { QuickSearch } from '../features/search/components/quick-search'
       border-radius: 0.75rem;
       border-inline-end: 0;
       overflow: hidden;
+      box-shadow: none;
     }
   `,
 })
