@@ -694,22 +694,22 @@ export class DashboardPage implements OnInit {
       {
         value: c.incomingCount,
         name: t('dashboard.incoming'),
-        color: 'rgb(139, 92, 246)',
+        color: '#A39474',
       },
       {
         value: c.completedCount,
         name: t('dashboard.completed'),
-        color: 'rgb(34, 197, 94)',
+        color: '#D0DDE3',
       },
       {
         value: c.overDueWithin7DaysCount,
         name: t('dashboard.due_in_7_days'),
-        color: 'rgb(245, 158, 11)',
+        color: '#C8849A',
       },
       {
         value: c.overdueCount,
         name: t('dashboard.overdue'),
-        color: 'rgb(239, 68, 68)',
+        color: '#8A1538',
       },
     ]
     const total = slices.reduce((sum, s) => sum + s.value, 0)
