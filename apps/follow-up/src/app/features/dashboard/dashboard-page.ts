@@ -214,25 +214,23 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
         </ui-card>
 
         <!-- Overdue -->
-        <ui-card shadow="none">
+        <ui-card shadow="none" class="bg-primary! border-primary!">
           <ui-card-content class="relative flex min-h-32 flex-col justify-start p-4!">
             <div
-              class="absolute top-4 end-4 flex size-14 items-center justify-center rounded-full"
-              [style.background-color]="'rgba(239, 68, 68, 0.15)'"
-              [style.color]="'rgb(239, 68, 68)'"
+              class="absolute top-4 end-4 flex size-14 items-center justify-center rounded-full bg-primary-foreground/15 text-primary-foreground"
             >
               <mat-icon
                 class="text-2xl! size-7! leading-7!"
                 [svgIcon]="icons.PRIORITY_HIGH"
               />
             </div>
-            <p class="text-sm text-foreground-muted">
+            <p class="text-sm text-primary-foreground/80">
               {{ 'dashboard.overdue' | translate }}
             </p>
             @if (countersLoading()) {
               <ui-skeleton width="4rem" height="2rem" />
             } @else {
-              <p class="text-3xl font-bold text-foreground">
+              <p class="text-3xl font-bold text-primary-foreground">
                 {{ counters().overdueCount }}
               </p>
             }
