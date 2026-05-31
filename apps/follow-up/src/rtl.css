@@ -1,7 +1,7 @@
 html[dir=ltr] {
-  font-family: ui-sans-serif, Cairo, system-ui, sans-serif;
+  font-family: ui-sans-serif, 'Lusail', Cairo, system-ui, sans-serif;
 }
 
 html[dir=rtl] {
-  font-family: Cairo, ui-sans-serif, sans-serif;
+  font-family: 'Lusail', Cairo, ui-sans-serif, sans-serif;
 }

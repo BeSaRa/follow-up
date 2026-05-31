@@ -10,6 +10,24 @@
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "externalDependencies": [
+          "fonts/Lusail-Regular.otf",
+          "fonts/Lusail-Regular.woff",
+          "fonts/Lusail-Regular.woff2",
+          "fonts/Lusail-Regular.ttf",
+          "fonts/Lusail-Medium.otf",
+          "fonts/Lusail-Medium.woff",
+          "fonts/Lusail-Medium.woff2",
+          "fonts/Lusail-Medium.ttf",
+          "fonts/Lusail-Light.otf",
+          "fonts/Lusail-Light.woff",
+          "fonts/Lusail-Light.woff2",
+          "fonts/Lusail-Light.ttf",
+          "fonts/Lusail-Bold.otf",
+          "fonts/Lusail-Bold.woff",
+          "fonts/Lusail-Bold.woff2",
+          "fonts/Lusail-Bold.ttf"
+        ],
         "outputPath": "dist/apps/follow-up",
         "browser": "apps/follow-up/src/main.ts",
         "tsConfig": "apps/follow-up/tsconfig.app.json",
@@ -20,6 +38,7 @@
           }
         ],
         "styles": [
+          "apps/follow-up/src/fonts.css",
           "apps/follow-up/src/rtl.css",
           "apps/follow-up/src/styles.css"
         ]
