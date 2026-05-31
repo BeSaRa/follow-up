@@ -518,9 +518,9 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
                   }
                 </div>
               } @else {
-                <div class="space-y-2">
+                <div class="divide-y divide-border">
                   @for (item of priorityListFull(); track item.key) {
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-3 px-2 py-3">
                       <div
                         [class]="
                           'flex size-10 shrink-0 items-center justify-center rounded-full ' +
