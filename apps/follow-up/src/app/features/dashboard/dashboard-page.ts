@@ -3,12 +3,14 @@ import {
   Component,
   DestroyRef,
   computed,
+  effect,
   inject,
   OnInit,
   signal,
+  untracked,
 } from '@angular/core'
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
-import { RouterLink } from '@angular/router'
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop'
+import { ActivatedRoute, Router, RouterLink } from '@angular/router'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { MatIcon } from '@angular/material/icon'
 import {
@@ -650,10 +652,41 @@ export class DashboardPage implements OnInit {
   // signal, so we mirror it through onLangChange.
   private readonly currentLang = signal(this.translate.currentLang || 'ar')
 
+  private readonly router = inject(Router)
+  private readonly route = inject(ActivatedRoute)
+  private readonly queryParams = toSignal(this.route.queryParamMap, {
+    initialValue: this.route.snapshot.queryParamMap,
+  })
+  /**
+   * Item id to open from the URL (?action=open&item={id}). Returns null when
+   * the URL doesn't request an open or the id isn't a positive integer.
+   */
+  private readonly openItemId = computed<number | null>(() => {
+    const params = this.queryParams()
+    if (params.get('action') !== 'open') return null
+    const id = Number(params.get('item'))
+    return Number.isFinite(id) && id > 0 ? id : null
+  })
+  /** Ref to the open view dialog, so we don't reopen it on every signal tick. */
+  private openDialogRef: ReturnType<FollowupService['view']> | null = null
+
   constructor() {
     this.translate.onLangChange
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((e) => this.currentLang.set(e.lang))
+
+    // Deep-link bridge: when the URL asks to open an item and the row is
+    // present in the latest list, open the view dialog for it.
+    effect(() => {
+      const targetId = this.openItemId()
+      const rows = this.latest()
+      if (targetId === null) return
+      if (this.openDialogRef !== null) return
+      if (rows.length === 0) return
+      const row = rows.find((r) => r.id === targetId)
+      if (!row) return
+      untracked(() => this.openViewDialog(row))
+    })
   }
 
   /** Echarts instance for the distribution donut — captured via (chartInit). */
@@ -1032,19 +1065,37 @@ export class DashboardPage implements OnInit {
   }
 
   protected view(item: Followup): void {
-    this.service
-      .view(item)
-      .afterClosed()
-      .subscribe((result) => {
-        if (
-          result?.terminated ||
-          result?.statusChanged ||
-          result?.priorityChanged
-        ) {
-          this.loadLatest()
-          this.loadCounters()
-        }
+    // Push ?action=open&item={id} onto the URL — the effect in the
+    // constructor watches that and opens the dialog for us, so refreshing
+    // the dashboard re-opens the same item.
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { action: 'open', item: item.id },
+      queryParamsHandling: 'merge',
+    })
+  }
+
+  private openViewDialog(item: Followup): void {
+    const ref = this.service.view(item)
+    this.openDialogRef = ref
+    ref.afterClosed().subscribe((result) => {
+      this.openDialogRef = null
+      // Clear the open-dialog params before reloading so the effect doesn't
+      // race and reopen the dialog against the freshly reloaded rows.
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { action: null, item: null },
+        queryParamsHandling: 'merge',
       })
+      if (
+        result?.terminated ||
+        result?.statusChanged ||
+        result?.priorityChanged
+      ) {
+        this.loadLatest()
+        this.loadCounters()
+      }
+    })
   }
 
   protected showLogs(item: Followup): void {
