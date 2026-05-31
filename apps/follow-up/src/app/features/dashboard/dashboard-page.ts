@@ -35,6 +35,7 @@ import { Followup } from '../followup/models/followup'
 import { FollowupDashboardCounters } from '../followup/models/followup-dashboard-counters'
 import { FollowupLevelCount } from './models/followup-level-count'
 import { DocumentClass } from '../../shared/enums/document-class'
+import { SecurityLevel } from '../../shared/enums/security-level'
 import { UserType } from '../../shared/enums/user-type'
 import { AppStore } from '../../shared/stores/app-store'
 
@@ -546,9 +547,9 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
                   }
                 </div>
               } @else {
-                <div class="space-y-2">
+                <div class="divide-y divide-border">
                   @for (item of securityListFull(); track item.key) {
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-3 px-2 py-3">
                       <div
                         class="flex size-8 shrink-0 items-center justify-center rounded-full"
                         [style.background-color]="item.bg"
@@ -685,15 +686,42 @@ export class DashboardPage implements OnInit {
     4: { icon: APP_ICONS.FLAG_OUTLINE },
   }
 
-  /** Mocked colors per security level until backend exposes metadata. */
+  /**
+   * Colors per security level, keyed by the lookup value defined in
+   * {@link SecurityLevel}. Severity escalates green → blue → purple → orange
+   * → red (Normal → Secret → Private Personal → Confidential → Top Secret).
+   * `gradient` is a [top, bottom] tuple used by the bar chart so each bar
+   * gets a vertical fade in its own level's color.
+   */
   private readonly securityMeta: Record<
     number,
-    { color: string; bg: string }
+    { color: string; bg: string; gradient: [string, string] }
   > = {
-    1: { color: 'rgb(34, 197, 94)', bg: 'rgba(34, 197, 94, 0.15)' },
-    2: { color: 'rgb(59, 130, 246)', bg: 'rgba(59, 130, 246, 0.15)' },
-    3: { color: 'rgb(245, 158, 11)', bg: 'rgba(245, 158, 11, 0.15)' },
-    4: { color: 'rgb(239, 68, 68)', bg: 'rgba(239, 68, 68, 0.15)' },
+    [SecurityLevel.NORMAL]: {
+      color: 'rgb(34, 197, 94)',
+      bg: 'rgba(34, 197, 94, 0.15)',
+      gradient: ['#86efac', '#16a34a'],
+    },
+    [SecurityLevel.SECRET]: {
+      color: 'rgb(59, 130, 246)',
+      bg: 'rgba(59, 130, 246, 0.15)',
+      gradient: ['#93c5fd', '#2563eb'],
+    },
+    [SecurityLevel.PRIVATE_PERSONAL]: {
+      color: 'rgb(168, 85, 247)',
+      bg: 'rgba(168, 85, 247, 0.15)',
+      gradient: ['#d8b4fe', '#9333ea'],
+    },
+    [SecurityLevel.CONFIDENTIAL]: {
+      color: 'rgb(245, 158, 11)',
+      bg: 'rgba(245, 158, 11, 0.15)',
+      gradient: ['#fcd34d', '#d97706'],
+    },
+    [SecurityLevel.TOP_SECRET]: {
+      color: 'rgb(239, 68, 68)',
+      bg: 'rgba(239, 68, 68, 0.15)',
+      gradient: ['#fca5a5', '#dc2626'],
+    },
   }
 
   protected readonly isArabic = computed(() => this.currentLang() === 'ar')
@@ -853,6 +881,7 @@ export class DashboardPage implements OnInit {
   /** Vertical bar chart for the security level distribution. */
   protected readonly securityChartOptions = computed<EChartsOption>(() => {
     const useArabic = this.isArabic()
+    const fallbackGradient: [string, string] = ['#cbd5e1', '#64748b']
     const data = this.securityCounts()
       .slice()
       .sort((a, b) => a.securityLevel - b.securityLevel)
@@ -872,21 +901,27 @@ export class DashboardPage implements OnInit {
       series: [
         {
           type: 'bar',
-          data: data.map((s) => s.followupCount),
-          itemStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                { offset: 0, color: '#4194b3' },
-                { offset: 1, color: '#0d4262' },
-              ],
-            },
-            borderRadius: [4, 4, 0, 0],
-          },
+          data: data.map((s) => {
+            const [top, bottom] =
+              this.securityMeta[s.securityLevel]?.gradient ?? fallbackGradient
+            return {
+              value: s.followupCount,
+              itemStyle: {
+                color: {
+                  type: 'linear',
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [
+                    { offset: 0, color: top },
+                    { offset: 1, color: bottom },
+                  ],
+                },
+                borderRadius: [4, 4, 0, 0],
+              },
+            }
+          }),
           barWidth: '50%',
         },
       ],
