@@ -232,6 +232,5 @@ export type {
   TimelineItemStatus,
 } from './lib/timeline/timeline'
 
-export { showcaseRoutes } from './lib/showcase/showcase.routes'
 export type { ApiProperty } from './lib/showcase/shared/api-table'
 export type { CssCustomProperty } from './lib/showcase/shared/styles-table'
