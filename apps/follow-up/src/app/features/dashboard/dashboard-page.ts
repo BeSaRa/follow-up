@@ -356,7 +356,9 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
                     <td uiTableCell>{{ item.dueDate }}</td>
                     <td uiTableCell>
                       <ui-badge
-                        [variant]="item.status ? 'success' : 'error'"
+                        [variant]="
+                          item.status ? 'outline-success' : 'outline-error'
+                        "
                         size="sm"
                       >
                         {{
@@ -723,37 +725,31 @@ export class DashboardPage implements OnInit {
    * Colors per security level, keyed by the lookup value defined in
    * {@link SecurityLevel}. Severity escalates green → blue → purple → orange
    * → red (Normal → Secret → Private Personal → Confidential → Top Secret).
-   * `gradient` is a [top, bottom] tuple used by the bar chart so each bar
-   * gets a vertical fade in its own level's color.
+   * Used to tint each level's icon circle in the security list.
    */
   private readonly securityMeta: Record<
     number,
-    { color: string; bg: string; gradient: [string, string] }
+    { color: string; bg: string }
   > = {
     [SecurityLevel.NORMAL]: {
       color: 'rgb(34, 197, 94)',
       bg: 'rgba(34, 197, 94, 0.15)',
-      gradient: ['#86efac', '#16a34a'],
     },
     [SecurityLevel.SECRET]: {
       color: 'rgb(59, 130, 246)',
       bg: 'rgba(59, 130, 246, 0.15)',
-      gradient: ['#93c5fd', '#2563eb'],
     },
     [SecurityLevel.PRIVATE_PERSONAL]: {
       color: 'rgb(168, 85, 247)',
       bg: 'rgba(168, 85, 247, 0.15)',
-      gradient: ['#d8b4fe', '#9333ea'],
     },
     [SecurityLevel.CONFIDENTIAL]: {
       color: 'rgb(245, 158, 11)',
       bg: 'rgba(245, 158, 11, 0.15)',
-      gradient: ['#fcd34d', '#d97706'],
     },
     [SecurityLevel.TOP_SECRET]: {
       color: 'rgb(239, 68, 68)',
       bg: 'rgba(239, 68, 68, 0.15)',
-      gradient: ['#fca5a5', '#dc2626'],
     },
   }
 
