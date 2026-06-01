@@ -35,6 +35,11 @@
           {
             "glob": "**/*",
             "input": "apps/follow-up/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/follow-up/src/fonts",
+            "output": "fonts"
           }
         ],
         "styles": [
