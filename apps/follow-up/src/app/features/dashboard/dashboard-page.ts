@@ -914,7 +914,6 @@ export class DashboardPage implements OnInit {
   /** Vertical bar chart for the security level distribution. */
   protected readonly securityChartOptions = computed<EChartsOption>(() => {
     const useArabic = this.isArabic()
-    const fallbackGradient: [string, string] = ['#cbd5e1', '#64748b']
     const data = this.securityCounts()
       .slice()
       .sort((a, b) => a.securityLevel - b.securityLevel)
@@ -934,27 +933,22 @@ export class DashboardPage implements OnInit {
       series: [
         {
           type: 'bar',
-          data: data.map((s) => {
-            const [top, bottom] =
-              this.securityMeta[s.securityLevel]?.gradient ?? fallbackGradient
-            return {
-              value: s.followupCount,
-              itemStyle: {
-                color: {
-                  type: 'linear',
-                  x: 0,
-                  y: 0,
-                  x2: 0,
-                  y2: 1,
-                  colorStops: [
-                    { offset: 0, color: top },
-                    { offset: 1, color: bottom },
-                  ],
-                },
-                borderRadius: [4, 4, 0, 0],
-              },
-            }
-          }),
+          // All bars share a single vertical gradient regardless of level.
+          itemStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                { offset: 0, color: '#4194B3' },
+                { offset: 1, color: '#276B8A' },
+              ],
+            },
+            borderRadius: [4, 4, 0, 0],
+          },
+          data: data.map((s) => s.followupCount),
           barWidth: '50%',
         },
       ],
