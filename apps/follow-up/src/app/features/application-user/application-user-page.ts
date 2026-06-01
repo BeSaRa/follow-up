@@ -151,7 +151,9 @@ import { ApplicationUser } from './models/application-user'
                       <td uiTableCell>{{ user.qid }}</td>
                       <td uiTableCell>
                         <ui-badge
-                          [variant]="user.status ? 'success' : 'error'"
+                          [variant]="
+                            user.status ? 'outline-success' : 'outline-error'
+                          "
                           size="sm"
                         >
                           {{

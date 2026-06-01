@@ -129,7 +129,9 @@ import { FollowupStatus } from './models/followup-status'
                       <td uiTableCell>{{ item.enName }}</td>
                       <td uiTableCell>
                         <ui-badge
-                          [variant]="item.status ? 'success' : 'error'"
+                          [variant]="
+                            item.status ? 'outline-success' : 'outline-error'
+                          "
                           size="sm"
                         >
                           {{

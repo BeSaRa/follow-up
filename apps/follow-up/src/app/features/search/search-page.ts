@@ -453,7 +453,9 @@ import { AppStore } from '../../shared/stores/app-store'
                         <td uiTableCell>{{ item.dueDate }}</td>
                         <td uiTableCell>
                           <ui-badge
-                            [variant]="item.status ? 'success' : 'error'"
+                            [variant]="
+                              item.status ? 'outline-success' : 'outline-error'
+                            "
                             size="sm"
                           >
                             {{

@@ -140,7 +140,9 @@ import { ExternalSiteTawasolSelectorDialog } from './components/external-site-ta
                       <td uiTableCell>{{ item.siteTypeInfo.arName }}</td>
                       <td uiTableCell>
                         <ui-badge
-                          [variant]="item.status ? 'success' : 'error'"
+                          [variant]="
+                            item.status ? 'outline-success' : 'outline-error'
+                          "
                           size="sm"
                         >
                           {{
