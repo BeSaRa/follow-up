@@ -495,8 +495,8 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
 
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <ui-card shadow="none">
-            <ui-card-content class="p-4!">
+          <ui-card shadow="none" class="flex flex-col">
+            <ui-card-content class="flex flex-1 flex-col p-4!">
               <h2 class="mb-3 text-lg font-semibold text-foreground">
                 {{ 'dashboard.priority_distribution_title' | translate }}
               </h2>
@@ -536,6 +536,12 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
                   }
                 </div>
               }
+              <div
+                echarts
+                [options]="priorityChartOptions()"
+                [loading]="priorityCountsLoading()"
+                class="mt-auto h-28 w-full shrink-0"
+              ></div>
             </ui-card-content>
           </ui-card>
 
@@ -810,6 +816,7 @@ export class DashboardPage implements OnInit {
       0,
     )
     return {
+      textStyle: { fontFamily: 'Lusail' },
       tooltip: {
         trigger: 'item',
         // Default tooltip uses float-based layout that breaks in RTL; render
@@ -843,6 +850,7 @@ export class DashboardPage implements OnInit {
           style: {
             text: String(visibleTotal),
             textAlign: 'center',
+            fontFamily: 'Lusail',
             fontSize: 28,
             fontWeight: 'bold',
             fill: '#0f172a',
@@ -855,6 +863,7 @@ export class DashboardPage implements OnInit {
           style: {
             text: this.translate.instant('dashboard.total'),
             textAlign: 'center',
+            fontFamily: 'Lusail',
             fontSize: 12,
             fill: '#64748b',
           },
@@ -914,6 +923,7 @@ export class DashboardPage implements OnInit {
       .slice()
       .sort((a, b) => a.securityLevel - b.securityLevel)
     return {
+      textStyle: { fontFamily: 'Lusail' },
       tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
       grid: { left: 8, right: 8, top: 8, bottom: 8, containLabel: true },
       xAxis: {
@@ -977,6 +987,51 @@ export class DashboardPage implements OnInit {
             VARIANT_COLOR_CLASSES[variant] ?? VARIANT_COLOR_CLASSES.outline,
         }
       })
+  })
+
+  /**
+   * Vertical bar chart for the priority level distribution. Uses the same
+   * single gradient as the security chart so the two cards read as a pair.
+   */
+  protected readonly priorityChartOptions = computed<EChartsOption>(() => {
+    const items = this.priorityListFull()
+    return {
+      textStyle: { fontFamily: 'Lusail' },
+      tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+      grid: { left: 8, right: 8, top: 8, bottom: 8, containLabel: true },
+      xAxis: {
+        type: 'category',
+        data: items.map((p) => p.name),
+        axisLabel: { fontSize: 11, interval: 0, hideOverlap: true },
+      },
+      yAxis: {
+        type: 'value',
+        axisLabel: { fontSize: 11 },
+        splitLine: { lineStyle: { color: '#e2e8f0' } },
+      },
+      series: [
+        {
+          type: 'bar',
+          // Same vertical gradient as the security chart bars.
+          itemStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                { offset: 0, color: '#4194B3' },
+                { offset: 1, color: '#276B8A' },
+              ],
+            },
+            borderRadius: [4, 4, 0, 0],
+          },
+          data: items.map((p) => p.count),
+          barWidth: '50%',
+        },
+      ],
+    }
   })
 
   /**
