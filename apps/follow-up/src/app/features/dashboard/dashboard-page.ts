@@ -132,7 +132,7 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
             @if (countersLoading()) {
               <ui-skeleton width="4rem" height="2rem" />
             } @else {
-              <p class="text-3xl font-bold text-foreground">
+              <p class="text-6xl font-bold text-foreground">
                 {{ counters().incomingCount }}
               </p>
             }
@@ -158,7 +158,7 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
             @if (countersLoading()) {
               <ui-skeleton width="4rem" height="2rem" />
             } @else {
-              <p class="text-3xl font-bold text-foreground">
+              <p class="text-6xl font-bold text-foreground">
                 {{ counters().completedCount }}
               </p>
             }
@@ -185,7 +185,7 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
               @if (countersLoading()) {
                 <ui-skeleton width="4rem" height="2rem" />
               } @else {
-                <p class="text-3xl font-bold text-foreground">
+                <p class="text-4xl font-bold text-foreground">
                   {{ counters().overDueWithin7DaysCount }}
                 </p>
               }
@@ -232,7 +232,7 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
             @if (countersLoading()) {
               <ui-skeleton width="4rem" height="2rem" />
             } @else {
-              <p class="text-3xl font-bold text-primary-foreground">
+              <p class="text-6xl font-bold text-primary-foreground">
                 {{ counters().overdueCount }}
               </p>
             }
