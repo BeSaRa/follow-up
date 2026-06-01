@@ -89,7 +89,9 @@ interface OrbitParticle {
         "
       ></div>
 
-      <ui-card class="relative z-10 w-full max-w-md animate-fade-up bg-surface-raised/30! backdrop-blur-md">
+      <ui-card
+        class="relative z-10 w-full max-w-md animate-fade-up bg-surface-raised/30! backdrop-blur-md"
+      >
         <button
           type="button"
           class="absolute end-3 top-3 z-10 inline-flex items-center justify-center rounded-md px-2 py-1 text-sm font-medium text-foreground-muted hover:bg-surface-hover hover:text-foreground transition-colors"
@@ -136,7 +138,10 @@ interface OrbitParticle {
                 <span
                   class="pointer-events-none absolute inset-y-0 start-0 z-10 flex items-center ps-3 text-foreground-muted"
                 >
-                  <mat-icon class="text-xl! size-5! leading-5!" [svgIcon]="icons.EMAIL_OUTLINE" />
+                  <mat-icon
+                    class="text-xl! size-5! leading-5!"
+                    [svgIcon]="icons.EMAIL_OUTLINE"
+                  />
                 </span>
                 <input
                   uiInput
@@ -158,7 +163,10 @@ interface OrbitParticle {
                 <span
                   class="pointer-events-none absolute inset-y-0 start-0 z-10 flex items-center ps-3 text-foreground-muted"
                 >
-                  <mat-icon class="text-xl! size-5! leading-5!" [svgIcon]="icons.LOCK_OUTLINE" />
+                  <mat-icon
+                    class="text-xl! size-5! leading-5!"
+                    [svgIcon]="icons.LOCK_OUTLINE"
+                  />
                 </span>
                 <input
                   uiInput
@@ -173,12 +181,23 @@ interface OrbitParticle {
                   type="button"
                   class="absolute inset-y-0 end-0 z-10 flex items-center pe-3 text-foreground-muted hover:text-foreground"
                   (click)="showPassword.set(!showPassword())"
-                  [attr.aria-label]="(showPassword() ? 'login.hide_password' : 'login.show_password') | translate"
+                  [attr.aria-label]="
+                    (showPassword()
+                      ? 'login.hide_password'
+                      : 'login.show_password'
+                    ) | translate
+                  "
                 >
                   @if (showPassword()) {
-                    <mat-icon class="text-xl! size-5! leading-5!" [svgIcon]="icons.EYE_OFF_OUTLINE" />
+                    <mat-icon
+                      class="text-xl! size-5! leading-5!"
+                      [svgIcon]="icons.EYE_OFF_OUTLINE"
+                    />
                   } @else {
-                    <mat-icon class="text-xl! size-5! leading-5!" [svgIcon]="icons.EYE_OUTLINE" />
+                    <mat-icon
+                      class="text-xl! size-5! leading-5!"
+                      [svgIcon]="icons.EYE_OUTLINE"
+                    />
                   }
                 </button>
               </div>
@@ -213,11 +232,17 @@ export class LoginPage {
   private readonly appStore = inject(AppStore)
   protected readonly icons = APP_ICONS
   protected readonly showPassword = signal(false)
-  protected readonly darkMode = signal(document.documentElement.classList.contains('dark'))
-  protected readonly currentLang = signal(this.translate.getCurrentLang() || 'ar')
+  protected readonly darkMode = signal(
+    document.documentElement.classList.contains('dark'),
+  )
+  protected readonly currentLang = signal(
+    this.translate.getCurrentLang() || 'ar',
+  )
 
-  private readonly orbitCanvas = viewChild.required<ElementRef<HTMLCanvasElement>>('orbitCanvas')
-  private readonly cursorBlob = viewChild.required<ElementRef<HTMLDivElement>>('cursorBlob')
+  private readonly orbitCanvas =
+    viewChild.required<ElementRef<HTMLCanvasElement>>('orbitCanvas')
+  private readonly cursorBlob =
+    viewChild.required<ElementRef<HTMLDivElement>>('cursorBlob')
 
   protected readonly form = this.fb.nonNullable.group({
     userName: ['', [Validators.required]],
@@ -227,13 +252,18 @@ export class LoginPage {
   constructor() {
     effect(() => {
       if (this.store.isAuthenticated()) {
-        const route = this.appStore.userType() === UserType.SYSTEM_ADMIN ? '/admin' : '/dashboard'
+        const route =
+          this.appStore.userType() === UserType.SYSTEM_ADMIN
+            ? '/admin'
+            : '/dashboard'
         this.router.navigate([route])
       }
     })
 
     afterNextRender(() => {
-      const stopParticles = this.startOrbitParticles(this.orbitCanvas().nativeElement)
+      const stopParticles = this.startOrbitParticles(
+        this.orbitCanvas().nativeElement,
+      )
       const stopBlob = this.startCursorBlob(this.cursorBlob().nativeElement)
       this.destroyRef.onDestroy(() => {
         stopParticles()
@@ -426,7 +456,14 @@ export class LoginPage {
 
       for (const q of projected) {
         ctx.globalAlpha = q.alpha
-        const glow = ctx.createRadialGradient(q.sx, q.sy, 0, q.sx, q.sy, q.r * 4)
+        const glow = ctx.createRadialGradient(
+          q.sx,
+          q.sy,
+          0,
+          q.sx,
+          q.sy,
+          q.r * 4,
+        )
         glow.addColorStop(0, q.color)
         glow.addColorStop(1, 'rgba(255,255,255,0)')
         ctx.fillStyle = glow
