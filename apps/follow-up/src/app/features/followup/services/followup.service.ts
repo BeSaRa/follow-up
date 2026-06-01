@@ -212,7 +212,6 @@ export class FollowupService extends RegisterServiceMixin(CrudService)<Followup,
       },
       { allowDots: true, encode: false },
     )
-    console.log('[uploadCommentAttachment] query:', query)
     return this.http.post<unknown>(
       `${this.urlService.URLS.USER_COMMENTS_ATTACHMENT}?${query}`,
       formData,
