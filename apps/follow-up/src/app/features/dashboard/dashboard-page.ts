@@ -587,12 +587,13 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
                   }
                 </div>
               }
-              <div
+              <!-- Temporarily hidden while reviewing card sizing -->
+              <!-- <div
                 echarts
                 [options]="securityChartOptions()"
                 [loading]="securityLoading()"
                 class="mt-4 h-28 w-full"
-              ></div>
+              ></div> -->
             </ui-card-content>
           </ui-card>
         </div>
