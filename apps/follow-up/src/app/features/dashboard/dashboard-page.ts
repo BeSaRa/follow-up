@@ -256,7 +256,7 @@ const VARIANT_COLOR_CLASSES: Record<BadgeVariant, string> = {
             </a>
           </div>
           <div class="overflow-x-auto">
-            <table uiTable striped>
+            <table uiTable striped stripeColor="#FBFCFD">
               <thead uiTableHeader>
                 <tr uiTableRow>
                   <th uiTableHead resizable class="w-[300px]">

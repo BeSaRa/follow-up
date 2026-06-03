@@ -27,6 +27,13 @@ const API_PROPERTIES: ApiProperty[] = [
     kind: 'input',
   },
   {
+    name: 'stripeColor',
+    type: 'string',
+    default: '-',
+    description: 'Background color for striped (even) rows. Any CSS color value, e.g. #FBFCFD. Falls back to the surface theme token. Only applies with striped.',
+    kind: 'input',
+  },
+  {
     name: 'stickyHeader',
     type: 'boolean',
     default: 'false',
@@ -70,7 +77,13 @@ const API_PROPERTIES: ApiProperty[] = [
   },
 ]
 
-const CSS_PROPERTIES: CssCustomProperty[] = []
+const CSS_PROPERTIES: CssCustomProperty[] = [
+  {
+    name: '--ui-table-stripe',
+    default: 'var(--color-surface)',
+    description: 'Background color for striped (even) rows. Set automatically by the stripeColor input; defaults to the surface theme token.',
+  },
+]
 
 interface User {
   name: string
@@ -126,6 +139,23 @@ const EXAMPLES = {
     <tr uiTableRow>
       <th uiTableHead sortable [sortDirection]="nameSortDir()" (sortChange)="nameSortDir.set($event)">Name</th>
       <th uiTableHead sortable [sortDirection]="emailSortDir()" (sortChange)="emailSortDir.set($event)">Email</th>
+      <th uiTableHead>Role</th>
+    </tr>
+  </thead>
+  <tbody uiTableBody>
+    <tr uiTableRow>
+      <td uiTableCell>Alice Johnson</td>
+      <td uiTableCell>alice&#64;example.com</td>
+      <td uiTableCell>Admin</td>
+    </tr>
+    <!-- more rows... -->
+  </tbody>
+</table>`,
+  stripeColor: `<table uiTable striped stripeColor="#FBFCFD">
+  <thead uiTableHeader>
+    <tr uiTableRow>
+      <th uiTableHead>Name</th>
+      <th uiTableHead>Email</th>
       <th uiTableHead>Role</th>
     </tr>
   </thead>
@@ -238,6 +268,33 @@ const EXAMPLES = {
             </showcase-example-viewer>
 
             <showcase-example-viewer
+              title="Custom Stripe Color"
+              description="Override the striped row color per table via the stripeColor input. Accepts any CSS color value."
+              [htmlCode]="stripeColorHtml"
+            >
+              <div class="overflow-x-auto rounded-lg border border-border">
+                <table uiTable striped stripeColor="#FBFCFD">
+                  <thead uiTableHeader>
+                    <tr uiTableRow>
+                      <th uiTableHead>Name</th>
+                      <th uiTableHead>Email</th>
+                      <th uiTableHead>Role</th>
+                    </tr>
+                  </thead>
+                  <tbody uiTableBody>
+                    @for (user of users; track user.email) {
+                      <tr uiTableRow>
+                        <td uiTableCell>{{ user.name }}</td>
+                        <td uiTableCell>{{ user.email }}</td>
+                        <td uiTableCell>{{ user.role }}</td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </showcase-example-viewer>
+
+            <showcase-example-viewer
               title="Sortable Headers"
               description="Click a sortable column header to toggle between ascending and descending sort."
               [htmlCode]="sortableHtml"
@@ -309,6 +366,7 @@ export class TableShowcase {
   protected readonly cssProperties = CSS_PROPERTIES
   protected readonly basicHtml = EXAMPLES.basic
   protected readonly stripedHtml = EXAMPLES.striped
+  protected readonly stripeColorHtml = EXAMPLES.stripeColor
   protected readonly sortableHtml = EXAMPLES.sortable
   protected readonly roundedHeaderHtml = EXAMPLES.roundedHeader
 

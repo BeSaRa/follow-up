@@ -105,7 +105,7 @@ import { ApplicationUser } from './models/application-user'
       <ui-card>
         <ui-card-content class="p-0!">
           <div class="overflow-x-auto">
-            <table uiTable roundedHeader striped>
+            <table uiTable roundedHeader striped stripeColor="#FBFCFD">
               <thead uiTableHeader>
                 <tr uiTableRow>
                   <th uiTableHead>

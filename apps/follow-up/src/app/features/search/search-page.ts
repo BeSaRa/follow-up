@@ -396,7 +396,7 @@ import { AppStore } from '../../shared/stores/app-store'
           <ui-card class="mt-6 overflow-hidden">
             <ui-card-content class="p-0!">
               <div class="overflow-x-auto">
-                <table uiTable striped roundedHeader>
+                <table uiTable striped roundedHeader stripeColor="#FBFCFD">
                   <thead uiTableHeader>
                     <tr uiTableRow>
                       <th uiTableHead resizable class="w-[300px]">

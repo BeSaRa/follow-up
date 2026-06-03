@@ -18,6 +18,7 @@ export type SortDirection = 'asc' | 'desc' | null
   selector: 'table[uiTable]',
   host: {
     '[class]': 'hostClasses()',
+    '[style.--ui-table-stripe]': 'stripeColor() || null',
   },
 })
 export class UiTable {
@@ -25,6 +26,12 @@ export class UiTable {
   readonly stickyHeader = input(false, { transform: booleanAttribute })
   /** Rounds the top-start/top-end corners of the header's first/last cells. */
   readonly roundedHeader = input(false, { transform: booleanAttribute })
+  /**
+   * Background color for striped (even) rows. Any CSS color value, e.g.
+   * `#FBFCFD`. Falls back to the `surface` theme token when unset. Only has an
+   * effect together with `striped`.
+   */
+  readonly stripeColor = input<string>()
 
   protected readonly hostClasses = computed(() => {
     const base = 'w-full caption-bottom text-sm'
@@ -111,7 +118,7 @@ export class UiTableRow {
     }
     const base = 'border-b border-border transition-colors hover:bg-surface-hover'
     return this.table?.striped()
-      ? `${base} even:bg-surface`
+      ? `${base} even:bg-[var(--ui-table-stripe,var(--color-surface))]`
       : base
   })
 }
