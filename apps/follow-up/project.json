@@ -51,6 +51,7 @@
       },
       "configurations": {
         "production": {
+          "baseHref": "",
           "fileReplacements": [
             {
               "replace": "apps/follow-up/src/app/dev.routes.ts",
